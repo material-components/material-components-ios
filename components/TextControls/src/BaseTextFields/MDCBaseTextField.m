@@ -651,28 +651,69 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
 
 #pragma mark Accessibility Overrides
 
+- (NSInteger)accessibilityElementCount {
+  if (self.isAccessibilityElement) {
+    return [super accessibilityElementCount];
+  } else {
+    return [self accessibilityElements].count;
+  }
+}
+
 - (NSString *)accessibilityLabel {
-  NSString *superAccessibilityLabel = [super accessibilityLabel];
-  if (superAccessibilityLabel.length > 0) {
-    return superAccessibilityLabel;
-  }
+  if (self.isAccessibilityElement) {
+    NSString *superAccessibilityLabel = [super accessibilityLabel];
+    if (superAccessibilityLabel.length > 0) {
+      return superAccessibilityLabel;
+    }
 
-  NSMutableArray *accessibilityLabelComponents = [[NSMutableArray alloc] init];
-  if (self.label.text.length > 0) {
-    [accessibilityLabelComponents addObject:self.label.text];
-  }
-  if (self.leadingAssistiveLabel.text.length > 0) {
-    [accessibilityLabelComponents addObject:self.leadingAssistiveLabel.text];
-  }
-  if (self.trailingAssistiveLabel.text.length > 0) {
-    [accessibilityLabelComponents addObject:self.trailingAssistiveLabel.text];
-  }
+    NSMutableArray *accessibilityLabelComponents = [[NSMutableArray alloc] init];
+    if (self.label.text.length > 0) {
+      [accessibilityLabelComponents addObject:self.label.text];
+    }
+    if (self.leadingAssistiveLabel.text.length > 0) {
+      [accessibilityLabelComponents addObject:self.leadingAssistiveLabel.text];
+    }
+    if (self.trailingAssistiveLabel.text.length > 0) {
+      [accessibilityLabelComponents addObject:self.trailingAssistiveLabel.text];
+    }
 
-  if (accessibilityLabelComponents.count > 0) {
-    return [accessibilityLabelComponents componentsJoinedByString:@", "];
-  }
+    if (accessibilityLabelComponents.count > 0) {
+      return [accessibilityLabelComponents componentsJoinedByString:@", "];
+    }
 
-  return nil;
+    return nil;
+  } else {
+    return [super accessibilityLabel];
+  }
+}
+
+- (NSArray *)accessibilityElements {
+  if (self.isAccessibilityElement) {
+    return [super accessibilityElements];
+  } else {
+    NSMutableArray *mutableElements = [[super accessibilityElements] mutableCopy];
+    if (self.label.isAccessibilityElement &&
+        self.labelPosition != MDCTextControlLabelPositionNone) {
+      // The label should be before the system text field element
+      [mutableElements insertObject:self.label atIndex:0];
+    }
+    if (self.leadingView.isAccessibilityElement && self.leadingView.superview == self) {
+      // The leading view should be first if it's there
+      [mutableElements insertObject:self.leadingView atIndex:0];
+    }
+    if (self.trailingView.isAccessibilityElement && self.trailingView.superview == self) {
+      // The trailing view should be after the system text field element or clear button if it's
+      // there
+      [mutableElements addObject:self.trailingView];
+    }
+    if (self.leadingAssistiveLabel.isAccessibilityElement) {
+      [mutableElements addObject:self.leadingAssistiveLabel];
+    }
+    if (self.trailingAssistiveLabel.isAccessibilityElement) {
+      [mutableElements addObject:self.trailingAssistiveLabel];
+    }
+    return [mutableElements copy];
+  }
 }
 
 - (UIBezierPath *)accessibilityPath {
