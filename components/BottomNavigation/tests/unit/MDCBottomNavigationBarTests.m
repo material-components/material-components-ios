@@ -193,6 +193,7 @@ static NSString *const kTestItemTitleText = @"Title";
   UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:nil tag:0];
   tabBarItem.accessibilityLabel = initialLabel;
   MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
+
   // When
   bar.items = @[ tabBarItem ];
 
@@ -255,6 +256,7 @@ static NSString *const kTestItemTitleText = @"Title";
   UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:nil tag:0];
   tabBarItem.isAccessibilityElement = NO;
   MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
+
   // When
   bar.items = @[ tabBarItem ];
 
@@ -274,6 +276,33 @@ static NSString *const kTestItemTitleText = @"Title";
 
   // Then
   XCTAssert(bar.itemViews.firstObject.isAccessibilityElement);
+}
+
+- (void)testTagInitialValue {
+  // Given
+  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:nil tag:0];
+  tabBarItem.tag = 1234;
+  MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
+
+  // When
+  bar.items = @[ tabBarItem ];
+
+  // Then
+  XCTAssertEqual(bar.itemViews.firstObject.tag, tabBarItem.tag);
+}
+
+- (void)testTagValueChanged {
+  // Given
+  UITabBarItem *tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Home" image:nil tag:0];
+  tabBarItem.tag = 1234;
+  MDCBottomNavigationBar *bar = [[MDCBottomNavigationBar alloc] init];
+  bar.items = @[ tabBarItem ];
+
+  // When
+  tabBarItem.tag = 4321;
+
+  // Then
+  XCTAssertEqual(bar.itemViews.firstObject.tag, tabBarItem.tag);
 }
 
 - (void)testTitleVisibility {

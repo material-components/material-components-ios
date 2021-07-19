@@ -375,6 +375,7 @@ static BOOL gEnablePerformantShadow = NO;
       NSStringFromSelector(@selector(titlePositionAdjustment)),
       NSStringFromSelector(@selector(largeContentSizeImage)),
       NSStringFromSelector(@selector(largeContentSizeImageInsets)),
+      NSStringFromSelector(@selector(tag)),
     ];
   });
   return keyPaths;
@@ -451,6 +452,8 @@ static BOOL gEnablePerformantShadow = NO;
       if (@available(iOS 13.0, *)) {
         itemView.largeContentImage = newValue;
       }
+    } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(tag))]) {
+      itemView.tag = [newValue integerValue];
     }
 #if MDC_AVAILABLE_SDK_IOS(13_0)
     else if ([keyPath
@@ -591,6 +594,7 @@ static BOOL gEnablePerformantShadow = NO;
     itemView.titlePositionAdjustment = item.titlePositionAdjustment;
     itemView.badgeColor = self.itemBadgeBackgroundColor;
     itemView.badgeTextColor = self.itemBadgeTextColor;
+    itemView.tag = item.tag;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
     MDCInkTouchController *controller = [[MDCInkTouchController alloc] initWithView:itemView];
