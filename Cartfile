@@ -1,0 +1,4 @@
+github "material-motion/motion-interchange-objc" ~> 4.0
+github "material-motion/motion-animator-objc" ~> 5.0
+github "material-foundation/material-internationalization-ios" ~> 2.0
+github "material-foundation/material-text-accessibility-ios" ~> 2.0
