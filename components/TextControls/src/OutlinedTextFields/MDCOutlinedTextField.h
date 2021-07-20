@@ -19,7 +19,7 @@
 /**
  An implementation of a Material outlined text field.
  */
-__attribute__((objc_subclassing_restricted)) @interface MDCOutlinedTextField : MDCBaseTextField
+@interface MDCOutlinedTextField : MDCBaseTextField
 
 /**
  MDCOutlinedTextField does not support UITextBorderStyle borders.
