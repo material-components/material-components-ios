@@ -34,7 +34,7 @@
 static char *const kKVOContextMDCTabBarView = "kKVOContextMDCTabBarView";
 
 /** Minimum (typical) height of a Material Tab bar. */
-static const CGFloat kMinHeight = 48;
+static const CGFloat kMinHeight = 24;
 
 /** Default minimum width of an item in the Tab bar */
 static const CGFloat kDefaultMinItemWidth = 90;
