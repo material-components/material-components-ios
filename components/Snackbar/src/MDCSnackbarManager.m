@@ -782,9 +782,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 - (void)setUppercaseButtonTitle:(BOOL)uppercaseButtonTitle {
   _uppercaseButtonTitle = uppercaseButtonTitle;
   [self runSnackbarUpdatesOnMainThread:^{
-    for (MDCButton *button in self.internalManager.currentSnackbar.actionButtons) {
-      button.uppercaseTitle = uppercaseButtonTitle;
-    }
+    self.internalManager.currentSnackbar.actionButton.uppercaseTitle = uppercaseButtonTitle;
   }];
 }
 
@@ -796,9 +794,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   _disabledButtonAlpha = disabledButtonAlpha;
 
   [self runSnackbarUpdatesOnMainThread:^{
-    for (MDCButton *button in self.internalManager.currentSnackbar.actionButtons) {
-      button.disabledAlpha = disabledButtonAlpha;
-    }
+    self.internalManager.currentSnackbar.actionButton.disabledAlpha = disabledButtonAlpha;
   }];
 }
 
@@ -810,9 +806,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   _buttonInkColor = buttonInkColor;
 
   [self runSnackbarUpdatesOnMainThread:^{
-    for (MDCButton *button in self.internalManager.currentSnackbar.actionButtons) {
-      button.inkColor = buttonInkColor;
-    }
+    self.internalManager.currentSnackbar.actionButton.inkColor = buttonInkColor;
   }];
 }
 

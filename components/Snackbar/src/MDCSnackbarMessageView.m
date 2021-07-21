@@ -14,22 +14,21 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+#import "MaterialAnimationTiming.h"
+#import "MaterialAvailability.h"
 #import "MaterialButtons.h"
 #import "MaterialElevation.h"
 #import "MaterialShadowElevations.h"
+#import "MaterialShadowLayer.h"
 #import "MDCSnackbarManager.h"
 #import "MDCSnackbarMessage.h"
 #import "MDCSnackbarMessageView.h"
-
-#import "MaterialAnimationTiming.h"
-#import "MaterialAvailability.h"
-#import "MaterialMath.h"
-#import "MaterialShadowLayer.h"
+#import "MDCSnackbarMessageViewInternal.h"
+#import "MDCSnackbarOverlayView.h"
+#import "MaterialSnackbarStrings.h"
+#import "MaterialSnackbarStrings_table.h"
 #import "MaterialTypography.h"
-#import "private/MDCSnackbarMessageViewInternal.h"
-#import "private/MDCSnackbarOverlayView.h"
-#import "private/MaterialSnackbarStrings.h"
-#import "private/MaterialSnackbarStrings_table.h"
+#import "MaterialMath.h"
 
 NSString *const MDCSnackbarMessageTitleAutomationIdentifier =
     @"MDCSnackbarMessageTitleAutomationIdentifier";
@@ -74,11 +73,6 @@ static const UIEdgeInsets kContentMarginMutliLineText = (UIEdgeInsets){16.0, 16.
 static const UIEdgeInsets kLegacyContentMargin = (UIEdgeInsets){18.0, 24.0, 18.0, 24.0};
 
 /**
- Padding between the image and the main title.
- */
-static const CGFloat kTitleImagePadding = 8;
-
-/**
  Padding between the main title and the first button.
  */
 static const CGFloat kTitleButtonPadding = 8;
@@ -107,11 +101,6 @@ static const CGFloat kMinimumHeight = 48;
  */
 static const CGFloat kMinimumHeightMultiline = 68;
 
-/**
- Each button will have a tag indexed starting from this value.
- */
-static const NSInteger kButtonTagStart = 20000;
-
 static const MDCFontTextStyle kMessageTextStyle = MDCFontTextStyleBody1;
 static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
@@ -121,16 +110,6 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 #endif  // MDC_AVAILABLE_SDK_IOS(10_0)
 
 @interface MDCSnackbarMessageView ()
-
-/**
- Holds the icon for the image.
- */
-@property(nonatomic, strong) UIImageView *imageView;
-
-/**
- Holds the button views.
- */
-@property(nonatomic, strong) NSArray *buttons;
 
 /**
  Holds the text label for the main message.
@@ -148,12 +127,12 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 @property(nonatomic, strong) UIControl *containerView;
 
 /**
- The view containing all of the buttons.
+ The view containing the button view.
  */
-@property(nonatomic, strong) UIView *buttonView;
+@property(nonatomic, strong) UIView *buttonContainer;
 
 /**
- The view containing the title and image views.
+ The view containing the title view.
  */
 @property(nonatomic, strong) UIView *contentView;
 
@@ -183,7 +162,6 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     CGFloat buttonContentPadding =
         MDCSnackbarMessage.usesLegacySnackbar ? kLegacyButtonPadding : kButtonPadding;
     [self setTranslatesAutoresizingMaskIntoConstraints:NO];
-    self.tag = kButtonTagStart;
 
     // Style the text in the button.
     self.titleLabel.numberOfLines = 1;
@@ -207,9 +185,6 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 @implementation MDCSnackbarMessageView {
   UIFont *_messageFont;
   UIFont *_buttonFont;
-
-  // Holds the instances of MDCButton
-  NSMutableArray<MDCButton *> *_actionButtons;
 
   NSMutableDictionary<NSNumber *, UIColor *> *_buttonTitleColors;
 
@@ -309,11 +284,9 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     [_containerView addSubview:_contentView];
     _contentView.userInteractionEnabled = NO;
 
-    _buttonView = [[UIView alloc] init];
-    [_buttonView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [_containerView addSubview:_buttonView];
-
-    _actionButtons = [[NSMutableArray alloc] init];
+    _buttonContainer = [[UIView alloc] init];
+    [_buttonContainer setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [_containerView addSubview:_buttonContainer];
 
     // Set up the title label.
     _label = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -385,14 +358,9 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
 - (void)initializeMDCSnackbarMessageViewButtons:(MDCSnackbarMessage *)message
                                     withManager:(MDCSnackbarManager *)manager {
-  // Add buttons to the view. We'll use this opportunity to determine how much space a button will
+  // Add button to the view. We'll use this opportunity to determine how much space a button will
   // need, to inform the layout direction.
-  NSMutableArray *actions = [NSMutableArray array];
   if (message.action) {
-    UIView *buttonView = [[UIView alloc] init];
-    [buttonView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [_buttonView addSubview:buttonView];
-
     MDCButton *button = [[MDCSnackbarMessageViewButton alloc] init];
     [button setTitleColor:_buttonTitleColors[@(UIControlStateNormal)]
                  forState:UIControlStateNormal];
@@ -408,8 +376,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 #pragma clang diagnostic pop
 
     button.enableRippleBehavior = message.enableRippleBehavior;
-    [buttonView addSubview:button];
-    [_actionButtons addObject:button];
+    [_buttonContainer addSubview:button];
 
     // Set up the button's accessibility values.
     button.accessibilityIdentifier = message.action.accessibilityIdentifier;
@@ -428,11 +395,9 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
       button.inkColor = manager.buttonInkColor;
     }
 
-    [actions addObject:buttonView];
+    self.actionButton = button;
+    [self updateButtonFont];
   }
-
-  self.buttons = actions;
-  [self updateButtonFont];
 }
 
 - (void)dismissWithAction:(MDCSnackbarMessageAction *)action userInitiated:(BOOL)userInitiated {
@@ -529,9 +494,9 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
 - (void)setButtonTitleColor:(nullable UIColor *)buttonTitleColor forState:(UIControlState)state {
   _buttonTitleColors[@(state)] = buttonTitleColor;
-  for (MDCButton *button in _actionButtons) {
+  if (self.actionButton) {
     if (_buttonTitleColors[@(state)]) {
-      [button setTitleColor:buttonTitleColor forState:state];
+      [self.actionButton setTitleColor:buttonTitleColor forState:state];
     } else {
       // Set to default
       UIColor *defaultButtonTitleColor;
@@ -544,7 +509,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
           defaultButtonTitleColor = MDCRGBAColor(0xFF, 0xFF, 0xFF, (float)0.6);
           break;
       }
-      [button setTitleColor:defaultButtonTitleColor forState:state];
+      [self.actionButton setTitleColor:defaultButtonTitleColor forState:state];
     }
   }
 }
@@ -667,16 +632,18 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     }
   }
 
-  for (MDCButton *button in _actionButtons) {
-    [button setTitleFont:finalButtonFont forState:UIControlStateNormal];
-    [button setTitleFont:finalButtonFont forState:UIControlStateHighlighted];
-  }
+  [self.actionButton setTitleFont:finalButtonFont forState:UIControlStateNormal];
+  [self.actionButton setTitleFont:finalButtonFont forState:UIControlStateHighlighted];
 
   [self setNeedsLayout];
 }
 
 - (BOOL)shouldWaitForDismissalDuringVoiceover {
   return self.message.action != nil;
+}
+
+- (NSArray<MDCButton *> *)actionButtons {
+  return self.actionButton ? @[ self.actionButton ] : @[];
 }
 
 #pragma mark - Constraints and layout
@@ -731,7 +698,6 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     @"kBottomMargin" : @(safeContentMargin.bottom),
     @"kLeftMargin" : @(safeContentMargin.left),
     @"kRightMargin" : @(safeContentMargin.right),
-    @"kTitleImagePadding" : @(kTitleImagePadding),
     @"kTopMargin" : @(safeContentMargin.top),
     @"kTitleButtonPadding" : @(kTitleButtonPadding),
     @"kContentSafeBottomInset" : @(kBorderWidth + self.contentSafeBottomInset),
@@ -739,11 +705,11 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   NSDictionary *views = @{
     @"container" : self.containerView,
     @"content" : self.contentView,
-    @"buttons" : self.buttonView,
+    @"buttons" : self.buttonContainer,
     @"buttonGutter" : self.buttonGutterTapTarget,
   };
 
-  BOOL hasButtons = (self.buttons.count > 0);
+  BOOL hasButtons = self.actionButton != nil;
 
   NSString *formatString = nil;  // Scratch variable.
   NSMutableArray *constraints = [NSMutableArray array];
@@ -851,7 +817,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 }
 
 /**
- Provides constraints for the image view and label within the content view.
+ Provides constraints for the label within the content view.
  */
 - (NSArray *)contentViewConstraints {
   UIEdgeInsets safeContentMargin = self.safeContentMargin;
@@ -859,15 +825,11 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     @"kBottomMargin" : @(safeContentMargin.bottom),
     @"kLeftMargin" : @(safeContentMargin.left),
     @"kRightMargin" : @(safeContentMargin.right),
-    @"kTitleImagePadding" : @(kTitleImagePadding),
     @"kTopMargin" : @(safeContentMargin.top),
   };
 
   NSMutableDictionary *views = [NSMutableDictionary dictionary];
   views[@"label"] = self.label;
-  if (self.imageView) {
-    views[@"imageView"] = self.imageView;
-  }
 
   NSString *formatString = nil;  // Scratch variable.
   NSMutableArray *constraints = [NSMutableArray array];
@@ -880,43 +842,11 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
                                                                              views:views]];
 
   // Pin the label to the trailing edge of the content view.
-  formatString = @"H:[label]|";
+  formatString = @"H:|[label]|";
   [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
                                                                            options:0
                                                                            metrics:metrics
                                                                              views:views]];
-
-  if (self.imageView) {
-    // Constrain the image view to be no taller than @c kMaximumImageSize.
-    formatString = @"V:[imageView(<=kMaximumImageSize)]";
-    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
-                                                                             options:0
-                                                                             metrics:metrics
-                                                                               views:views]];
-
-    // Vertically center the image view within the content view.
-    [constraints addObject:[NSLayoutConstraint constraintWithItem:self.imageView
-                                                        attribute:NSLayoutAttributeCenterY
-                                                        relatedBy:NSLayoutRelationEqual
-                                                           toItem:self.contentView
-                                                        attribute:NSLayoutAttributeCenterY
-                                                       multiplier:1.0
-                                                         constant:0]];
-
-    // Constrain the image view to be no wider than @c kMaximumImageSize, and pin it to the leading
-    // edge of the content view. Pin the label to the trailing edge of the image.
-    formatString = @"H:|[imageView(<=kMaximumImageSize)]-(==kTitleImagePadding)-[label]";
-    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
-                                                                             options:0
-                                                                             metrics:metrics
-                                                                               views:views]];
-  } else {
-    formatString = @"H:|[label]";
-    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
-                                                                             options:0
-                                                                             metrics:metrics
-                                                                               views:views]];
-  }
 
   return constraints;
 }
@@ -932,38 +862,24 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     @"kRightMargin" : @(safeContentMargin.right),
     @"kTopMargin" : @(safeContentMargin.top),
     @"kBottomMargin" : @(safeContentMargin.bottom),
-    @"kTitleImagePadding" : @(kTitleImagePadding),
     @"kBorderMargin" : @(kBorderWidth),
     @"kTitleButtonPadding" : @(kTitleButtonPadding),
     @"kButtonPadding" :
         @(MDCSnackbarMessage.usesLegacySnackbar ? kLegacyButtonPadding : kButtonPadding),
   };
 
-  __block UIView *previousButton = nil;
-  [self.buttons enumerateObjectsUsingBlock:^(UIView *buttonContainer, NSUInteger idx,
-                                             __unused BOOL *stop) {
+  if (self.actionButton) {
     // Convenience dictionary of views.
     NSMutableDictionary *views = [NSMutableDictionary dictionary];
-    views[@"buttonContainer"] = buttonContainer;
-    MDCButton *currentButton = [buttonContainer viewWithTag:kButtonTagStart + idx];
-    views[@"button"] = currentButton;
-    if (previousButton) {
-      views[@"previousButton"] = previousButton;
-    }
-
-    // In a horizontal layout, the button takes on the height of the Snackbar.
-    [constraints
-        addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[buttonContainer]|"
-                                                                    options:0
-                                                                    metrics:metrics
-                                                                      views:views]];
+    views[@"buttonContainer"] = self.buttonContainer;
+    views[@"button"] = self.actionButton;
 
     // Ensure that the button is vertically centered in its container view
     NSLayoutConstraint *verticallyCenterConstraint =
-        [NSLayoutConstraint constraintWithItem:currentButton
+        [NSLayoutConstraint constraintWithItem:self.actionButton
                                      attribute:NSLayoutAttributeCenterY
                                      relatedBy:NSLayoutRelationEqual
-                                        toItem:buttonContainer
+                                        toItem:self.buttonContainer
                                      attribute:NSLayoutAttributeCenterY
                                     multiplier:1.0
                                       constant:0];
@@ -974,35 +890,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
                                                                              options:0
                                                                              metrics:metrics
                                                                                views:views]];
-
-    if (idx == 0) {
-      // The first button should be pinned to the leading edge of the button view.
-      [constraints addObjectsFromArray:[NSLayoutConstraint
-                                           constraintsWithVisualFormat:@"H:|[buttonContainer]"
-                                                               options:0
-                                                               metrics:metrics
-                                                                 views:views]];
-    }
-
-    if (idx == ([self.buttons count] - 1)) {
-      // The last button should be pinned to the trailing edge of the button view.
-      [constraints addObjectsFromArray:[NSLayoutConstraint
-                                           constraintsWithVisualFormat:@"H:[buttonContainer]|"
-                                                               options:0
-                                                               metrics:metrics
-                                                                 views:views]];
-    }
-
-    if (previousButton) {
-      // If there was a button before this one, pin this one to it.
-      NSString *formatString = @"H:[previousButton]-(==kButtonPadding)-[buttonContainer]";
-      [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
-                                                                               options:0
-                                                                               metrics:metrics
-                                                                                 views:views]];
-    }
-  }];
-
+  }
   return constraints;
 }
 
@@ -1037,7 +925,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   // Make sure that content margins are included in our calculation.
   height += self.safeContentMargin.top + self.safeContentMargin.bottom;
 
-  // Make sure that the height of the image and text is larger than the minimum height;
+  // Make sure that the height of the text is larger than the minimum height;
   height = MAX(_isMultilineText ? kMinimumHeightMultiline : kMinimumHeight, height) +
            self.contentSafeBottomInset;
 
@@ -1129,26 +1017,24 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 // Override regular accessibility element ordering and ensure label
 // is read first before any buttons, if they exist.
 - (NSInteger)accessibilityElementCount {
-  return 1 + [self.buttons count];
+  return 1 + (self.actionButton ? 1 : 0);
 }
 
 - (id)accessibilityElementAtIndex:(NSInteger)index {
   if (index == 0) {
     return _label;
   }
-  return [self.buttons objectAtIndex:(index - 1)];
+  return self.actionButton;
 }
 
 - (NSInteger)indexOfAccessibilityElement:(id)element {
   if (element == _label) {
     return 0;
+  } else if (element == _actionButton) {
+    return 1;
   }
 
-  NSInteger buttonIndex = [self.buttons indexOfObject:element];
-  if (buttonIndex == NSNotFound) {
-    return NSNotFound;
-  }
-  return buttonIndex + 1;
+  return NSNotFound;
 }
 
 #pragma mark - Animation
@@ -1168,7 +1054,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   // background color, so just animate them both independently here. If this becomes more
   // complicated, refactor to add a containing view for both and animate that.
   [self.contentView.layer addAnimation:opacityAnimation forKey:@"opacity"];
-  [self.buttonView.layer addAnimation:opacityAnimation forKey:@"opacity"];
+  [self.buttonContainer.layer addAnimation:opacityAnimation forKey:@"opacity"];
   [CATransaction commit];
 }
 

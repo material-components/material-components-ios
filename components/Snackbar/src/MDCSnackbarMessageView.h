@@ -57,9 +57,16 @@
 @property(nonatomic, strong, nullable) UIFont *buttonFont UI_APPEARANCE_SELECTOR;
 
 /**
- The array of action buttons of the snackbar.
+ The action button for the snackbar, if `message.action` is set.
  */
-@property(nonatomic, strong, nullable) NSMutableArray<MDCButton *> *actionButtons;
+@property(nonatomic, strong, nullable) MDCButton *actionButton;
+
+/**
+ Deprecated. Please use `actionButton` instead. Returns an array with `actionButton` if
+ `actionButton` is not nil, otherewise returns an empty array.
+ */
+@property(nonatomic, strong, nullable, readonly)
+    NSArray<MDCButton *> *actionButtons __deprecated_msg("Please use `actionButton` instead`.");
 
 /**
  The elevation of the snackbar view.

@@ -35,7 +35,6 @@ static const int64_t kDispatchTimeWait = (int64_t)((CGFloat)0.2 * NSEC_PER_SEC);
 @end
 @interface MDCSnackbarMessageView (Testing)
 @property(nonatomic, strong) UILabel *label;
-@property(nonatomic, strong) NSMutableArray<MDCButton *> *actionButtons;
 @end
 
 /** Fake MDCChipView for unit testing. */
@@ -347,7 +346,7 @@ static const int64_t kDispatchTimeWait = (int64_t)((CGFloat)0.2 * NSEC_PER_SEC);
   [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
-  MDCButton *actionButton = self.manager.internalManager.currentSnackbar.actionButtons.firstObject;
+  MDCButton *actionButton = self.manager.internalManager.currentSnackbar.actionButton;
   XCTAssertFalse(actionButton.uppercaseTitle);
   XCTAssertEqual(actionButton.disabledAlpha, 0.5);
   XCTAssertEqualObjects(UIColor.redColor, actionButton.inkColor);
@@ -473,7 +472,7 @@ static const int64_t kDispatchTimeWait = (int64_t)((CGFloat)0.2 * NSEC_PER_SEC);
       [[MDCSnackbarMessageViewTestsFakeView alloc] init];
   messageView.mdc_adjustsFontForContentSizeCategory = YES;
   MDCButton *button = [[MDCButton alloc] init];
-  [messageView.actionButtons addObject:button];
+  messageView.actionButton = button;
   UIFont *buttonFont = [UIFont systemFontOfSize:10.0 weight:UIFontWeightMedium];
   MDCFontScaler *fontScaler = [[MDCFontScaler alloc] initForMaterialTextStyle:MDCTextStyleButton];
   buttonFont = [fontScaler scaledFontWithFont:buttonFont];
@@ -687,6 +686,43 @@ static const int64_t kDispatchTimeWait = (int64_t)((CGFloat)0.2 * NSEC_PER_SEC);
   // Then
   XCTAssertNil(self.manager.internalManager.currentSnackbar);
   MDCSnackbarMessage.usesLegacySnackbar = NO;
+}
+
+- (void)testLegacyActionButtonsMatchesActionButton {
+  // Given
+  MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
+  action.title = @"Tap Me";
+  self.message.action = action;
+
+  // When
+  [self.manager showMessage:self.message];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
+
+  // Then
+  MDCButton *actionButton = self.manager.internalManager.currentSnackbar.actionButton;
+  NSArray *actionButtons = self.manager.internalManager.currentSnackbar.actionButtons;
+  XCTAssertEqual(actionButtons.count, 1.0);
+  XCTAssertEqual(actionButtons.firstObject, actionButton);
+}
+
+- (void)testLegacyActionButtonsReturnsEmptyArrayWhenNil {
+  // When
+  [self.manager showMessage:self.message];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
+
+  // Then
+  MDCButton *actionButton = self.manager.internalManager.currentSnackbar.actionButton;
+  NSArray *actionButtons = self.manager.internalManager.currentSnackbar.actionButtons;
+  XCTAssertNil(actionButton);
+  XCTAssertEqual(actionButtons.count, 0);
 }
 
 @end
