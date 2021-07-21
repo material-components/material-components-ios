@@ -693,124 +693,83 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
  */
 - (NSArray *)containerViewConstraints {
   UIEdgeInsets safeContentMargin = self.safeContentMargin;
-  NSDictionary *metrics = @{
-    @"kBorderMargin" : @(kBorderWidth),
-    @"kBottomMargin" : @(safeContentMargin.bottom),
-    @"kLeftMargin" : @(safeContentMargin.left),
-    @"kRightMargin" : @(safeContentMargin.right),
-    @"kTopMargin" : @(safeContentMargin.top),
-    @"kTitleButtonPadding" : @(kTitleButtonPadding),
-    @"kContentSafeBottomInset" : @(kBorderWidth + self.contentSafeBottomInset),
-  };
-  NSDictionary *views = @{
-    @"container" : self.containerView,
-    @"content" : self.contentView,
-    @"buttons" : self.buttonContainer,
-    @"buttonGutter" : self.buttonGutterTapTarget,
-  };
-
+  CGFloat contentSafeBottomInset = kBorderWidth + self.contentSafeBottomInset;
   BOOL hasButtons = self.actionButton != nil;
 
-  NSString *formatString = nil;  // Scratch variable.
   NSMutableArray *constraints = [NSMutableArray array];
 
-  // Pin the left and right edges of the container view to the Snackbar.
-  formatString = @"H:|-(==kBorderMargin)-[container]-(==kBorderMargin)-|";
-  [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
-                                                                           options:0
-                                                                           metrics:metrics
-                                                                             views:views]];
+  [constraints addObjectsFromArray:@[
+    // Pin the left and right edges of the container view to the Snackbar.
+    [self.containerView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor
+                                                     constant:kBorderWidth],
+    [self.containerView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor
+                                                      constant:-kBorderWidth],
 
-  // Pin the top and bottom edges of the container view to the Snackbar.
-  formatString = @"V:|-(==kBorderMargin)-[container]-(==kContentSafeBottomInset)-|";
-  [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
-                                                                           options:0
-                                                                           metrics:metrics
-                                                                             views:views]];
+    // Pin the top and bottom edges of the container view to the Snackbar.
+    [self.containerView.topAnchor constraintEqualToAnchor:self.topAnchor constant:kBorderWidth],
+    [self.containerView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor
+                                                    constant:-contentSafeBottomInset],
 
-  // Pin the content to the top of the container view.
-  formatString = @"V:|-(==kTopMargin)-[content]";
-  [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
-                                                                           options:0
-                                                                           metrics:metrics
-                                                                             views:views]];
+    // Pin the content to the top of the container view.
+    [self.contentView.topAnchor constraintEqualToAnchor:self.containerView.topAnchor
+                                               constant:self.safeContentMargin.top],
 
-  // Pin the content view to the left side of the container.
-  formatString = @"H:|-(==kLeftMargin)-[content]";
-  [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
-                                                                           options:0
-                                                                           metrics:metrics
-                                                                             views:views]];
+    // Pin the content view to the left side of the container.
+    [self.contentView.leadingAnchor constraintEqualToAnchor:self.containerView.leadingAnchor
+                                                   constant:self.safeContentMargin.left],
+  ]];
 
-  // If there are no buttons, or the buttons are below the main content, then the content view
-  // should be pinned to the right side of the container. If there are horizontal buttons, the
-  // leftmost button will take care of positioning the trailing edge of the label view.
-
-  // If there are no buttons, then go ahead and pin the content view to the bottom of the
-  // container view.
-  if (!hasButtons) {
-    formatString = @"V:[content]-(==kBottomMargin)-|";
-    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
-                                                                             options:0
-                                                                             metrics:metrics
-                                                                               views:views]];
-  }
-
-  if (!hasButtons) {
-    // There is nothing to the right of the content, so go ahead and pin it to the trailing edge of
-    // the container view.
-    formatString = @"H:[content]-(==kRightMargin)-|";
-    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
-                                                                             options:0
-                                                                             metrics:metrics
-                                                                               views:views]];
-  } else {  // This is a horizontal layout, and there are buttons present.
+  if (hasButtons) {
     if (MDCSnackbarMessage.usesLegacySnackbar) {
-      // Align the content and buttons horizontally.
-      formatString =
-          @"H:[content]-(==kTitleButtonPadding)-[buttons][buttonGutter(==kRightMargin)]|";
-      [constraints addObjectsFromArray:[NSLayoutConstraint
-                                           constraintsWithVisualFormat:formatString
-                                                               options:NSLayoutFormatAlignAllCenterY
-                                                               metrics:metrics
-                                                                 views:views]];
+      [constraints addObjectsFromArray:@[
+        // Align the content and buttons horizontally.
+        [self.contentView.trailingAnchor constraintEqualToAnchor:self.buttonContainer.leadingAnchor
+                                                        constant:-kTitleButtonPadding],
+        [self.buttonGutterTapTarget.widthAnchor constraintEqualToConstant:safeContentMargin.right],
+        [self.buttonContainer.trailingAnchor
+            constraintEqualToAnchor:self.buttonGutterTapTarget.leadingAnchor],
+        [self.buttonGutterTapTarget.trailingAnchor
+            constraintEqualToAnchor:self.containerView.trailingAnchor],
 
-      // The buttons should take up the entire height of the container view.
-      formatString = @"V:|[buttons]|";
-      [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
-                                                                               options:0
-                                                                               metrics:metrics
-                                                                                 views:views]];
+        // The buttons should take up the entire height of the container view.
+        [self.buttonContainer.topAnchor constraintEqualToAnchor:self.containerView.topAnchor],
+        [self.buttonContainer.bottomAnchor constraintEqualToAnchor:self.containerView.bottomAnchor],
 
-      // The button gutter tap target should take up the entire height of the container view.
-      formatString = @"V:|[buttonGutter]|";
-      [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
-                                                                               options:0
-                                                                               metrics:metrics
-                                                                                 views:views]];
+        // The button gutter tap target should take up the entire height of the container view.
+        [self.buttonGutterTapTarget.topAnchor constraintEqualToAnchor:self.containerView.topAnchor],
+        [self.buttonGutterTapTarget.bottomAnchor
+            constraintEqualToAnchor:self.containerView.bottomAnchor],
+      ]];
     } else {
-      // Align the content and buttons horizontally.
-      formatString = @"H:[content]-(==kTitleButtonPadding)-[buttons]-(==kRightMargin)-|";
-      [constraints addObjectsFromArray:[NSLayoutConstraint
-                                           constraintsWithVisualFormat:formatString
-                                                               options:NSLayoutFormatAlignAllCenterY
-                                                               metrics:metrics
-                                                                 views:views]];
+      [constraints addObjectsFromArray:@[
+        // Position the label/content horizontally with the button container.
+        [self.contentView.trailingAnchor constraintEqualToAnchor:self.buttonContainer.leadingAnchor
+                                                        constant:-kTitleButtonPadding],
 
-      formatString = @"V:|[buttons]|";
-      [constraints addObjectsFromArray:[NSLayoutConstraint
-                                           constraintsWithVisualFormat:formatString
-                                                               options:NSLayoutFormatAlignAllCenterY
-                                                               metrics:metrics
-                                                                 views:views]];
+        // Pin the button container to the trailing edge of the container view.
+        [self.buttonContainer.trailingAnchor
+            constraintEqualToAnchor:self.containerView.trailingAnchor
+                           constant:-self.safeContentMargin.right],
+
+        // Pin the top/bottom of the button container to its parent view.
+        [self.buttonContainer.topAnchor constraintEqualToAnchor:self.containerView.topAnchor],
+        [self.buttonContainer.bottomAnchor constraintEqualToAnchor:self.containerView.bottomAnchor],
+      ]];
     }
 
     // Pin the content to the bottom of the container view, since there's nothing below.
-    formatString = @"V:[content]-(==kBottomMargin)-|";
-    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
-                                                                             options:0
-                                                                             metrics:metrics
-                                                                               views:views]];
+    [constraints addObjectsFromArray:@[ [self.contentView.bottomAnchor
+                                         constraintEqualToAnchor:self.containerView.bottomAnchor
+                                                        constant:-safeContentMargin.bottom] ]];
+  } else {  // There is not an action button present.
+    [constraints addObjectsFromArray:@[
+      // If there are no buttons, then go ahead and pin the content view to the bottom and trailing
+      // edges of the container view.
+      [self.contentView.bottomAnchor constraintEqualToAnchor:self.containerView.bottomAnchor
+                                                    constant:-self.safeContentMargin.bottom],
+      [self.contentView.trailingAnchor constraintEqualToAnchor:self.containerView.trailingAnchor
+                                                      constant:-self.safeContentMargin.right]
+    ]];
   }
 
   return constraints;
@@ -820,33 +779,17 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
  Provides constraints for the label within the content view.
  */
 - (NSArray *)contentViewConstraints {
-  UIEdgeInsets safeContentMargin = self.safeContentMargin;
-  NSDictionary *metrics = @{
-    @"kBottomMargin" : @(safeContentMargin.bottom),
-    @"kLeftMargin" : @(safeContentMargin.left),
-    @"kRightMargin" : @(safeContentMargin.right),
-    @"kTopMargin" : @(safeContentMargin.top),
-  };
-
-  NSMutableDictionary *views = [NSMutableDictionary dictionary];
-  views[@"label"] = self.label;
-
-  NSString *formatString = nil;  // Scratch variable.
   NSMutableArray *constraints = [NSMutableArray array];
 
-  // The label should take up the entire height of the content view.
-  formatString = @"V:|[label]|";
-  [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
-                                                                           options:0
-                                                                           metrics:metrics
-                                                                             views:views]];
+  [constraints addObjectsFromArray:@[
+    // The label should take up the entire height of the content view.
+    [self.label.topAnchor constraintEqualToAnchor:self.contentView.topAnchor],
+    [self.label.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor],
 
-  // Pin the label to the trailing edge of the content view.
-  formatString = @"H:|[label]|";
-  [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:formatString
-                                                                           options:0
-                                                                           metrics:metrics
-                                                                             views:views]];
+    // Pin the label to the trailing edge of the content view.
+    [self.label.trailingAnchor constraintEqualToAnchor:self.contentView.trailingAnchor],
+    [self.label.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor],
+  ]];
 
   return constraints;
 }
@@ -856,41 +799,19 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
  */
 - (NSArray *)horizontalButtonLayoutConstraints {
   NSMutableArray *constraints = [NSMutableArray array];
-  UIEdgeInsets safeContentMargin = self.safeContentMargin;
-  NSDictionary *metrics = @{
-    @"kLeftMargin" : @(safeContentMargin.left),
-    @"kRightMargin" : @(safeContentMargin.right),
-    @"kTopMargin" : @(safeContentMargin.top),
-    @"kBottomMargin" : @(safeContentMargin.bottom),
-    @"kBorderMargin" : @(kBorderWidth),
-    @"kTitleButtonPadding" : @(kTitleButtonPadding),
-    @"kButtonPadding" :
-        @(MDCSnackbarMessage.usesLegacySnackbar ? kLegacyButtonPadding : kButtonPadding),
-  };
 
   if (self.actionButton) {
-    // Convenience dictionary of views.
-    NSMutableDictionary *views = [NSMutableDictionary dictionary];
-    views[@"buttonContainer"] = self.buttonContainer;
-    views[@"button"] = self.actionButton;
+    [constraints addObjectsFromArray:@[
+      // Ensure that the button is vertically centered in its container view
+      [self.actionButton.centerYAnchor constraintEqualToAnchor:self.buttonContainer.centerYAnchor],
 
-    // Ensure that the button is vertically centered in its container view
-    NSLayoutConstraint *verticallyCenterConstraint =
-        [NSLayoutConstraint constraintWithItem:self.actionButton
-                                     attribute:NSLayoutAttributeCenterY
-                                     relatedBy:NSLayoutRelationEqual
-                                        toItem:self.buttonContainer
-                                     attribute:NSLayoutAttributeCenterY
-                                    multiplier:1.0
-                                      constant:0];
-    [constraints addObject:verticallyCenterConstraint];
-
-    // Pin the button to the width of its container.
-    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[button]|"
-                                                                             options:0
-                                                                             metrics:metrics
-                                                                               views:views]];
+      // Pin the button to the width of its container.
+      [self.actionButton.leadingAnchor constraintEqualToAnchor:self.buttonContainer.leadingAnchor],
+      [self.actionButton.trailingAnchor
+          constraintEqualToAnchor:self.buttonContainer.trailingAnchor],
+    ]];
   }
+
   return constraints;
 }
 
