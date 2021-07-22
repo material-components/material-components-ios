@@ -76,7 +76,7 @@ __deprecated_msg(
 @property(nonatomic, readonly) UIOffset floatingPlaceholderOffset;
 
 /**
- The scale of the the floating placeholder label in comparison to the inline placeholder specified
+ The scale of the floating placeholder label in comparison to the inline placeholder specified
  as a value from 0.0 to 1.0. Only relevant when floatingEnabled = true.
 
  If nil, the floatingPlaceholderScale is @(floatingPlaceholderScaleDefault).

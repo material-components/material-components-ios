@@ -179,7 +179,7 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
             " value is not within the bounds of the navigation bar's items and/or view controllers",
            (unsigned long)selectedIndex);
 
-  // Early return if we are out of bounds or if the the index is already selected.
+  // Early return if we are out of bounds or if the index is already selected.
   if (outOfBounds || selectedIndex == _selectedIndex) {
     return;
   }

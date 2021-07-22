@@ -193,7 +193,7 @@ values are allowed.
 
 /**
  This property allows the user to override the default height of the container. The container is the
- region above the the assistive labels within the text area. If there is no assistive label text,
+ region above the assistive labels within the text area. If there is no assistive label text,
  the container's frame will be equal to the frame of the text area itself.
 
  If this property is set to a value that's smaller than the
