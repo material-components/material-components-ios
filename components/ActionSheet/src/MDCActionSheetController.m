@@ -228,12 +228,6 @@ static NSString *const kMaterialActionSheetBundle = @"MaterialActionSheet.bundle
   [self.view addSubview:self.tableView];
   [self.view addSubview:self.header];
   [self.view addSubview:self.headerDividerView];
-
-  NSString *key =
-      kMaterialActionSheetStringTable[kStr_MaterialActionSheetPresentedAccessibilityAnnouncement];
-  NSString *announcement = NSLocalizedStringFromTableInBundle(
-      key, kMaterialActionSheetStringsTableName, [[self class] bundle], @"Alert");
-  UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, announcement);
 }
 
 - (void)viewDidLayoutSubviews {
@@ -301,6 +295,12 @@ static NSString *const kMaterialActionSheetBundle = @"MaterialActionSheet.bundle
   self.mdc_bottomSheetPresentationController.dismissOnBackgroundTap =
       self.transitionController.dismissOnBackgroundTap;
   [self.view layoutIfNeeded];
+
+  NSString *key =
+      kMaterialActionSheetStringTable[kStr_MaterialActionSheetPresentedAccessibilityAnnouncement];
+  NSString *announcement = NSLocalizedStringFromTableInBundle(
+      key, kMaterialActionSheetStringsTableName, [[self class] bundle], @"Alert");
+  UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, announcement);
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
