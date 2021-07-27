@@ -778,4 +778,30 @@ static void MoveSliderThumbToRelativePosition(MDCSlider *slider,
   [self generateSnapshotAndVerifyForView:snapshotView];
 }
 
+// Test slider layout is RTL when ForceRTL semanticContentAttribute is set
+- (void)testRightToLeftLayout {
+  // When
+  [self makeSliderDiscrete:self.slider];
+  self.slider.value = self.slider.minimumValue;
+  self.slider.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
+
+  // Then
+  UIView *snapshotView =
+      [self.slider mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(30, 0, 0, 0)];
+  [self generateSnapshotAndVerifyForView:snapshotView];
+}
+
+// Test slider layout is LTR when ForceLTR semanticContentAttribute is set
+- (void)testLeftToRightLayout {
+  // When
+  [self makeSliderDiscrete:self.slider];
+  self.slider.value = self.slider.minimumValue;
+  self.slider.semanticContentAttribute = UISemanticContentAttributeForceLeftToRight;
+
+  // Then
+  UIView *snapshotView =
+      [self.slider mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(30, 0, 0, 0)];
+  [self generateSnapshotAndVerifyForView:snapshotView];
+}
+
 @end

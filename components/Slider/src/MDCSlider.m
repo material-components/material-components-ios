@@ -16,7 +16,9 @@
 
 #import "private/MDCSlider+Private.h"
 #import "private/MDCSlider_Subclassable.h"
-#import "MaterialPalettes.h"
+#import "MaterialElevation.h"
+#import "MDCPalettes.h"
+#import "MaterialShadowElevations.h"
 #import "MDCSliderDelegate.h"
 #import "MaterialMath.h"
 #import "MaterialThumbTrack.h"
@@ -493,6 +495,12 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) { return MDCPalette.blueP
 
 - (BOOL)adjustsFontForContentSizeCategory {
   return _thumbTrack.adjustsFontForContentSizeCategory;
+}
+
+- (void)setSemanticContentAttribute:(UISemanticContentAttribute)semanticContentAttribute {
+  [super setSemanticContentAttribute:semanticContentAttribute];
+  [self.thumbTrack setSemanticContentAttribute:semanticContentAttribute];
+  [self setNeedsLayout];
 }
 
 - (CGFloat)trackHeight {
