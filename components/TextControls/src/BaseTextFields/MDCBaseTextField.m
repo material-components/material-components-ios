@@ -687,6 +687,24 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
   }
 }
 
+- (NSString *)accessibilityValue {
+  NSString *accessibilityValue = [super accessibilityValue];
+  NSString *accessibilityLabel = [self accessibilityLabel];
+  // Voice Over reads both the accessibility label and the accessibility value in succession.
+  // If no value is set on the text field, the accessibility value will be the placeholder.
+  // This means that if a placeholder is set and it is equal to the label text
+  // Voice Over will read the same string twice. Ex, "Label, Label, Text Field". This is
+  // confusing to the user, so if we determine this to be case, we manually return an empty
+  // accessibility value.
+  if (accessibilityLabel && [accessibilityValue isEqualToString:accessibilityLabel] &&
+      self.text.length == 0) {
+    // We need to return empty string rather than nil,
+    // otherwise Voice Over seems to still read a value.
+    accessibilityValue = @"";
+  }
+  return accessibilityValue;
+}
+
 - (NSArray *)accessibilityElements {
   if (self.isAccessibilityElement) {
     return [super accessibilityElements];
