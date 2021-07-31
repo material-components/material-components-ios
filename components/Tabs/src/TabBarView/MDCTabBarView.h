@@ -259,7 +259,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
  @param item The tab bar item to be centered.
  @param animated Whether to animate the scroll.
  */
-- (void)scrollToItem:(UITabBarItem *)item animated:(BOOL)animated;
+- (void)scrollToItem:(nonnull UITabBarItem *)item animated:(BOOL)animated;
 
 @end
 
