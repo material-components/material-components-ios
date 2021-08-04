@@ -45,7 +45,7 @@ MDCTextControlLabelPosition MDCTextControlLabelPositionWith(BOOL hasLabelText, B
 }
 
 CGSize MDCTextControlLabelSizeWith(NSString *text, CGFloat maxWidth, UIFont *font) {
-  if (!font) {
+  if (!font || text.length == 0) {
     return CGSizeZero;
   }
   CGSize fittingSize = CGSizeMake(maxWidth, CGFLOAT_MAX);

@@ -224,6 +224,18 @@
   [self validateTextArea:textArea];
 }
 
+- (void)testThatTextAreaWithEmptyLabelTextAndNonEmptyTextRendersCorrectly {
+  // Given
+  MDCBaseTextArea *textArea = self.textArea;
+
+  // When
+  textArea.label.text = @"";
+  textArea.textView.text = @"Text";
+
+  // Then
+  [self validateTextArea:textArea];
+}
+
 #pragma mark Helpers
 
 - (UIView *)createSideView {

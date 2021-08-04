@@ -177,7 +177,8 @@ static const CGFloat kFilledFloatingLabelScaleFactor = (CGFloat)0.75;
   CGFloat halfOfFloatingLabelHeight = CGRectGetHeight(floatingLabelFrame) * 0.5f;
   CGFloat sublayerMinY = halfOfFloatingLabelHeight;
   CGFloat sublayerMaxY = containerHeight;
-  if (labelBehavior == MDCTextControlLabelBehaviorDisappears) {
+  if (labelBehavior == MDCTextControlLabelBehaviorDisappears ||
+      labelPosition == MDCTextControlLabelPositionNone) {
     sublayerMinY = 0.0f;
   }
 
