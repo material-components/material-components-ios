@@ -232,6 +232,16 @@
 @property(nonatomic, assign) BOOL shouldEnableAccessibilityViewIsModal;
 
 /**
+ If disabled, @c MDCSnackbarManager will not show snackbar messages when VoiceOver
+ is running. Only consider setting this property to @c NO when your use case of snackbar provides
+ disruptive user experience when VoiceOver is running and not showing snackbar wouldn't block
+ user critical journey.
+
+ Default is set to YES.
+ */
+@property(nonatomic, assign) BOOL shouldShowMessageWhenVoiceOverIsRunning;
+
+/**
  The delegate for MDCSnackbarManager.defaultManager through which it may inform of snackbar
  presentation updates.
  */

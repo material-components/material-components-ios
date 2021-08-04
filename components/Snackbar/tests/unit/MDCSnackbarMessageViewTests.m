@@ -328,6 +328,48 @@ static const int64_t kDispatchTimeWait = (int64_t)((CGFloat)0.2 * NSEC_PER_SEC);
   XCTAssertTrue(self.manager.internalManager.overlayView.accessibilityViewIsModal);
 }
 
+- (void)testSnackbarViewShowWhenShouldShowMessageWhenVoiceOverIsRunningIsYES {
+  // Given
+  self.manager.internalManager.isVoiceOverRunningOverride = YES;
+  self.manager.shouldShowMessageWhenVoiceOverIsRunning = YES;
+  MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
+  action.title = @"Tap Me";
+  self.message.action = action;
+
+  // When
+  [self.manager showMessage:self.message];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, kDispatchTimeWait);
+  dispatch_after(popTime, dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
+
+  // Then
+  XCTAssertNotNil(self.manager.internalManager.currentSnackbar);
+}
+
+- (void)testSnackbarViewNotShowWhenShouldShowMessageWhenVoiceOverIsRunningIsNO {
+  // Given
+  self.manager.internalManager.isVoiceOverRunningOverride = YES;
+  self.manager.shouldShowMessageWhenVoiceOverIsRunning = NO;
+  MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
+  action.title = @"Tap Me";
+  self.message.action = action;
+
+  // When
+  [self.manager showMessage:self.message];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, kDispatchTimeWait);
+  dispatch_after(popTime, dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
+
+  // Then
+  XCTAssertNil(self.manager.internalManager.currentSnackbar);
+}
+
 - (void)testManagerForwardsButtonProperties {
   // Given
   self.manager.disabledButtonAlpha = (CGFloat)0.5;

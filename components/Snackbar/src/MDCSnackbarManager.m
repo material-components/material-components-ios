@@ -587,6 +587,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
     _messageElevation = MDCShadowElevationSnackbar;
     _mdc_overrideBaseElevation = -1;
     _focusAccessibilityNotification = UIAccessibilityLayoutChangedNotification;
+    _shouldShowMessageWhenVoiceOverIsRunning = YES;
   }
   return self;
 }
@@ -601,6 +602,10 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 
 - (void)showMessage:(MDCSnackbarMessage *)inputMessage {
   if (!inputMessage) {
+    return;
+  }
+
+  if (self.internalManager.isVoiceOverRunning && !self.shouldShowMessageWhenVoiceOverIsRunning) {
     return;
   }
 
