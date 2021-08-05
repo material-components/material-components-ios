@@ -38,6 +38,14 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
 @property(nonatomic, assign) CGRect normalLabelFrame;
 @property(nonatomic, assign) CGFloat lastRecordedWidth;
 @property(nonatomic, assign) CGFloat lastCalculatedHeight;
+/**
+ * This property is set in every layout cycle, in preLayoutSubviews, right after the current
+ * labelPosition is determined . It's set to YES if the labelPosition changed and NO if it didn't.
+ * It's referred to in animateLabel (called from postLayoutSubviews) when deciding on a label
+ * animation duration. If it's NO, the label gets an animation duration of 0, to avoid buggy looking
+ * frame/text animations. Otherwise, it uses the value in the animationDuration property.
+ */
+@property(nonatomic, assign) BOOL labelPositionChanged;
 
 /**
  This property maps MDCTextControlStates as NSNumbers to
@@ -77,7 +85,7 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
   [self setUpLabel];
   [self setUpAssistiveLabels];
   [self observeContentSizeCategoryNotifications];
-  [self observeAssistiveLabelKeyPaths];
+  [self observeLabelKeyPaths];
 }
 
 - (void)dealloc {
@@ -187,7 +195,9 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
  */
 - (void)preLayoutSubviews {
   self.textControlState = [self determineCurrentTextControlState];
+  MDCTextControlLabelPosition previousLabelPosition = self.labelPosition;
   self.labelPosition = [self determineCurrentLabelPosition];
+  self.labelPositionChanged = previousLabelPosition != self.labelPosition;
   MDCTextControlColorViewModel *colorViewModel =
       [self textControlColorViewModelForState:self.textControlState];
   [self applyColorViewModel:colorViewModel withLabelPosition:self.labelPosition];
@@ -575,6 +585,7 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
 #pragma mark Label
 
 - (void)animateLabel {
+  NSTimeInterval animationDuration = self.labelPositionChanged ? self.animationDuration : 0.0f;
   __weak MDCBaseTextField *weakSelf = self;
   [MDCTextControlLabelAnimation animateLabel:self.label
                                        state:self.labelPosition
@@ -583,7 +594,7 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
                                   normalFont:self.normalFont
                                 floatingFont:self.floatingFont
                     labelTruncationIsPresent:self.layout.labelTruncationIsPresent
-                           animationDuration:self.animationDuration
+                           animationDuration:animationDuration
                                   completion:^(BOOL finished) {
                                     if (finished) {
                                       // Ensure that the label position is correct in case of
@@ -833,8 +844,8 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
 
 #pragma mark - Key-value observing
 
-- (void)observeAssistiveLabelKeyPaths {
-  for (NSString *keyPath in [MDCBaseTextField assistiveLabelKVOKeyPaths]) {
+- (void)observeLabelKeyPaths {
+  for (NSString *keyPath in [MDCBaseTextField assistiveLabelKeyPaths]) {
     [self.leadingAssistiveLabel addObserver:self
                                  forKeyPath:keyPath
                                     options:NSKeyValueObservingOptionNew
@@ -844,16 +855,25 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
                                      options:NSKeyValueObservingOptionNew
                                      context:kKVOContextMDCBaseTextField];
   }
+  for (NSString *keyPath in [MDCBaseTextField labelKeyPaths]) {
+    [self.label addObserver:self
+                 forKeyPath:keyPath
+                    options:NSKeyValueObservingOptionNew
+                    context:kKVOContextMDCBaseTextField];
+  }
 }
 
 - (void)removeObservers {
-  for (NSString *keyPath in [MDCBaseTextField assistiveLabelKVOKeyPaths]) {
+  for (NSString *keyPath in [MDCBaseTextField assistiveLabelKeyPaths]) {
     [self.leadingAssistiveLabel removeObserver:self
                                     forKeyPath:keyPath
                                        context:kKVOContextMDCBaseTextField];
     [self.trailingAssistiveLabel removeObserver:self
                                      forKeyPath:keyPath
                                         context:kKVOContextMDCBaseTextField];
+  }
+  for (NSString *keyPath in [MDCBaseTextField labelKeyPaths]) {
+    [self.label removeObserver:self forKeyPath:keyPath context:kKVOContextMDCBaseTextField];
   }
 }
 
@@ -862,26 +882,41 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
                         change:(NSDictionary<NSKeyValueChangeKey, id> *)change
                        context:(void *)context {
   if (context == kKVOContextMDCBaseTextField) {
-    if (object != self.leadingAssistiveLabel && object != self.trailingAssistiveLabel) {
-      return;
-    }
-
-    for (NSString *assistiveLabelKeyPath in [MDCBaseTextField assistiveLabelKVOKeyPaths]) {
-      if ([assistiveLabelKeyPath isEqualToString:keyPath]) {
-        [self setNeedsLayout];
-        break;
+    if (object == self.leadingAssistiveLabel || object == self.trailingAssistiveLabel) {
+      for (NSString *labelKeyPath in [MDCBaseTextField assistiveLabelKeyPaths]) {
+        if ([labelKeyPath isEqualToString:keyPath]) {
+          [self setNeedsLayout];
+          break;
+        }
       }
-    }
+    } else if (object == self.label)
+      for (NSString *labelKeyPath in [MDCBaseTextField labelKeyPaths]) {
+        if ([labelKeyPath isEqualToString:keyPath]) {
+          [self setNeedsLayout];
+          break;
+        }
+      }
   }
 }
 
-+ (NSArray<NSString *> *)assistiveLabelKVOKeyPaths {
++ (NSArray<NSString *> *)assistiveLabelKeyPaths {
   static NSArray<NSString *> *keyPaths = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     keyPaths = @[
       NSStringFromSelector(@selector(text)),
       NSStringFromSelector(@selector(font)),
+    ];
+  });
+  return keyPaths;
+}
+
++ (NSArray<NSString *> *)labelKeyPaths {
+  static NSArray<NSString *> *keyPaths = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    keyPaths = @[
+      NSStringFromSelector(@selector(text)),
     ];
   });
   return keyPaths;

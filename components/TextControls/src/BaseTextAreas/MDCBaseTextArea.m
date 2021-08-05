@@ -46,6 +46,14 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 @property(nonatomic, assign) CGRect normalLabelFrame;
 @property(nonatomic, assign) CGRect floatingLabelFrame;
 @property(nonatomic, assign) NSTimeInterval animationDuration;
+/**
+ * This property is set in every layout cycle, in preLayoutSubviews, right after the current
+ * labelPosition is determined . It's set to YES if the labelPosition changed and NO if it didn't.
+ * It's referred to in animateLabel (called from postLayoutSubviews) when deciding on a label
+ * animation duration. If it's NO, the label gets an animation duration of 0, to avoid buggy looking
+ * frame/text animations. Otherwise, it uses the value in the animationDuration property.
+ */
+@property(nonatomic, assign) BOOL labelPositionChanged;
 
 @property(nonatomic, strong)
     NSMutableDictionary<NSNumber *, MDCTextControlColorViewModel *> *colorViewModels;
@@ -94,7 +102,7 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
   [self setUpTextView];
   [self setUpPlaceholderLabel];
   [self observeTextViewNotifications];
-  [self observeAssistiveLabelKeyPaths];
+  [self observeLabelKeyPaths];
 }
 
 - (void)dealloc {
@@ -197,7 +205,9 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 
 - (void)preLayoutSubviews {
   self.textControlState = [self determineCurrentTextControlState];
+  MDCTextControlLabelPosition previousLabelPosition = self.labelPosition;
   self.labelPosition = [self determineCurrentLabelPosition];
+  self.labelPositionChanged = previousLabelPosition != self.labelPosition;
   self.placeholderLabel.attributedText = [self determineAttributedPlaceholder];
   self.placeholderLabel.numberOfLines = (NSInteger)self.numberOfLinesOfVisibleText;
   MDCTextControlColorViewModel *colorViewModel =
@@ -484,6 +494,7 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 #pragma mark Label
 
 - (void)animateLabel {
+  NSTimeInterval animationDuration = self.labelPositionChanged ? self.animationDuration : 0.0f;
   __weak MDCBaseTextArea *weakSelf = self;
   [MDCTextControlLabelAnimation animateLabel:self.label
                                        state:self.labelPosition
@@ -492,7 +503,7 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
                                   normalFont:self.normalFont
                                 floatingFont:self.floatingFont
                     labelTruncationIsPresent:self.layout.labelTruncationIsPresent
-                           animationDuration:self.animationDuration
+                           animationDuration:animationDuration
                                   completion:^(BOOL finished) {
                                     if (finished) {
                                       // Ensure that the label position is correct in case of
@@ -750,8 +761,8 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
 
 #pragma mark - Key-value observing
 
-- (void)observeAssistiveLabelKeyPaths {
-  for (NSString *keyPath in [MDCBaseTextArea assistiveLabelKVOKeyPaths]) {
+- (void)observeLabelKeyPaths {
+  for (NSString *keyPath in [MDCBaseTextArea assistiveLabelKeyPaths]) {
     [self.leadingAssistiveLabel addObserver:self
                                  forKeyPath:keyPath
                                     options:NSKeyValueObservingOptionNew
@@ -761,16 +772,25 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
                                      options:NSKeyValueObservingOptionNew
                                      context:kKVOContextMDCBaseTextArea];
   }
+  for (NSString *keyPath in [MDCBaseTextArea labelKeyPaths]) {
+    [self.label addObserver:self
+                 forKeyPath:keyPath
+                    options:NSKeyValueObservingOptionNew
+                    context:kKVOContextMDCBaseTextArea];
+  }
 }
 
 - (void)removeObservers {
-  for (NSString *keyPath in [MDCBaseTextArea assistiveLabelKVOKeyPaths]) {
+  for (NSString *keyPath in [MDCBaseTextArea assistiveLabelKeyPaths]) {
     [self.leadingAssistiveLabel removeObserver:self
                                     forKeyPath:keyPath
                                        context:kKVOContextMDCBaseTextArea];
     [self.trailingAssistiveLabel removeObserver:self
                                      forKeyPath:keyPath
                                         context:kKVOContextMDCBaseTextArea];
+  }
+  for (NSString *keyPath in [MDCBaseTextArea labelKeyPaths]) {
+    [self.label removeObserver:self forKeyPath:keyPath context:kKVOContextMDCBaseTextArea];
   }
 }
 
@@ -779,26 +799,41 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
                         change:(NSDictionary<NSKeyValueChangeKey, id> *)change
                        context:(void *)context {
   if (context == kKVOContextMDCBaseTextArea) {
-    if (object != self.leadingAssistiveLabel && object != self.trailingAssistiveLabel) {
-      return;
-    }
-
-    for (NSString *assistiveLabelKeyPath in [MDCBaseTextArea assistiveLabelKVOKeyPaths]) {
-      if ([assistiveLabelKeyPath isEqualToString:keyPath]) {
-        [self setNeedsLayout];
-        break;
+    if (object == self.leadingAssistiveLabel || object == self.trailingAssistiveLabel) {
+      for (NSString *labelKeyPath in [MDCBaseTextArea assistiveLabelKeyPaths]) {
+        if ([labelKeyPath isEqualToString:keyPath]) {
+          [self setNeedsLayout];
+          break;
+        }
       }
-    }
+    } else if (object == self.label)
+      for (NSString *labelKeyPath in [MDCBaseTextArea labelKeyPaths]) {
+        if ([labelKeyPath isEqualToString:keyPath]) {
+          [self setNeedsLayout];
+          break;
+        }
+      }
   }
 }
 
-+ (NSArray<NSString *> *)assistiveLabelKVOKeyPaths {
++ (NSArray<NSString *> *)assistiveLabelKeyPaths {
   static NSArray<NSString *> *keyPaths = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     keyPaths = @[
       NSStringFromSelector(@selector(text)),
       NSStringFromSelector(@selector(font)),
+    ];
+  });
+  return keyPaths;
+}
+
++ (NSArray<NSString *> *)labelKeyPaths {
+  static NSArray<NSString *> *keyPaths = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    keyPaths = @[
+      NSStringFromSelector(@selector(text)),
     ];
   });
   return keyPaths;
