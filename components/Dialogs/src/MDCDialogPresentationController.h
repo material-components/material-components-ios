@@ -50,7 +50,9 @@
     dialogPresentationControllerDelegate;
 
 /**
- Should a tap on the dimmed background view dismiss the presented controller.
+ Should a tap on the dimmed background view dismiss the presented controller. This property must be
+ enabled in order to make use of the @c MDCDialogPresentationControllerDelegate methods related to
+ dismissal.
 
  Defaults to YES.
  */

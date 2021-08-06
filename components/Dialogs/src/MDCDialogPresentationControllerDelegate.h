@@ -24,8 +24,23 @@
 @optional
 /**
  This method allows a delegate conforming to MDCDialogPresentationControllerDelegate to respond to
- MDCDialogPresentationController dismissals.
+ MDCDialogPresentationController dismissals after they happen.
  */
 - (void)dialogPresentationControllerDidDismiss:
+    (nonnull MDCDialogPresentationController *)dialogPresentationController;
+
+/**
+ This method allows a delegate conforming to MDCDialogPresentationControllerDelegate to prevent a
+ dismissal if desired. If this method is left unimplemented, or implemented to return YES, the
+ dismissal will go on as usual. If this method returns NO, the dismissal will not go forward.
+ */
+- (BOOL)dialogPresentationControllerShouldDismiss:
+    (nonnull MDCDialogPresentationController *)dialogPresentationController;
+
+/**
+ This method allows a delegate conforming to MDCDialogPresentationControllerDelegate to respond to
+ MDCDialogPresentationController dismissals before they happen.
+ */
+- (void)dialogPresentationControllerWillDismiss:
     (nonnull MDCDialogPresentationController *)dialogPresentationController;
 @end

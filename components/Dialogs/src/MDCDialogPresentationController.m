@@ -351,6 +351,19 @@ static const UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 
 - (void)dismiss:(UIGestureRecognizer *)gesture {
   if (gesture.state == UIGestureRecognizerStateRecognized) {
+    BOOL shouldDismiss = YES;
+    if ([self.dialogPresentationControllerDelegate
+            respondsToSelector:@selector(dialogPresentationControllerShouldDismiss:)]) {
+      shouldDismiss = [self.dialogPresentationControllerDelegate
+          dialogPresentationControllerShouldDismiss:self];
+    }
+    if (!shouldDismiss) {
+      return;
+    }
+    if ([self.dialogPresentationControllerDelegate
+            respondsToSelector:@selector(dialogPresentationControllerWillDismiss:)]) {
+      [self.dialogPresentationControllerDelegate dialogPresentationControllerWillDismiss:self];
+    }
     [self.presentingViewController
         dismissViewControllerAnimated:YES
                            completion:^{
