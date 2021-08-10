@@ -287,7 +287,7 @@ static NSString *const exampleSuperLongText =
   [self showSingleLineStyleBanner];
   self.bannerView.imageView.hidden = NO;
   NSBundle *bundle = [NSBundle bundleForClass:[BannerTypicalUseExampleViewController class]];
-  self.bannerView.imageView.image = [[UIImage imageNamed:@"banner-email"
+  self.bannerView.imageView.image = [[UIImage imageNamed:@"system_icons/email"
                                                 inBundle:bundle
                            compatibleWithTraitCollection:nil]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -325,7 +325,7 @@ static NSString *const exampleSuperLongText =
   [self showMultiLineAlignedButtonStyleBanner];
   self.bannerView.imageView.hidden = NO;
   NSBundle *bundle = [NSBundle bundleForClass:[BannerTypicalUseExampleViewController class]];
-  self.bannerView.imageView.image = [[UIImage imageNamed:@"banner-email"
+  self.bannerView.imageView.image = [[UIImage imageNamed:@"system_icons/email"
                                                 inBundle:bundle
                            compatibleWithTraitCollection:nil]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -363,7 +363,7 @@ static NSString *const exampleSuperLongText =
   [self showMultiLineStackedButtonStyleBanner];
   self.bannerView.imageView.hidden = NO;
   NSBundle *bundle = [NSBundle bundleForClass:[BannerTypicalUseExampleViewController class]];
-  self.bannerView.imageView.image = [[UIImage imageNamed:@"banner-email"
+  self.bannerView.imageView.image = [[UIImage imageNamed:@"system_icons/email"
                                                 inBundle:bundle
                            compatibleWithTraitCollection:nil]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
