@@ -25,7 +25,9 @@
  @param style The Material font text style for which to return a font.
  @return The font associated with the specified style.
  */
-+ (nonnull UIFont *)mdc_preferredFontForMaterialTextStyle:(MDCFontTextStyle)style;
++ (nonnull UIFont *)mdc_preferredFontForMaterialTextStyle:(MDCFontTextStyle)style
+    API_DEPRECATED("Follow go/material-ios-dynamic-type#custom-fonts instead.",
+                   ios(11, API_TO_BE_DEPRECATED));
 
 /**
  Returns an instance of the font associated with the Material text style
@@ -34,7 +36,9 @@
  @param style The Material font text style for which to return a font.
  @return The font associated with the specified style.
  */
-+ (nonnull UIFont *)mdc_standardFontForMaterialTextStyle:(MDCFontTextStyle)style;
++ (nonnull UIFont *)mdc_standardFontForMaterialTextStyle:(MDCFontTextStyle)style
+    API_DEPRECATED("Follow go/material-ios-dynamic-type#custom-fonts instead.",
+                   ios(11, API_TO_BE_DEPRECATED));
 
 /**
  Returns an new instance of the font sized according to the text-style and whether the content
@@ -44,6 +48,8 @@
  @param scaled Should the new font be scaled according to the content size category (Dynamic Type)
  */
 - (nonnull UIFont *)mdc_fontSizedForMaterialTextStyle:(MDCFontTextStyle)style
-                                 scaledForDynamicType:(BOOL)scaled;
+                                 scaledForDynamicType:(BOOL)scaled
+    API_DEPRECATED("Follow go/material-ios-dynamic-type#custom-fonts instead.",
+                   ios(11, API_TO_BE_DEPRECATED));
 
 @end

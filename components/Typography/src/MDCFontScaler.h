@@ -46,6 +46,8 @@ UIKIT_EXTERN MDCTextStyle const MDCTextStyleOverline;
  This interface is similar to UIFontMetrics, but the fonts returned from MDCFontScaler do *not*
  automatically adjust when the device's text size / content size category is changed.
  */
+API_DEPRECATED("Follow go/material-ios-dynamic-type#custom-fonts instead.",
+               ios(11, API_TO_BE_DEPRECATED))
 @interface MDCFontScaler : NSObject
 
 /**

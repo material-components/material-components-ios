@@ -34,7 +34,9 @@ typedef NSDictionary<UIContentSizeCategory, NSNumber *> *MDCScalingCurve;
  UIContentSizeCategoryAccessibility categories. If any of these keys are missing then any scaling
  behavior that reads from this property is undefined.
  */
-@property(nonatomic, copy, nullable, setter=mdc_setScalingCurve:) MDCScalingCurve mdc_scalingCurve;
+@property(nonatomic, copy, nullable, setter=mdc_setScalingCurve:)
+    MDCScalingCurve mdc_scalingCurve API_DEPRECATED(
+        "Follow go/material-ios-dynamic-type#custom-fonts instead.", ios(11, API_TO_BE_DEPRECATED));
 
 /**
  Returns a font with the same family, weight and traits, but whose point size is based on the given
@@ -44,7 +46,9 @@ typedef NSDictionary<UIContentSizeCategory, NSNumber *> *MDCScalingCurve;
  @return A font whose point size is extracted from @c mdc_scalingCurve for the given size category,
  or self if @c mdc_scalingCurve is nil.
  */
-- (nonnull UIFont *)mdc_scaledFontForSizeCategory:(nonnull UIContentSizeCategory)sizeCategory;
+- (nonnull UIFont *)mdc_scaledFontForSizeCategory:(nonnull UIContentSizeCategory)sizeCategory
+    API_DEPRECATED("Follow go/material-ios-dynamic-type#custom-fonts instead.",
+                   ios(11, API_TO_BE_DEPRECATED));
 
 /**
  Returns a font with the same family, weight and traits, but whose point size is based on the given
@@ -55,7 +59,9 @@ typedef NSDictionary<UIContentSizeCategory, NSNumber *> *MDCScalingCurve;
  environment's content size category, or self if @c mdc_scalingCurve is nil.
  */
 - (nonnull UIFont *)mdc_scaledFontForTraitEnvironment:
-    (nonnull id<UITraitEnvironment>)traitEnvironment;
+    (nonnull id<UITraitEnvironment>)traitEnvironment
+    API_DEPRECATED("Follow go/material-ios-dynamic-type#custom-fonts instead.",
+                   ios(11, API_TO_BE_DEPRECATED));
 
 /**
  Returns a font with the same family, weight and traits, but whose point size is based on the
@@ -68,7 +74,8 @@ typedef NSDictionary<UIContentSizeCategory, NSNumber *> *MDCScalingCurve;
  @return A font whose point size is extracted from @c mdc_scalingCurve for
  UIContentSizeCategoryLarge, or self if @c mdc_scalingCurve is nil.
  */
-- (nonnull UIFont *)mdc_scaledFontAtDefaultSize;
+- (nonnull UIFont *)mdc_scaledFontAtDefaultSize API_DEPRECATED(
+    "Follow go/material-ios-dynamic-type#custom-fonts instead.", ios(11, API_TO_BE_DEPRECATED));
 
 /**
  Returns a font with the same family, weight and traits, but whose point size is based on the
@@ -83,6 +90,7 @@ typedef NSDictionary<UIContentSizeCategory, NSNumber *> *MDCScalingCurve;
  @c mdc_scalingCurve for UIApplication.sharedApplication's preferredContentSizeCategory, if a shared
  application is available, otherwise uses UIContentSizeCategoryLarge instead.
  */
-- (nonnull UIFont *)mdc_scaledFontForCurrentSizeCategory;
+- (nonnull UIFont *)mdc_scaledFontForCurrentSizeCategory API_DEPRECATED(
+    "Follow go/material-ios-dynamic-type#custom-fonts instead.", ios(11, API_TO_BE_DEPRECATED));
 
 @end
