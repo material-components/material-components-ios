@@ -20,6 +20,9 @@
 /**
  Defines delegate methods that will be deprecated.
  */
+API_DEPRECATED(
+    "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
+    ios(11, API_TO_BE_DEPRECATED))
 @protocol MDCAppBarNavigationControllerToBeDeprecatedDelegate <NSObject>
 @optional
 

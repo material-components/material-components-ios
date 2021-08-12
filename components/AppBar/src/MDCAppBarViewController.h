@@ -23,6 +23,9 @@
  MDCAppBarViewController is a flexible header view controller that manages a navigation bar and
  header stack view in order to provide the Material Top App Bar user interface.
  */
+API_DEPRECATED(
+    "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
+    ios(11, API_TO_BE_DEPRECATED))
 API_UNAVAILABLE(tvos, watchos)
 @interface MDCAppBarViewController : MDCFlexibleHeaderViewController
 
@@ -84,6 +87,9 @@ API_UNAVAILABLE(tvos, watchos)
  @warning This API will be deprecated in favor of MDCAppBarViewController. Learn more at
  https://github.com/material-components/material-components-ios/blob/develop/components/AppBar/docs/migration-guide-appbar-appbarviewcontroller.md
  */
+API_DEPRECATED(
+    "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
+    ios(11, API_TO_BE_DEPRECATED))
 API_UNAVAILABLE(tvos, watchos)
 @interface MDCAppBar : NSObject
 

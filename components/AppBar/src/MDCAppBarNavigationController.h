@@ -28,6 +28,9 @@
 /**
  Defines the events that an MDCAppBarNavigationController may send to a delegate.
  */
+API_DEPRECATED(
+    "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
+    ios(11, API_TO_BE_DEPRECATED))
 @protocol
     MDCAppBarNavigationControllerDelegate <UINavigationControllerDelegate,
                                            MDCAppBarNavigationControllerToBeDeprecatedDelegate>
@@ -97,6 +100,9 @@
  delegate yet. In this case, use the -appBarForViewController: API to retrieve the injected App Bar
  for your root view controller and execute your delegate logic on the returned result, if any.
  */
+API_DEPRECATED(
+    "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
+    ios(11, API_TO_BE_DEPRECATED))
 __attribute__((objc_subclassing_restricted)) @interface MDCAppBarNavigationController
     : UINavigationController
 
@@ -186,6 +192,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCAppBarNavigationContr
  https://github.com/material-components/material-components-ios/blob/develop/components/AppBar/docs/migration-guide-appbar-appbarviewcontroller.md
  */
 - (nullable MDCAppBar *)appBarForViewController:(nonnull UIViewController *)viewController
-    __deprecated_msg("Use -appBarViewControllerForViewController: instead.");
+    __deprecated_msg(
+        "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.");
 
 @end

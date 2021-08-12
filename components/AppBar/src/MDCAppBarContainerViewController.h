@@ -39,6 +39,9 @@
  3. Wrapping a view controller can affect things like "isMovingToParentViewController" in
     wonderfully subtle ways.
  */
+API_DEPRECATED(
+    "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
+    ios(11, API_TO_BE_DEPRECATED))
 @interface MDCAppBarContainerViewController : UIViewController
 
 /**

@@ -21,6 +21,9 @@
  @warning This API will eventually be deprecated.
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
+API_DEPRECATED(
+    "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
+    ios(11, API_TO_BE_DEPRECATED))
 @interface MDCAppBarTypographyThemer : NSObject
 @end
 
