@@ -1052,7 +1052,10 @@ static BOOL gEnablePerformantShadow = NO;
 }
 
 - (UIBezierPath *)boundingPath {
-  return [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:self.layer.cornerRadius];
+  CGSize cornerRadii = CGSizeMake(self.layer.cornerRadius, self.layer.cornerRadius);
+  return [UIBezierPath bezierPathWithRoundedRect:self.bounds
+                               byRoundingCorners:(UIRectCorner)self.layer.maskedCorners
+                                     cornerRadii:cornerRadii];
 }
 
 - (UIEdgeInsets)defaultContentEdgeInsets {
