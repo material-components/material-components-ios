@@ -14,8 +14,8 @@
 
 #import <XCTest/XCTest.h>
 
+#import "MDCFontScaler.h"
 #import "MaterialTypography.h"
-
 
 @interface UIFont_MaterialScalable : XCTestCase
 

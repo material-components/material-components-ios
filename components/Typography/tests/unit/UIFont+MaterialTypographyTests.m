@@ -13,9 +13,10 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
+#import "MDCFontScaler.h"
+#import "MaterialTypography.h"
 #import "MDCTypographyMockTraitEnvironment.h"
 #import "MaterialApplication.h"
-#import "MaterialTypography.h"
 
 @interface UIFont_MaterialTypographyTests : XCTestCase
 @end

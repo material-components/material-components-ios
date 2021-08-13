@@ -18,6 +18,7 @@
 #import "MaterialShadowElevations.h"
 #import "MaterialSnackbar.h"
 #import "MDCFakeMDCSnackbarManagerDelegate.h"
+#import "MDCFontScaler.h"
 #import "MaterialTypography.h"
 
 #import "../../src/private/MDCSnackbarManagerInternal.h"

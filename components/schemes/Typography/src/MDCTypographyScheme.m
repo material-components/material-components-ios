@@ -14,7 +14,8 @@
 
 #import "MDCTypographyScheme.h"
 
-#import <MaterialComponents/MaterialTypography.h>
+#import "MDCFontScaler.h"
+#import "MaterialTypography.h"  // ComponentImport
 
 @implementation MDCTypographyScheme
 

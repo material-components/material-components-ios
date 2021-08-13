@@ -18,6 +18,7 @@
 
 #import "MaterialElevation.h"
 #import "MaterialTextFields.h"
+#import "MDCFontScaler.h"
 #import "MaterialTypography.h"
 
 // Expose internal methods for testing

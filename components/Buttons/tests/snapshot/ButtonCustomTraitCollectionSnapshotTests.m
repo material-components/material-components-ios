@@ -19,6 +19,7 @@
 
 #import "MaterialAvailability.h"
 #import "MaterialButtons.h"
+#import "MDCFontScaler.h"
 #import "MaterialTypography.h"
 #import "MaterialColor.h"
 

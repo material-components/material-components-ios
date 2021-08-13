@@ -22,6 +22,7 @@
 #import "MaterialButtons.h"
 #import "MDCAlertController+ButtonForAction.h"
 #import "MaterialDialogs.h"
+#import "MDCFontScaler.h"
 #import "MaterialTypography.h"
 #import "MaterialColor.h"
 
