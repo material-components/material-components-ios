@@ -58,6 +58,24 @@
 @property(nonatomic, assign) MDCSnackbarAlignment alignment;
 
 /**
+ Determines the Snackbar's leading margin to the safe area of the screen.
+
+ Defaults to 8 when the traitCollection horizontal size class is compact.
+
+ Defaults to 24 when the traitCollection horizontal size class is regular.
+ */
+@property(nonatomic, assign) CGFloat leadingMargin;
+
+/**
+ Determines the Snackbar's trailing margin to the safe area of the screen.
+
+ Defaults to 8 when the traitCollection horizontal size class is compact.
+
+ Defaults to 24 when the traitCollection horizontal size class is regular.
+ */
+@property(nonatomic, assign) CGFloat trailingMargin;
+
+/**
  Shows @c message to the user, in a style consistent with the data contained in @c message.
 
  For messages with the same category, the firing of completion blocks has a guaranteed FIFO

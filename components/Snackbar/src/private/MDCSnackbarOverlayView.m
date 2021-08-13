@@ -148,6 +148,16 @@ static const CGFloat kMaximumHeight = 80;
       _containingView.clipsToBounds = YES;
     }
     [self addSubview:_containingView];
+    // Set default side margin as leadingMargin and trailingMargin.
+    CGFloat sideMargin = self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular
+                             ? MDCSnackbarSideMargin_RegularWidth
+                             : MDCSnackbarSideMargin_CompactWidth;
+    if (MDCSnackbarMessage.usesLegacySnackbar) {
+      sideMargin = self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular
+                       ? MDCSnackbarSideMargin_RegularWidth
+                       : MDCSnackbarLegacySideMargin_CompactWidth;
+    }
+    _leadingMargin = _trailingMargin = sideMargin;
 
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
 
@@ -228,9 +238,8 @@ static const CGFloat kMaximumHeight = 80;
 
   self.maximumHeightConstraint.constant = self.maximumHeight;
 
-  CGFloat sideMargin = [self sideMargin];
-  CGFloat leftMargin = sideMargin;
-  CGFloat rightMargin = sideMargin;
+  CGFloat leftMargin = self.leadingMargin;
+  CGFloat rightMargin = self.trailingMargin;
 
   BOOL isRegularWidth = self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular;
   BOOL isRegularHeight = self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular;
@@ -280,26 +289,14 @@ static const CGFloat kMaximumHeight = 80;
                                                               : MDCSnackbarBottomMargin_iPhone;
 }
 
-- (CGFloat)sideMargin {
-  if (MDCSnackbarMessage.usesLegacySnackbar) {
-    return self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular
-               ? MDCSnackbarSideMargin_RegularWidth
-               : MDCSnackbarLegacySideMargin_CompactWidth;
-  }
-  return self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular
-             ? MDCSnackbarSideMargin_RegularWidth
-             : MDCSnackbarSideMargin_CompactWidth;
-}
-
 - (void)setSnackbarView:(MDCSnackbarMessageView *)snackbarView {
   if (_snackbarView != snackbarView) {
     [_snackbarView removeFromSuperview];
     _snackbarView = snackbarView;
 
     CGFloat bottomMargin = [self staticBottomMargin];
-    CGFloat sideMargin = [self sideMargin];
-    CGFloat leftMargin = sideMargin;
-    CGFloat rightMargin = sideMargin;
+    CGFloat leftMargin = self.leadingMargin;
+    CGFloat rightMargin = self.trailingMargin;
 
     UIView *container = self.containingView;
 
@@ -331,18 +328,19 @@ static const CGFloat kMaximumHeight = 80;
                                             toItem:container
                                          attribute:NSLayoutAttributeLeading
                                         multiplier:1.0
-                                          constant:sideMargin];
+                                          constant:self.leadingMargin];
         self.snackbarViewLeadingConstraint.active = self.alignment == MDCSnackbarAlignmentLeading;
 
         // If not full width, ensure that it doesn't get any larger than our own width.
         [container
-            addConstraint:[NSLayoutConstraint constraintWithItem:snackbarView
-                                                       attribute:NSLayoutAttributeWidth
-                                                       relatedBy:NSLayoutRelationLessThanOrEqual
-                                                          toItem:container
-                                                       attribute:NSLayoutAttributeWidth
-                                                      multiplier:1.0
-                                                        constant:-2 * sideMargin]];
+            addConstraint:[NSLayoutConstraint
+                              constraintWithItem:snackbarView
+                                       attribute:NSLayoutAttributeWidth
+                                       relatedBy:NSLayoutRelationLessThanOrEqual
+                                          toItem:container
+                                       attribute:NSLayoutAttributeWidth
+                                      multiplier:1.0
+                                        constant:-(self.leadingMargin + self.trailingMargin)]];
 
         // Also ensure that it doesn't get any smaller than its own minimum width.
         [container

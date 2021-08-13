@@ -640,6 +640,26 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   });
 }
 
+- (CGFloat)leadingMargin {
+  return self.internalManager.overlayView.leadingMargin;
+}
+
+- (void)setLeadingMargin:(CGFloat)leadingMargin {
+  NSAssert([NSThread isMainThread], @"leadingMargin must be called on main thread.");
+
+  self.internalManager.overlayView.leadingMargin = leadingMargin;
+}
+
+- (CGFloat)trailingMargin {
+  return self.internalManager.overlayView.trailingMargin;
+}
+
+- (void)setTrailingMargin:(CGFloat)trailingMargin {
+  NSAssert([NSThread isMainThread], @"trailingMargin must be called on main thread.");
+
+  self.internalManager.overlayView.trailingMargin = trailingMargin;
+}
+
 - (void)setBottomOffset:(CGFloat)offset {
   NSAssert([NSThread isMainThread], @"setBottomOffset must be called on main thread.");
 

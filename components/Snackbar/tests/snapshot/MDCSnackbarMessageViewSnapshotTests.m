@@ -238,4 +238,28 @@ static NSString *const kItemTitleLong2Arabic =
   [self generateSnapshotAndVerifyForView:self.testManager.internalManager.overlayView];
 }
 
+- (void)testSnackbarOverlayViewWithConfiguredMargins {
+  // Given
+  MDCSnackbarMessageView *messageView = [self snackbarMessageViewWithText:kItemTitleShort1Latin
+                                                              actionTitle:kItemTitleShort2Latin];
+  messageView.frame = CGRectMake(0, 0, kWidth, kHeightSingleLineText);
+
+  // When
+  self.testManager.leadingMargin = 100;
+  self.testManager.trailingMargin = 5;
+  [self.testManager.internalManager.overlayView showSnackbarView:messageView
+                                                        animated:NO
+                                                      completion:nil];
+
+  // This run loop drain is here to resolve Bazel flakiness.
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [expectation fulfill];
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.testManager.internalManager.overlayView];
+}
+
 @end

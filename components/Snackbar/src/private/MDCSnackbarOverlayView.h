@@ -71,4 +71,22 @@ OBJC_EXTERN NSTimeInterval const MDCSnackbarLegacyTransitionDuration;
 */
 @property(nonatomic) MDCSnackbarAlignment alignment;
 
+/**
+ Determines the Snackbar's leading margin to the safe area of the screen.
+
+ Defaults to 8 when the traitCollection horizontal size class is compact.
+
+ Defaults to 24 when the traitCollection horizontal size class is regular.
+ */
+@property(nonatomic, assign) CGFloat leadingMargin;
+
+/**
+ Determines the Snackbar's trailing margin to the safe area of the screen.
+
+ Defaults to 8 when the traitCollection horizontal size class is compact.
+
+ Defaults to 24 when the traitCollection horizontal size class is regular.
+ */
+@property(nonatomic, assign) CGFloat trailingMargin;
+
 @end
