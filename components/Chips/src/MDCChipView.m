@@ -801,7 +801,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   [self configureLayerWithCornerRadius:cornerRadius];
 
   // Handle RTL
-  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+  if (self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     for (UIView *subview in self.subviews) {
       CGRect flippedRect = MDFRectFlippedHorizontally(subview.frame, CGRectGetWidth(self.bounds));
       subview.frame = flippedRect;

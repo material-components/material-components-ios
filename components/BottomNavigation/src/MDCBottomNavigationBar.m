@@ -18,7 +18,6 @@
 
 #import "MaterialElevation.h"
 #import "MaterialInk.h"
-#import <MDFInternationalization/MDFInternationalization.h>
 
 #import "private/MDCBottomNavigationBar+Private.h"
 #import "private/MDCBottomNavigationItemView.h"
@@ -330,7 +329,7 @@ static BOOL gEnablePerformantShadow = NO;
 }
 
 - (void)layoutItemViews {
-  UIUserInterfaceLayoutDirection layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
+  UIUserInterfaceLayoutDirection layoutDirection = self.effectiveUserInterfaceLayoutDirection;
   NSInteger numItems = self.items.count;
   if (numItems == 0) {
     return;

@@ -694,10 +694,10 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   CGFloat topInset = self.titleIconInsets.top;
   CGFloat titleIconHeight = titleIconViewSize.height;
   CGFloat titleIconWidth = titleIconViewSize.width;
-  BOOL isRightOrRTLNatural = (self.titleIconAlignment == NSTextAlignmentRight ||
-                              (self.titleIconAlignment == NSTextAlignmentNatural &&
-                               [self mdf_effectiveUserInterfaceLayoutDirection] ==
-                                   UIUserInterfaceLayoutDirectionRightToLeft));
+  BOOL isRightOrRTLNatural =
+      (self.titleIconAlignment == NSTextAlignmentRight ||
+       (self.titleIconAlignment == NSTextAlignmentNatural &&
+        [self effectiveUserInterfaceLayoutDirection] == UIUserInterfaceLayoutDirectionRightToLeft));
 
   if (self.titleIconAlignment == NSTextAlignmentJustified) {
     // Justified images are sized to fit the alert's width (minus the insets).
@@ -1022,7 +1022,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
     }
   }
   // Handle RTL
-  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+  if (self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     for (UIButton *button in buttons) {
       CGRect flippedRect = MDFRectFlippedHorizontally(button.frame, CGRectGetWidth(self.bounds));
       button.frame = flippedRect;
@@ -1091,8 +1091,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
       }
     }
     // Handle RTL
-    if (self.mdf_effectiveUserInterfaceLayoutDirection ==
-        UIUserInterfaceLayoutDirectionRightToLeft) {
+    if (self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
       for (UIButton *button in buttons) {
         CGRect flippedRect = MDFRectFlippedHorizontally(button.frame, CGRectGetWidth(self.bounds));
         button.frame = flippedRect;

@@ -14,8 +14,6 @@
 
 #import "MDCProgressGradientView.h"
 
-#import <MDFInternationalization/MDFInternationalization.h>
-
 @interface MDCProgressGradientView ()
 
 @property(nonatomic, readonly) CAGradientLayer *gradientLayer;
@@ -56,7 +54,7 @@
   CGPoint leftPoint = CGPointMake(0, CGRectGetMidY(self.gradientLayer.bounds));
   CGPoint rightPoint = CGPointMake(CGRectGetWidth(self.gradientLayer.bounds),
                                    CGRectGetMidY(self.gradientLayer.bounds));
-  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+  if (self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     [path moveToPoint:rightPoint];
     [path addLineToPoint:leftPoint];
   } else {

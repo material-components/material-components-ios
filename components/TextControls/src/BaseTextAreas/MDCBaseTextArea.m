@@ -15,7 +15,6 @@
 #import "MDCBaseTextArea.h"
 
 #import <CoreGraphics/CoreGraphics.h>
-#import <MDFInternationalization/MDFInternationalization.h>
 #import <QuartzCore/QuartzCore.h>
 
 #import "private/MDCBaseTextAreaLayout.h"
@@ -632,8 +631,7 @@ static const CGFloat kMDCBaseTextAreaDefaultMaximumNumberOfVisibleLines = (CGFlo
   } else if (self.semanticContentAttribute == UISemanticContentAttributeForceLeftToRight) {
     return NO;
   } else {
-    return self.mdf_effectiveUserInterfaceLayoutDirection ==
-           UIUserInterfaceLayoutDirectionRightToLeft;
+    return self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
   }
 }
 

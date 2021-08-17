@@ -15,8 +15,6 @@
 #import "MDCThumbTrack.h"
 #import "private/MDCThumbTrack+Private.h"
 
-#import <MDFInternationalization/MDFInternationalization.h>
-
 #import "MDCNumericValueLabel.h"
 #import "MDCThumbView.h"
 #import "MaterialAvailability.h"
@@ -1017,7 +1015,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   CGFloat relValue = (position.x - _thumbRadius) / self.thumbPanRange;
   relValue = MAX(0, MIN(relValue, 1));
   // For RTL we invert the value
-  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+  if (self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     relValue = 1 - relValue;
   }
   return (1 - relValue) * _minimumValue + relValue * _maximumValue;
@@ -1061,7 +1059,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   }
   CGFloat relValue = (value - _minimumValue) / fabs(_minimumValue - _maximumValue);
   // For RTL we invert the value
-  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+  if (self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     relValue = 1 - relValue;
   }
   return relValue;

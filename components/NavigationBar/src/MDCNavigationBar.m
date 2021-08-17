@@ -253,7 +253,7 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   if (@available(iOS 11.0, *)) {
     RTLFriendlySafeAreaInsets = MDFInsetsMakeWithLayoutDirection(
         self.safeAreaInsets.top, self.safeAreaInsets.left, self.safeAreaInsets.bottom,
-        self.safeAreaInsets.right, self.mdf_effectiveUserInterfaceLayoutDirection);
+        self.safeAreaInsets.right, self.effectiveUserInterfaceLayoutDirection);
   }
 
   CGSize leadingButtonBarSize = [_leadingButtonBar sizeThatFits:self.bounds.size];
@@ -266,7 +266,7 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   CGRect trailingButtonBarFrame =
       CGRectMake(xOrigin, CGRectGetMinY(self.bounds), trailingButtonBarSize.width,
                  trailingButtonBarSize.height);
-  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+  if (self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     leadingButtonBarFrame =
         MDFRectFlippedHorizontally(leadingButtonBarFrame, CGRectGetWidth(self.bounds));
     trailingButtonBarFrame =
@@ -299,7 +299,7 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   titleSize.width = ceil(titleSize.width);
   titleSize.height = ceil(titleSize.height);
   CGRect titleFrame = CGRectMake(textFrame.origin.x, 0, titleSize.width, titleSize.height);
-  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+  if (self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     titleFrame = MDFRectFlippedHorizontally(titleFrame, CGRectGetWidth(self.bounds));
   }
   UIControlContentVerticalAlignment titleVerticalAlignment = UIControlContentVerticalAlignmentTop;
@@ -310,7 +310,7 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   _titleLabel.frame = MDCRectAlignToScale(alignedFrame, self.window.screen.scale);
 
   // Layout TitleView
-  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+  if (self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     textFrame = MDFRectFlippedHorizontally(textFrame, CGRectGetWidth(self.bounds));
   }
 
@@ -528,8 +528,8 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   switch (alignment) {
     // Center align title
     case MDCNavigationBarTitleAlignmentCenter: {
-      BOOL isRTL = [self mdf_effectiveUserInterfaceLayoutDirection] ==
-                   UIUserInterfaceLayoutDirectionRightToLeft;
+      BOOL isRTL =
+          [self effectiveUserInterfaceLayoutDirection] == UIUserInterfaceLayoutDirectionRightToLeft;
 
       MDCButtonBar *leftButtonBar = self.leadingButtonBar;
       MDCButtonBar *rightButtonBar = self.trailingButtonBar;

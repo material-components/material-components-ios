@@ -14,8 +14,6 @@
 
 #import "MDCTextInputControllerFilled.h"
 
-#import <MDFInternationalization/MDFInternationalization.h>
-
 #import "MDCMultilineTextField.h"
 #import "MDCTextInput.h"
 #import "MDCTextInputControllerBase.h"
@@ -106,7 +104,7 @@ static CGFloat _underlineHeightNormalDefault =
 
 - (CGRect)leadingViewRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect {
   CGRect leadingViewRect = defaultRect;
-  CGFloat xOffset = (self.textInput.mdf_effectiveUserInterfaceLayoutDirection ==
+  CGFloat xOffset = (self.textInput.effectiveUserInterfaceLayoutDirection ==
                      UIUserInterfaceLayoutDirectionRightToLeft)
                         ? -1 * MDCTextInputControllerFilledFullPadding
                         : MDCTextInputControllerFilledFullPadding;
@@ -125,7 +123,7 @@ static CGFloat _underlineHeightNormalDefault =
 
 - (CGRect)trailingViewRectForBounds:(CGRect)bounds defaultRect:(CGRect)defaultRect {
   CGRect trailingViewRect = defaultRect;
-  CGFloat xOffset = (self.textInput.mdf_effectiveUserInterfaceLayoutDirection ==
+  CGFloat xOffset = (self.textInput.effectiveUserInterfaceLayoutDirection ==
                      UIUserInterfaceLayoutDirectionRightToLeft)
                         ? MDCTextInputControllerFilledThreeQuartersPadding
                         : -1 * MDCTextInputControllerFilledThreeQuartersPadding;

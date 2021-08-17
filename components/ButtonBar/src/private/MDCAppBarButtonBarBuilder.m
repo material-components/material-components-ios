@@ -16,7 +16,6 @@
 
 #import <objc/runtime.h>
 #import "MaterialInk.h"
-#import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MaterialAvailability.h"
 #import "MDCButtonBar.h"
@@ -214,7 +213,7 @@ static const UIEdgeInsets kButtonInset = {0, 12, 0, 12};
       contentInsetsForButton:button
               layoutPosition:buttonBar.layoutPosition
                  layoutHints:layoutHints
-             layoutDirection:[buttonBar mdf_effectiveUserInterfaceLayoutDirection]
+             layoutDirection:[buttonBar effectiveUserInterfaceLayoutDirection]
           userInterfaceIdiom:[self usePadInsetsForButtonBar:buttonBar] ? UIUserInterfaceIdiomPad
                                                                        : UIUserInterfaceIdiomPhone];
 

@@ -28,7 +28,6 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <QuartzCore/QuartzCore.h>
 #import "MaterialAnimationTiming.h"  // ComponentImport
-#import <MDFInternationalization/MDFInternationalization.h>
 
 // KVO contexts
 static char *const kKVOContextMDCTabBarView = "kKVOContextMDCTabBarView";
@@ -776,8 +775,7 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
   if (self.needsScrollToSelectedItem) {
     self.needsScrollToSelectedItem = NO;
     // In RTL layouts, make sure we "begin" the selected item scroll offset from the leading edge.
-    if (self.mdf_effectiveUserInterfaceLayoutDirection ==
-        UIUserInterfaceLayoutDirectionRightToLeft) {
+    if (self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
       CGFloat viewWidth = CGRectGetWidth(self.bounds);
       if (viewWidth < self.contentSize.width) {
         self.contentOffset = CGPointMake(self.contentSize.width - viewWidth, self.contentOffset.y);
@@ -1124,8 +1122,7 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
 #pragma mark - Helpers
 
 - (BOOL)isRTL {
-  return self.mdf_effectiveUserInterfaceLayoutDirection ==
-         UIUserInterfaceLayoutDirectionRightToLeft;
+  return self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
 }
 
 - (void)scrollToItem:(UITabBarItem *)item animated:(BOOL)animated {

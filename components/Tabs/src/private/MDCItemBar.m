@@ -1033,7 +1033,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   UIUserInterfaceLayoutDirection rtl = UIUserInterfaceLayoutDirectionRightToLeft;
   NSProcessInfo *processInfo = [NSProcessInfo processInfo];
   return [processInfo isOperatingSystemAtLeastVersion:iOS9Version] &&
-         self.collectionView.mdf_effectiveUserInterfaceLayoutDirection == rtl;
+         self.collectionView.effectiveUserInterfaceLayoutDirection == rtl;
 }
 
 /// Indicates if the superclass' layout appears to have been layed out in a left-to-right order. If

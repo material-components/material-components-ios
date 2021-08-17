@@ -95,7 +95,7 @@ static NSString *const kEnabledSelector = @"enabled";
   CGFloat totalWidth = 0;
 
   CGFloat edge;
-  switch (self.mdf_effectiveUserInterfaceLayoutDirection) {
+  switch (self.effectiveUserInterfaceLayoutDirection) {
     case UIUserInterfaceLayoutDirectionLeftToRight:
       edge = 0;
       break;
@@ -126,7 +126,7 @@ static NSString *const kEnabledSelector = @"enabled";
       }
     }
 
-    switch (self.mdf_effectiveUserInterfaceLayoutDirection) {
+    switch (self.effectiveUserInterfaceLayoutDirection) {
       case UIUserInterfaceLayoutDirectionLeftToRight:
         break;
       case UIUserInterfaceLayoutDirectionRightToLeft:
@@ -142,7 +142,7 @@ static NSString *const kEnabledSelector = @"enabled";
         }
       }
     }
-    switch (self.mdf_effectiveUserInterfaceLayoutDirection) {
+    switch (self.effectiveUserInterfaceLayoutDirection) {
       case UIUserInterfaceLayoutDirectionLeftToRight:
         edge += width;
         break;

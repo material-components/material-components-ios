@@ -294,7 +294,7 @@ static const UIEdgeInsets internalLayoutInsets = (UIEdgeInsets){0, 16, 0, 24};
   CGPoint titleCenter;
   CGPoint imageCenter;
   BOOL isLTR =
-      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight;
+      self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight;
   BOOL isLeadingIcon = self.imageLocation == MDCFloatingButtonImageLocationLeading;
 
   // If we are LTR with a leading image, the image goes on the left.

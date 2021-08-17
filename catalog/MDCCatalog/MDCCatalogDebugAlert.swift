@@ -13,10 +13,8 @@
 // limitations under the License.
 
 import UIKit
-
-import MDFInternationalization
-
 import MaterialComponents.MaterialDialogs
+import MDFInternationalization
 
 class MDCCatalogDebugSetting {
   init(title: String) {
@@ -67,10 +65,12 @@ class MDCCatalogDebugAlert: UICollectionViewController {
     super.viewDidLoad()
 
     collectionView?.backgroundColor = .white
-    collectionView?.register(MDCCatalogDebugToggleCell.self,
-                             forCellWithReuseIdentifier: "toggle")
-    collectionView?.register(MDCCatalogDebugDismissCell.self,
-                             forCellWithReuseIdentifier: "dismiss")
+    collectionView?.register(
+      MDCCatalogDebugToggleCell.self,
+      forCellWithReuseIdentifier: "toggle")
+    collectionView?.register(
+      MDCCatalogDebugDismissCell.self,
+      forCellWithReuseIdentifier: "dismiss")
   }
 
   override func viewDidLayoutSubviews() {
@@ -82,8 +82,10 @@ class MDCCatalogDebugAlert: UICollectionViewController {
     }
   }
 
-  override func collectionView(_ collectionView: UICollectionView,
-                               cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+  override func collectionView(
+    _ collectionView: UICollectionView,
+    cellForItemAt indexPath: IndexPath
+  ) -> UICollectionViewCell {
     if indexPath.row == dismissCellRow {
       return collectionView.dequeueReusableCell(withReuseIdentifier: "dismiss", for: indexPath)
     }
@@ -94,20 +96,24 @@ class MDCCatalogDebugAlert: UICollectionViewController {
     return cell
   }
 
-  override func collectionView(_ collectionView: UICollectionView,
-                               numberOfItemsInSection section: Int) -> Int {
+  override func collectionView(
+    _ collectionView: UICollectionView,
+    numberOfItemsInSection section: Int
+  ) -> Int {
     return numberOfRows
   }
 
-  override func collectionView(_ collectionView: UICollectionView,
-                               didSelectItemAt indexPath: IndexPath) {
+  override func collectionView(
+    _ collectionView: UICollectionView,
+    didSelectItemAt indexPath: IndexPath
+  ) {
     if indexPath.row == dismissCellRow {
       dismiss(animated: true, completion: nil)
     }
   }
 }
 
-fileprivate class MDCCatalogDebugToggleCell: UICollectionViewCell {
+private class MDCCatalogDebugToggleCell: UICollectionViewCell {
   private var _setting: MDCCatalogDebugSetting?
   var setting: MDCCatalogDebugSetting? {
     get {
@@ -135,7 +141,7 @@ fileprivate class MDCCatalogDebugToggleCell: UICollectionViewCell {
     contentView.addSubview(label)
     contentView.addSubview(toggleSwitch)
 
-    toggleSwitch.addTarget(self, action:#selector(switchToggled(sender:)), for: .touchUpInside)
+    toggleSwitch.addTarget(self, action: #selector(switchToggled(sender:)), for: .touchUpInside)
   }
 
   override func layoutSubviews() {
@@ -145,11 +151,12 @@ fileprivate class MDCCatalogDebugToggleCell: UICollectionViewCell {
     let height = contentView.bounds.height
 
     let switchSize = toggleSwitch.sizeThatFits(contentView.bounds.size)
-    var toggleSwitchFrame = CGRect(x: width - switchSize.width - 10,
-                                   y: (height - switchSize.height) / 2.0,
-                                   width: switchSize.width,
-                                   height: switchSize.height)
-    if (self.mdf_effectiveUserInterfaceLayoutDirection == .rightToLeft) {
+    var toggleSwitchFrame = CGRect(
+      x: width - switchSize.width - 10,
+      y: (height - switchSize.height) / 2.0,
+      width: switchSize.width,
+      height: switchSize.height)
+    if self.effectiveUserInterfaceLayoutDirection == .rightToLeft {
       toggleSwitchFrame = MDFRectFlippedHorizontally(toggleSwitchFrame, width)
     }
     toggleSwitch.frame = toggleSwitchFrame
@@ -179,7 +186,7 @@ class MDCCatalogDebugDismissCell: UICollectionViewCell {
     set {
       super.isHighlighted = newValue
       backgroundColor = nil
-      if (newValue) {
+      if newValue {
         backgroundColor = UIColor(white: 0, alpha: 0.1)
       }
     }

@@ -68,19 +68,19 @@ static inline UIFont *defaultDetailsFont(void) {
   _contentWrapper = [[UIView alloc] initWithFrame:self.contentView.bounds];
   _contentWrapper.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | MDFTrailingMarginAutoresizingMaskForLayoutDirection(
-                                            self.mdf_effectiveUserInterfaceLayoutDirection);
+                                            self.effectiveUserInterfaceLayoutDirection);
   _contentWrapper.clipsToBounds = YES;
   [self.contentView addSubview:_contentWrapper];
 
   // Text label.
   _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   _titleLabel.autoresizingMask = MDFTrailingMarginAutoresizingMaskForLayoutDirection(
-      self.mdf_effectiveUserInterfaceLayoutDirection);
+      self.effectiveUserInterfaceLayoutDirection);
 
   // Detail text label.
   _detailsTextLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   _detailsTextLabel.autoresizingMask = MDFTrailingMarginAutoresizingMaskForLayoutDirection(
-      self.mdf_effectiveUserInterfaceLayoutDirection);
+      self.effectiveUserInterfaceLayoutDirection);
 
   [self resetCollectionViewListCell];
 
@@ -90,7 +90,7 @@ static inline UIFont *defaultDetailsFont(void) {
   // Image view.
   _imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
   _imageView.autoresizingMask = MDFTrailingMarginAutoresizingMaskForLayoutDirection(
-      self.mdf_effectiveUserInterfaceLayoutDirection);
+      self.effectiveUserInterfaceLayoutDirection);
   [self.contentView addSubview:_imageView];
 
   [self setupConstraints];

@@ -14,8 +14,6 @@
 
 #import "MDCPageControl.h"
 
-#import <MDFInternationalization/MDFInternationalization.h>
-
 #import "private/MDCPageControlIndicator.h"
 #import "private/MDCPageControlTrackLayer.h"
 #import "private/MaterialPageControlStrings.h"
@@ -476,8 +474,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
 
 - (BOOL)isRTL {
   return self.respectsUserInterfaceLayoutDirection &&
-         (self.mdf_effectiveUserInterfaceLayoutDirection ==
-          UIUserInterfaceLayoutDirectionRightToLeft);
+         (self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft);
 }
 
 - (void)setRespectsUserInterfaceLayoutDirection:(BOOL)respectsUserInterfaceLayoutDirection {

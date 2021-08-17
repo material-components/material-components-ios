@@ -122,19 +122,19 @@ static inline CGRect AlignRectToUpperPixel(CGRect rect) {
   _contentWrapper = [[UIView alloc] initWithFrame:self.contentView.bounds];
   _contentWrapper.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | MDFTrailingMarginAutoresizingMaskForLayoutDirection(
-                                            self.mdf_effectiveUserInterfaceLayoutDirection);
+                                            self.effectiveUserInterfaceLayoutDirection);
   _contentWrapper.clipsToBounds = YES;
   [self.contentView addSubview:_contentWrapper];
 
   // Text label.
   _textLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   _textLabel.autoresizingMask = MDFTrailingMarginAutoresizingMaskForLayoutDirection(
-      self.mdf_effectiveUserInterfaceLayoutDirection);
+      self.effectiveUserInterfaceLayoutDirection);
 
   // Detail text label.
   _detailTextLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   _detailTextLabel.autoresizingMask = MDFTrailingMarginAutoresizingMaskForLayoutDirection(
-      self.mdf_effectiveUserInterfaceLayoutDirection);
+      self.effectiveUserInterfaceLayoutDirection);
 
   [self resetMDCCollectionViewTextCellLabelProperties];
 
@@ -144,7 +144,7 @@ static inline CGRect AlignRectToUpperPixel(CGRect rect) {
   // Image view.
   _imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
   _imageView.autoresizingMask = MDFTrailingMarginAutoresizingMaskForLayoutDirection(
-      self.mdf_effectiveUserInterfaceLayoutDirection);
+      self.effectiveUserInterfaceLayoutDirection);
   [self.contentView addSubview:_imageView];
 }
 
@@ -171,7 +171,7 @@ static inline CGRect AlignRectToUpperPixel(CGRect rect) {
       _imageView.image ? kCellTextWithImagePaddingLeading : kCellTextNoImagePaddingLeading;
   CGFloat trailingPadding = kCellTextNoImagePaddingTrailing;
   UIEdgeInsets insets = MDFInsetsMakeWithLayoutDirection(
-      0, leadingPadding, 0, trailingPadding, self.mdf_effectiveUserInterfaceLayoutDirection);
+      0, leadingPadding, 0, trailingPadding, self.effectiveUserInterfaceLayoutDirection);
   return UIEdgeInsetsInsetRect(self.contentView.bounds, insets);
 }
 
@@ -239,7 +239,7 @@ static inline CGRect AlignRectToUpperPixel(CGRect rect) {
   detailFrame = AlignRectToUpperPixel(detailFrame);
   imageFrame = AlignRectToUpperPixel(imageFrame);
 
-  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+  if (self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     textFrame = MDFRectFlippedHorizontally(textFrame, CGRectGetWidth(_contentWrapper.bounds));
     detailFrame = MDFRectFlippedHorizontally(detailFrame, CGRectGetWidth(_contentWrapper.bounds));
     imageFrame = MDFRectFlippedHorizontally(imageFrame, CGRectGetWidth(self.contentView.bounds));

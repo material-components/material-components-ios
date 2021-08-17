@@ -133,7 +133,7 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
   if (!backBarButtonItem) {
     UIImage *backButtonImage = [MDCIcons imageFor_ic_arrow_back];
     backButtonImage = [backButtonImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    if (self.navigationBar.mdf_effectiveUserInterfaceLayoutDirection ==
+    if (self.navigationBar.effectiveUserInterfaceLayoutDirection ==
         UIUserInterfaceLayoutDirectionRightToLeft) {
       backButtonImage = [backButtonImage mdf_imageWithHorizontallyFlippedOrientation];
     }

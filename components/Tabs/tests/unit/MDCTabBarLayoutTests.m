@@ -122,7 +122,7 @@ static NSArray<UICollectionViewCell *> *SortedCellsFromCollectionView(
 
   // Then
   XCTAssertEqual(_tabBar.mdf_semanticContentAttribute, UISemanticContentAttributeForceRightToLeft);
-  XCTAssertEqual(_tabBar.mdf_effectiveUserInterfaceLayoutDirection,
+  XCTAssertEqual(_tabBar.effectiveUserInterfaceLayoutDirection,
                  UIUserInterfaceLayoutDirectionRightToLeft);
   NSArray<UICollectionViewCell *> *sortedVisibleItems =
       SortedCellsFromCollectionView(collectionView);

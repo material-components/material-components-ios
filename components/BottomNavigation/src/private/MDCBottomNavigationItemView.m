@@ -17,8 +17,6 @@
 
 #import "MaterialInk.h"
 #import "MaterialRipple.h"
-#import <MDFInternationalization/MDFInternationalization.h>
-
 #import "MDCBottomNavigationBar.h"
 #import "MDCBottomNavigationItemBadge.h"
 
@@ -313,7 +311,7 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
 
   // Account for RTL
   BOOL isRTL =
-      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
+      self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
   NSInteger rtlCoefficient = isRTL ? -1 : 1;
   CGFloat layoutStartingPoint =
       isRTL ? CGRectGetMaxX(contentBoundingRect) : CGRectGetMinX(contentBoundingRect);
@@ -363,7 +361,7 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
   self.label.center = CGPointMake(CGRectGetMidX(labelFrame), CGRectGetMidY(labelFrame));
   self.label.bounds = CGRectMake(0, 0, CGRectGetWidth(labelFrame), CGRectGetHeight(labelFrame));
 
-  UIUserInterfaceLayoutDirection layoutDirection = self.mdf_effectiveUserInterfaceLayoutDirection;
+  UIUserInterfaceLayoutDirection layoutDirection = self.effectiveUserInterfaceLayoutDirection;
   BOOL isRTL = layoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
 
   if (self.titleBelowIcon) {

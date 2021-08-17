@@ -778,12 +778,12 @@ and for each of our cell's subviews me need to update the `autoResizingMask`:
 #### Swift
 ```swift
 _titleLabel.autoresizingMask =
-  MDFTrailingMarginAutoresizingMaskForLayoutDirection(mdf_effectiveUserInterfaceLayoutDirection)
+  MDFTrailingMarginAutoresizingMaskForLayoutDirection(effectiveUserInterfaceLayoutDirection)
 ```
 
 #### Objective-C
 ```objc
 _titleLabel.autoresizingMask =
-    MDFTrailingMarginAutoresizingMaskForLayoutDirection(self.mdf_effectiveUserInterfaceLayoutDirection);
+    MDFTrailingMarginAutoresizingMaskForLayoutDirection(self.effectiveUserInterfaceLayoutDirection);
 ``` 
 <!--</div>-->

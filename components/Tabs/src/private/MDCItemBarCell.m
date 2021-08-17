@@ -15,8 +15,6 @@
 #import "MDCItemBarCell.h"
 #import "MDCItemBarCell+Private.h"
 
-#import <MDFInternationalization/MDFInternationalization.h>
-
 #import "MDCItemBarBadge.h"
 #import "MDCItemBarStyle.h"
 #import "MaterialAnimationTiming.h"
@@ -272,8 +270,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
   // Determine badge center
   if (_style.shouldDisplayBadge) {
     CGFloat badgeOffset = (imageBounds.size.width / 2) + (badgeSize.width / 2);
-    if (self.mdf_effectiveUserInterfaceLayoutDirection ==
-        UIUserInterfaceLayoutDirectionRightToLeft) {
+    if (self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
       badgeOffset *= -1;
     }
 

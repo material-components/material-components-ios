@@ -116,7 +116,7 @@ static const CGFloat kDetailColorOpacity = (CGFloat)0.6;
   self.detailLabel.frame = layout.detailLabelFrame;
   self.leadingImageView.frame = layout.leadingImageViewFrame;
   self.trailingImageView.frame = layout.trailingImageViewFrame;
-  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+  if (self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     self.leadingImageView.frame =
         MDFRectFlippedHorizontally(self.leadingImageView.frame, layout.cellWidth);
     self.trailingImageView.frame =

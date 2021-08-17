@@ -18,7 +18,6 @@
 
 #import "MaterialTextControls+Enums.h"
 #import "MDCTextControlAssistiveLabelDrawPriority.h"
-#import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MDCBaseTextFieldDelegate.h"
 #import "MaterialTextControlsPrivate+BaseStyle.h"
@@ -371,8 +370,7 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
   } else if (self.semanticContentAttribute == UISemanticContentAttributeForceLeftToRight) {
     return NO;
   } else {
-    return self.mdf_effectiveUserInterfaceLayoutDirection ==
-           UIUserInterfaceLayoutDirectionRightToLeft;
+    return self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
   }
 }
 

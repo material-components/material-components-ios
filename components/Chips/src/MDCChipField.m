@@ -52,7 +52,7 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
 
 - (CGRect)textRectForBounds:(CGRect)bounds {
   CGRect textRect = [super textRectForBounds:bounds];
-  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+  if (self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     textRect = MDFRectFlippedHorizontally(textRect, CGRectGetWidth(self.bounds));
     textRect.origin.x += 5;
   }
@@ -173,7 +173,7 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
   CGRect standardizedBounds = CGRectStandardize(self.bounds);
 
   BOOL isRTL =
-      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
+      self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
 
   // Calculate the frames for all the chips and set them.
   NSArray *chipFrames = [self chipFramesForSize:standardizedBounds.size];

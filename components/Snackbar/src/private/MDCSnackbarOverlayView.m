@@ -16,8 +16,6 @@
 
 #import <Foundation/Foundation.h>
 
-#import <MDFInternationalization/MDFInternationalization.h>
-
 #import "../MDCSnackbarError.h"
 #import "../MDCSnackbarMessage.h"
 #import "MaterialAnimationTiming.h"
@@ -245,8 +243,7 @@ static const CGFloat kMaximumHeight = 80;
   BOOL isRegularHeight = self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular;
   if (!isRegularWidth || !isRegularHeight) {
     if (@available(iOS 11.0, *)) {
-      if (self.mdf_effectiveUserInterfaceLayoutDirection ==
-          UIUserInterfaceLayoutDirectionLeftToRight) {
+      if (self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
         leftMargin += self.mdc_safeAreaInsets.left;
         rightMargin += self.mdc_safeAreaInsets.right;
       } else {
@@ -363,7 +360,7 @@ static const CGFloat kMaximumHeight = 80;
                                                         constant:[snackbarView maximumWidth]]];
       } else {
         if (@available(iOS 11.0, *)) {
-          if (self.mdf_effectiveUserInterfaceLayoutDirection ==
+          if (self.effectiveUserInterfaceLayoutDirection ==
               UIUserInterfaceLayoutDirectionLeftToRight) {
             leftMargin += self.mdc_safeAreaInsets.left;
             rightMargin += self.mdc_safeAreaInsets.right;

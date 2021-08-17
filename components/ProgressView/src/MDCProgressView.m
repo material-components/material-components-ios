@@ -395,7 +395,7 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
       progressFrame = CGRectZero;
     }
   }
-  if (self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
+  if (self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     progressFrame = MDFRectFlippedHorizontally(progressFrame, CGRectGetWidth(self.bounds));
   }
   self.progressView.frame = progressFrame;

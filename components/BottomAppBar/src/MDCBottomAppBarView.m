@@ -16,8 +16,6 @@
 
 #import "MDCBottomAppBarView.h"
 
-#import <MDFInternationalization/MDFInternationalization.h>
-
 #import "private/MDCBottomAppBarAttributes.h"
 #import "private/MDCBottomAppBarLayer.h"
 #import "MaterialButtons.h"
@@ -148,7 +146,7 @@ static const CGFloat kMDCBottomAppBarViewFloatingButtonElevationSecondary = 4;
   CGFloat rightCenter =
       appBarWidth - kMDCBottomAppBarFloatingButtonPositionX - safeAreaInsets.right;
   BOOL isRTL =
-      self.mdf_effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
+      self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
   switch (self.floatingButtonPosition) {
     case MDCBottomAppBarFloatingButtonPositionLeading: {
       floatingButtonPoint.x = isRTL ? rightCenter : leftCenter;
