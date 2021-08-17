@@ -188,8 +188,6 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
   NSMutableDictionary<NSNumber *, UIColor *> *_buttonTitleColors;
 
-  BOOL _mdc_adjustsFontForContentSizeCategory;
-
   BOOL _shouldDismissOnOverlayTap;
 
   BOOL _isMultilineText;
@@ -220,7 +218,6 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
             ?: MDCRGBAColor(0xFF, 0xFF, 0xFF, (float)0.6);
     _buttonTitleColors[@(UIControlStateHighlighted)] =
         [manager buttonTitleColorForState:UIControlStateHighlighted] ?: UIColor.whiteColor;
-    _mdc_adjustsFontForContentSizeCategory = manager.mdc_adjustsFontForContentSizeCategory;
 #pragma clang diagnostic push
     _messageFont = manager.messageFont;
     _buttonFont = manager.buttonFont;
@@ -298,7 +295,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
     NSMutableAttributedString *messageString = [message.attributedText mutableCopy];
 
-    if (!_messageFont && !_mdc_adjustsFontForContentSizeCategory) {
+    if (!_messageFont) {
       // Find any of the bold attributes in the string, and set the proper font for those ranges.
       // Use NSAttributedStringEnumerationLongestEffectiveRangeNotRequired as opposed to 0,
       // otherwise it will only work if bold text is in the end.
@@ -537,34 +534,8 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   // If we have a custom font apply it to the label.
   // If not, fall back to the Material specified font.
   if (_messageFont) {
-    // If we are automatically adjusting for Dynamic Type resize the font based on the text style
-    if (_mdc_adjustsFontForContentSizeCategory) {
-      if (_messageFont.mdc_scalingCurve) {
-        _label.font = [_messageFont mdc_scaledFontForTraitEnvironment:self];
-      } else {
-        _label.font =
-            [_messageFont mdc_fontSizedForMaterialTextStyle:kMessageTextStyle
-                                       scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-      }
-    } else {
       _label.font = _messageFont;
-    }
   } else {
-    // TODO(#2709): Migrate to a single source of truth for fonts
-    // There is no custom font, so use the default font.
-    if (_mdc_adjustsFontForContentSizeCategory) {
-      // If we are using the default (system) font loader, retrieve the
-      // font from the UIFont preferredFont API.
-      if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-        _label.font = [UIFont mdc_preferredFontForMaterialTextStyle:kMessageTextStyle];
-      } else {
-        // There is a custom font loader, retrieve the font and scale it.
-        UIFont *customTypographyFont = [MDCTypography body1Font];
-        _label.font = [customTypographyFont
-            mdc_fontSizedForMaterialTextStyle:kMessageTextStyle
-                         scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-      }
-    } else {
       // If we are using the default (system) font loader, retrieve the
       // font from the UIFont standardFont API.
       if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
@@ -573,7 +544,6 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
         // There is a custom font loader, retrieve the font from it.
         _label.font = [MDCTypography body1Font];
       }
-    }
   }
   [self setNeedsLayout];
 }
@@ -595,32 +565,9 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   // If not, fall back to the Material specified font.
   if (_buttonFont) {
     finalButtonFont = _buttonFont;
-    // If we are automatically adjusting for Dynamic Type resize the font based on the text style
-    if (_mdc_adjustsFontForContentSizeCategory) {
-      if (_buttonFont.mdc_scalingCurve) {
-        finalButtonFont = [_buttonFont mdc_scaledFontForTraitEnvironment:self];
-      } else {
-        finalButtonFont =
-            [_buttonFont mdc_fontSizedForMaterialTextStyle:kButtonTextStyle
-                                      scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-      }
-    }
   } else {
     // TODO(#2709): Migrate to a single source of truth for fonts
     // There is no custom font, so use the default font.
-    if (_mdc_adjustsFontForContentSizeCategory) {
-      // If we are using the default (system) font loader, retrieve the
-      // font from the UIFont preferredFont API.
-      if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-        finalButtonFont = [UIFont mdc_preferredFontForMaterialTextStyle:kButtonTextStyle];
-      } else {
-        // There is a custom font loader, retrieve the font and scale it.
-        UIFont *customTypographyFont = [MDCTypography buttonFont];
-        finalButtonFont = [customTypographyFont
-            mdc_fontSizedForMaterialTextStyle:kButtonTextStyle
-                         scaledForDynamicType:_mdc_adjustsFontForContentSizeCategory];
-      }
-    } else {
       // If we are using the default (system) font loader, retrieve the
       // font from the UIFont standardFont API.
       if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
@@ -629,7 +576,6 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
         // There is a custom font loader, retrieve the font from it.
         finalButtonFont = [MDCTypography buttonFont];
       }
-    }
   }
 
   [self.actionButton setTitleFont:finalButtonFont forState:UIControlStateNormal];
@@ -1012,36 +958,6 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   NSBundle *bundle = [NSBundle bundleForClass:[MDCSnackbarMessageView class]];
   NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle) resourcePath];
   return [resourcePath stringByAppendingPathComponent:bundleName];
-}
-
-#pragma mark - Dynamic Type Support
-
-- (BOOL)mdc_adjustsFontForContentSizeCategory {
-  return _mdc_adjustsFontForContentSizeCategory;
-}
-
-- (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
-  _mdc_adjustsFontForContentSizeCategory = adjusts;
-
-  if (_mdc_adjustsFontForContentSizeCategory) {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(contentSizeCategoryDidChange:)
-                                                 name:UIContentSizeCategoryDidChangeNotification
-                                               object:nil];
-  } else {
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIContentSizeCategoryDidChangeNotification
-                                                  object:nil];
-  }
-
-  [self updateMessageFont];
-  [self updateButtonFont];
-}
-
-// Handles UIContentSizeCategoryDidChangeNotifications
-- (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
-  [self updateMessageFont];
-  [self updateButtonFont];
 }
 
 #pragma mark - Elevation

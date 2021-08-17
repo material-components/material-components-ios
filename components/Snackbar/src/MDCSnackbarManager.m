@@ -563,7 +563,6 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   CGFloat _disabledButtonAlpha;
   UIColor *_buttonInkColor;
   NSMutableDictionary<NSNumber *, UIColor *> *_buttonTitleColors;
-  BOOL _mdc_adjustsFontForContentSizeCategory;
   BOOL _shouldApplyStyleChangesToVisibleSnackbars;
 }
 
@@ -853,20 +852,6 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 
 - (UIColor *)buttonTitleColorForState:(UIControlState)state {
   return _buttonTitleColors[@(state)];
-}
-
-- (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)mdc_adjustsFontForContentSizeCategory {
-  if (mdc_adjustsFontForContentSizeCategory != _mdc_adjustsFontForContentSizeCategory) {
-    _mdc_adjustsFontForContentSizeCategory = mdc_adjustsFontForContentSizeCategory;
-    [self runSnackbarUpdatesOnMainThread:^{
-      [self.internalManager.currentSnackbar
-          mdc_setAdjustsFontForContentSizeCategory:mdc_adjustsFontForContentSizeCategory];
-    }];
-  }
-}
-
-- (BOOL)mdc_adjustsFontForContentSizeCategory {
-  return _mdc_adjustsFontForContentSizeCategory;
 }
 
 - (void)setShouldApplyStyleChangesToVisibleSnackbars:

@@ -100,7 +100,6 @@
   MDCSnackbarManager.defaultManager.alignment = MDCSnackbarAlignmentLeading;
   MDCSnackbarManager.defaultManager.buttonFont = [UIFont systemFontOfSize:72];
   MDCSnackbarManager.defaultManager.delegate = delegate;
-  [MDCSnackbarManager.defaultManager mdc_setAdjustsFontForContentSizeCategory:YES];
   MDCSnackbarManager.defaultManager.messageFont = [UIFont systemFontOfSize:66];
   MDCSnackbarManager.defaultManager.messageTextColor = UIColor.orangeColor;
   MDCSnackbarManager.defaultManager.shouldApplyStyleChangesToVisibleSnackbars = YES;
@@ -113,8 +112,6 @@
   XCTAssertEqual(manager.alignment, MDCSnackbarManager.defaultManager.alignment);
   XCTAssertEqualObjects(manager.buttonFont, MDCSnackbarManager.defaultManager.buttonFont);
   XCTAssertEqual(manager.delegate, MDCSnackbarManager.defaultManager.delegate);
-  XCTAssertEqual(manager.mdc_adjustsFontForContentSizeCategory,
-                 MDCSnackbarManager.defaultManager.mdc_adjustsFontForContentSizeCategory);
   XCTAssertEqualObjects(manager.messageFont, MDCSnackbarManager.defaultManager.messageFont);
   XCTAssertEqual(manager.messageTextColor, MDCSnackbarManager.defaultManager.messageTextColor);
   XCTAssertEqual(manager.shouldApplyStyleChangesToVisibleSnackbars,
@@ -142,8 +139,6 @@
   manager2.buttonFont = [UIFont systemFontOfSize:41];
   manager1.delegate = delegate1;
   manager2.delegate = delegate2;
-  manager1.mdc_adjustsFontForContentSizeCategory = YES;
-  manager2.mdc_adjustsFontForContentSizeCategory = NO;
   manager1.messageFont = [UIFont systemFontOfSize:66];
   manager2.messageFont = [UIFont systemFontOfSize:33];
   manager1.messageTextColor = UIColor.orangeColor;
@@ -161,8 +156,6 @@
   XCTAssertNotEqual(manager1.alignment, manager2.alignment);
   XCTAssertNotEqual(manager1.buttonFont, manager2.buttonFont);
   XCTAssertNotEqual(manager1.delegate, manager2.delegate);
-  XCTAssertNotEqual(manager1.mdc_adjustsFontForContentSizeCategory,
-                    manager2.mdc_adjustsFontForContentSizeCategory);
   XCTAssertNotEqual(manager1.messageFont, manager2.messageFont);
   XCTAssertNotEqual(manager1.messageTextColor, manager2.messageTextColor);
   XCTAssertNotEqual(manager1.shouldApplyStyleChangesToVisibleSnackbars,

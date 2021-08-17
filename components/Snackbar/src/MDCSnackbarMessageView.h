@@ -112,24 +112,3 @@
      UITraitCollection *_Nullable previousTraitCollection);
 
 @end
-
-@interface MDCSnackbarMessageView (ToBeDeprecated)
-
-/**
- Indicates whether the Snackbar should automatically update its font when the device’s
- UIContentSizeCategory is changed.
-
- This property is modeled after the adjustsFontForContentSizeCategory property in the
- UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
-
- If set to YES, this button will base its message font on MDCFontTextStyleBody2
- and its button font on MDCFontTextStyleButton.
-
- Default value is NO.
-
- To get a snackbar to respond to Dynamic Type, make sure to set scalable fonts.
- */
-@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
-    BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
-
-@end
