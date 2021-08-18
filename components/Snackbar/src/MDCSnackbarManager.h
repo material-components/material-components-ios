@@ -40,7 +40,14 @@
 @interface MDCSnackbarManager : NSObject <MDCElevationOverriding>
 
 /**
- An instance of MDCSnackbarManager.
+ The default shared instance of MDCSnackbarManager.
+
+ Any property set on this shared manager affects all the snackbar messages sent to this manager.
+
+ Consider creating a new manager instance or resetting the property values
+ (e.g. leadingMargin, trailingMargin) to their default values on the default
+ manager instance if you don't want the property values to affect all
+ snackbar messages.
  */
 @property(class, nonnull, nonatomic, readonly, strong) MDCSnackbarManager *defaultManager;
 
