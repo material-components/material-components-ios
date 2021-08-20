@@ -240,7 +240,7 @@ NSString *const kDeselectedCellAccessibilityHintKey =
     case MDCCollectionViewCellAccessoryDisclosureIndicator: {
       UIImage *image = [MDCIcons imageFor_ic_chevron_right];
       if (self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
-        image = [image mdf_imageWithHorizontallyFlippedOrientation];
+        image = [image imageWithHorizontallyFlippedOrientation];
       }
       accessoryImageView.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
       break;

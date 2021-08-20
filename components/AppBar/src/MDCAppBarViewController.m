@@ -26,7 +26,6 @@
 #import "MaterialShadowLayer.h"
 #import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialUIMetrics.h"
-#import <MDFInternationalization/MDFInternationalization.h>
 
 static NSString *const kBarStackKey = @"barStack";
 
@@ -135,7 +134,7 @@ static NSString *const kMaterialAppBarBundle = @"MaterialAppBar.bundle";
     backButtonImage = [backButtonImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     if (self.navigationBar.effectiveUserInterfaceLayoutDirection ==
         UIUserInterfaceLayoutDirectionRightToLeft) {
-      backButtonImage = [backButtonImage mdf_imageWithHorizontallyFlippedOrientation];
+      backButtonImage = [backButtonImage imageWithHorizontallyFlippedOrientation];
     }
     backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:backButtonImage
                                                          style:UIBarButtonItemStyleDone

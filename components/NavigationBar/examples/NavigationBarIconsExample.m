@@ -15,7 +15,6 @@
 
 #import "MaterialColorScheme.h"
 #import "MaterialTypographyScheme.h"
-#import <MDFInternationalization/MDFInternationalization.h>
 
 #import "MaterialIcons+ic_arrow_back.h"
 #import "MaterialIcons+ic_info.h"
@@ -61,7 +60,7 @@
                                         toNavigationBar:self.navigationBar];
 
   UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]
-      initWithImage:[[[MDCIcons imageFor_ic_arrow_back] mdf_imageWithHorizontallyFlippedOrientation]
+      initWithImage:[[[MDCIcons imageFor_ic_arrow_back] imageWithHorizontallyFlippedOrientation]
                         imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
               style:UIBarButtonItemStylePlain
              target:self
