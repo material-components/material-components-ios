@@ -95,3 +95,31 @@ __deprecated_msg(
     ;
 
 @end
+
+@interface MDCMultilineTextField (UIAccessibility)
+
+/**
+The default value of isAccessibleElement for MDCMultilneTextField is false. Unlike MDCBaseTextField,
+explicitly setting it to false does not make any difference. When isAccessibleElement is false, the
+entire view is treated as a container. The VoiceOver iterates through each accessibility element
+within MDCMultilineTextField and read the accessibilityLabel of each element. Since
+MDCMutlilineTextField acts merely as a container, whether accessibilityLabel for
+MDCMultilineTextField is set or not has no effect.
+
+If isAccessibleElement is set to true, the entire MDCMultilineTextField is treated as one
+accessibility element, as opposed to a container. The accessibilityLabel for MDCMultilineTextField
+will be a computed property. The value returned will be a concatenation of accessibilityLabel of the
+elements contained within the MDCMultilineTextField. If accessibilityLabel for MDCMultilineTextField
+is set, the assigned value is used in place of placeholder label's accessibilityLabel when
+concatenating.
+
+*/
+
+@property(nonatomic) BOOL isAccessibilityElement;
+
+/**
+ See comments for isAccessibilityElement
+ */
+@property(nullable, nonatomic, copy) NSString *accessibilityLabel;
+
+@end

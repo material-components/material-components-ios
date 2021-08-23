@@ -44,7 +44,7 @@
   XCTAssertEqualObjects(field.accessibilityLabel, @"main accessibility label");
 }
 
-- (void)testAccessibilityLabelUnderlineLabels {
+- (void)testAccessibilityLabelUnderlineLabelsWhenIsAccessibilityElementIsTurnedOn {
   // Given
   MDCMultilineTextField *field = [[MDCMultilineTextField alloc] init];
 
@@ -52,13 +52,14 @@
   field.accessibilityLabel = @"main accessibility label";
   field.leadingUnderlineLabel.accessibilityLabel = @"leading underline";
   field.trailingUnderlineLabel.accessibilityLabel = @"trailing underline";
+  field.isAccessibilityElement = YES;
 
   // Then
   XCTAssertEqualObjects(field.accessibilityLabel,
                         @"main accessibility label, leading underline, trailing underline");
 }
 
-- (void)testAccessibilityLabelPlaceholder {
+- (void)testAccessibilityLabelPlaceholderWhenIsAccessibilityElementIsTurnedOn {
   // Given
   MDCMultilineTextField *field = [[MDCMultilineTextField alloc] init];
 
@@ -67,13 +68,14 @@
   field.placeholderLabel.accessibilityLabel = @"placeholder";
   field.leadingUnderlineLabel.accessibilityLabel = @"leading underline";
   field.trailingUnderlineLabel.accessibilityLabel = @"trailing underline";
+  field.isAccessibilityElement = YES;
 
   // Then
   XCTAssertEqualObjects(field.accessibilityLabel,
                         @"placeholder, leading underline, trailing underline");
 }
 
-- (void)testAccessibilityLabelPlaceholderAndLabel {
+- (void)testAccessibilityLabelPlaceholderAndLabelWhenIsAccessibilityElementIsTurnedOn {
   // Given
   MDCMultilineTextField *field = [[MDCMultilineTextField alloc] init];
 
@@ -82,6 +84,7 @@
   field.placeholderLabel.accessibilityLabel = @"placeholder";
   field.leadingUnderlineLabel.accessibilityLabel = @"leading underline";
   field.trailingUnderlineLabel.accessibilityLabel = @"trailing underline";
+  field.isAccessibilityElement = YES;
 
   // Then
   XCTAssertEqualObjects(field.accessibilityLabel,

@@ -793,6 +793,14 @@ static NSString *const kBundle = @"MaterialTextFields.bundle";
 
 #pragma mark - Accessibility
 
+- (NSInteger)accessibilityElementCount {
+  if (self.isAccessibilityElement) {
+    return [super accessibilityElementCount];
+  } else {
+    return [self accessibilityElements].count;
+  }
+}
+
 - (NSString *)accessibilityValue {
   NSString *value = [self.text length] ? self.text : self.placeholder;
 
@@ -805,20 +813,56 @@ static NSString *const kBundle = @"MaterialTextFields.bundle";
 }
 
 - (NSString *)accessibilityLabel {
-  NSMutableArray *accessibilityStrings = [[NSMutableArray alloc] init];
-  if ([super accessibilityLabel].length > 0) {
-    [accessibilityStrings addObject:[super accessibilityLabel]];
-  } else if (self.placeholderLabel.accessibilityLabel.length > 0) {
-    [accessibilityStrings addObject:self.placeholderLabel.accessibilityLabel];
+  if (self.isAccessibilityElement) {
+    NSMutableArray *accessibilityStrings = [[NSMutableArray alloc] init];
+    if ([super accessibilityLabel].length > 0) {
+      [accessibilityStrings addObject:[super accessibilityLabel]];
+    } else if (self.placeholderLabel.accessibilityLabel.length > 0) {
+      [accessibilityStrings addObject:self.placeholderLabel.accessibilityLabel];
+    }
+    if (self.leadingUnderlineLabel.accessibilityLabel.length > 0) {
+      [accessibilityStrings addObject:self.leadingUnderlineLabel.accessibilityLabel];
+    }
+    if (self.trailingUnderlineLabel.accessibilityLabel.length > 0) {
+      [accessibilityStrings addObject:self.trailingUnderlineLabel.accessibilityLabel];
+    }
+    return accessibilityStrings.count > 0 ? [accessibilityStrings componentsJoinedByString:@", "]
+                                          : nil;
+  } else {
+    return [super accessibilityLabel];
   }
-  if (self.leadingUnderlineLabel.accessibilityLabel.length > 0) {
-    [accessibilityStrings addObject:self.leadingUnderlineLabel.accessibilityLabel];
+}
+
+- (NSArray *)accessibilityElements {
+  if (self.isAccessibilityElement) {
+    return [super accessibilityElements];
+  } else {
+    NSMutableArray *mutableElements = [super accessibilityElements] == nil
+                                          ? [[NSMutableArray alloc] init]
+                                          : [[super accessibilityElements] mutableCopy];
+
+    if (self.placeholderLabel.isAccessibilityElement) {
+      [mutableElements insertObject:self.placeholderLabel atIndex:0];
+    }
+
+    if (self.textView.isAccessibilityElement) {
+      [mutableElements addObject:self.textView];
+    }
+
+    if (self.leadingUnderlineLabel.isAccessibilityElement) {
+      [mutableElements addObject:self.leadingUnderlineLabel];
+    }
+
+    if (self.clearButton.isAccessibilityElement && self.isEditing) {
+      [mutableElements addObject:self.clearButton];
+    }
+
+    if (self.trailingUnderlineLabel.isAccessibilityElement) {
+      [mutableElements addObject:self.trailingUnderlineLabel];
+    }
+
+    return [mutableElements copy];
   }
-  if (self.trailingUnderlineLabel.accessibilityLabel.length > 0) {
-    [accessibilityStrings addObject:self.trailingUnderlineLabel.accessibilityLabel];
-  }
-  return accessibilityStrings.count > 0 ? [accessibilityStrings componentsJoinedByString:@", "]
-                                        : nil;
 }
 
 - (BOOL)mdc_adjustsFontForContentSizeCategory {
