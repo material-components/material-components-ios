@@ -14,7 +14,6 @@
 
 #import "MDCActivityIndicator.h"
 
-#import <MDFInternationalization/MDFInternationalization.h>
 #import <MotionAnimator/MotionAnimator.h>
 #import <QuartzCore/QuartzCore.h>
 
@@ -161,7 +160,7 @@ static const CGFloat kSingleCycleRotation =
 #pragma clang diagnostic ignored "-Wpartial-availability"
   // The activity indicator reflects the passage of time (a spatial semantic context) and so
   // will not be mirrored in RTL languages.
-  self.mdf_semanticContentAttribute = UISemanticContentAttributeSpatial;
+  self.semanticContentAttribute = UISemanticContentAttributeSpatial;
 #pragma clang diagnostic pop
 
   _animator = [[MDMMotionAnimator alloc] init];

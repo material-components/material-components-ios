@@ -18,7 +18,6 @@
 #import "MDCTabBarItemAppearance.h"
 #import "MDCTabBarTextTransform.h"
 #import "MDCItemBarDelegate.h"
-#import <MDFInternationalization/MDFInternationalization.h>
 
 #import "private/MDCItemBar.h"
 #import "private/MDCItemBarAlignment.h"
@@ -427,19 +426,13 @@ static inline UIColor *RippleColor() {
   }
 }
 
-// UISemanticContentAttribute was added in iOS SDK 9.0 but is available on devices running earlier
-// version of iOS. We ignore the partial-availability warning that gets thrown on our use of this
-// symbol.
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wpartial-availability"
-- (void)mdf_setSemanticContentAttribute:(UISemanticContentAttribute)semanticContentAttribute {
-  if (semanticContentAttribute == self.mdf_semanticContentAttribute) {
+- (void)setSemanticContentAttribute:(UISemanticContentAttribute)semanticContentAttribute {
+  if (semanticContentAttribute == self.semanticContentAttribute) {
     return;
   }
-  [super mdf_setSemanticContentAttribute:semanticContentAttribute];
-  _itemBar.mdf_semanticContentAttribute = semanticContentAttribute;
+  super.semanticContentAttribute = semanticContentAttribute;
+  _itemBar.semanticContentAttribute = semanticContentAttribute;
 }
-#pragma clang diagnostic pop
 
 #pragma mark - MDCAccessibility
 

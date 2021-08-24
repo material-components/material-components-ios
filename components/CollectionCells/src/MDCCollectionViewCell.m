@@ -540,19 +540,13 @@ NSString *const kDeselectedCellAccessibilityHintKey =
 
 #pragma mark - RTL
 
-// UISemanticContentAttribute was added in iOS SDK 9.0 but is available on devices running earlier
-// version of iOS. We ignore the partial-availability warning that gets thrown on our use of this
-// symbol.
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wpartial-availability"
-- (void)mdf_setSemanticContentAttribute:(UISemanticContentAttribute)mdf_semanticContentAttribute {
-  [super mdf_setSemanticContentAttribute:mdf_semanticContentAttribute];
+- (void)semanticContentAttribute:(UISemanticContentAttribute)semanticContentAttribute {
+  super.semanticContentAttribute = semanticContentAttribute;
   // Reload the accessory type image if there is one.
   if ([_accessoryView isKindOfClass:[MDCAccessoryTypeImageView class]]) {
     self.accessoryType = self.accessoryType;
   }
 }
-#pragma clang diagnostic pop
 
 #pragma mark - Accessibility
 
