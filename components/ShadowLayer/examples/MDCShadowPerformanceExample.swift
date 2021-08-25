@@ -92,6 +92,7 @@ class MDCShadowPerformanceExample:
     view.addSubview(bottomNavBar)
     bottomNavBar.titleVisibility = .always
     bottomNavBar.alignment = .centered
+    bottomNavBar.enableRippleBehavior = true
     let tabBarItem1 = UITabBarItem(title: "Home", image: UIImage(named: "ic_home"), tag: 0)
     let tabBarItem2 =
       UITabBarItem(title: "Messages", image: UIImage(named: "ic_email"), tag: 1)

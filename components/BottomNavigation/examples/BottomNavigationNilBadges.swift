@@ -14,10 +14,10 @@
 
 import Foundation
 import MaterialComponents.MaterialBottomNavigation
-import MaterialComponents.MaterialBottomNavigation_Theming
+import MaterialComponents.MaterialBottomNavigation_Theming 
 import MaterialComponents.MaterialContainerScheme
 
-class BottomNavigationNilBadges : UIViewController, MDCBottomNavigationBarDelegate {
+class BottomNavigationNilBadges: UIViewController, MDCBottomNavigationBarDelegate {
 
   @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
@@ -28,7 +28,7 @@ class BottomNavigationNilBadges : UIViewController, MDCBottomNavigationBarDelega
 
   init() {
     super.init(nibName: nil, bundle: nil)
-    self.title = "Bottom Navigation (Swift)"  
+    self.title = "Bottom Navigation (Swift)"
   }
 
   @available(*, unavailable)
@@ -52,7 +52,7 @@ class BottomNavigationNilBadges : UIViewController, MDCBottomNavigationBarDelega
     // Add items to the bottom navigation bar.
     tabBarItem1.accessibilityValue = "New items"
 
-    bottomNavBar.items = [ tabBarItem1, tabBarItem2 ]
+    bottomNavBar.items = [tabBarItem1, tabBarItem2]
 
     // Select a bottom navigation bar item.
     bottomNavBar.selectedItem = tabBarItem2
@@ -63,14 +63,16 @@ class BottomNavigationNilBadges : UIViewController, MDCBottomNavigationBarDelega
 
     // Theme the bottom navigation bar.
     bottomNavBar.applyPrimaryTheme(withScheme: containerScheme)
+    bottomNavBar.enableRippleBehavior = true
   }
-  
+
   func layoutBottomNavBar() {
     let size = bottomNavBar.sizeThatFits(view.bounds.size)
-    var bottomNavBarFrame = CGRect(x: 0,
-                                   y: view.bounds.height - size.height,
-                                   width: size.width,
-                                   height: size.height)
+    var bottomNavBarFrame = CGRect(
+      x: 0,
+      y: view.bounds.height - size.height,
+      width: size.width,
+      height: size.height)
     if #available(iOS 11.0, *) {
       bottomNavBarFrame.size.height += view.safeAreaInsets.bottom
       bottomNavBarFrame.origin.y -= view.safeAreaInsets.bottom
@@ -98,7 +100,7 @@ class BottomNavigationNilBadges : UIViewController, MDCBottomNavigationBarDelega
     _ bottomNavigationBar: MDCBottomNavigationBar,
     didSelect item: UITabBarItem
   ) {
-    if (item == tabBarItem1) {
+    if item == tabBarItem1 {
       tabBarItem1.badgeValue = nil
       tabBarItem1.accessibilityValue = ""
     }

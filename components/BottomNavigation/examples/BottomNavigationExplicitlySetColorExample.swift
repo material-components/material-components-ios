@@ -15,8 +15,8 @@
 import Foundation
 import MaterialComponents.MaterialBottomNavigation
 import MaterialComponents.MaterialButtons
-import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialPalettes
+import MaterialComponents.MaterialContainerScheme
 
 class BottomNavigationExplicitlySetColorExample: UIViewController {
 
@@ -35,23 +35,27 @@ class BottomNavigationExplicitlySetColorExample: UIViewController {
   }
 
   func layoutButtons() {
-    redButton.frame.origin = CGPoint(x: view.center.x - (redButton.frame.width / 2),
-                                     y: view.center.y - (redButton.frame.height + 16))
-    blueButton.frame.origin = CGPoint(x: view.center.x - (blueButton.frame.width / 2),
-                                      y: view.center.y + 16)
+    redButton.frame.origin = CGPoint(
+      x: view.center.x - (redButton.frame.width / 2),
+      y: view.center.y - (redButton.frame.height + 16))
+    blueButton.frame.origin = CGPoint(
+      x: view.center.x - (blueButton.frame.width / 2),
+      y: view.center.y + 16)
   }
 
   func layoutBottomNavBar() {
     let size = bottomNavBar.sizeThatFits(view.bounds.size)
-    var bottomNavBarFrame = CGRect(x: 0,
-                                   y: view.bounds.height - size.height,
-                                   width: size.width,
-                                   height: size.height)
+    var bottomNavBarFrame = CGRect(
+      x: 0,
+      y: view.bounds.height - size.height,
+      width: size.width,
+      height: size.height)
     if #available(iOS 11.0, *) {
       bottomNavBarFrame.size.height += view.safeAreaInsets.bottom
       bottomNavBarFrame.origin.y -= view.safeAreaInsets.bottom
     }
     bottomNavBar.frame = bottomNavBarFrame
+    bottomNavBar.enableRippleBehavior = true
   }
 
   override func viewWillLayoutSubviews() {
@@ -80,10 +84,10 @@ class BottomNavigationExplicitlySetColorExample: UIViewController {
       UITabBarItem(title: "Messages", image: UIImage(named: "ic_email"), tag: 1)
     let tabBarItem3 =
       UITabBarItem(title: "Favorites", image: UIImage(named: "ic_favorite"), tag: 2)
-    bottomNavBar.items = [ tabBarItem1, tabBarItem2, tabBarItem3 ]
+    bottomNavBar.items = [tabBarItem1, tabBarItem2, tabBarItem3]
 
     // Select a bottom navigation bar item.
-    bottomNavBar.selectedItem = tabBarItem2;
+    bottomNavBar.selectedItem = tabBarItem2
 
     // Layout buttons
     redButton.setTitle("Red theme", for: .normal)

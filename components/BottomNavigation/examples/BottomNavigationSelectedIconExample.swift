@@ -37,8 +37,9 @@ class BottomNavigationSelectedIconExample: UIViewController {
     tabBarItem2.selectedImage = nil
     let tabBarItem3 = UITabBarItem(title: "Favorites", image: UIImage(named: "ic_cake"), tag: 2)
     tabBarItem3.selectedImage = UIImage(named: "ic_favorite")
-    bottomNavBar.items = [ tabBarItem1, tabBarItem2, tabBarItem3 ]
+    bottomNavBar.items = [tabBarItem1, tabBarItem2, tabBarItem3]
     bottomNavBar.selectedItem = tabBarItem1
+    bottomNavBar.enableRippleBehavior = true
     view.addSubview(bottomNavBar)
 
     bottomNavBar.applyPrimaryTheme(withScheme: containerScheme)
@@ -46,10 +47,11 @@ class BottomNavigationSelectedIconExample: UIViewController {
 
   func layoutBottomNavBar() {
     let size = bottomNavBar.sizeThatFits(view.bounds.size)
-    var bottomNavBarFrame = CGRect(x: 0,
-                                   y: view.bounds.height - size.height,
-                                   width: size.width,
-                                   height: size.height)
+    var bottomNavBarFrame = CGRect(
+      x: 0,
+      y: view.bounds.height - size.height,
+      width: size.width,
+      height: size.height)
     if #available(iOS 11.0, *) {
       bottomNavBarFrame.size.height += view.safeAreaInsets.bottom
       bottomNavBarFrame.origin.y -= view.safeAreaInsets.bottom
@@ -68,7 +70,6 @@ class BottomNavigationSelectedIconExample: UIViewController {
     layoutBottomNavBar()
   }
 }
-
 
 // MARK: - Catalog by Conventions
 extension BottomNavigationSelectedIconExample {

@@ -44,6 +44,7 @@
   self.bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
   self.bottomNavBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
   self.bottomNavBar.delegate = self;
+  self.bottomNavBar.enableRippleBehavior = YES;
   [self.view addSubview:self.bottomNavBar];
 
   UITabBarItem *tabBarItem1 = [[UITabBarItem alloc] initWithTitle:@"Home"

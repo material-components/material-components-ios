@@ -114,6 +114,7 @@
   [self.view addSubview:self.collectionView];
 
   self.bottomNavBar = [[MDCBottomNavigationBar alloc] initWithFrame:CGRectZero];
+  self.bottomNavBar.enableRippleBehavior = YES;
   [self.view addSubview:self.bottomNavBar];
   [self configureNavigationBar];
 

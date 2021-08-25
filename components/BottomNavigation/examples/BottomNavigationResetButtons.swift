@@ -45,24 +45,28 @@ class BottomNavigationResetExample: UIViewController {
   }
 
   func layoutButtons() {
-    buttonOne.center = CGPoint(x: view.center.x,
-                                     y: view.center.y - buttonOne.bounds.height / 2 - 16)
-    buttonTwo.center = CGPoint(x: view.center.x,
-                                     y: view.center.y + buttonTwo.bounds.height / 2 + 16)
+    buttonOne.center = CGPoint(
+      x: view.center.x,
+      y: view.center.y - buttonOne.bounds.height / 2 - 16)
+    buttonTwo.center = CGPoint(
+      x: view.center.x,
+      y: view.center.y + buttonTwo.bounds.height / 2 + 16)
 
   }
 
   func layoutBottomNavBar() {
     let size = bottomNavBar.sizeThatFits(view.bounds.size)
-    var bottomNavBarFrame = CGRect(x: 0,
-                                   y: view.bounds.height - size.height,
-                                   width: size.width,
-                                   height: size.height)
+    var bottomNavBarFrame = CGRect(
+      x: 0,
+      y: view.bounds.height - size.height,
+      width: size.width,
+      height: size.height)
     if #available(iOS 11.0, *) {
       bottomNavBarFrame.size.height += view.safeAreaInsets.bottom
       bottomNavBarFrame.origin.y -= view.safeAreaInsets.bottom
     }
     bottomNavBar.frame = bottomNavBarFrame
+    bottomNavBar.enableRippleBehavior = true
   }
 
   override func viewWillLayoutSubviews() {
@@ -85,7 +89,7 @@ class BottomNavigationResetExample: UIViewController {
     bottomNavBar.alignment = .centered
 
     // Add items to the bottom navigation bar.
-    bottomNavBar.items = [ tabBarItem1, tabBarItem2, tabBarItem3 ]
+    bottomNavBar.items = [tabBarItem1, tabBarItem2, tabBarItem3]
 
     // Select a bottom navigation bar item.
     bottomNavBar.selectedItem = tabBarItem2
