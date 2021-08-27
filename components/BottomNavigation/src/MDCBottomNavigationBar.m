@@ -154,6 +154,7 @@ static BOOL gEnablePerformantShadow = NO;
       .active = YES;
   [_barItemsLayoutGuide.trailingAnchor constraintEqualToAnchor:_itemsLayoutView.trailingAnchor]
       .active = YES;
+  _enableRippleBehavior = YES;
 }
 
 - (void)layoutSubviews {

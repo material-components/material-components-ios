@@ -255,7 +255,7 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
  of our migration to Ripple. Learn more at
  https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
 
- Defaults to NO.
+ Defaults to YES.
  */
 @property(nonatomic, assign) BOOL enableRippleBehavior;
 

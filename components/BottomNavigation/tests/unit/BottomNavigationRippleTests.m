@@ -59,7 +59,7 @@
  */
 - (void)testEnabledInkAndDisabledRippleColorsAndSuperviewsAndBounds {
   // Then
-  XCTAssertFalse(self.bottomNavigationBar.enableRippleBehavior);
+  XCTAssertTrue(self.bottomNavigationBar.enableRippleBehavior);
   for (MDCBottomNavigationItemView *itemView in self.bottomNavigationBar.itemViews) {
     XCTAssertEqualObjects(itemView.rippleTouchController.rippleView.rippleColor,
                           [UIColor.blackColor colorWithAlphaComponent:(CGFloat)0.15]);
@@ -121,6 +121,9 @@
  Test to confirm that default behavior triggers ink on touch and not ripple.
  */
 - (void)testTouchingItemToCheckInkIsInvokedAndNotRipple {
+  // When
+  self.bottomNavigationBar.enableRippleBehavior = NO;
+
   // Then
   for (MDCBottomNavigationItemView *itemView in self.bottomNavigationBar.itemViews) {
     XCTAssertFalse([self.bottomNavigationBar rippleTouchController:itemView.rippleTouchController
@@ -138,7 +141,6 @@
  */
 - (void)testSetEnableRippleBehaviorToYesThenSetSelectedItemTintColorToSetRippleColor {
   // When
-  self.bottomNavigationBar.enableRippleBehavior = YES;
   [self.bottomNavigationBar setSelectedItemTintColor:UIColor.redColor];
 
   // Then
