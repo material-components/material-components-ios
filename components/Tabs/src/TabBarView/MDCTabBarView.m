@@ -88,9 +88,6 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
 /** The bottom divider view shown behind the default indicator template. */
 @property(nonnull, nonatomic, strong) UIView *bottomDividerView;
 
-/** @c YES if the items are laid-out in a scrollable style. */
-@property(nonatomic, readonly) BOOL isScrollableLayoutStyle;
-
 /** Used to scroll to the selected item during the first call to @c layoutSubviews. */
 @property(nonatomic, assign) BOOL needsScrollToSelectedItem;
 
@@ -802,10 +799,6 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
   [super setBounds:bounds];
 }
 
-- (BOOL)isScrollableLayoutStyle {
-  return [self effectiveLayoutStyle] == MDCTabBarViewLayoutStyleScrollable;
-}
-
 - (MDCTabBarViewLayoutStyle)effectiveLayoutStyle {
   return [self effectiveLayoutStyleWithStyle:self.preferredLayoutStyle];
 }
@@ -1168,7 +1161,7 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
   }
 
   BOOL isRTL = [self isRTL];
-  CGFloat originAdjustment = self.isScrollableLayoutStyle ? kScrollableTabsLeadingEdgeInset : 0;
+  CGFloat originAdjustment = [self contentPaddingForLayoutStyle:self.preferredLayoutStyle].left;
   CGFloat viewOriginX = isRTL ? self.contentSize.width - originAdjustment : originAdjustment;
 
   for (NSUInteger i = 0; i < index; ++i) {
