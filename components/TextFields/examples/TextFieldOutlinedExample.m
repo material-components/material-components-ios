@@ -202,41 +202,22 @@
                                                       attribute:NSLayoutAttributeTrailingMargin
                                                      multiplier:1
                                                        constant:0]];
-  if (@available(iOS 11.0, *)) {
-    [NSLayoutConstraint activateConstraints:@[
-      [NSLayoutConstraint constraintWithItem:textFieldName
-                                   attribute:NSLayoutAttributeTop
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:self.scrollView.contentLayoutGuide
-                                   attribute:NSLayoutAttributeTop
-                                  multiplier:1
-                                    constant:20],
-      [NSLayoutConstraint constraintWithItem:textFieldMessage
-                                   attribute:NSLayoutAttributeBottom
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:self.scrollView.contentLayoutGuide
-                                   attribute:NSLayoutAttributeBottomMargin
-                                  multiplier:1
-                                    constant:-20]
-    ]];
-  } else {
-    [NSLayoutConstraint activateConstraints:@[
-      [NSLayoutConstraint constraintWithItem:textFieldName
-                                   attribute:NSLayoutAttributeTop
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:self.scrollView
-                                   attribute:NSLayoutAttributeTop
-                                  multiplier:1
-                                    constant:20],
-      [NSLayoutConstraint constraintWithItem:textFieldMessage
-                                   attribute:NSLayoutAttributeBottom
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:self.scrollView
-                                   attribute:NSLayoutAttributeBottomMargin
-                                  multiplier:1
-                                    constant:-20]
-    ]];
-  }
+  [NSLayoutConstraint activateConstraints:@[
+    [NSLayoutConstraint constraintWithItem:textFieldName
+                                 attribute:NSLayoutAttributeTop
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.scrollView.contentLayoutGuide
+                                 attribute:NSLayoutAttributeTop
+                                multiplier:1
+                                  constant:20],
+    [NSLayoutConstraint constraintWithItem:textFieldMessage
+                                 attribute:NSLayoutAttributeBottom
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.scrollView.contentLayoutGuide
+                                 attribute:NSLayoutAttributeBottomMargin
+                                multiplier:1
+                                  constant:-20]
+  ]];
 
   [constraints
       addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[state(80)]-[zip]|"

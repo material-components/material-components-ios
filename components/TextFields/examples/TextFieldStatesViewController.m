@@ -112,42 +112,23 @@
                                   metrics:nil
                                     views:views]];
 
-  if (@available(iOS 11.0, *)) {
-    [NSLayoutConstraint constraintWithItem:self.enabled
-                                 attribute:NSLayoutAttributeTop
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self.scrollView.contentLayoutGuide
-                                 attribute:NSLayoutAttributeTop
-                                multiplier:1
-                                  constant:20]
-        .active = YES;
-    [NSLayoutConstraint constraintWithItem:self.erroredDisabled
-                                 attribute:NSLayoutAttributeBottom
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self.scrollView.contentLayoutGuide
-                                 attribute:NSLayoutAttributeBottomMargin
-                                multiplier:1
-                                  constant:-20]
-        .active = YES;
+  [NSLayoutConstraint constraintWithItem:self.enabled
+                               attribute:NSLayoutAttributeTop
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.scrollView.contentLayoutGuide
+                               attribute:NSLayoutAttributeTop
+                              multiplier:1
+                                constant:20]
+      .active = YES;
+  [NSLayoutConstraint constraintWithItem:self.erroredDisabled
+                               attribute:NSLayoutAttributeBottom
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.scrollView.contentLayoutGuide
+                               attribute:NSLayoutAttributeBottomMargin
+                              multiplier:1
+                                constant:-20]
+      .active = YES;
 
-  } else {
-    [NSLayoutConstraint constraintWithItem:self.enabled
-                                 attribute:NSLayoutAttributeTop
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self.scrollView
-                                 attribute:NSLayoutAttributeTop
-                                multiplier:1
-                                  constant:20]
-        .active = YES;
-    [NSLayoutConstraint constraintWithItem:self.erroredDisabled
-                                 attribute:NSLayoutAttributeBottom
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self.scrollView
-                                 attribute:NSLayoutAttributeBottomMargin
-                                multiplier:1
-                                  constant:-20]
-        .active = YES;
-  }
 }
 
 - (void)setupControllers {

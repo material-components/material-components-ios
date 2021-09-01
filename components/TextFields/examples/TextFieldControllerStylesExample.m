@@ -189,41 +189,22 @@
                                 constant:0]
       .active = YES;
 
-  if (@available(iOS 11.0, *)) {
-    [NSLayoutConstraint constraintWithItem:textFieldOutlined
-                                 attribute:NSLayoutAttributeTop
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self.scrollView.contentLayoutGuide
-                                 attribute:NSLayoutAttributeTop
-                                multiplier:1
-                                  constant:20]
-        .active = YES;
-    [NSLayoutConstraint constraintWithItem:textFieldOutlined
-                                 attribute:NSLayoutAttributeBottom
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self.scrollView.contentLayoutGuide
-                                 attribute:NSLayoutAttributeBottom
-                                multiplier:1
-                                  constant:-20]
-        .active = YES;
-  } else {
-    [NSLayoutConstraint constraintWithItem:textFieldOutlined
-                                 attribute:NSLayoutAttributeTop
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self.scrollView
-                                 attribute:NSLayoutAttributeTop
-                                multiplier:1
-                                  constant:20]
-        .active = YES;
-    [NSLayoutConstraint constraintWithItem:textFieldOutlined
-                                 attribute:NSLayoutAttributeBottom
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self.scrollView
-                                 attribute:NSLayoutAttributeBottom
-                                multiplier:1
-                                  constant:-20]
-        .active = YES;
-  }
+  [NSLayoutConstraint constraintWithItem:textFieldOutlined
+                               attribute:NSLayoutAttributeTop
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.scrollView.contentLayoutGuide
+                               attribute:NSLayoutAttributeTop
+                              multiplier:1
+                                constant:20]
+      .active = YES;
+  [NSLayoutConstraint constraintWithItem:textFieldOutlined
+                               attribute:NSLayoutAttributeBottom
+                               relatedBy:NSLayoutRelationEqual
+                                  toItem:self.scrollView.contentLayoutGuide
+                               attribute:NSLayoutAttributeBottom
+                              multiplier:1
+                                constant:-20]
+      .active = YES;
 }
 
 #pragma mark - UITextFieldDelegate

@@ -99,19 +99,8 @@
   [self.view addSubview:self.trailingItemField];
   [self.view addSubview:self.titleField];
 
-  if (@available(iOS 11.0, *)) {
-    [self.view.safeAreaLayoutGuide.topAnchor constraintEqualToAnchor:self.navigationBar.topAnchor]
-        .active = YES;
-  } else {
-    [NSLayoutConstraint constraintWithItem:self.topLayoutGuide
-                                 attribute:NSLayoutAttributeBottom
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self.navigationBar
-                                 attribute:NSLayoutAttributeTop
-                                multiplier:1.0
-                                  constant:0]
-        .active = YES;
-  }
+  [self.view.safeAreaLayoutGuide.topAnchor constraintEqualToAnchor:self.navigationBar.topAnchor]
+      .active = YES;
   [NSLayoutConstraint constraintWithItem:self.navigationBar
                                attribute:NSLayoutAttributeBottom
                                relatedBy:NSLayoutRelationEqual

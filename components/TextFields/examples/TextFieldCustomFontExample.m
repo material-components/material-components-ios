@@ -96,41 +96,22 @@
                                                       attribute:NSLayoutAttributeTrailingMargin
                                                      multiplier:1
                                                        constant:0]];
-  if (@available(iOS 11.0, *)) {
-    [NSLayoutConstraint activateConstraints:@[
-      [NSLayoutConstraint constraintWithItem:systemFontTextField
-                                   attribute:NSLayoutAttributeTop
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:self.scrollView.contentLayoutGuide
-                                   attribute:NSLayoutAttributeTop
-                                  multiplier:1
-                                    constant:20],
-      [NSLayoutConstraint constraintWithItem:multilineCustomDynamicTextField
-                                   attribute:NSLayoutAttributeBottom
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:self.scrollView.contentLayoutGuide
-                                   attribute:NSLayoutAttributeBottomMargin
-                                  multiplier:1
-                                    constant:-20]
-    ]];
-  } else {
-    [NSLayoutConstraint activateConstraints:@[
-      [NSLayoutConstraint constraintWithItem:systemFontTextField
-                                   attribute:NSLayoutAttributeTop
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:self.scrollView
-                                   attribute:NSLayoutAttributeTop
-                                  multiplier:1
-                                    constant:20],
-      [NSLayoutConstraint constraintWithItem:multilineCustomDynamicTextField
-                                   attribute:NSLayoutAttributeBottom
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:self.scrollView
-                                   attribute:NSLayoutAttributeBottomMargin
-                                  multiplier:1
-                                    constant:-20]
-    ]];
-  }
+  [NSLayoutConstraint activateConstraints:@[
+    [NSLayoutConstraint constraintWithItem:systemFontTextField
+                                 attribute:NSLayoutAttributeTop
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.scrollView.contentLayoutGuide
+                                 attribute:NSLayoutAttributeTop
+                                multiplier:1
+                                  constant:20],
+    [NSLayoutConstraint constraintWithItem:multilineCustomDynamicTextField
+                                 attribute:NSLayoutAttributeBottom
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.scrollView.contentLayoutGuide
+                                 attribute:NSLayoutAttributeBottomMargin
+                                multiplier:1
+                                  constant:-20]
+  ]];
 
   [NSLayoutConstraint activateConstraints:constraints];
 }

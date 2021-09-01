@@ -130,10 +130,8 @@
   CGRect standardizedFrame = CGRectStandardize(self.view.frame);
   [_pageControl sizeThatFits:standardizedFrame.size];
   UIEdgeInsets edgeInsets = UIEdgeInsetsZero;
-  if (@available(iOS 11.0, *)) {
-    // Accommodate insets for iPhone X.
-    edgeInsets = self.view.safeAreaInsets;
-  }
+  // Accommodate insets for iPhone X.
+  edgeInsets = self.view.safeAreaInsets;
   CGFloat yOffset =
       CGRectGetHeight(self.view.frame) - CGRectGetHeight(_pageControl.frame) - edgeInsets.bottom;
   _pageControl.frame =

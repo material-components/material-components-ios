@@ -79,9 +79,7 @@ static ChipModel *MakeModel(NSString *title,
   typographyScheme.useCurrentContentSizeCategoryWhenApplied = YES;
   self.containerScheme.typographyScheme = typographyScheme;
 
-  if (@available(iOS 11.0, *)) {
-    self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
-  }
+  self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
 
   self.collectionView.backgroundColor = [UIColor whiteColor];
   self.collectionView.delaysContentTouches = NO;

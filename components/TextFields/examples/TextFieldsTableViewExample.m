@@ -49,13 +49,8 @@ static NSString *const TSTTextFieldTableViewCellIdentifier = @"TSTTextFieldsTabl
   [self.tableView setContentInset:UIEdgeInsetsMake(20, 0, 0, -20)];
   [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 
-  if (@available(iOS 11.0, *)) {
-    [self.tableView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor]
-        .active = YES;
-  } else {
-    [self.tableView.topAnchor constraintEqualToAnchor:self.topLayoutGuide.bottomAnchor].active =
-        YES;
-  }
+  [self.tableView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor]
+      .active = YES;
 
   [self.tableView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
 

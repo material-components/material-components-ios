@@ -57,12 +57,10 @@
   CGFloat originY = self.view.bounds.origin.y;
   CGFloat width = self.view.bounds.size.width;
   CGFloat height = self.view.bounds.size.height;
-  if (@available(iOS 11.0, *)) {
-    originX += self.view.safeAreaInsets.left;
-    originY += self.view.safeAreaInsets.top;
-    width -= (self.view.safeAreaInsets.left + self.view.safeAreaInsets.right);
-    height -= (self.view.safeAreaInsets.top + self.view.safeAreaInsets.bottom);
-  }
+  originX += self.view.safeAreaInsets.left;
+  originY += self.view.safeAreaInsets.top;
+  width -= (self.view.safeAreaInsets.left + self.view.safeAreaInsets.right);
+  height -= (self.view.safeAreaInsets.top + self.view.safeAreaInsets.bottom);
   CGRect frame = CGRectMake(originX, originY, width, height);
   self.collectionView.frame = frame;
   self.collectionViewLayout.estimatedItemSize =

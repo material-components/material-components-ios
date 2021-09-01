@@ -84,9 +84,7 @@
 
 - (void)updateLayout {
   CGRect frame = CGRectInset(self.view.bounds, 10, 10);
-  if (@available(iOS 11.0, *)) {
-    frame = UIEdgeInsetsInsetRect(frame, self.view.safeAreaInsets);
-  }
+  frame = UIEdgeInsetsInsetRect(frame, self.view.safeAreaInsets);
   MDCChipView *chip = self.chipField.chips.lastObject;
   [self recomputeChipFieldChipHeightWithChip:chip];
   frame.size = [self.chipField sizeThatFits:frame.size];
