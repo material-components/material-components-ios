@@ -60,7 +60,6 @@ static const CGFloat kViewOffsetToCenter = 20;
   UILabel *label = [[UILabel alloc] init];
   label.text = text;
   label.font = [MDCTypography captionFont];
-  label.alpha = [MDCTypography captionFontOpacity];
   [label sizeToFit];
   [self.view addSubview:label];
 

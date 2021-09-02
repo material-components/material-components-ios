@@ -153,21 +153,11 @@ static NSString *const kPangramCyrillic =
   self.testingView.labelKorean.font = font;
 }
 
-- (void)setLabelsTextColorOpacity:(CGFloat)opacity {
-  UIColor *color = [UIColor colorWithWhite:0 alpha:opacity];
-  self.testingView.labelLatin.textColor = color;
-  self.testingView.labelArabic.textColor = color;
-  self.testingView.labelHindi.textColor = color;
-  self.testingView.labelKorean.textColor = color;
-  self.testingView.labelCyrillic.textColor = color;
-}
-
 #pragma mark - Tests
 
 - (void)testDisplay4 {
   // When
   [self setLabelsFont:[MDCTypography display4Font]];
-  [self setLabelsTextColorOpacity:[MDCTypography display4FontOpacity]];
 
   // Then
   [self.testingView sizeToFit];
@@ -177,7 +167,6 @@ static NSString *const kPangramCyrillic =
 - (void)testDisplay3 {
   // When
   [self setLabelsFont:[MDCTypography display3Font]];
-  [self setLabelsTextColorOpacity:[MDCTypography display3FontOpacity]];
 
   // Then
   [self.testingView sizeToFit];
@@ -187,7 +176,6 @@ static NSString *const kPangramCyrillic =
 - (void)testDisplay2 {
   // When
   [self setLabelsFont:[MDCTypography display2Font]];
-  [self setLabelsTextColorOpacity:[MDCTypography display2FontOpacity]];
 
   // Then
   [self.testingView sizeToFit];
@@ -197,7 +185,6 @@ static NSString *const kPangramCyrillic =
 - (void)testDisplay1 {
   // When
   [self setLabelsFont:[MDCTypography display1Font]];
-  [self setLabelsTextColorOpacity:[MDCTypography display1FontOpacity]];
 
   // Then
   [self.testingView sizeToFit];
@@ -207,7 +194,6 @@ static NSString *const kPangramCyrillic =
 - (void)testHeadline {
   // When
   [self setLabelsFont:[MDCTypography headlineFont]];
-  [self setLabelsTextColorOpacity:[MDCTypography headlineFontOpacity]];
 
   // Then
   [self.testingView sizeToFit];
@@ -217,7 +203,6 @@ static NSString *const kPangramCyrillic =
 - (void)testTitle {
   // When
   [self setLabelsFont:[MDCTypography titleFont]];
-  [self setLabelsTextColorOpacity:[MDCTypography titleFontOpacity]];
 
   // Then
   [self.testingView sizeToFit];
@@ -227,7 +212,6 @@ static NSString *const kPangramCyrillic =
 - (void)testSubhead {
   // When
   [self setLabelsFont:[MDCTypography subheadFont]];
-  [self setLabelsTextColorOpacity:[MDCTypography subheadFontOpacity]];
 
   // Then
   [self.testingView sizeToFit];
@@ -237,7 +221,6 @@ static NSString *const kPangramCyrillic =
 - (void)testBody2 {
   // When
   [self setLabelsFont:[MDCTypography body2Font]];
-  [self setLabelsTextColorOpacity:[MDCTypography body2FontOpacity]];
 
   // Then
   [self.testingView sizeToFit];
@@ -247,7 +230,6 @@ static NSString *const kPangramCyrillic =
 - (void)testBody1 {
   // When
   [self setLabelsFont:[MDCTypography body1Font]];
-  [self setLabelsTextColorOpacity:[MDCTypography body1FontOpacity]];
 
   // Then
   [self.testingView sizeToFit];
@@ -257,7 +239,6 @@ static NSString *const kPangramCyrillic =
 - (void)testCaption {
   // When
   [self setLabelsFont:[MDCTypography captionFont]];
-  [self setLabelsTextColorOpacity:[MDCTypography captionFontOpacity]];
 
   // Then
   [self.testingView sizeToFit];
@@ -267,7 +248,6 @@ static NSString *const kPangramCyrillic =
 - (void)testButton {
   // When
   [self setLabelsFont:[MDCTypography buttonFont]];
-  [self setLabelsTextColorOpacity:[MDCTypography buttonFontOpacity]];
 
   // Then
   [self.testingView sizeToFit];

@@ -13,19 +13,19 @@
 // limitations under the License.
 
 import UIKit
-
 import CatalogByConvention
-
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialAppBar_ColorThemer
-import MaterialComponents.MaterialAppBar_TypographyThemer
+import MaterialComponents.MaterialAppBar_ColorThemer 
+import MaterialComponents.MaterialAppBar_TypographyThemer 
+import MaterialComponents.MaterialButtons_ButtonThemer 
 import MaterialComponents.MaterialButtons
-import MaterialComponents.MaterialButtons_ButtonThemer
+import MaterialComponents.MaterialButtons_Theming 
 import MaterialComponents.MaterialCollections
 import MaterialComponents.MaterialTypography
-import MaterialComponents.MaterialButtons_Theming
 
 class NodeViewTableViewDemoCell: UITableViewCell {
+
+  private let detailOpacity: CGFloat = 0.54
 
   let label = UILabel()
 
@@ -35,7 +35,7 @@ class NodeViewTableViewDemoCell: UITableViewCell {
     imageView!.image = UIImage(named: "Demo")
 
     // Ensure subtitle text is proportionally less pronounced than the title label
-    detailTextLabel?.alpha = MDCTypography.captionFontOpacity()
+    detailTextLabel?.alpha = detailOpacity
     detailTextLabel?.font = MDCTypography.body2Font()
 
     let lineDivider = UIView()
@@ -50,7 +50,8 @@ class NodeViewTableViewDemoCell: UITableViewCell {
       toItem: nil,
       attribute: .notAnAttribute,
       multiplier: 1.0,
-      constant: 1).isActive = true
+      constant: 1
+    ).isActive = true
 
     // Line divider to section view
     NSLayoutConstraint(
@@ -60,7 +61,8 @@ class NodeViewTableViewDemoCell: UITableViewCell {
       toItem: lineDivider,
       attribute: .leading,
       multiplier: 1.0,
-      constant: 0).isActive = true
+      constant: 0
+    ).isActive = true
     NSLayoutConstraint(
       item: self,
       attribute: .trailing,
@@ -68,7 +70,8 @@ class NodeViewTableViewDemoCell: UITableViewCell {
       toItem: lineDivider,
       attribute: .trailing,
       multiplier: 1.0,
-      constant: 0).isActive = true
+      constant: 0
+    ).isActive = true
     NSLayoutConstraint(
       item: self,
       attribute: .bottom,
@@ -76,7 +79,8 @@ class NodeViewTableViewDemoCell: UITableViewCell {
       toItem: lineDivider,
       attribute: .bottom,
       multiplier: 1.0,
-      constant: 0).isActive = true
+      constant: 0
+    ).isActive = true
   }
 
   required init(coder: NSCoder) {
@@ -107,49 +111,55 @@ class NodeViewTableViewPrimaryDemoCell: UITableViewCell {
   func setupContainedButton() {
     containedButton.setTitle("Start Demo", for: .normal)
     containedButton.translatesAutoresizingMaskIntoConstraints = false
-    containedButton.accessibilityIdentifier = "start.demo";
+    containedButton.accessibilityIdentifier = "start.demo"
     contentView.addSubview(containedButton)
 
     // constraints
-    NSLayoutConstraint(item: contentView,
-                       attribute: .left,
-                       relatedBy: .equal,
-                       toItem: containedButton,
-                       attribute: .left,
-                       multiplier: 1,
-                       constant: -16).isActive = true
-    NSLayoutConstraint(item: contentView,
-                       attribute: .right,
-                       relatedBy: .equal,
-                       toItem: containedButton,
-                       attribute: .right,
-                       multiplier: 1,
-                       constant: 16).isActive = true
-    NSLayoutConstraint(item: contentView,
-                       attribute: .top,
-                       relatedBy: .equal,
-                       toItem: containedButton,
-                       attribute: .top,
-                       multiplier: 1,
-                       constant: -10).isActive = true
-    NSLayoutConstraint(item: contentView,
-                       attribute: .bottom,
-                       relatedBy: .equal,
-                       toItem: containedButton,
-                       attribute: .bottom,
-                       multiplier: 1,
-                       constant: 6).isActive = true
+    NSLayoutConstraint(
+      item: contentView,
+      attribute: .left,
+      relatedBy: .equal,
+      toItem: containedButton,
+      attribute: .left,
+      multiplier: 1,
+      constant: -16
+    ).isActive = true
+    NSLayoutConstraint(
+      item: contentView,
+      attribute: .right,
+      relatedBy: .equal,
+      toItem: containedButton,
+      attribute: .right,
+      multiplier: 1,
+      constant: 16
+    ).isActive = true
+    NSLayoutConstraint(
+      item: contentView,
+      attribute: .top,
+      relatedBy: .equal,
+      toItem: containedButton,
+      attribute: .top,
+      multiplier: 1,
+      constant: -10
+    ).isActive = true
+    NSLayoutConstraint(
+      item: contentView,
+      attribute: .bottom,
+      relatedBy: .equal,
+      toItem: containedButton,
+      attribute: .bottom,
+      multiplier: 1,
+      constant: 6
+    ).isActive = true
   }
 
 }
 
-
-
 class MDCNodeListViewController: CBCNodeListViewController {
-  var mainSectionHeader : UIView?
-  var mainSectionHeaderTitleLabel : UILabel?
-  var mainSectionHeaderDescriptionLabel : UILabel?
-  var additionalExamplesSectionHeader : UIView?
+  var mainSectionHeader: UIView?
+  var mainSectionHeaderTitleLabel: UILabel?
+  var mainSectionHeaderDescriptionLabel: UILabel?
+  var additionalExamplesSectionHeader: UIView?
   let sectionNames = ["Description", "Additional Examples"]
   let estimadedDescriptionSectionHeight = CGFloat(100)
   let estimadedAdditionalExamplesSectionHeight = CGFloat(50)
@@ -161,6 +171,7 @@ class MDCNodeListViewController: CBCNodeListViewController {
   var descriptionLineHeight = CGFloat(24)
   var demoButtonRowHeight = CGFloat(54)
   var additionalDemoRowHeight = CGFloat(64)
+  private let descriptionOpacity: CGFloat = 0.87
 
   enum Section: Int {
     case description = 0
@@ -168,9 +179,10 @@ class MDCNodeListViewController: CBCNodeListViewController {
   }
 
   deinit {
-    NotificationCenter.default.removeObserver(self,
-                                              name: AppTheme.didChangeGlobalThemeNotificationName,
-                                              object: nil)
+    NotificationCenter.default.removeObserver(
+      self,
+      name: AppTheme.didChangeGlobalThemeNotificationName,
+      object: nil)
   }
 
   override init(node: CBCNode) {
@@ -180,7 +192,8 @@ class MDCNodeListViewController: CBCNodeListViewController {
 
     // Make sure that primary demo appears first
     if let primaryDemoNodeIndex = childrenNodes.index(where: { $0.isPrimaryDemo() }),
-        primaryDemoNodeIndex != 0 {
+      primaryDemoNodeIndex != 0
+    {
       let primaryDemoNode = childrenNodes[primaryDemoNodeIndex]
       childrenNodes.remove(at: primaryDemoNodeIndex)
       childrenNodes.insert(primaryDemoNode, at: 0)
@@ -222,10 +235,12 @@ class MDCNodeListViewController: CBCNodeListViewController {
       self.tableView.accessibilityIdentifier = "DemoTableList"
     }
 
-    self.tableView.register(NodeViewTableViewPrimaryDemoCell.self,
-                            forCellReuseIdentifier: "NodeViewTableViewPrimaryDemoCell")
-    self.tableView.register(NodeViewTableViewDemoCell.self,
-                            forCellReuseIdentifier: "NodeViewTableViewDemoCell")
+    self.tableView.register(
+      NodeViewTableViewPrimaryDemoCell.self,
+      forCellReuseIdentifier: "NodeViewTableViewPrimaryDemoCell")
+    self.tableView.register(
+      NodeViewTableViewDemoCell.self,
+      forCellReuseIdentifier: "NodeViewTableViewDemoCell")
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -250,31 +265,39 @@ extension MDCNodeListViewController {
     return sectionNames.count
   }
 
-  override func tableView(_ tableView: UITableView,
-                          titleForHeaderInSection section: Int) -> String? {
+  override func tableView(
+    _ tableView: UITableView,
+    titleForHeaderInSection section: Int
+  ) -> String? {
     return sectionNames[section]
   }
-  override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+  override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
+  {
     if indexPath.section == Section.description.rawValue {
       return demoButtonRowHeight
     }
     return additionalDemoRowHeight
   }
 
-  override func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+  override func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int)
+    -> CGFloat
+  {
     if let mainSectionHeader = mainSectionHeader, section == Section.description.rawValue {
       let labelPreferredMaxLayoutWidth = tableView.frame.size.width - (2 * padding)
       mainSectionHeaderDescriptionLabel?.preferredMaxLayoutWidth = labelPreferredMaxLayoutWidth
       mainSectionHeaderTitleLabel?.preferredMaxLayoutWidth = labelPreferredMaxLayoutWidth
-      let targetSize = CGSize(width: tableView.frame.size.width,
-                              height: estimadedDescriptionSectionHeight)
+      let targetSize = CGSize(
+        width: tableView.frame.size.width,
+        height: estimadedDescriptionSectionHeight)
       return mainSectionHeader.systemLayoutSizeFitting(targetSize).height
     }
     return estimadedAdditionalExamplesSectionHeight
   }
   // swiftlint:disable function_body_length
-  override func tableView(_ tableView: UITableView,
-                          viewForHeaderInSection section: Int) -> UIView? {
+  override func tableView(
+    _ tableView: UITableView,
+    viewForHeaderInSection section: Int
+  ) -> UIView? {
     if section == 0 {
       return mainSectionHeader
     }
@@ -306,7 +329,8 @@ extension MDCNodeListViewController {
       toItem: nil,
       attribute: .notAnAttribute,
       multiplier: 1.0,
-      constant: 1).isActive = true
+      constant: 1
+    ).isActive = true
 
     // Line divider to section view
     NSLayoutConstraint(
@@ -316,7 +340,8 @@ extension MDCNodeListViewController {
       toItem: lineDivider,
       attribute: .leading,
       multiplier: 1.0,
-      constant: 0).isActive = true
+      constant: 0
+    ).isActive = true
     NSLayoutConstraint(
       item: sectionView,
       attribute: .trailing,
@@ -324,7 +349,8 @@ extension MDCNodeListViewController {
       toItem: lineDivider,
       attribute: .trailing,
       multiplier: 1.0,
-      constant: 0).isActive = true
+      constant: 0
+    ).isActive = true
     NSLayoutConstraint(
       item: sectionView,
       attribute: .top,
@@ -332,7 +358,8 @@ extension MDCNodeListViewController {
       toItem: lineDivider,
       attribute: .top,
       multiplier: 1.0,
-      constant: 0).isActive = true
+      constant: 0
+    ).isActive = true
 
     // Line divider to Title Label
     NSLayoutConstraint(
@@ -342,7 +369,8 @@ extension MDCNodeListViewController {
       toItem: sectionTitleLabel,
       attribute: .top,
       multiplier: 1.0,
-      constant: -padding).isActive = true
+      constant: -padding
+    ).isActive = true
 
     let preiOS11Behavior = {
       NSLayoutConstraint(
@@ -352,7 +380,8 @@ extension MDCNodeListViewController {
         toItem: sectionTitleLabel,
         attribute: .leading,
         multiplier: 1.0,
-        constant: -self.padding).isActive = true
+        constant: -self.padding
+      ).isActive = true
       NSLayoutConstraint(
         item: sectionView,
         attribute: .trailing,
@@ -360,29 +389,35 @@ extension MDCNodeListViewController {
         toItem: sectionTitleLabel,
         attribute: .trailing,
         multiplier: 1.0,
-        constant: self.padding).isActive = true
+        constant: self.padding
+      ).isActive = true
     }
     // Title Label to Section View
     if #available(iOS 11.0, *) {
       // Align to the safe area insets.
       sectionTitleLabel.leadingAnchor
-        .constraint(equalTo: sectionView.safeAreaLayoutGuide.leadingAnchor,
-                    constant: padding).isActive = true
+        .constraint(
+          equalTo: sectionView.safeAreaLayoutGuide.leadingAnchor,
+          constant: padding
+        ).isActive = true
       sectionTitleLabel.trailingAnchor
-        .constraint(equalTo: sectionView.safeAreaLayoutGuide.trailingAnchor,
-                    constant: -padding).isActive = true
+        .constraint(
+          equalTo: sectionView.safeAreaLayoutGuide.trailingAnchor,
+          constant: -padding
+        ).isActive = true
     } else {
       preiOS11Behavior()
     }
 
-     NSLayoutConstraint(
+    NSLayoutConstraint(
       item: sectionView,
       attribute: .bottom,
       relatedBy: .equal,
       toItem: sectionTitleLabel,
       attribute: .bottom,
       multiplier: 1.0,
-      constant: padding).isActive = true
+      constant: padding
+    ).isActive = true
 
     return sectionView
   }
@@ -407,8 +442,8 @@ extension MDCNodeListViewController {
     let attrs = [NSAttributedString.Key.paragraphStyle: paragraphStyle]
 
     descriptionLabel.attributedText =
-        NSAttributedString(string:componentDescription, attributes:attrs)
-    descriptionLabel.alpha = MDCTypography.body1FontOpacity()
+      NSAttributedString(string: componentDescription, attributes: attrs)
+    descriptionLabel.alpha = descriptionOpacity
     descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
     descriptionLabel.numberOfLines = 0
     descriptionLabel.setContentCompressionResistancePriority(.required, for: .vertical)
@@ -426,7 +461,8 @@ extension MDCNodeListViewController {
         toItem: sectionTitleLabel,
         attribute: .leading,
         multiplier: 1.0,
-        constant: -self.padding).isActive = true
+        constant: -self.padding
+      ).isActive = true
       NSLayoutConstraint(
         item: sectionView,
         attribute: .trailing,
@@ -434,16 +470,21 @@ extension MDCNodeListViewController {
         toItem: sectionTitleLabel,
         attribute: .trailing,
         multiplier: 1.0,
-        constant: self.padding).isActive = true
+        constant: self.padding
+      ).isActive = true
     }
     if #available(iOS 11.0, *) {
       // Align to the safe area insets.
       sectionTitleLabel.leadingAnchor
-        .constraint(equalTo: sectionView.safeAreaLayoutGuide.leadingAnchor,
-                    constant: padding).isActive = true
+        .constraint(
+          equalTo: sectionView.safeAreaLayoutGuide.leadingAnchor,
+          constant: padding
+        ).isActive = true
       sectionTitleLabel.trailingAnchor
-        .constraint(equalTo: sectionView.safeAreaLayoutGuide.trailingAnchor,
-                    constant: -padding).isActive = true
+        .constraint(
+          equalTo: sectionView.safeAreaLayoutGuide.trailingAnchor,
+          constant: -padding
+        ).isActive = true
     } else {
       preiOS11Behavior()
     }
@@ -455,7 +496,8 @@ extension MDCNodeListViewController {
       toItem: sectionView,
       attribute: .top,
       multiplier: 1.0,
-      constant: titleMaxY).isActive = true
+      constant: titleMaxY
+    ).isActive = true
 
     // descriptionLabel to sectionTitleLabel
     NSLayoutConstraint(
@@ -465,7 +507,8 @@ extension MDCNodeListViewController {
       toItem: descriptionLabel,
       attribute: .leading,
       multiplier: 1.0,
-      constant: 0).isActive = true
+      constant: 0
+    ).isActive = true
     NSLayoutConstraint(
       item: sectionTitleLabel,
       attribute: .trailing,
@@ -473,7 +516,8 @@ extension MDCNodeListViewController {
       toItem: descriptionLabel,
       attribute: .trailing,
       multiplier: 1.0,
-      constant: 0).isActive = true
+      constant: 0
+    ).isActive = true
     NSLayoutConstraint(
       item: sectionTitleLabel,
       attribute: .lastBaseline,
@@ -481,7 +525,8 @@ extension MDCNodeListViewController {
       toItem: descriptionLabel,
       attribute: .firstBaseline,
       multiplier: 1.0,
-      constant: -titleDescriptionMargin).isActive = true
+      constant: -titleDescriptionMargin
+    ).isActive = true
 
     // descriptionLabel to SectionView
     NSLayoutConstraint(
@@ -491,11 +536,11 @@ extension MDCNodeListViewController {
       toItem: descriptionLabel,
       attribute: .bottom,
       multiplier: 1.0,
-      constant: 10).isActive = true
+      constant: 10
+    ).isActive = true
 
     return sectionView
   }
-
 
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     if section == Section.description.rawValue {
@@ -504,9 +549,11 @@ extension MDCNodeListViewController {
     return node.children.count - 1
   }
 
-  override func tableView(_ tableView: UITableView,
-                          cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    var cell : UITableViewCell?
+  override func tableView(
+    _ tableView: UITableView,
+    cellForRowAt indexPath: IndexPath
+  ) -> UITableViewCell {
+    var cell: UITableViewCell?
     if indexPath.section == Section.description.rawValue {
       cell = tableView.dequeueReusableCell(withIdentifier: "NodeViewTableViewPrimaryDemoCell")
       cell?.selectionStyle = .none
@@ -542,7 +589,7 @@ extension MDCNodeListViewController {
     return true
   }
 
-  @objc func primaryDemoButtonClicked () {
+  @objc func primaryDemoButtonClicked() {
     let indexPath = IndexPath(row: 0, section: Section.description.rawValue)
     self.tableView(self.tableView, didSelectRowAt: indexPath)
   }
@@ -575,11 +622,11 @@ extension MDCNodeListViewController {
   }
 
   func themeExample(vc: UIViewController) {
-    let colorSel = NSSelectorFromString("setColorScheme:");
+    let colorSel = NSSelectorFromString("setColorScheme:")
     if vc.responds(to: colorSel) {
       vc.perform(colorSel, with: AppTheme.containerScheme.colorScheme)
     }
-    let typoSel = NSSelectorFromString("setTypographyScheme:");
+    let typoSel = NSSelectorFromString("setTypographyScheme:")
     if vc.responds(to: typoSel) {
       vc.perform(typoSel, with: AppTheme.containerScheme.typographyScheme)
     }

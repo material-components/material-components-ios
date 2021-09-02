@@ -39,8 +39,6 @@ static NSString *const reuseIdentifier = @"Cell";
   self.infoLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   self.infoLabel.text = @"Tap anywhere to move the button.";
   self.infoLabel.font = [MDCTypography subheadFont];
-  self.infoLabel.textColor =
-      [self.infoLabel.textColor colorWithAlphaComponent:[MDCTypography captionFontOpacity]];
   [self.view addSubview:self.infoLabel];
 
   MDCButton *button = [[MDCButton alloc] init];

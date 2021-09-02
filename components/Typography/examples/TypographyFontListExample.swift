@@ -36,17 +36,19 @@ class TypographyFontListExampleViewController: UITableViewController {
     return fonts.count
   }
 
-  override func tableView(_ tableView: UITableView,
-                          cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "cell") ??
-        UITableViewCell(style: .default, reuseIdentifier: "cell")
-    
+  override func tableView(
+    _ tableView: UITableView,
+    cellForRowAt indexPath: IndexPath
+  ) -> UITableViewCell {
+    let cell =
+      tableView.dequeueReusableCell(withIdentifier: "cell")
+      ?? UITableViewCell(style: .default, reuseIdentifier: "cell")
+
     cell.textLabel?.text = strings[indexPath.section]
     cell.textLabel?.font = fonts[indexPath.row]
-    cell.textLabel?.alpha = fontOpacities[indexPath.row]
     cell.textLabel?.numberOfLines = 0
     cell.textLabel?.lineBreakMode = .byWordWrapping
-    
+
     // textLabel must be unwrapped to access 'font'.
     if cell.textLabel!.font.pointSize > 100 && indexPath.section == 0 {
       cell.textLabel?.text = "MDC"
@@ -54,7 +56,6 @@ class TypographyFontListExampleViewController: UITableViewController {
 
     cell.detailTextLabel?.text = fontStyleNames[indexPath.row]
     cell.detailTextLabel?.font = MDCTypography.captionFont()
-    cell.detailTextLabel?.alpha = MDCTypography.captionFontOpacity()
     cell.selectionStyle = .none
 
     return cell
@@ -84,7 +85,7 @@ class TypographyFontListExampleViewController: UITableViewController {
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
     "abcdefghijklmnopqrstuvwxyz",
     "1234567890",
-    "!@#$%^&*()-=_+[]\\;',./<>?:\""
+    "!@#$%^&*()-=_+[]\\;',./<>?:\"",
   ]
 
   let fonts = [
@@ -102,25 +103,7 @@ class TypographyFontListExampleViewController: UITableViewController {
     MDCTypography.display1Font(),
     MDCTypography.display2Font(),
     MDCTypography.display3Font(),
-    MDCTypography.display4Font()
-  ]
-
-  let fontOpacities = [
-
-    // Common UI fonts.
-    MDCTypography.headlineFontOpacity(),
-    MDCTypography.titleFontOpacity(),
-    MDCTypography.subheadFontOpacity(),
-    MDCTypography.body2FontOpacity(),
-    MDCTypography.body1FontOpacity(),
-    MDCTypography.captionFontOpacity(),
-    MDCTypography.buttonFontOpacity(),
-
-    // Display fonts (extra large fonts)
-    MDCTypography.display1FontOpacity(),
-    MDCTypography.display2FontOpacity(),
-    MDCTypography.display3FontOpacity(),
-    MDCTypography.display4FontOpacity()
+    MDCTypography.display4Font(),
   ]
 
   let fontStyleNames = [
@@ -138,7 +121,7 @@ class TypographyFontListExampleViewController: UITableViewController {
     "Display 1 Font",
     "Display 2 Font",
     "Display 3 Font",
-    "Display 4 Font"
+    "Display 4 Font",
   ]
 }
 
@@ -149,7 +132,7 @@ extension TypographyFontListExampleViewController {
     return [
       "breadcrumbs": ["Typography and Fonts", "Typography"],
       "description": "The Typography component provides methods for displaying text using the "
-        + "type sizes and opacities from the Material Design specifications.",
+        + "type sizes from the Material Design specifications.",
       "primaryDemo": false,
       "presentable": false,
     ]

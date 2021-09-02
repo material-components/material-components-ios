@@ -24,6 +24,8 @@ const CGFloat MDCCellDefaultOneLineHeight = 48;
 const CGFloat MDCCellDefaultOneLineWithAvatarHeight = 56;
 const CGFloat MDCCellDefaultTwoLineHeight = 72;
 const CGFloat MDCCellDefaultThreeLineHeight = 88;
+static const CGFloat MDCCellDefaultTextOpacity = 0.87f;
+static const CGFloat MDCCellDefaultDetailTextOpacity = 0.54f;
 
 // Default cell fonts.
 static inline UIFont *CellDefaultTextFont(void) {
@@ -35,12 +37,10 @@ static inline UIFont *CellDefaultDetailTextFont(void) {
 }
 
 // Default cell font opacity.
-static inline CGFloat CellDefaultTextOpacity(void) {
-  return [MDCTypography subheadFontOpacity];
-}
+static inline CGFloat CellDefaultTextOpacity(void) { return MDCCellDefaultTextOpacity; }
 
 static inline CGFloat CellDefaultDetailTextFontOpacity(void) {
-  return [MDCTypography captionFontOpacity];
+  return MDCCellDefaultDetailTextOpacity;
 }
 
 // Image size.

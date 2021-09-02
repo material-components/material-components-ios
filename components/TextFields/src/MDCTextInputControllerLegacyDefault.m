@@ -18,8 +18,6 @@
 #import "MDCTextInput.h"
 #import "MDCTextInputControllerBase.h"
 
-#import "MaterialTypography.h"
-
 #pragma mark - Constants
 
 static const CGFloat MDCTextInputControllerLegacyDefaultClearButtonImageSquareWidthHeight = 24;
@@ -27,6 +25,7 @@ static const CGFloat MDCTextInputControllerLegacyDefaultUnderlineActiveHeight = 
 static const CGFloat MDCTextInputControllerLegacyDefaultUnderlineNormalHeight = 1;
 static const CGFloat MDCTextInputControllerLegacyDefaultVerticalHalfPadding = 8;
 static const CGFloat MDCTextInputControllerLegacyDefaultVerticalPadding = 16;
+static const CGFloat kButtonOpacity = 0.54f;
 
 static inline UIBezierPath *MDCTextInputControllerLegacyDefaultEmptyPath() {
   return [UIBezierPath bezierPath];
@@ -58,8 +57,7 @@ static CGFloat _underlineHeightNormalLegacyDefault =
 }
 
 - (void)setupClearButton {
-  UIImage *image = [self
-      drawnClearButtonImage:[UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]]];
+  UIImage *image = [self drawnClearButtonImage:[UIColor colorWithWhite:0 alpha:kButtonOpacity]];
   [self.textInput.clearButton setImage:image forState:UIControlStateNormal];
 }
 

@@ -20,7 +20,6 @@
   NSArray<NSString *> *_strings;
   NSArray<NSString *> *_styleNames;
   NSArray<UIFont *> *_styleFonts;
-  NSArray<NSNumber *> *_opacities;
 }
 
 static inline UIFont *customFont(MDCFontTextStyle style) {
@@ -57,15 +56,6 @@ static inline UIFont *customFont(MDCFontTextStyle style) {
     customFont(MDCFontTextStyleButton), customFont(MDCFontTextStyleDisplay1),
     customFont(MDCFontTextStyleDisplay2), customFont(MDCFontTextStyleDisplay3),
     customFont(MDCFontTextStyleDisplay4)
-  ];
-
-  _opacities = @[
-    @([MDCTypography headlineFontOpacity]), @([MDCTypography titleFontOpacity]),
-    @([MDCTypography subheadFontOpacity]), @([MDCTypography body2FontOpacity]),
-    @([MDCTypography body1FontOpacity]), @([MDCTypography captionFontOpacity]),
-    @([MDCTypography buttonFontOpacity]), @([MDCTypography display1FontOpacity]),
-    @([MDCTypography display2FontOpacity]), @([MDCTypography display3FontOpacity]),
-    @([MDCTypography display4FontOpacity])
   ];
 
   [[NSNotificationCenter defaultCenter] addObserver:self
@@ -107,7 +97,6 @@ static inline UIFont *customFont(MDCFontTextStyle style) {
   }
   cell.textLabel.text = _strings[indexPath.section];
   cell.textLabel.font = _styleFonts[indexPath.row];
-  cell.textLabel.alpha = [_opacities[indexPath.row] floatValue];
   cell.textLabel.numberOfLines = 0;
   cell.textLabel.lineBreakMode = NSLineBreakByWordWrapping;
 

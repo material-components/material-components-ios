@@ -32,6 +32,7 @@ static const CGFloat kHorizontalSpaceBetweenTextViewAndButton = 24.0f;
 static const CGFloat kVerticalSpaceBetweenButtonAndTextView = 12.0f;
 static const CGFloat kDividerDefaultOpacity = 0.12f;
 static const CGFloat kDividerDefaultHeight = 1.0f;
+static const CGFloat kTextDefaultOpacity = 0.87f;
 static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 
 @interface MDCBannerView ()
@@ -143,7 +144,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   textView.translatesAutoresizingMaskIntoConstraints = NO;
   textView.font = [MDCTypography body2Font];
   textView.textColor = UIColor.blackColor;
-  textView.alpha = [MDCTypography body2FontOpacity];
+  textView.alpha = kTextDefaultOpacity;
   textView.textContainer.maximumNumberOfLines = kTextNumberOfLineLimit;
   textView.textContainer.lineBreakMode = NSLineBreakByTruncatingTail;
   textView.textContainer.lineFragmentPadding = 0;

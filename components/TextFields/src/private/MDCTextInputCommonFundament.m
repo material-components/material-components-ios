@@ -36,6 +36,7 @@ static NSString *const MDCTextInputUnderlineKVOKeyLineHeight = @"lineHeight";
 const CGFloat MDCTextInputBorderRadius = 4;
 static const CGFloat MDCTextInputClearButtonImageSquareWidthHeight = 24;
 static const CGFloat MDCTextInputHintTextOpacity = (CGFloat)0.54;
+static const CGFloat MDCTextInputOpacity = (CGFloat)0.87;
 static const CGFloat MDCTextInputOverlayViewToEditingRectPadding = 2;
 const CGFloat MDCTextInputFullPadding = 16;
 const CGFloat MDCTextInputHalfPadding = 8;
@@ -50,7 +51,7 @@ static inline UIColor *MDCTextInputDefaultPlaceholderTextColor() {
 }
 
 static inline UIColor *MDCTextInputTextColor() {
-  return [UIColor colorWithWhite:0 alpha:[MDCTypography body1FontOpacity]];
+  return [UIColor colorWithWhite:0 alpha:MDCTextInputOpacity];
 }
 
 static inline UIColor *MDCTextInputUnderlineColor() {

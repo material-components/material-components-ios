@@ -19,8 +19,6 @@
 #import "MaterialTypography.h"
 
 static const CGFloat kEpsilon = (CGFloat)0.001;
-static const CGFloat kOpacityLight = (CGFloat)0.54;
-static const CGFloat kOpacityMedium = (CGFloat)0.87;
 /**
  For our tests we are following a Given When Then structure as defined in
  http://martinfowler.com/bliki/GivenWhenThen.html
@@ -58,104 +56,6 @@ static const CGFloat kOpacityMedium = (CGFloat)0.87;
 @end
 
 @implementation TypographyTests
-
-#pragma mark - Font opacity
-
-- (void)testDisplay4FontOpacity {
-  // When
-  CGFloat opacity = [MDCTypography display4FontOpacity];
-
-  // Then
-  XCTAssertEqualWithAccuracy(opacity, kOpacityLight, kEpsilon,
-                             @"Opacity of display 4 must be correct.");
-}
-- (void)testDisplay3FontOpacity {
-  // When
-  CGFloat opacity = [MDCTypography display3FontOpacity];
-
-  // Then
-  XCTAssertEqualWithAccuracy(opacity, kOpacityLight, kEpsilon,
-                             @"Opacity of display 3 must be correct.");
-}
-- (void)testDisplay2FontOpacity {
-  // When
-  CGFloat opacity = [MDCTypography display2FontOpacity];
-
-  // Then
-  XCTAssertEqualWithAccuracy(opacity, kOpacityLight, kEpsilon,
-                             @"Opacity of display 2 must be correct.");
-}
-- (void)testDisplay1FontOpacity {
-  // When
-  CGFloat opacity = [MDCTypography display1FontOpacity];
-
-  // Then
-  XCTAssertEqualWithAccuracy(opacity, kOpacityLight, kEpsilon,
-                             @"Opacity of display 1 must be correct.");
-}
-
-- (void)testHeadlineFontOpacity {
-  // When
-  CGFloat opacity = [MDCTypography headlineFontOpacity];
-
-  // Then
-  XCTAssertEqualWithAccuracy(opacity, kOpacityMedium, kEpsilon,
-                             @"Opacity of headline must be correct.");
-}
-
-- (void)testTitleFontOpacity {
-  // When
-  CGFloat opacity = [MDCTypography titleFontOpacity];
-
-  // Then
-  XCTAssertEqualWithAccuracy(opacity, kOpacityMedium, kEpsilon,
-                             @"Opacity of headline must be correct.");
-}
-
-- (void)testSubheadFontOpacity {
-  // When
-  CGFloat opacity = [MDCTypography subheadFontOpacity];
-
-  // Then
-  XCTAssertEqualWithAccuracy(opacity, kOpacityMedium, kEpsilon,
-                             @"Opacity of subhead must be correct.");
-}
-
-- (void)testBody2FontOpacity {
-  // When
-  CGFloat opacity = [MDCTypography body2FontOpacity];
-
-  // Then
-  XCTAssertEqualWithAccuracy(opacity, kOpacityMedium, kEpsilon,
-                             @"Opacity of body 2 must be correct.");
-}
-
-- (void)testBody1FontOpacity {
-  // When
-  CGFloat opacity = [MDCTypography body1FontOpacity];
-
-  // Then
-  XCTAssertEqualWithAccuracy(opacity, kOpacityMedium, kEpsilon,
-                             @"Opacity of body 1 must be correct.");
-}
-
-- (void)testCaptionFontOpacity {
-  // When
-  CGFloat opacity = [MDCTypography captionFontOpacity];
-
-  // Then
-  XCTAssertEqualWithAccuracy(opacity, kOpacityLight, kEpsilon,
-                             @"Opacity of caption must be correct.");
-}
-
-- (void)testButtonFontOpacity {
-  // When
-  CGFloat opacity = [MDCTypography buttonFontOpacity];
-
-  // Then
-  XCTAssertEqualWithAccuracy(opacity, kOpacityMedium, kEpsilon,
-                             @"Opacity of button must be correct.");
-}
 
 #pragma mark - font name and size
 

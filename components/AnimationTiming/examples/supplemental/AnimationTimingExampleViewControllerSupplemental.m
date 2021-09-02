@@ -167,7 +167,6 @@ static const CGSize kAnimationCircleSize = {48, 48};
 + (UILabel *)curveLabelWithTitle:(NSString *)text {
   UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
   label.font = [MDCTypography captionFont];
-  label.textColor = [UIColor colorWithWhite:0 alpha:[MDCTypography body2FontOpacity]];
   label.text = text;
   [label sizeToFit];
   return label;

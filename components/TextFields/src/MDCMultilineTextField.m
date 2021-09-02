@@ -31,6 +31,8 @@ static NSString *const kClearButtonKey = @"MaterialTextFieldClearButtonAccessibi
 static NSString *const kAccessibilityLocalizationStringsTableName = @"MaterialTextField";
 // The Bundle for string resources.
 static NSString *const kBundle = @"MaterialTextFields.bundle";
+// The font opacity to be used for the caption.
+static const CGFloat kButtonFontOpacity = 0.54f;
 
 @interface MDCMultilineTextField () {
   UIColor *_cursorColor;
@@ -128,7 +130,7 @@ static NSString *const kBundle = @"MaterialTextFields.bundle";
   self.textColor = _fundament.textColor;
   // TODO: (#4331) This needs to be converted to the new text scheme.
   self.font = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleBody1];
-  self.clearButton.tintColor = [UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]];
+  self.clearButton.tintColor = [UIColor colorWithWhite:0 alpha:kButtonFontOpacity];
   NSBundle *bundle = [[self class] bundle];
   NSString *accessibilityLabel =
       [bundle localizedStringForKey:kClearButtonKey

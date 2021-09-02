@@ -18,8 +18,6 @@
 #import <MDFTextAccessibility/MDFTextAccessibility.h>
 
 static id<MDCTypographyFontLoading> gFontLoader = nil;
-const CGFloat MDCTypographyStandardOpacity = (CGFloat)0.87;
-const CGFloat MDCTypographySecondaryOpacity = (CGFloat)0.54;
 
 @implementation MDCTypography
 
@@ -53,32 +51,17 @@ const CGFloat MDCTypographySecondaryOpacity = (CGFloat)0.54;
   return [[self fontLoader] lightFontOfSize:112];
 }
 
-+ (CGFloat)display4FontOpacity {
-  return MDCTypographySecondaryOpacity;
-}
 
 + (UIFont *)display3Font {
   return [[self fontLoader] regularFontOfSize:56];
-}
-
-+ (CGFloat)display3FontOpacity {
-  return MDCTypographySecondaryOpacity;
 }
 
 + (UIFont *)display2Font {
   return [[self fontLoader] regularFontOfSize:45];
 }
 
-+ (CGFloat)display2FontOpacity {
-  return MDCTypographySecondaryOpacity;
-}
-
 + (UIFont *)display1Font {
   return [[self fontLoader] regularFontOfSize:34];
-}
-
-+ (CGFloat)display1FontOpacity {
-  return MDCTypographySecondaryOpacity;
 }
 
 #pragma mark - Common UI fonts.
@@ -87,56 +70,29 @@ const CGFloat MDCTypographySecondaryOpacity = (CGFloat)0.54;
   return [[self fontLoader] regularFontOfSize:24];
 }
 
-+ (CGFloat)headlineFontOpacity {
-  return MDCTypographyStandardOpacity;
-}
-
 + (UIFont *)titleFont {
   return [[self fontLoader] mediumFontOfSize:20];
 }
 
-+ (CGFloat)titleFontOpacity {
-  return MDCTypographyStandardOpacity;
-}
 
 + (UIFont *)subheadFont {
   return [[self fontLoader] regularFontOfSize:16];
-}
-
-+ (CGFloat)subheadFontOpacity {
-  return MDCTypographyStandardOpacity;
 }
 
 + (UIFont *)body2Font {
   return [[self fontLoader] mediumFontOfSize:14];
 }
 
-+ (CGFloat)body2FontOpacity {
-  return MDCTypographyStandardOpacity;
-}
-
 + (UIFont *)body1Font {
   return [[self fontLoader] regularFontOfSize:14];
-}
-
-+ (CGFloat)body1FontOpacity {
-  return MDCTypographyStandardOpacity;
 }
 
 + (UIFont *)captionFont {
   return [[self fontLoader] regularFontOfSize:12];
 }
 
-+ (CGFloat)captionFontOpacity {
-  return MDCTypographySecondaryOpacity;
-}
-
 + (UIFont *)buttonFont {
   return [[self fontLoader] mediumFontOfSize:14];
-}
-
-+ (CGFloat)buttonFontOpacity {
-  return MDCTypographyStandardOpacity;
 }
 
 + (BOOL)isLargeForContrastRatios:(nonnull UIFont *)font {

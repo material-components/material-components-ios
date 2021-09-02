@@ -37,8 +37,6 @@
   self.infoLabel = [[UILabel alloc] initWithFrame:CGRectZero];
   self.infoLabel.text = @"Tap on the button below.";
   self.infoLabel.font = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleCaption];
-  self.infoLabel.textColor =
-      [self.infoLabel.textColor colorWithAlphaComponent:[MDCTypography captionFontOpacity]];
   [self.view addSubview:self.infoLabel];
 
   self.button = [[MDCRaisedButton alloc] init];

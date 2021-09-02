@@ -26,7 +26,6 @@
   UILabel *label = [[UILabel alloc] init];
   label.text = @"This is a title";
   label.font = [MDCTypography titleFont];
-  label.alpha = [MDCTypography titleFontOpacity];
 
   [label sizeToFit];
 

@@ -23,7 +23,6 @@
 #import "private/MDCTextInputCommonFundament.h"
 
 #import "MaterialMath.h"
-#import "MaterialTypography.h"
 
 NSString *const MDCTextFieldTextDidSetTextNotification = @"MDCTextFieldTextDidSetTextNotification";
 NSString *const MDCTextInputDidToggleEnabledNotification =
@@ -34,6 +33,7 @@ NSString *const MDCTextInputDidToggleEnabledNotification =
 static const CGFloat MDCTextInputClearButtonImageBuiltInPadding = (CGFloat)-2.5;
 static const CGFloat MDCTextInputEditingRectRightViewPaddingCorrection = -2;
 static const CGFloat MDCTextInputTextRectYCorrection = 1;
+static const CGFloat kButtonFontOpacity = (CGFloat)0.54f;
 
 @interface MDCTextField () {
   UIColor *_cursorColor;
@@ -118,7 +118,7 @@ static const CGFloat MDCTextInputTextRectYCorrection = 1;
   [super setBorderStyle:UITextBorderStyleNone];
 
   // Set the clear button color to black with 54% opacity.
-  self.clearButton.tintColor = [UIColor colorWithWhite:0 alpha:[MDCTypography captionFontOpacity]];
+  self.clearButton.tintColor = [UIColor colorWithWhite:0 alpha:kButtonFontOpacity];
 
   _cursorColor = MDCTextInputCursorColor();
   [self applyCursorColor];
