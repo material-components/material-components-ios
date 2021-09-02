@@ -216,6 +216,16 @@
 @property(nonatomic, strong, nullable) UIColor *buttonInkColor;
 
 /**
+ Enable a hidden touch affordance (button) for users to dismiss under VoiceOver.
+
+ It allows users to dismiss the snackbar in an explicit way in addition to
+ tapping on the message label.
+
+ Defaults to @c NO.
+ */
+@property(nonatomic, assign) BOOL enableDismissalAccessibilityAffordance;
+
+/**
  If enabled, modifications of class styling properties will be applied immediately
  to the currently presented Snackbar.
 

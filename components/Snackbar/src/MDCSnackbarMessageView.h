@@ -84,6 +84,16 @@
 @property(nullable, nonatomic, copy) NSString *accessibilityHint;
 
 /**
+ Enable a hidden touch affordance (button) for users to dismiss under VoiceOver.
+
+ It allows users to dismiss the snackbar in an explicit way in addition to
+ tapping on the message label.
+
+ Defaults to @c NO.
+ */
+@property(nonatomic, assign) BOOL enableDismissalAccessibilityAffordance;
+
+/**
  Returns the button title color for a particular control state.
 
  Default for UIControlStateNormal is MDCRGBAColor(0xFF, 0xFF, 0xFF, (CGFloat)0.6).

@@ -137,6 +137,11 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 @property(nonatomic, strong) UIView *contentView;
 
 /**
+ The accessibility element representing the dismissal touch affordance.
+ */
+@property(nonatomic, strong) UIButton *dismissalAccessibilityAffordance;
+
+/**
  An invisible hit target to ensure that tapping the horizontal area between the button and the edge
  of the screen triggers a button tap instead of dismissing the snackbar.
  */
@@ -225,6 +230,7 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     _shouldDismissOnOverlayTap = message.shouldDismissOnOverlayTap;
     _dismissalHandler = [handler copy];
     _mdc_overrideBaseElevation = manager.mdc_overrideBaseElevation;
+    _enableDismissalAccessibilityAffordance = manager.enableDismissalAccessibilityAffordance;
     _traitCollectionDidChangeBlock = manager.traitCollectionDidChangeBlockForMessageView;
     _mdc_elevationDidChangeBlock = manager.mdc_elevationDidChangeBlockForMessageView;
     self.backgroundColor = _snackbarMessageViewBackgroundColor;
@@ -276,6 +282,28 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
       [_containerView addGestureRecognizer:swipeLeftGesture];
     }
 
+    NSString *dismissalAccessibilityLabelKey =
+        kMaterialSnackbarStringTable[kStr_MaterialSnackbarMessageViewDismissalLabel];
+    NSString *dismissalAccessibilityLabel = NSLocalizedStringFromTableInBundle(
+        dismissalAccessibilityLabelKey, kMaterialSnackbarStringsTableName, [[self class] bundle],
+        @"Dismissal accessibility label for Snackbar");
+    NSString *dismissalAccessibilityHintKey =
+        kMaterialSnackbarStringTable[kStr_MaterialSnackbarMessageViewTitleA11yHint];
+    NSString *dismissalAccessibilityHint = NSLocalizedStringFromTableInBundle(
+        dismissalAccessibilityHintKey, kMaterialSnackbarStringsTableName, [[self class] bundle],
+        @"Dismissal accessibility hint for Snackbar");
+    _dismissalAccessibilityAffordance = [[UIButton alloc] init];
+    _dismissalAccessibilityAffordance.isAccessibilityElement = YES;
+    _dismissalAccessibilityAffordance.accessibilityLabel = dismissalAccessibilityLabel;
+    _dismissalAccessibilityAffordance.accessibilityHint = dismissalAccessibilityHint;
+    [self addSubview:_dismissalAccessibilityAffordance];
+    _dismissalAccessibilityAffordance.hidden = !_enableDismissalAccessibilityAffordance;
+    _dismissalAccessibilityAffordance.accessibilityElementsHidden =
+        !_enableDismissalAccessibilityAffordance;
+    [_dismissalAccessibilityAffordance addTarget:self
+                                          action:@selector(didTapDismissalTouchAffordance:)
+                                forControlEvents:UIControlEventTouchUpInside];
+
     _contentView = [[UIView alloc] init];
     [_contentView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [_containerView addSubview:_contentView];
@@ -324,17 +352,11 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     [_label setContentHuggingPriority:UILayoutPriorityDefaultLow
                               forAxis:UILayoutConstraintAxisHorizontal];
 
-    NSString *accessibilityHintKey =
-        kMaterialSnackbarStringTable[kStr_MaterialSnackbarMessageViewTitleA11yHint];
-    NSString *accessibilityHint = NSLocalizedStringFromTableInBundle(
-        accessibilityHintKey, kMaterialSnackbarStringsTableName, [[self class] bundle],
-        @"Dismissal accessibility hint for Snackbar");
-
     // For UIAccessibility purposes, the label is the primary 'button' for dismissing the Snackbar,
     // so we'll make sure the label is treated like a button.
     _label.accessibilityTraits = UIAccessibilityTraitButton;
     _label.accessibilityIdentifier = MDCSnackbarMessageTitleAutomationIdentifier;
-    _label.accessibilityHint = accessibilityHint;
+    _label.accessibilityHint = dismissalAccessibilityHint;
 
     // If an accessibility label or hint was set on the message model object, use that instead of
     // the text in the label or the default hint.
@@ -427,6 +449,16 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   if (elevationChanged) {
     [self mdc_elevationDidChange];
   }
+}
+
+- (void)setEnableDismissalAccessibilityAffordance:(BOOL)enableDismissalAccessibilityAffordance {
+  if (_enableDismissalAccessibilityAffordance == enableDismissalAccessibilityAffordance) {
+    return;
+  }
+  _enableDismissalAccessibilityAffordance = enableDismissalAccessibilityAffordance;
+  _dismissalAccessibilityAffordance.hidden = !enableDismissalAccessibilityAffordance;
+  _dismissalAccessibilityAffordance.accessibilityElementsHidden =
+      !enableDismissalAccessibilityAffordance;
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -764,6 +796,15 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
+  if (!self.dismissalAccessibilityAffordance.hidden) {
+    // Update frame of the dismissal touch affordance.
+    CGRect globalFrame = [self convertRect:self.bounds toView:nil];
+    CGRect globalDismissalAreaFrame =
+        CGRectMake(0, 0, CGRectGetWidth([UIScreen mainScreen].bounds), CGRectGetMinY(globalFrame));
+    CGRect localDismissalAreaFrame = [self convertRect:globalDismissalAreaFrame fromView:nil];
+    self.dismissalAccessibilityAffordance.frame = localDismissalAreaFrame;
+  }
+
   BOOL isMultilineText = [self numberOfLines] > 1;
   if (_isMultilineText != isMultilineText) {
     _isMultilineText = isMultilineText;
@@ -873,6 +914,10 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   [self dismissWithAction:self.message.action userInitiated:YES];
 }
 
+- (void)didTapDismissalTouchAffordance:(__unused UIControl *)sender {
+  [self dismissWithAction:nil userInitiated:YES];
+}
+
 - (void)animationDidStop:(__unused CAAnimation *)theAnimation finished:(BOOL)flag {
   if (flag) {
     [self dismissWithAction:nil userInitiated:YES];
@@ -884,14 +929,20 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 // Override regular accessibility element ordering and ensure label
 // is read first before any buttons, if they exist.
 - (NSInteger)accessibilityElementCount {
-  return 1 + (self.actionButton ? 1 : 0);
+  return 1 + (self.actionButton ? 1 : 0) +
+         (self.dismissalAccessibilityAffordance.accessibilityElementsHidden ? 0 : 1);
 }
 
 - (id)accessibilityElementAtIndex:(NSInteger)index {
   if (index == 0) {
     return _label;
+  } else if (index == 1) {
+    return self.actionButton;
   }
-  return self.actionButton;
+  if (!self.dismissalAccessibilityAffordance.accessibilityElementsHidden) {
+    return self.dismissalAccessibilityAffordance;
+  }
+  return nil;
 }
 
 - (NSInteger)indexOfAccessibilityElement:(id)element {
@@ -899,6 +950,9 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     return 0;
   } else if (element == _actionButton) {
     return 1;
+  } else if (element == _dismissalAccessibilityAffordance &&
+             !self.dismissalAccessibilityAffordance.accessibilityElementsHidden) {
+    return 2;
   }
 
   return NSNotFound;
@@ -970,6 +1024,11 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   BOOL result = [super pointInside:point withEvent:event];
   BOOL accessibilityEnabled =
       UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning();
+  if (accessibilityEnabled && self.enableDismissalAccessibilityAffordance &&
+      CGRectContainsPoint(self.dismissalAccessibilityAffordance.frame, point)) {
+    // Count @c dismissalAccessibilitAffordance as hittable when VoiceOver is running.
+    return YES;
+  }
   if (!result && !accessibilityEnabled && _shouldDismissOnOverlayTap) {
     [self dismissWithAction:nil userInitiated:YES];
   }

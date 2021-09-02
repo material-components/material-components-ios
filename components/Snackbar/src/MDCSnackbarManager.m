@@ -587,6 +587,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
     _mdc_overrideBaseElevation = -1;
     _focusAccessibilityNotification = UIAccessibilityLayoutChangedNotification;
     _shouldShowMessageWhenVoiceOverIsRunning = YES;
+    _enableDismissalAccessibilityAffordance = NO;
   }
   return self;
 }

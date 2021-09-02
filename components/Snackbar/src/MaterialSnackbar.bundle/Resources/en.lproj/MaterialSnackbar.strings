@@ -1,2 +1,4 @@
 /* Accessibility announcement when a dialog is displayed. */
 "MaterialSnackbarMessageViewTitleA11yHint" = "Double-tap to dismiss";
+/* Accessibility label of a snackbar's dismissal touch affordance. */
+"MaterialSnackbarMessageViewDismissalLabel" = "Dismiss popup message";
