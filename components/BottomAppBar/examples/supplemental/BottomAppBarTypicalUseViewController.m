@@ -47,9 +47,7 @@
 }
 
 - (void)viewSafeAreaInsetsDidChange {
-  if (@available(iOS 11.0, *)) {
-    [super viewSafeAreaInsetsDidChange];
-  }
+  [super viewSafeAreaInsetsDidChange];
   [self layoutBottomAppBar];
 }
 

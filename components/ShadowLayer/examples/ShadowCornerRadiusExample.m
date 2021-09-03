@@ -111,14 +111,7 @@ static const CGFloat kShadowElevationsSliderFrameHeight = 27;
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
 
-  if (@available(iOS 11.0, *)) {
-    _shadowsView.frame = UIEdgeInsetsInsetRect(self.view.bounds, self.view.safeAreaInsets);
-  } else {
-    CGRect frame = self.view.bounds;
-    frame.origin.y += self.topLayoutGuide.length;
-    frame.size.height -= self.topLayoutGuide.length;
-    _shadowsView.frame = frame;
-  }
+  _shadowsView.frame = UIEdgeInsetsInsetRect(self.view.bounds, self.view.safeAreaInsets);
 }
 
 #pragma mark catalog by convention

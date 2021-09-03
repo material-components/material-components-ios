@@ -87,12 +87,10 @@
   NSString *urduFontName = @"NotoNastaliqUrdu";
   UIFont *dialogBodyFont = [UIFont systemFontOfSize:20.0];
   UIFont *dialogButtonFont = [UIFont systemFontOfSize:20.0];
-  if (@available(iOS 11, *)) {
-    // Noto Nastaliq Urdu was added in iOS 11, and is an extremely tall
-    // font for any given nominal point size.
-    dialogBodyFont = [UIFont fontWithName:urduFontName size:20.0];
-    dialogButtonFont = [UIFont fontWithName:urduFontName size:20.0];
-  }
+  // Noto Nastaliq Urdu was added in iOS 11, and is an extremely tall
+  // font for any given nominal point size.
+  dialogBodyFont = [UIFont fontWithName:urduFontName size:20.0];
+  dialogButtonFont = [UIFont fontWithName:urduFontName size:20.0];
   alert.messageFont = dialogBodyFont;
   MDCButton *buttonForRetryAction = [alert buttonForAction:retryAction];
   buttonForRetryAction.titleLabel.font = dialogButtonFont;

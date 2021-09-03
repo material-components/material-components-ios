@@ -98,17 +98,11 @@
 @implementation RippleTypicalUseExample (Supplemental)
 
 - (void)viewWillLayoutSubviews {
-  if (@available(iOS 11.0, *)) {
-    UIEdgeInsets safeAreaInsets = self.view.safeAreaInsets;
-    self.containerView.frame =
-        CGRectMake(safeAreaInsets.left, safeAreaInsets.top,
-                   CGRectGetWidth(self.view.frame) - safeAreaInsets.left - safeAreaInsets.right,
-                   CGRectGetHeight(self.view.frame) - safeAreaInsets.top - safeAreaInsets.bottom);
-  } else {
-    self.containerView.frame =
-        CGRectMake(0, self.topLayoutGuide.length, CGRectGetWidth(self.view.frame),
-                   CGRectGetHeight(self.view.frame) - self.topLayoutGuide.length);
-  }
+  UIEdgeInsets safeAreaInsets = self.view.safeAreaInsets;
+  self.containerView.frame =
+      CGRectMake(safeAreaInsets.left, safeAreaInsets.top,
+                 CGRectGetWidth(self.view.frame) - safeAreaInsets.left - safeAreaInsets.right,
+                 CGRectGetHeight(self.view.frame) - safeAreaInsets.top - safeAreaInsets.bottom);
 
   CGFloat offset = 8;
   CGFloat shapeDimension = 200;

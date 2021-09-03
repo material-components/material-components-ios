@@ -123,9 +123,7 @@ static const CGFloat kSheetBounceBuffer = 150;
 
     // Since we handle the SafeAreaInsets ourselves through the contentInset property, we disable
     // the adjustment behavior to prevent accounting for it twice.
-    if (@available(iOS 11.0, *)) {
-      scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    }
+    scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     scrollView.preservesSuperviewLayoutMargins = YES;
   }
   return self;
@@ -171,24 +169,22 @@ static const CGFloat kSheetBounceBuffer = 150;
 }
 
 - (void)safeAreaInsetsDidChange {
-  if (@available(iOS 11.0, *)) {
-    [super safeAreaInsetsDidChange];
+  [super safeAreaInsetsDidChange];
 
-    if (self.adjustHeightForSafeAreaInsets) {
-      _preferredSheetHeight = self.originalPreferredSheetHeight + self.safeAreaInsets.bottom;
+  if (self.adjustHeightForSafeAreaInsets) {
+    _preferredSheetHeight = self.originalPreferredSheetHeight + self.safeAreaInsets.bottom;
 
-      UIEdgeInsets contentInset = self.sheet.scrollView.contentInset;
-      contentInset.bottom = MAX(contentInset.bottom, self.safeAreaInsets.bottom);
-      self.sheet.scrollView.contentInset = contentInset;
-    }
-    CGRect scrollViewFrame = CGRectStandardize(self.sheet.scrollView.frame);
-    scrollViewFrame.size = CGSizeMake(scrollViewFrame.size.width, CGRectGetHeight(self.frame));
-    self.sheet.scrollView.frame = scrollViewFrame;
-
-    // Note this is needed to make sure the full displayed frame updates to reflect the new safe
-    // area insets after rotation. See b/183357841 for context.
-    [self updateSheetFrame];
+    UIEdgeInsets contentInset = self.sheet.scrollView.contentInset;
+    contentInset.bottom = MAX(contentInset.bottom, self.safeAreaInsets.bottom);
+    self.sheet.scrollView.contentInset = contentInset;
   }
+  CGRect scrollViewFrame = CGRectStandardize(self.sheet.scrollView.frame);
+  scrollViewFrame.size = CGSizeMake(scrollViewFrame.size.width, CGRectGetHeight(self.frame));
+  self.sheet.scrollView.frame = scrollViewFrame;
+
+  // Note this is needed to make sure the full displayed frame updates to reflect the new safe
+  // area insets after rotation. See b/183357841 for context.
+  [self updateSheetFrame];
 }
 
 #pragma mark - KVO
@@ -228,10 +224,8 @@ static const CGFloat kSheetBounceBuffer = 150;
 
 - (void)updateSheetHeight {
   CGFloat adjustedPreferredSheetHeight = self.originalPreferredSheetHeight;
-  if (@available(iOS 11.0, *)) {
-    if (self.adjustHeightForSafeAreaInsets) {
-      adjustedPreferredSheetHeight += self.safeAreaInsets.bottom;
-    }
+  if (self.adjustHeightForSafeAreaInsets) {
+    adjustedPreferredSheetHeight += self.safeAreaInsets.bottom;
   }
 
   if (_preferredSheetHeight == adjustedPreferredSheetHeight) {
@@ -312,9 +306,7 @@ static const CGFloat kSheetBounceBuffer = 150;
 // Returns the maximum allowable height that the sheet can be dragged to.
 - (CGFloat)maximumSheetHeight {
   CGFloat boundsHeight = CGRectGetHeight(self.bounds);
-  if (@available(iOS 11.0, *)) {
-    boundsHeight -= self.safeAreaInsets.top;
-  }
+  boundsHeight -= self.safeAreaInsets.top;
   // If we have a scrollview, the sheet should never get taller than its content height.
   CGFloat contentHeight = [self scrollViewContentHeight];
   if (contentHeight > 0) {

@@ -151,11 +151,9 @@ static CGFloat const kSliderMinimumTouchSize = 48;
   [super layoutSubviews];
 
   UIEdgeInsets safeArea = UIEdgeInsetsZero;
-  if (@available(iOS 11.0, *)) {
-    // Accommodate insets for iPhone X.
-    safeArea = self.safeAreaInsets;
-    safeArea.top = 0;
-  }
+  // Accommodate insets for iPhone X.
+  safeArea = self.safeAreaInsets;
+  safeArea.top = 0;
   CGRect labelFrame =
       CGRectMake(kSliderHorizontalMargin + 6, kSliderVerticalMargin,
                  self.contentView.frame.size.width - (2 * kSliderHorizontalMargin), 20);

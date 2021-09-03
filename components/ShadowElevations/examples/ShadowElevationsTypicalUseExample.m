@@ -228,13 +228,8 @@ static const CGFloat kShadowElevationsPaperBottomMargin = 20;
   _shadowsView = [[ShadowElevationsPointsView alloc] initWithFrame:self.view.bounds];
   [self.view addSubview:_shadowsView];
 
-  if (@available(iOS 11.0, *)) {
-    self.shadowsView.autoresizingMask =
-        UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  } else {
-    _shadowsView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self setupShadowsViewConstraints];
-  }
+  self.shadowsView.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 }
 
 - (void)setupShadowsViewConstraints {

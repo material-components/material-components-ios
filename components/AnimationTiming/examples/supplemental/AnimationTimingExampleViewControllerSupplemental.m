@@ -49,43 +49,9 @@ static const CGSize kAnimationCircleSize = {48, 48};
   self.scrollView.clipsToBounds = YES;
   [self.view addSubview:self.scrollView];
 
-  if (@available(iOS 11.0, *)) {
-    // No need to do anything - additionalSafeAreaInsets will inset our content.
-    self.scrollView.autoresizingMask =
-        UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  } else {
-    self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
-    [NSLayoutConstraint activateConstraints:@[
-      [NSLayoutConstraint constraintWithItem:self.scrollView
-                                   attribute:NSLayoutAttributeTop
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:self.topLayoutGuide
-                                   attribute:NSLayoutAttributeBottom
-                                  multiplier:1.0
-                                    constant:0],
-      [NSLayoutConstraint constraintWithItem:self.scrollView
-                                   attribute:NSLayoutAttributeBottom
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:self.view
-                                   attribute:NSLayoutAttributeBottom
-                                  multiplier:1.0
-                                    constant:0],
-      [NSLayoutConstraint constraintWithItem:self.scrollView
-                                   attribute:NSLayoutAttributeLeft
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:self.view
-                                   attribute:NSLayoutAttributeLeft
-                                  multiplier:1.0
-                                    constant:0],
-      [NSLayoutConstraint constraintWithItem:self.scrollView
-                                   attribute:NSLayoutAttributeRight
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:self.view
-                                   attribute:NSLayoutAttributeRight
-                                  multiplier:1.0
-                                    constant:0]
-    ]];
-  }
+  // No need to do anything - additionalSafeAreaInsets will inset our content.
+  self.scrollView.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
   CGFloat lineSpace = (CGRectGetHeight(self.view.frame) - 50) / 5;
   UILabel *linearLabel = [AnimationTimingExampleViewController curveLabelWithTitle:@"Linear"];

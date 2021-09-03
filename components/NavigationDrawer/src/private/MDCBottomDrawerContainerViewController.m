@@ -251,9 +251,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 }
 
 - (CGFloat)topSafeAreaInset {
-  if (@available(iOS 11.0, *)) {
-    return [UIApplication mdc_safeSharedApplication].keyWindow.safeAreaInsets.top;
-  }
+  return [UIApplication mdc_safeSharedApplication].keyWindow.safeAreaInsets.top;
   return MDCFixedStatusBarHeightOnPreiPhoneXDevices;
 }
 
@@ -607,10 +605,8 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   [self addScrollViewObserver];
 
   // Scroll view should not update its content insets implicitly.
-  if (@available(iOS 11.0, *)) {
-    self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-    self.scrollView.insetsLayoutMarginsFromSafeArea = NO;
-  }
+  self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+  self.scrollView.insetsLayoutMarginsFromSafeArea = NO;
 }
 
 - (void)setupLayout {
@@ -727,19 +723,15 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 }
 
 - (CGFloat)bottomSafeAreaInsetsToAdjustContainerHeight {
-  if (@available(iOS 11.0, *)) {
-    if (self.shouldIncludeSafeAreaInContentHeight) {
-      return self.view.safeAreaInsets.bottom;
-    }
+  if (self.shouldIncludeSafeAreaInContentHeight) {
+    return self.view.safeAreaInsets.bottom;
   }
   return 0;
 }
 
 - (CGFloat)bottomSafeAreaInsetsToAdjustInitialDrawerHeight {
-  if (@available(iOS 11.0, *)) {
-    if (self.shouldIncludeSafeAreaInInitialDrawerHeight) {
-      return self.view.safeAreaInsets.bottom;
-    }
+  if (self.shouldIncludeSafeAreaInInitialDrawerHeight) {
+    return self.view.safeAreaInsets.bottom;
   }
   return 0;
 }

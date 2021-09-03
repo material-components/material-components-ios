@@ -221,10 +221,8 @@ static NSString *const kMaterialActionSheetBundle = @"MaterialActionSheet.bundle
   self.tableView.frame = self.view.bounds;
   self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
   self.view.preservesSuperviewLayoutMargins = YES;
-  if (@available(iOS 11.0, *)) {
-    self.view.insetsLayoutMarginsFromSafeArea = NO;
-    self.tableView.insetsLayoutMarginsFromSafeArea = NO;
-  }
+  self.view.insetsLayoutMarginsFromSafeArea = NO;
+  self.tableView.insetsLayoutMarginsFromSafeArea = NO;
   [self.view addSubview:self.tableView];
   [self.view addSubview:self.header];
   [self.view addSubview:self.headerDividerView];
@@ -244,9 +242,7 @@ static NSString *const kMaterialActionSheetBundle = @"MaterialActionSheet.bundle
   self.headerDividerView.frame =
       CGRectMake(0, size.height, CGRectGetWidth(self.view.bounds), dividerHeight);
   UIEdgeInsets insets = UIEdgeInsetsMake(size.height + dividerHeight, 0, 0, 0);
-  if (@available(iOS 11.0, *)) {
-    insets.bottom = self.tableView.adjustedContentInset.bottom;
-  }
+  insets.bottom = self.tableView.adjustedContentInset.bottom;
   self.tableView.contentInset = insets;
   self.tableView.contentOffset = CGPointMake(0, -size.height);
 }
@@ -268,9 +264,7 @@ static NSString *const kMaterialActionSheetBundle = @"MaterialActionSheet.bundle
       (((CGFloat)amountOfCellsToShow - (CGFloat)0.5) * cellHeight) + headerHeight;
   // When updating the preferredSheetHeight the presentation controller takes into account the
   // safe area so we have to remove that.
-  if (@available(iOS 11.0, *)) {
-    preferredHeight = preferredHeight - self.tableView.adjustedContentInset.bottom;
-  }
+  preferredHeight = preferredHeight - self.tableView.adjustedContentInset.bottom;
   return ceil(preferredHeight);
 }
 

@@ -242,14 +242,12 @@ static const CGFloat kMaximumHeight = 80;
   BOOL isRegularWidth = self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular;
   BOOL isRegularHeight = self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular;
   if (!isRegularWidth || !isRegularHeight) {
-    if (@available(iOS 11.0, *)) {
-      if (self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
-        leftMargin += self.mdc_safeAreaInsets.left;
-        rightMargin += self.mdc_safeAreaInsets.right;
-      } else {
-        leftMargin += self.mdc_safeAreaInsets.right;
-        rightMargin += self.mdc_safeAreaInsets.left;
-      }
+    if (self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+      leftMargin += self.mdc_safeAreaInsets.left;
+      rightMargin += self.mdc_safeAreaInsets.right;
+    } else {
+      leftMargin += self.mdc_safeAreaInsets.right;
+      rightMargin += self.mdc_safeAreaInsets.left;
     }
 
     _snackbarLeadingMarginConstraint.constant = leftMargin;
@@ -265,9 +263,7 @@ static const CGFloat kMaximumHeight = 80;
   CGFloat keyboardHeight = self.watcher.visibleKeyboardHeight;
   CGFloat userHeight = self.bottomOffset;
   if (!MDCSnackbarMessage.usesLegacySnackbar) {
-    if (@available(iOS 11.0, *)) {
-      userHeight = MAX(userHeight, self.safeAreaInsets.bottom);
-    }
+    userHeight = MAX(userHeight, self.safeAreaInsets.bottom);
   }
 
   return MAX(keyboardHeight, userHeight);
@@ -359,15 +355,13 @@ static const CGFloat kMaximumHeight = 80;
                                                       multiplier:1.0
                                                         constant:[snackbarView maximumWidth]]];
       } else {
-        if (@available(iOS 11.0, *)) {
-          if (self.effectiveUserInterfaceLayoutDirection ==
-              UIUserInterfaceLayoutDirectionLeftToRight) {
-            leftMargin += self.mdc_safeAreaInsets.left;
-            rightMargin += self.mdc_safeAreaInsets.right;
-          } else {
-            leftMargin += self.mdc_safeAreaInsets.right;
-            rightMargin += self.mdc_safeAreaInsets.left;
-          }
+        if (self.effectiveUserInterfaceLayoutDirection ==
+            UIUserInterfaceLayoutDirectionLeftToRight) {
+          leftMargin += self.mdc_safeAreaInsets.left;
+          rightMargin += self.mdc_safeAreaInsets.right;
+        } else {
+          leftMargin += self.mdc_safeAreaInsets.right;
+          rightMargin += self.mdc_safeAreaInsets.left;
         }
 
         _snackbarLeadingMarginConstraint =
@@ -471,9 +465,7 @@ static const CGFloat kMaximumHeight = 80;
   // Maximum height must be extended to include the bottom content safe area.
   CGFloat maximumHeight = kMaximumHeight;
   if (self.anchoredToScreenBottom && MDCSnackbarMessage.usesLegacySnackbar) {
-    if (@available(iOS 11.0, *)) {
-      maximumHeight += self.safeAreaInsets.bottom;
-    }
+    maximumHeight += self.safeAreaInsets.bottom;
   }
   return maximumHeight;
 }
@@ -491,10 +483,8 @@ static const CGFloat kMaximumHeight = 80;
 
 - (UIEdgeInsets)mdc_safeAreaInsets {
   UIEdgeInsets insets = UIEdgeInsetsZero;
-  if (@available(iOS 11.0, *)) {
-    // Accommodate insets for iPhone X.
-    insets = self.safeAreaInsets;
-  }
+  // Accommodate insets for iPhone X.
+  insets = self.safeAreaInsets;
   return insets;
 }
 

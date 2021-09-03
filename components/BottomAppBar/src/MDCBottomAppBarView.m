@@ -138,9 +138,7 @@ static const CGFloat kMDCBottomAppBarViewFloatingButtonElevationSecondary = 4;
   floatingButtonPoint.y = MAX(0, navigationBarMinY - self.floatingButtonVerticalOffset);
 
   UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
-  if (@available(iOS 11.0, *)) {
-    safeAreaInsets = self.safeAreaInsets;
-  }
+  safeAreaInsets = self.safeAreaInsets;
 
   CGFloat leftCenter = kMDCBottomAppBarFloatingButtonPositionX + safeAreaInsets.left;
   CGFloat rightCenter =
@@ -276,10 +274,8 @@ static const CGFloat kMDCBottomAppBarViewFloatingButtonElevationSecondary = 4;
 
 - (UIEdgeInsets)mdc_safeAreaInsets {
   UIEdgeInsets insets = UIEdgeInsetsZero;
-  if (@available(iOS 11.0, *)) {
-    // Accommodate insets for iPhone X.
-    insets = self.safeAreaInsets;
-  }
+  // Accommodate insets for iPhone X.
+  insets = self.safeAreaInsets;
   return insets;
 }
 

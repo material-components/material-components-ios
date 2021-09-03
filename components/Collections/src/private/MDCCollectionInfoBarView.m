@@ -90,10 +90,8 @@ static inline UIColor *CollectionInfoBarRedColor(void) {
   [super layoutSubviews];
 
   UIEdgeInsets collectionViewSafeAreaInsets = UIEdgeInsetsZero;
-  if (@available(iOS 11.0, *)) {
-    if (self.superview) {
-      collectionViewSafeAreaInsets = self.superview.safeAreaInsets;
-    }
+  if (self.superview) {
+    collectionViewSafeAreaInsets = self.superview.safeAreaInsets;
   }
   CGFloat leftInset =
       MAX(MDCCollectionInfoBarLabelHorizontalPadding, collectionViewSafeAreaInsets.left);

@@ -81,18 +81,12 @@
   [stackView addArrangedSubview:
                  self.bottomSheetPresentationControllerDismissalAnimationCompletedCalledLabel];
 
-  if (@available(iOS 11.0, *)) {
-    [stackView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor].active =
-        YES;
-    [stackView.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor]
-        .active = YES;
-    [stackView.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor]
-        .active = YES;
-  } else {
-    [stackView.topAnchor constraintEqualToAnchor:self.topLayoutGuide.bottomAnchor].active = YES;
-    [stackView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = YES;
-    [stackView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
-  }
+  [stackView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor].active =
+      YES;
+  [stackView.leadingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor]
+      .active = YES;
+  [stackView.trailingAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.trailingAnchor]
+      .active = YES;
 }
 
 - (void)presentBottomSheet {

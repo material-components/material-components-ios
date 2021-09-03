@@ -67,22 +67,7 @@ static const CGFloat kViewOffsetToCenter = 20;
 }
 
 - (CGRect)contentBounds {
-  CGRect bounds = self.view.bounds;
-  __block CGRect contentBounds = CGRectZero;
-
-  void (^preiOS11Behavior)(void) = ^{
-    CGRect safeAreaBounds;
-    CGRectDivide(bounds, &safeAreaBounds, &contentBounds, self.topLayoutGuide.length,
-                 CGRectMinYEdge);
-  };
-  if (@available(iOS 11.0, *)) {
-    UIEdgeInsets safeAreaInsets = self.view.safeAreaInsets;
-    contentBounds = UIEdgeInsetsInsetRect(bounds, safeAreaInsets);
-  } else {
-    preiOS11Behavior();
-  }
-
-  return contentBounds;
+  return UIEdgeInsetsInsetRect(self.view.bounds, self.view.safeAreaInsets);
 }
 
 - (void)viewDidLayoutSubviews {

@@ -250,11 +250,9 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   // For pre iOS 11 devices, it's safe to assume that the Safe Area insets' left and right
   // values are zero. DO NOT use this to get the top or bottom Safe Area insets.
   UIEdgeInsets RTLFriendlySafeAreaInsets = UIEdgeInsetsZero;
-  if (@available(iOS 11.0, *)) {
-    RTLFriendlySafeAreaInsets = MDFInsetsMakeWithLayoutDirection(
-        self.safeAreaInsets.top, self.safeAreaInsets.left, self.safeAreaInsets.bottom,
-        self.safeAreaInsets.right, self.effectiveUserInterfaceLayoutDirection);
-  }
+  RTLFriendlySafeAreaInsets = MDFInsetsMakeWithLayoutDirection(
+      self.safeAreaInsets.top, self.safeAreaInsets.left, self.safeAreaInsets.bottom,
+      self.safeAreaInsets.right, self.effectiveUserInterfaceLayoutDirection);
 
   CGSize leadingButtonBarSize = [_leadingButtonBar sizeThatFits:self.bounds.size];
   CGRect leadingButtonBarFrame =
@@ -279,10 +277,8 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
   CGRect textFrame = UIEdgeInsetsInsetRect(self.bounds, self.titleInsets);
   textFrame.origin.x += _leadingButtonBar.frame.size.width;
   textFrame.size.width -= _leadingButtonBar.frame.size.width + _trailingButtonBar.frame.size.width;
-  if (@available(iOS 11.0, *)) {
-    textFrame.origin.x += self.safeAreaInsets.left;
-    textFrame.size.width -= self.safeAreaInsets.left + self.safeAreaInsets.right;
-  }
+  textFrame.origin.x += self.safeAreaInsets.left;
+  textFrame.size.width -= self.safeAreaInsets.left + self.safeAreaInsets.right;
 
   // Layout TitleLabel
   NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle alloc] init];
@@ -325,9 +321,7 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
       CGFloat availableWidth = UIEdgeInsetsInsetRect(self.bounds, self.titleInsets).size.width;
       availableWidth -=
           MAX(_leadingButtonBar.frame.size.width, _trailingButtonBar.frame.size.width) * 2;
-      if (@available(iOS 11.0, *)) {
-        availableWidth -= self.safeAreaInsets.left + self.safeAreaInsets.right;
-      }
+      availableWidth -= self.safeAreaInsets.left + self.safeAreaInsets.right;
       titleViewFrame.size.width = availableWidth;
       if (self.titleViewLayoutBehavior == MDCNavigationBarTitleViewLayoutBehaviorCenterFit) {
         titleViewFrame.size.width = MIN(self.titleView.intrinsicContentSize.width, availableWidth);
