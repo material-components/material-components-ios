@@ -15,7 +15,6 @@
 #import <XCTest/XCTest.h>
 
 #import "../../src/private/UIFont+MaterialTypographyPrivate.h"
-#import "MDCTypographyFontLoader.h"
 #import "MaterialTypography.h"
 
 static const CGFloat kEpsilon = (CGFloat)0.001;
@@ -160,75 +159,6 @@ static const CGFloat kEpsilon = (CGFloat)0.001;
 
   // Then
   XCTAssertEqualWithAccuracy(font.pointSize, 14, kEpsilon, @"The font size of button must be 14.");
-}
-
-- (void)testItalicFontFromFont {
-  // Given
-  CGFloat size = 8;
-  MDCSystemFontLoader *fontLoader = [[MDCSystemFontLoader alloc] init];
-  UIFont *normalFont = [UIFont systemFontOfSize:size];
-  UIFont *italicFont = [UIFont italicSystemFontOfSize:size];
-  UIFont *mediumFont = [fontLoader mediumFontOfSize:size];
-  UIFontDescriptor *fontDescriptor =
-      [mediumFont.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitItalic];
-  UIFont *italicMediumFont = [UIFont fontWithDescriptor:fontDescriptor size:0];
-
-  // Then
-  XCTAssertEqualObjects([MDCTypography italicFontFromFont:mediumFont], italicMediumFont);
-  XCTAssertEqualObjects([MDCTypography italicFontFromFont:normalFont], italicFont);
-}
-
-- (void)testBoldFontFromFont {
-  // Given
-  CGFloat size = 8;
-  MDCSystemFontLoader *fontLoader = [[MDCSystemFontLoader alloc] init];
-  UIFont *normalFont = [UIFont systemFontOfSize:size];
-  UIFont *boldFont = [UIFont boldSystemFontOfSize:size];
-  UIFont *italicFont = [UIFont italicSystemFontOfSize:size];
-  UIFontDescriptor *fontDescriptor = [[UIFont systemFontOfSize:size].fontDescriptor
-      fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitItalic | UIFontDescriptorTraitBold];
-  UIFont *italicBoldFont = [UIFont fontWithDescriptor:fontDescriptor size:0];
-  UIFont *fontLoaderRegularFont = [fontLoader regularFontOfSize:size];
-  UIFont *fontLoaderBoldFont = [fontLoader boldFontOfSize:size];
-
-  // Then
-  XCTAssertEqualObjects([MDCTypography boldFontFromFont:italicFont], italicBoldFont);
-  XCTAssertEqualObjects([MDCTypography boldFontFromFont:normalFont], boldFont);
-  // For some reason the fonts are not equal, the names are the same though.
-  XCTAssertEqualObjects([MDCTypography boldFontFromFont:fontLoaderRegularFont].fontName,
-                        fontLoaderBoldFont.fontName);
-}
-
-- (void)testBoldFontFromFontWithNoBold {
-  // Given
-  BodoniOrnamentsFontLoader *fontLoader = [[BodoniOrnamentsFontLoader alloc] init];
-  [MDCTypography setFontLoader:fontLoader];
-  UIFont *font = [MDCTypography buttonFont];
-
-  // When
-  UIFont *boldFont = [MDCTypography boldFontFromFont:font];
-
-  // Then
-  XCTAssertNotNil(boldFont);
-
-  // Cleanup
-  [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
-}
-
-- (void)testItalicFontFromFontWithNoItalic {
-  // Given
-  BodoniOrnamentsFontLoader *fontLoader = [[BodoniOrnamentsFontLoader alloc] init];
-  [MDCTypography setFontLoader:fontLoader];
-  UIFont *font = [MDCTypography buttonFont];
-
-  // When
-  UIFont *italicFont = [MDCTypography italicFontFromFont:font];
-
-  // Then
-  XCTAssertNotNil(italicFont);
-
-  // Cleanup
-  [MDCTypography setFontLoader:[[MDCSystemFontLoader alloc] init]];
 }
 
 - (void)testFontFamilyMatchesSystemFontFamily {

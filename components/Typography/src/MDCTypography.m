@@ -105,31 +105,6 @@ static id<MDCTypographyFontLoading> gFontLoader = nil;
   return [MDFTextAccessibility isLargeForContrastRatios:font];
 }
 
-+ (UIFont *)italicFontFromFont:(UIFont *)font {
-  SEL selector = @selector(italicFontFromFont:);
-  if ([self.fontLoader respondsToSelector:selector]) {
-    return [self.fontLoader italicFontFromFont:font];
-  }
-  UIFontDescriptor *fontDescriptor =
-      [font.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitItalic];
-  UIFont *fontFromDescriptor = [UIFont fontWithDescriptor:fontDescriptor size:0];
-  return fontFromDescriptor ? fontFromDescriptor : [UIFont italicSystemFontOfSize:font.pointSize];
-}
-
-+ (UIFont *)boldFontFromFont:(UIFont *)font {
-  SEL selector = @selector(boldFontFromFont:);
-  if ([self.fontLoader respondsToSelector:selector]) {
-    return [self.fontLoader boldFontFromFont:font];
-  }
-  UIFontDescriptorSymbolicTraits traits = UIFontDescriptorTraitBold;
-  if (font.mdc_slant != 0) {
-    traits = traits | UIFontDescriptorTraitItalic;
-  }
-  UIFontDescriptor *fontDescriptor = [font.fontDescriptor fontDescriptorWithSymbolicTraits:traits];
-  UIFont *fontFromDescriptor = [UIFont fontWithDescriptor:fontDescriptor size:0];
-  return fontFromDescriptor ? fontFromDescriptor : [UIFont boldSystemFontOfSize:font.pointSize];
-}
-
 #pragma mark - Private
 
 + (id<MDCTypographyFontLoading>)defaultFontLoader {

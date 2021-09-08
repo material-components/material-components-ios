@@ -123,12 +123,6 @@
 /** Returns a font for buttons. */
 + (nonnull UIFont *)buttonFont;
 
-/** Returns a bold version of the specified font. */
-+ (nonnull UIFont *)boldFontFromFont:(nonnull UIFont *)font;
-
-/** Returns an italic version of the specified font. */
-+ (nonnull UIFont *)italicFontFromFont:(nonnull UIFont *)font;
-
 /**
  Asks the receiver to determine if a particular font would be considered "large" for the purposes of
  calculating contrast ratios.
