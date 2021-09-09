@@ -34,4 +34,18 @@
   return backgroundView;
 }
 
+- (void)mdc_layoutAndApplyBestFitFrameWithWidth:(CGFloat)width {
+  [self layoutIfNeeded];
+  CGSize size = CGSizeMake(width, 0);
+  size = [self systemLayoutSizeFittingSize:size
+             withHorizontalFittingPriority:UILayoutPriorityRequired
+                   verticalFittingPriority:UILayoutPriorityFittingSizeLevel];
+  if (size.width <= 0 || size.height <= 0) {
+    size = [self sizeThatFits:CGSizeMake(width, CGFLOAT_MAX)];
+  }
+  CGRect result = CGRectZero;
+  result.size = size;
+  self.frame = result;
+}
+
 @end

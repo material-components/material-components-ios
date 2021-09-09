@@ -84,6 +84,12 @@
 @property(nullable, nonatomic, copy) NSString *accessibilityHint;
 
 /**
+ The @c minimumLayoutHeight to use when laying out the Snackbar such that there
+ will be enough space to layout text at the current text size.
+ */
+@property(nonatomic, readonly) CGFloat minimumLayoutHeight;
+
+/**
  Enable a hidden touch affordance (button) for users to dismiss under VoiceOver.
 
  It allows users to dismiss the snackbar in an explicit way in addition to

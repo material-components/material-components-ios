@@ -26,8 +26,7 @@
 /** The width of the Snackbar for testing. */
 static const CGFloat kWidth = 180;
 
-/** Height of a Snackbar with 1 line of message text. */
-static const CGFloat kHeightSingleLineText = 48;
+static const CGFloat kAccessibilityFontSize = 25;
 
 static NSString *const kItemTitleShort1Latin = @"Quando";
 static NSString *const kItemTitleShort2Latin = @"No";
@@ -50,6 +49,22 @@ static NSString *const kItemTitleLong2Arabic =
 
 @interface MDCSnackbarManager (SnackbarManagerSnapshotTesting)
 @property(nonnull, nonatomic, strong) MDCSnackbarManagerInternal *internalManager;
+@end
+
+/** A subclass of MDCSnackbarMessageView for testing that allows overriding the traitCollection. */
+@interface MDCSnackbarSnapshotTestsMessageView : MDCSnackbarMessageView
+
+/** Allows overriding @c traitCollection for testing. */
+@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
+
+@end
+
+@implementation MDCSnackbarSnapshotTestsMessageView
+
+- (UITraitCollection *)traitCollection {
+  return self.traitCollectionOverride ?: [super traitCollection];
+}
+
 @end
 
 /** Snapshot tests for MDCSnackbarMessageView. */
@@ -83,14 +98,21 @@ static NSString *const kItemTitleLong2Arabic =
   [self snapshotVerifyView:snapshotView];
 }
 
-- (MDCSnackbarMessageView *)snackbarMessageViewWithMessage:(MDCSnackbarMessage *)message {
-  return [[MDCSnackbarMessageView alloc] initWithMessage:message
-                                          dismissHandler:nil
-                                         snackbarManager:self.testManager];
+- (MDCSnackbarSnapshotTestsMessageView *)snackbarMessageViewWithMessage:
+    (MDCSnackbarMessage *)message {
+  MDCSnackbarSnapshotTestsMessageView *view =
+      [[MDCSnackbarSnapshotTestsMessageView alloc] initWithMessage:message
+                                                    dismissHandler:nil
+                                                   snackbarManager:self.testManager];
+  // The intrinsic content size will only be correct when the width of the frame is set due to
+  // multiline label sizing. Note: this should not be an issue when the view is in actual use, but
+  // is here in the artificial environment of a snapshot test.
+  view.frame = CGRectMake(0, 0, kWidth, 0);
+  return view;
 }
 
-- (MDCSnackbarMessageView *)snackbarMessageViewWithText:(NSString *)text
-                                            actionTitle:(NSString *)title {
+- (MDCSnackbarSnapshotTestsMessageView *)snackbarMessageViewWithText:(NSString *)text
+                                                         actionTitle:(NSString *)title {
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   message.text = text;
   if (title) {
@@ -107,7 +129,7 @@ static NSString *const kItemTitleLong2Arabic =
   // When
   MDCSnackbarMessageView *messageView = [self snackbarMessageViewWithText:kItemTitleShort1Latin
                                                               actionTitle:nil];
-  messageView.frame = CGRectMake(0, 0, kWidth, kHeightSingleLineText);
+  [messageView mdc_layoutAndApplyBestFitFrameWithWidth:kWidth];
 
   // Then
   [self generateSnapshotAndVerifyForView:messageView];
@@ -117,7 +139,7 @@ static NSString *const kItemTitleLong2Arabic =
   // When
   MDCSnackbarMessageView *messageView = [self snackbarMessageViewWithText:kItemTitleShort1Arabic
                                                               actionTitle:nil];
-  messageView.frame = CGRectMake(0, 0, kWidth, kHeightSingleLineText);
+  [messageView mdc_layoutAndApplyBestFitFrameWithWidth:kWidth];
   [self changeViewToRTL:messageView];
 
   // Then
@@ -128,7 +150,7 @@ static NSString *const kItemTitleLong2Arabic =
   // When
   MDCSnackbarMessageView *messageView = [self snackbarMessageViewWithText:kItemTitleLong1Latin
                                                               actionTitle:nil];
-  messageView.frame = CGRectMake(0, 0, kWidth, kHeightSingleLineText);
+  [messageView mdc_layoutAndApplyBestFitFrameWithWidth:kWidth];
 
   // Then
   [self generateSnapshotAndVerifyForView:messageView];
@@ -138,7 +160,7 @@ static NSString *const kItemTitleLong2Arabic =
   // When
   MDCSnackbarMessageView *messageView = [self snackbarMessageViewWithText:kItemTitleLong1Arabic
                                                               actionTitle:nil];
-  messageView.frame = CGRectMake(0, 0, kWidth, kHeightSingleLineText);
+  [messageView mdc_layoutAndApplyBestFitFrameWithWidth:kWidth];
   [self changeViewToRTL:messageView];
 
   // Then
@@ -149,7 +171,7 @@ static NSString *const kItemTitleLong2Arabic =
   // When
   MDCSnackbarMessageView *messageView = [self snackbarMessageViewWithText:kItemTitleShort1Latin
                                                               actionTitle:kItemTitleShort2Latin];
-  messageView.frame = CGRectMake(0, 0, kWidth, kHeightSingleLineText);
+  [messageView mdc_layoutAndApplyBestFitFrameWithWidth:kWidth];
 
   // Then
   [self generateSnapshotAndVerifyForView:messageView];
@@ -159,7 +181,7 @@ static NSString *const kItemTitleLong2Arabic =
   // When
   MDCSnackbarMessageView *messageView = [self snackbarMessageViewWithText:kItemTitleShort1Arabic
                                                               actionTitle:kItemTitleShort2Arabic];
-  messageView.frame = CGRectMake(0, 0, kWidth, kHeightSingleLineText);
+  [messageView mdc_layoutAndApplyBestFitFrameWithWidth:kWidth];
   [self changeViewToRTL:messageView];
 
   // Then
@@ -170,7 +192,50 @@ static NSString *const kItemTitleLong2Arabic =
   // When
   MDCSnackbarMessageView *messageView = [self snackbarMessageViewWithText:kItemTitleLong1Latin
                                                               actionTitle:kItemTitleLong2Latin];
-  messageView.frame = CGRectMake(0, 0, kWidth, kHeightSingleLineText);
+  [messageView mdc_layoutAndApplyBestFitFrameWithWidth:kWidth];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:messageView];
+}
+
+// Note that this test doesn't test whether or not the actual font size changes, only that the
+// snackbar grows vertically with more text.
+- (void)testWithLongMessageShortActionLTRLatinDynamicType {
+  // Given
+  MDCSnackbarSnapshotTestsMessageView *messageView =
+      [self snackbarMessageViewWithText:kItemTitleLong1Latin actionTitle:kItemTitleShort2Latin];
+
+  // When
+  messageView
+      .traitCollectionOverride = [UITraitCollection traitCollectionWithTraitsFromCollections:@[
+    [UITraitCollection
+        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraExtraExtraLarge],
+    [UITraitCollection traitCollectionWithVerticalSizeClass:UIUserInterfaceSizeClassRegular]
+  ]];
+
+  [messageView mdc_layoutAndApplyBestFitFrameWithWidth:kWidth];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:messageView];
+}
+
+// Note that this test doesn't test whether or not the actual font size changes, only that layout
+// switches from horizontal to vertical.
+- (void)testWithLongMessageShortActionLTRLatinDynamicTypeAccessibilitySize {
+  // Given
+  MDCSnackbarSnapshotTestsMessageView *messageView =
+      [self snackbarMessageViewWithText:kItemTitleLong1Latin actionTitle:kItemTitleShort2Latin];
+
+  // When
+  messageView.traitCollectionOverride =
+      [UITraitCollection traitCollectionWithTraitsFromCollections:@[
+        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                               UIContentSizeCategoryAccessibilityExtraExtraExtraLarge],
+        [UITraitCollection traitCollectionWithVerticalSizeClass:UIUserInterfaceSizeClassRegular]
+      ]];
+  messageView.messageFont = [UIFont systemFontOfSize:kAccessibilityFontSize];
+
+  [messageView mdc_layoutAndApplyBestFitFrameWithWidth:kWidth];
 
   // Then
   [self generateSnapshotAndVerifyForView:messageView];
@@ -180,7 +245,7 @@ static NSString *const kItemTitleLong2Arabic =
   // When
   MDCSnackbarMessageView *messageView = [self snackbarMessageViewWithText:kItemTitleLong1Arabic
                                                               actionTitle:kItemTitleLong2Arabic];
-  messageView.frame = CGRectMake(0, 0, kWidth, kHeightSingleLineText);
+  [messageView mdc_layoutAndApplyBestFitFrameWithWidth:kWidth];
   [self changeViewToRTL:messageView];
 
   // Then
@@ -191,7 +256,7 @@ static NSString *const kItemTitleLong2Arabic =
   // Given
   MDCSnackbarMessageView *messageView = [self snackbarMessageViewWithText:kItemTitleShort1Latin
                                                               actionTitle:kItemTitleShort2Latin];
-  messageView.frame = CGRectMake(0, 0, kWidth, kHeightSingleLineText);
+  [messageView mdc_layoutAndApplyBestFitFrameWithWidth:kWidth];
 
   // When
   messageView.elevation = 0;
@@ -204,7 +269,7 @@ static NSString *const kItemTitleLong2Arabic =
   // Given
   MDCSnackbarMessageView *messageView = [self snackbarMessageViewWithText:kItemTitleShort1Latin
                                                               actionTitle:kItemTitleShort2Latin];
-  messageView.frame = CGRectMake(0, 0, kWidth, kHeightSingleLineText);
+  [messageView mdc_layoutAndApplyBestFitFrameWithWidth:kWidth];
 
   // When
   messageView.elevation = 12;
@@ -219,7 +284,7 @@ static NSString *const kItemTitleLong2Arabic =
   // Given
   MDCSnackbarMessageView *messageView = [self snackbarMessageViewWithText:kItemTitleShort1Latin
                                                               actionTitle:kItemTitleShort2Latin];
-  messageView.frame = CGRectMake(0, 0, kWidth, kHeightSingleLineText);
+  [messageView mdc_layoutAndApplyBestFitFrameWithWidth:kWidth];
 
   // When
   messageView.elevation = 24;
@@ -242,7 +307,7 @@ static NSString *const kItemTitleLong2Arabic =
   // Given
   MDCSnackbarMessageView *messageView = [self snackbarMessageViewWithText:kItemTitleShort1Latin
                                                               actionTitle:kItemTitleShort2Latin];
-  messageView.frame = CGRectMake(0, 0, kWidth, kHeightSingleLineText);
+  [messageView mdc_layoutAndApplyBestFitFrameWithWidth:kWidth];
 
   // When
   self.testManager.leadingMargin = 100;

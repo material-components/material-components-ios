@@ -92,6 +92,11 @@ static const CGFloat kMinimumViewWidth_iPhone = 320;
 static const CGFloat kMaximumViewWidth_iPhone = 320;
 
 /**
+ The maximimum ratio of the snackbar that can be occupied by the snackbar button.
+ */
+static const CGFloat kMaxButtonRatio = 0.333333;
+
+/**
  The minimum height of the Snackbar.
  */
 static const CGFloat kMinimumHeight = 48;
@@ -103,6 +108,13 @@ static const CGFloat kMinimumHeightMultiline = 68;
 
 static const MDCFontTextStyle kMessageTextStyle = MDCFontTextStyleBody1;
 static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
+
+/**
+ The minimum font size at which to switch to a vertical layout for dynamic type. Picked to be 1
+ larger then MDCFontTextStyleBody1 at the largest non-a11y size. Ideally we would not use a constant
+ here, b/198825058 tracks work to make this more dynamic and less reliant on a magic number.
+ */
+static const CGFloat kMinimumAccessibiltyFontSize = 21;
 
 #if MDC_AVAILABLE_SDK_IOS(10_0)
 @interface MDCSnackbarMessageView () <CAAnimationDelegate>
@@ -304,10 +316,28 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
                                           action:@selector(didTapDismissalTouchAffordance:)
                                 forControlEvents:UIControlEventTouchUpInside];
 
-    _contentView = [[UIView alloc] init];
+    if (MDCSnackbarMessage.usesLegacySnackbar) {
+      _contentView = [[UIView alloc] init];
+      _contentView.userInteractionEnabled = NO;
+    } else {
+      UIScrollView *contentView = [[UIScrollView alloc] init];
+      contentView.indicatorStyle =
+          self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight
+              ? UIScrollViewIndicatorStyleWhite
+              : UIScrollViewIndicatorStyleBlack;
+      _contentView = contentView;
+
+      // Use a separate gesture recognizer on the scroll view to allow for scrolling content without
+      // dismissing the snackbar.
+      UITapGestureRecognizer *tapGesture =
+          [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                  action:@selector(handleContentTapped:)];
+      tapGesture.cancelsTouchesInView = NO;
+
+      [contentView addGestureRecognizer:tapGesture];
+    }
     [_contentView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [_containerView addSubview:_contentView];
-    _contentView.userInteractionEnabled = NO;
 
     _buttonContainer = [[UIView alloc] init];
     [_buttonContainer setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -343,7 +373,8 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     // Apply 'global' attributes along the whole string.
     _label.backgroundColor = [UIColor clearColor];
     _label.textAlignment = NSTextAlignmentNatural;
-    _label.adjustsFontSizeToFitWidth = YES;
+    _label.adjustsFontSizeToFitWidth = MDCSnackbarMessage.usesLegacySnackbar;
+    _label.adjustsFontForContentSizeCategory = !MDCSnackbarMessage.usesLegacySnackbar;
     _label.attributedText = messageString;
     _label.numberOfLines = 0;
     [_label setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -410,6 +441,8 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
     button.uppercaseTitle = manager.uppercaseButtonTitle;
     button.disabledAlpha = manager.disabledButtonAlpha;
+    button.titleLabel.adjustsFontForContentSizeCategory = !MDCSnackbarMessage.usesLegacySnackbar;
+    button.titleLabel.adjustsFontSizeToFitWidth = !MDCSnackbarMessage.usesLegacySnackbar;
     if (manager.buttonInkColor) {
       button.inkColor = manager.buttonInkColor;
     }
@@ -566,16 +599,16 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   // If we have a custom font apply it to the label.
   // If not, fall back to the Material specified font.
   if (_messageFont) {
-      _label.font = _messageFont;
+    _label.font = _messageFont;
   } else {
-      // If we are using the default (system) font loader, retrieve the
-      // font from the UIFont standardFont API.
-      if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-        _label.font = [UIFont mdc_standardFontForMaterialTextStyle:kMessageTextStyle];
-      } else {
-        // There is a custom font loader, retrieve the font from it.
-        _label.font = [MDCTypography body1Font];
-      }
+    // If we are using the default (system) font loader, retrieve the
+    // font from the UIFont standardFont API.
+    if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+      _label.font = [UIFont mdc_standardFontForMaterialTextStyle:kMessageTextStyle];
+    } else {
+      // There is a custom font loader, retrieve the font from it.
+      _label.font = [MDCTypography body1Font];
+    }
   }
   [self setNeedsLayout];
 }
@@ -600,14 +633,14 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   } else {
     // TODO(#2709): Migrate to a single source of truth for fonts
     // There is no custom font, so use the default font.
-      // If we are using the default (system) font loader, retrieve the
-      // font from the UIFont standardFont API.
-      if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
-        finalButtonFont = [UIFont mdc_standardFontForMaterialTextStyle:kButtonTextStyle];
-      } else {
-        // There is a custom font loader, retrieve the font from it.
-        finalButtonFont = [MDCTypography buttonFont];
-      }
+    // If we are using the default (system) font loader, retrieve the
+    // font from the UIFont standardFont API.
+    if ([MDCTypography.fontLoader isKindOfClass:[MDCSystemFontLoader class]]) {
+      finalButtonFont = [UIFont mdc_standardFontForMaterialTextStyle:kButtonTextStyle];
+    } else {
+      // There is a custom font loader, retrieve the font from it.
+      finalButtonFont = [MDCTypography buttonFont];
+    }
   }
 
   [self.actionButton setTitleFont:finalButtonFont forState:UIControlStateNormal];
@@ -665,6 +698,32 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   [super updateConstraints];
 }
 
+- (void)updatePreferredMaxLayoutWidth {
+  if (!MDCSnackbarMessage.usesLegacySnackbar) {
+    CGFloat availableWidth =
+        self.bounds.size.width - self.safeContentMargin.left - self.safeContentMargin.right;
+    BOOL shouldUseHorizontalLayout = ![self shouldUseVerticalLayout];
+    // Account for the action button if present and the layout is horizontal.
+    if (shouldUseHorizontalLayout && self.actionButton) {
+      availableWidth = availableWidth -
+                       MIN(self.actionButton.intrinsicContentSize.width,
+                           (self.bounds.size.width * kMaxButtonRatio)) -
+                       kTitleButtonPadding;
+    }
+    self.label.preferredMaxLayoutWidth = availableWidth;
+  }
+}
+
+- (CGFloat)minimumLayoutHeight {
+  if ([self shouldUseVerticalLayout]) {
+    return self.actionButton.intrinsicContentSize.height + self.label.font.lineHeight +
+           self.safeContentMargin.top + self.safeContentMargin.bottom;
+  } else {
+    return MAX(self.actionButton.intrinsicContentSize.height, self.label.font.lineHeight) +
+           self.safeContentMargin.top + self.safeContentMargin.bottom;
+  }
+}
+
 /**
  Provides constraints to pin the container view to the size of the Snackbar, inset by
  @c kBorderWidth. Also positions the content view and button view inside of the container view.
@@ -717,28 +776,68 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
         [self.buttonGutterTapTarget.topAnchor constraintEqualToAnchor:self.containerView.topAnchor],
         [self.buttonGutterTapTarget.bottomAnchor
             constraintEqualToAnchor:self.containerView.bottomAnchor],
+
+        // Pin the content to the bottom of the container view, since there's nothing below.
+        [self.contentView.bottomAnchor constraintEqualToAnchor:self.containerView.bottomAnchor
+                                                      constant:-safeContentMargin.bottom]
       ]];
-    } else {
-      [constraints addObjectsFromArray:@[
-        // Position the label/content horizontally with the button container.
-        [self.contentView.trailingAnchor constraintEqualToAnchor:self.buttonContainer.leadingAnchor
+    } else {  // Modern snackbar layout.
+      if ([self shouldUseVerticalLayout]) {
+        [constraints addObjectsFromArray:@[
+          // Align the content and buttons vertically.
+          [self.contentView.bottomAnchor constraintEqualToAnchor:self.buttonContainer.topAnchor
                                                         constant:-kTitleButtonPadding],
 
+          // Pin the trailing edge of the contentView to its superview.
+          [self.contentView.trailingAnchor constraintEqualToAnchor:self.containerView.trailingAnchor
+                                                          constant:-self.safeContentMargin.right],
+
+          // Make the leading edge of the button container less than the size of the view.
+          [self.buttonContainer.leadingAnchor
+              constraintGreaterThanOrEqualToAnchor:self.containerView.leadingAnchor
+                                          constant:self.safeContentMargin.left],
+
+          // Pin the bottom edge of the button to the bottom of the container view.
+          [self.buttonContainer.bottomAnchor constraintEqualToAnchor:self.containerView.bottomAnchor
+                                                            constant:-safeContentMargin.bottom],
+        ]];
+
+        // Make sure the button takes up no more space than needed.
+        [self.buttonContainer setContentHuggingPriority:UILayoutPriorityRequired
+                                                forAxis:UILayoutConstraintAxisHorizontal];
+      } else {  // Horizontal layout.
+        [constraints addObjectsFromArray:@[
+          // Align the content and buttons horizontally.
+          [self.contentView.trailingAnchor
+              constraintEqualToAnchor:self.buttonContainer.leadingAnchor
+                             constant:-kTitleButtonPadding],
+
+          // Pin the top/bottom of the button container to its parent view.
+          [self.buttonContainer.topAnchor constraintEqualToAnchor:self.containerView.topAnchor],
+          [self.buttonContainer.bottomAnchor
+              constraintEqualToAnchor:self.containerView.bottomAnchor],
+
+          // Pin the content to the bottom of the container view, since there's nothing below.
+          [self.contentView.bottomAnchor constraintEqualToAnchor:self.containerView.bottomAnchor
+                                                        constant:-safeContentMargin.bottom],
+
+          // Constrain the button container to a third of the width of its parent view to ensure
+          // button and text content are always visible.
+          [self.buttonContainer.widthAnchor
+              constraintLessThanOrEqualToAnchor:self.containerView.widthAnchor
+                                     multiplier:kMaxButtonRatio],
+        ]];
+      }
+
+      // The below constraint is shared by both vertical and horizontal layouts.
+      [constraints addObjectsFromArray:@[
         // Pin the button container to the trailing edge of the container view.
         [self.buttonContainer.trailingAnchor
             constraintEqualToAnchor:self.containerView.trailingAnchor
                            constant:-self.safeContentMargin.right],
 
-        // Pin the top/bottom of the button container to its parent view.
-        [self.buttonContainer.topAnchor constraintEqualToAnchor:self.containerView.topAnchor],
-        [self.buttonContainer.bottomAnchor constraintEqualToAnchor:self.containerView.bottomAnchor],
       ]];
     }
-
-    // Pin the content to the bottom of the container view, since there's nothing below.
-    [constraints addObjectsFromArray:@[ [self.contentView.bottomAnchor
-                                         constraintEqualToAnchor:self.containerView.bottomAnchor
-                                                        constant:-safeContentMargin.bottom] ]];
   } else {  // There is not an action button present.
     [constraints addObjectsFromArray:@[
       // If there are no buttons, then go ahead and pin the content view to the bottom and trailing
@@ -767,7 +866,16 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     // Pin the label to the trailing edge of the content view.
     [self.label.trailingAnchor constraintEqualToAnchor:self.contentView.trailingAnchor],
     [self.label.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor],
+    [self.label.widthAnchor constraintEqualToAnchor:self.contentView.widthAnchor],
   ]];
+
+  // Allow the content height constraint to break so that label will take up the content view
+  // height but will grow beyond it and scroll if needed.
+  NSLayoutConstraint *heightConstraint =
+      [self.contentView.heightAnchor constraintEqualToAnchor:self.label.heightAnchor];
+  heightConstraint.priority = UILayoutPriorityDefaultHigh;
+
+  [constraints addObject:heightConstraint];
 
   return constraints;
 }
@@ -782,6 +890,8 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
     [constraints addObjectsFromArray:@[
       // Ensure that the button is vertically centered in its container view
       [self.actionButton.centerYAnchor constraintEqualToAnchor:self.buttonContainer.centerYAnchor],
+      [self.buttonContainer.heightAnchor
+          constraintGreaterThanOrEqualToAnchor:self.actionButton.heightAnchor],
 
       // Pin the button to the width of its container.
       [self.actionButton.leadingAnchor constraintEqualToAnchor:self.buttonContainer.leadingAnchor],
@@ -795,6 +905,8 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
 - (void)layoutSubviews {
   [super layoutSubviews];
+
+  [self updatePreferredMaxLayoutWidth];
 
   if (!self.dismissalAccessibilityAffordance.hidden) {
     // Update frame of the dismissal touch affordance.
@@ -826,8 +938,9 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 - (CGSize)intrinsicContentSize {
   CGFloat height = 0;
 
+  [self updatePreferredMaxLayoutWidth];
+
   // Figure out which of the elements is tallest, and use that for calculating our preferred height.
-  // Images are forced to be no bigger than @c kMaximumImageSize.
   height = MAX(height, self.label.intrinsicContentSize.height);
 
   // Make sure that content margins are included in our calculation.
@@ -836,6 +949,10 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   // Make sure that the height of the text is larger than the minimum height;
   height = MAX(_isMultilineText ? kMinimumHeightMultiline : kMinimumHeight, height) +
            self.contentSafeBottomInset;
+
+  if ([self shouldUseVerticalLayout]) {
+    height += self.actionButton.intrinsicContentSize.height + kTitleButtonPadding;
+  }
 
   return CGSizeMake(UIViewNoIntrinsicMetric, height);
 }
@@ -856,7 +973,9 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   if (MDCSnackbarMessage.usesLegacySnackbar) {
     contentMargin = kLegacyContentMargin;
   } else {
-    contentMargin = _isMultilineText ? kContentMarginMutliLineText : kContentMarginSingleLineText;
+    contentMargin = _isMultilineText || [self shouldUseVerticalLayout]
+                        ? kContentMarginMutliLineText
+                        : kContentMarginSingleLineText;
   }
 
   UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
@@ -900,6 +1019,20 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
 
 - (void)handleBackgroundTapped:(__unused UIButton *)sender {
   [self dismissWithAction:nil userInitiated:YES];
+}
+
+- (void)handleContentTapped:(__unused UITapGestureRecognizer *)sender {
+  BOOL scrollViewShouldScroll = NO;
+  if (!MDCSnackbarMessage.usesLegacySnackbar &&
+      [self.contentView isKindOfClass:UIScrollView.class]) {
+    // If the scroll view can scroll allow touches to scroll content.
+    UIScrollView *contentView = (UIScrollView *)self.contentView;
+    scrollViewShouldScroll = contentView.contentSize.height > contentView.bounds.size.height;
+  }
+
+  if (!scrollViewShouldScroll) {
+    [self dismissWithAction:nil userInitiated:YES];
+  }
 }
 
 - (void)handleButtonGutterTapped:(__unused UIControl *)sender {
@@ -1008,6 +1141,14 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
   NSBundle *bundle = [NSBundle bundleForClass:[MDCSnackbarMessageView class]];
   NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle) resourcePath];
   return [resourcePath stringByAppendingPathComponent:bundleName];
+}
+
+- (BOOL)shouldUseVerticalLayout {
+  return !MDCSnackbarMessage.usesLegacySnackbar &&
+         UIContentSizeCategoryIsAccessibilityCategory(
+             self.traitCollection.preferredContentSizeCategory) &&
+         self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular &&
+         self.label.font.pointSize > kMinimumAccessibiltyFontSize;
 }
 
 #pragma mark - Elevation

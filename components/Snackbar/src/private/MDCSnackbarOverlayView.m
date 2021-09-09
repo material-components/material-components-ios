@@ -20,6 +20,8 @@
 #import "../MDCSnackbarMessage.h"
 #import "MaterialAnimationTiming.h"
 #import "MaterialAvailability.h"
+#import "MDCSnackbarAlignment.h"
+#import "MDCSnackbarMessageView.h"
 #import "MDCSnackbarMessageInternal.h"
 #import "MDCSnackbarMessageViewInternal.h"
 #import "MaterialApplication.h"
@@ -36,6 +38,9 @@ NSTimeInterval const MDCSnackbarLegacyTransitionDuration = 0.5;
 // The scaling starting point for presenting the new Snackbar.
 static const CGFloat MDCSnackbarEnterStartingScale = (CGFloat)0.8;
 
+// The max ratio of the screen that a snackbar can occupy.
+static const CGFloat MDCSnackbarMaxScreenRatioToOccupy = (CGFloat)0.5;
+
 // How far from the bottom of the screen should the Snackbar be.
 static const CGFloat MDCSnackbarBottomMargin_iPhone = 8;
 static const CGFloat MDCSnackbarBottomMargin_iPad = 24;
@@ -47,8 +52,8 @@ static const CGFloat MDCSnackbarSideMargin_CompactWidth = 8;
 static const CGFloat MDCSnackbarLegacySideMargin_CompactWidth = 0;
 static const CGFloat MDCSnackbarSideMargin_RegularWidth = 24;
 
-// The maximum height of the Snackbar.
-static const CGFloat kMaximumHeight = 80;
+// The maximum height of the legacy Snackbar.
+static const CGFloat kMaximumHeightLegacy = 80;
 
 #if MDC_AVAILABLE_SDK_IOS(10_0)
 @interface MDCSnackbarOverlayView () <CAAnimationDelegate>
@@ -462,11 +467,20 @@ static const CGFloat kMaximumHeight = 80;
 }
 
 - (CGFloat)maximumHeight {
-  // Maximum height must be extended to include the bottom content safe area.
-  CGFloat maximumHeight = kMaximumHeight;
+  CGFloat maximumHeight = kMaximumHeightLegacy;
   if (self.anchoredToScreenBottom && MDCSnackbarMessage.usesLegacySnackbar) {
     maximumHeight += self.safeAreaInsets.bottom;
   }
+
+  if (!MDCSnackbarMessage.usesLegacySnackbar) {
+    CGFloat minimumHeight = self.snackbarView.minimumLayoutHeight;
+    // Calculate the maximum height based on the screen size and bottom margin (includes keyboard).
+    CGFloat windowBasedMaximumHeight = (self.window.frame.size.height - self.dynamicBottomMargin) *
+                                       MDCSnackbarMaxScreenRatioToOccupy;
+    // If there is no UIWindow object yet default to the maximumHeight.
+    return self.window ? MAX(windowBasedMaximumHeight, minimumHeight) : maximumHeight;
+  }
+
   return maximumHeight;
 }
 
@@ -636,6 +650,7 @@ static const CGFloat kMaximumHeight = 80;
   // Always set the bottom constraint, even if there isn't a Snackbar currently displayed.
   void (^updateBlock)(void) = ^{
     self.bottomConstraint.constant = -[self dynamicBottomMargin];
+    self.maximumHeightConstraint.constant = self.maximumHeight;
     [self triggerSnackbarLayoutChange];
   };
 

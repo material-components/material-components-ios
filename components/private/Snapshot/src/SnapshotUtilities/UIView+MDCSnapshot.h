@@ -31,4 +31,13 @@
  */
 - (UIView *)mdc_addToBackgroundViewWithInsets:(UIEdgeInsets)insets;
 
+/**
+ * This method will layout a view and then find a frame that best fits the view
+ * for the given with, using either systemLayoutSizeFittingSize or sizeThatFits
+ * and set that frame to the view's frame property.
+ *
+ * @param width The width to use when sizing the view.
+ */
+- (void)mdc_layoutAndApplyBestFitFrameWithWidth:(CGFloat)width;
+
 @end
