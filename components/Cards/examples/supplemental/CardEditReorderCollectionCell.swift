@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import UIKit
+import MaterialComponents.MaterialCards_Theming 
 import MaterialComponents.MaterialTypographyScheme
-import MaterialComponents.MaterialCards_Theming
 
 class CardEditReorderCollectionCell: MDCCardCollectionCell {
 
@@ -42,13 +42,14 @@ class CardEditReorderCollectionCell: MDCCardCollectionCell {
 
     let bundle = Bundle(for: CardEditReorderCollectionCell.self)
 
-    self.imageView.image  = UIImage(named: imageName, in: bundle, compatibleWith: nil)
+    self.imageView.image = UIImage(named: imageName, in: bundle, compatibleWith: nil)
     self.titleLabel.text = title
 
     self.contentView.addSubview(imageView)
     self.contentView.addSubview(titleLabel)
-    titleLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 800),
-                                                       for: .vertical)
+    titleLabel.setContentCompressionResistancePriority(
+      UILayoutPriority(rawValue: 800),
+      for: .vertical)
 
     addConstraints()
   }
@@ -64,13 +65,13 @@ class CardEditReorderCollectionCell: MDCCardCollectionCell {
     self.addConstraints(
       NSLayoutConstraint.constraints(
         withVisualFormat: "H:|[image]|",
-        options: [], metrics: metrics, views: views) +
-      NSLayoutConstraint.constraints(
-        withVisualFormat: "V:|[image]-(margin)-[label]-(margin)-|",
-        options: [], metrics: metrics, views: views) +
-      NSLayoutConstraint.constraints(
-        withVisualFormat: "H:|-(margin)-[label]|",
         options: [], metrics: metrics, views: views)
-    );
+        + NSLayoutConstraint.constraints(
+          withVisualFormat: "V:|[image]-(margin)-[label]-(margin)-|",
+          options: [], metrics: metrics, views: views)
+        + NSLayoutConstraint.constraints(
+          withVisualFormat: "H:|-(margin)-[label]|",
+          options: [], metrics: metrics, views: views)
+    )
   }
 }

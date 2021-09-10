@@ -14,7 +14,7 @@
 
 import Foundation
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialAppBar_Theming
+import MaterialComponents.MaterialAppBar_Theming 
 import MaterialComponents.MaterialContainerScheme
 
 class AppBarInterfaceBuilderSwiftExample: UIViewController, UIScrollViewDelegate {
@@ -78,7 +78,7 @@ extension AppBarInterfaceBuilderSwiftExample {
       "primaryDemo": false,
       "presentable": false,
       "storyboardName": "AppBarInterfaceBuilderSwiftExampleController",
-      "skip_snapshots": true, // Currently crashing with "'NSUnknownKeyException', reason: '[<UIViewController 0x7fa0ca13f510> setValue:forUndefinedKey:]: this class is not key value coding-compliant for the key scrollView.'"
+      "skip_snapshots": true,  // Currently crashing with "'NSUnknownKeyException', reason: '[<UIViewController 0x7fa0ca13f510> setValue:forUndefinedKey:]: this class is not key value coding-compliant for the key scrollView.'"
     ]
   }
 

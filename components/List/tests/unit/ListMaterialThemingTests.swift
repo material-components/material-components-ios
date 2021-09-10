@@ -13,11 +13,10 @@
 // limitations under the License.
 
 import XCTest
-
 import MaterialComponents.MaterialList
+import MaterialComponents.MaterialList_Theming 
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialContainerScheme
-import MaterialComponents.MaterialList_Theming
 
 class ListMaterialThemingTests: XCTestCase {
 
@@ -145,7 +144,9 @@ class ListMaterialThemingTests: XCTestCase {
     XCTAssertEqual(cell.detailLabel.font, detailFont)
   }
 
-  func testMDCSelfSizingStereoCellWithContainerSchemeWithCustomColorSchemeAndCustomTypographyScheme() {
+  func
+    testMDCSelfSizingStereoCellWithContainerSchemeWithCustomColorSchemeAndCustomTypographyScheme()
+  {
     // Given
     let cell = MDCSelfSizingStereoCell()
     let scheme = MDCContainerScheme()

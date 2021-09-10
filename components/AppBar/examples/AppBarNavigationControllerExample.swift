@@ -14,12 +14,13 @@
 
 import Foundation
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialAppBar_Theming
+import MaterialComponents.MaterialAppBar_Theming 
 import MaterialComponents.MaterialContainerScheme
 
 class AppBarNavigationControllerExampleViewController:
-    UIViewController,
-    MDCAppBarNavigationControllerDelegate {
+  UIViewController,
+  MDCAppBarNavigationControllerDelegate
+{
 
   @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
 
@@ -39,10 +40,11 @@ class AppBarNavigationControllerExampleViewController:
     self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor
 
     self.navigationItem.rightBarButtonItem =
-      UIBarButtonItem(title: "Present",
-                      style: .done,
-                      target: self,
-                      action: #selector(presentModalAnimated))
+      UIBarButtonItem(
+        title: "Present",
+        style: .done,
+        target: self,
+        action: #selector(presentModalAnimated))
   }
 
   @objc func presentModalAnimated() {
@@ -57,10 +59,11 @@ class AppBarNavigationControllerExampleViewController:
     navigationController.pushViewController(contentViewController, animated: false)
 
     contentViewController.navigationItem.rightBarButtonItem =
-        UIBarButtonItem(title: "Dismiss",
-                        style: .done,
-                        target: self,
-                        action: #selector(dismissModal))
+      UIBarButtonItem(
+        title: "Dismiss",
+        style: .done,
+        target: self,
+        action: #selector(dismissModal))
 
     // Explicitly use the full-screen style to validate safe area insets behavior.
     navigationController.modalPresentationStyle = .fullScreen
@@ -74,9 +77,11 @@ class AppBarNavigationControllerExampleViewController:
 
   // MARK: - MDCAppBarNavigationControllerDelegate
 
-  func appBarNavigationController(_ navigationController: MDCAppBarNavigationController,
-                                  willAdd appBarViewController: MDCAppBarViewController,
-                                  asChildOf viewController: UIViewController) {
+  func appBarNavigationController(
+    _ navigationController: MDCAppBarNavigationController,
+    willAdd appBarViewController: MDCAppBarViewController,
+    asChildOf viewController: UIViewController
+  ) {
     appBarViewController.applyPrimaryTheme(withScheme: self.containerScheme)
   }
 }
@@ -89,10 +94,11 @@ private class PresentedViewController: UITableViewController {
     self.title = "Presented"
 
     self.navigationItem.leftBarButtonItem =
-        UIBarButtonItem(title: "Toggle",
-                        style: .done,
-                        target: self,
-                        action: #selector(toggleVisibility))
+      UIBarButtonItem(
+        title: "Toggle",
+        style: .done,
+        target: self,
+        action: #selector(toggleVisibility))
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -105,8 +111,9 @@ private class PresentedViewController: UITableViewController {
     guard let navigationController = navigationController else {
       return
     }
-    navigationController.setNavigationBarHidden(!navigationController.isNavigationBarHidden,
-                                                animated: true)
+    navigationController.setNavigationBarHidden(
+      !navigationController.isNavigationBarHidden,
+      animated: true)
   }
 
   // MARK: - UITableViewDataSource
@@ -115,11 +122,13 @@ private class PresentedViewController: UITableViewController {
     return 50
   }
 
-  override func tableView(_ tableView: UITableView,
-                          cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+  override func tableView(
+    _ tableView: UITableView,
+    cellForRowAt indexPath: IndexPath
+  ) -> UITableViewCell {
 
-    return self.tableView.dequeueReusableCell(withIdentifier: "cell") ??
-      UITableViewCell(style: .default, reuseIdentifier: "cell")
+    return self.tableView.dequeueReusableCell(withIdentifier: "cell")
+      ?? UITableViewCell(style: .default, reuseIdentifier: "cell")
   }
 
   // MARK - UITableViewDelegate

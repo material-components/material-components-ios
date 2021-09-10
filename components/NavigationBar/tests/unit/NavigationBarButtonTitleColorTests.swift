@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import XCTest
-import MaterialComponents.MaterialNavigationBar
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialNavigationBar
 
 class NavigationBarButtonTitleColorTests: XCTestCase {
 

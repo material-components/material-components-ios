@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import UIKit
 import CoreGraphics
-
-import MaterialComponents.MaterialAppBar_ColorThemer
-import MaterialComponents.MaterialAppBar_TypographyThemer
+import UIKit
+import MaterialComponents.MaterialAppBar_ColorThemer 
+import MaterialComponents.MaterialAppBar_TypographyThemer 
 import MaterialComponents.MaterialButtons
-import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialTabs
-import MaterialComponents.MaterialTabs_Theming
+import MaterialComponents.MaterialTabs_Theming 
+import MaterialComponents.MaterialContainerScheme
 
 class TabBarIndicatorTemplateExample: UIViewController {
 
@@ -58,12 +57,12 @@ class TabBarIndicatorTemplateExample: UIViewController {
     tabBar.applyPrimaryTheme(withScheme: containerScheme)
 
     let bundle = Bundle(for: TabBarIndicatorTemplateExample.self)
-    let info = UIImage.init(named: "TabBarDemo_ic_info", in: bundle, compatibleWith:nil)
-    let star = UIImage.init(named: "TabBarDemo_ic_star", in: bundle, compatibleWith:nil)
+    let info = UIImage.init(named: "TabBarDemo_ic_info", in: bundle, compatibleWith: nil)
+    let star = UIImage.init(named: "TabBarDemo_ic_star", in: bundle, compatibleWith: nil)
     tabBar.items = [
-      UITabBarItem(title: "Fly", image: info, tag:0),
-      UITabBarItem(title: "Sleep", image: star, tag:0),
-      UITabBarItem(title: "Eat", image: info, tag:0),
+      UITabBarItem(title: "Fly", image: info, tag: 0),
+      UITabBarItem(title: "Sleep", image: star, tag: 0),
+      UITabBarItem(title: "Eat", image: info, tag: 0),
     ]
 
     // Set lighter ink so the indicator animation is more visible.
@@ -88,51 +87,74 @@ class TabBarIndicatorTemplateExample: UIViewController {
 
     alignmentButton.addTarget(
       self,
-      action:#selector(changeAlignmentDidTouch(sender:)),
+      action: #selector(changeAlignmentDidTouch(sender:)),
       for: .touchUpInside)
     appearanceButton.addTarget(
       self,
       action: #selector(changeAppearance),
       for: .touchUpInside)
 
-    MDCAppBarColorThemer.applyColorScheme(containerScheme.colorScheme, to: self.appBarViewController)
-    MDCAppBarTypographyThemer.applyTypographyScheme(containerScheme.typographyScheme,
-                                                    to: self.appBarViewController)
+    MDCAppBarColorThemer.applyColorScheme(
+      containerScheme.colorScheme, to: self.appBarViewController)
+    MDCAppBarTypographyThemer.applyTypographyScheme(
+      containerScheme.typographyScheme,
+      to: self.appBarViewController)
   }
 
   @objc func changeAlignmentDidTouch(sender: UIButton) {
     let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     sheet.popoverPresentationController?.sourceView = self.alignmentButton
     sheet.popoverPresentationController?.sourceRect = self.alignmentButton.bounds
-    sheet.addAction(UIAlertAction(title: "Leading", style: .default, handler: { _ in
-      self.alignment = .leading
-    }))
-    sheet.addAction(UIAlertAction(title: "Center", style: .default, handler: { _ in
-      self.alignment = .center
-    }))
-    sheet.addAction(UIAlertAction(title: "Justified", style: .default, handler: { _ in
-      self.alignment = .justified
-    }))
-    sheet.addAction(UIAlertAction(title: "Selected Center", style: .default, handler: { _ in
-      self.alignment = .centerSelected
-    }))
-    present(sheet, animated: true, completion:nil)
+    sheet.addAction(
+      UIAlertAction(
+        title: "Leading", style: .default,
+        handler: { _ in
+          self.alignment = .leading
+        }))
+    sheet.addAction(
+      UIAlertAction(
+        title: "Center", style: .default,
+        handler: { _ in
+          self.alignment = .center
+        }))
+    sheet.addAction(
+      UIAlertAction(
+        title: "Justified", style: .default,
+        handler: { _ in
+          self.alignment = .justified
+        }))
+    sheet.addAction(
+      UIAlertAction(
+        title: "Selected Center", style: .default,
+        handler: { _ in
+          self.alignment = .centerSelected
+        }))
+    present(sheet, animated: true, completion: nil)
   }
 
   @objc func changeAppearance(fromSender sender: UIButton) {
     let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     sheet.popoverPresentationController?.sourceView = self.appearanceButton
     sheet.popoverPresentationController?.sourceRect = self.appearanceButton.bounds
-    sheet.addAction(UIAlertAction(title: "Titles", style: .default, handler: { _ in
-      self.itemAppearance = .titles
-    }))
-    sheet.addAction(UIAlertAction(title: "Images", style: .default, handler: { _ in
-      self.itemAppearance = .images
-    }))
-    sheet.addAction(UIAlertAction(title: "Titled Images", style: .default, handler: { _ in
-      self.itemAppearance = .titledImages
-    }))
-    present(sheet, animated: true, completion:nil)
+    sheet.addAction(
+      UIAlertAction(
+        title: "Titles", style: .default,
+        handler: { _ in
+          self.itemAppearance = .titles
+        }))
+    sheet.addAction(
+      UIAlertAction(
+        title: "Images", style: .default,
+        handler: { _ in
+          self.itemAppearance = .images
+        }))
+    sheet.addAction(
+      UIAlertAction(
+        title: "Titled Images", style: .default,
+        handler: { _ in
+          self.itemAppearance = .titledImages
+        }))
+    present(sheet, animated: true, completion: nil)
   }
 
   // MARK: Private

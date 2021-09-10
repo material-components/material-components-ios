@@ -20,7 +20,7 @@ class AppBarContainerTests: XCTestCase {
   func testContainmentAncestry() {
     let contentViewController = UIViewController()
     let appBarContainerViewController =
-        MDCAppBarContainerViewController(contentViewController: contentViewController)
+      MDCAppBarContainerViewController(contentViewController: contentViewController)
 
     // Content view should not have a parent until the container's view is loaded.
     XCTAssertNil(contentViewController.view.superview)

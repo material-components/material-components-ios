@@ -68,4 +68,3 @@ class ButtonBarCustomViewTests: XCTestCase {
     // Then, doesn't crash.
   }
 }
-

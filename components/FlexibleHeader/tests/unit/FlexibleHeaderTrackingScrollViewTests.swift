@@ -132,14 +132,14 @@ class FlexibleHeaderTrackingScrollViewTests: XCTestCase, UIScrollViewDelegate {
   }
 
   func testInterfaceOrientationIsChanging() {
-    view.interfaceOrientationWillChange() // Required by interfaceOrientationIsChanging
+    view.interfaceOrientationWillChange()  // Required by interfaceOrientationIsChanging
     view.interfaceOrientationIsChanging()
 
     XCTAssertEqual(beforeFrame, view.frame)
   }
 
   func testInterfaceOrientationDidChange() {
-    view.interfaceOrientationWillChange() // Required by interfaceOrientationDidChange
+    view.interfaceOrientationWillChange()  // Required by interfaceOrientationDidChange
     view.interfaceOrientationDidChange()
 
     XCTAssertEqual(beforeFrame, view.frame)
@@ -148,7 +148,7 @@ class FlexibleHeaderTrackingScrollViewTests: XCTestCase, UIScrollViewDelegate {
   // MARK: Content insets
 
   func testChangeContentInsets() {
-    view.changeContentInsets { } // no-op
+    view.changeContentInsets {}  // no-op
 
     XCTAssertEqual(beforeFrame, view.frame)
   }
@@ -174,9 +174,10 @@ class FlexibleHeaderTrackingScrollViewTests: XCTestCase, UIScrollViewDelegate {
   }
 
   func scrollViewWillEndDragging(
-      _ scrollView: UIScrollView,
-      withVelocity velocity: CGPoint,
-      targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    _ scrollView: UIScrollView,
+    withVelocity velocity: CGPoint,
+    targetContentOffset: UnsafeMutablePointer<CGPoint>
+  ) {
     if view.trackingScrollView == scrollView {
       view.trackingScrollWillEndDragging(
         withVelocity: velocity,

@@ -13,12 +13,11 @@
 // limitations under the License.
 
 import UIKit
-
 import MaterialComponents.MaterialButtons
-import MaterialComponents.MaterialButtons_Theming
-import MaterialComponents.MaterialContainerScheme
+import MaterialComponents.MaterialButtons_Theming 
 import MaterialComponents.MaterialDialogs
-import MaterialComponents.MaterialDialogs_Theming
+import MaterialComponents.MaterialDialogs_Theming 
+import MaterialComponents.MaterialContainerScheme
 
 class CustomShadowViewController: UIViewController {
 
@@ -50,9 +49,11 @@ class CustomShadowViewController: UIViewController {
     view.addGestureRecognizer(tap)
 
     NSLayoutConstraint.activate(
-      NSLayoutConstraint.constraints(withVisualFormat: "H:|-[body]-|", options: [], metrics: nil, views: [ "body": bodyLabel]))
+      NSLayoutConstraint.constraints(
+        withVisualFormat: "H:|-[body]-|", options: [], metrics: nil, views: ["body": bodyLabel]))
     NSLayoutConstraint.activate(
-      NSLayoutConstraint.constraints(withVisualFormat: "V:|-[body]-|", options: [], metrics: nil, views: [ "body": bodyLabel]))
+      NSLayoutConstraint.constraints(
+        withVisualFormat: "V:|-[body]-|", options: [], metrics: nil, views: ["body": bodyLabel]))
   }
 
   @objc func dismissSelf() {
@@ -61,7 +62,7 @@ class CustomShadowViewController: UIViewController {
 
   override var preferredContentSize: CGSize {
     get {
-      return CGSize(width:200.0, height:140.0);
+      return CGSize(width: 200.0, height: 140.0)
     }
     set {
       super.preferredContentSize = newValue
@@ -82,7 +83,7 @@ class DialogsCustomShadowExampleViewController: UIViewController {
     view.backgroundColor = containerScheme.colorScheme.backgroundColor
 
     textButton.setTitle("PRESENT ALERT", for: UIControl.State())
-    textButton.setTitleColor(UIColor(white: 0.1, alpha:1), for: UIControl.State())
+    textButton.setTitleColor(UIColor(white: 0.1, alpha: 1), for: UIControl.State())
     textButton.sizeToFit()
     textButton.translatesAutoresizingMaskIntoConstraints = false
     textButton.addTarget(self, action: #selector(tap), for: .touchUpInside)
@@ -90,20 +91,22 @@ class DialogsCustomShadowExampleViewController: UIViewController {
     self.view.addSubview(textButton)
 
     NSLayoutConstraint.activate([
-      NSLayoutConstraint(item:textButton,
-                       attribute:.centerX,
-                       relatedBy:.equal,
-                       toItem:self.view,
-                       attribute:.centerX,
-                       multiplier:1.0,
-                       constant: 0.0),
-      NSLayoutConstraint(item:textButton,
-                       attribute:.centerY,
-                       relatedBy:.equal,
-                       toItem:self.view,
-                       attribute:.centerY,
-                       multiplier:1.0,
-                       constant: 0.0)
+      NSLayoutConstraint(
+        item: textButton,
+        attribute: .centerX,
+        relatedBy: .equal,
+        toItem: self.view,
+        attribute: .centerX,
+        multiplier: 1.0,
+        constant: 0.0),
+      NSLayoutConstraint(
+        item: textButton,
+        attribute: .centerY,
+        relatedBy: .equal,
+        toItem: self.view,
+        attribute: .centerY,
+        multiplier: 1.0,
+        constant: 0.0),
     ])
   }
 
@@ -113,8 +116,8 @@ class DialogsCustomShadowExampleViewController: UIViewController {
     // Using a MDCDialogTransitionController as the transition delegate also sets
     // MDCDailogPresentationController as the presentation controller.
     // Make sure to store a strong reference to the transitionController.
-    presentedController.modalPresentationStyle = .custom;
-    presentedController.transitioningDelegate = self.transitionController;
+    presentedController.modalPresentationStyle = .custom
+    presentedController.transitioningDelegate = self.transitionController
 
     // Note this example demonstrate direct manipulation of cornerRadius on the
     //  view's layer so we're intentionally not calling the presentation controller's themer.

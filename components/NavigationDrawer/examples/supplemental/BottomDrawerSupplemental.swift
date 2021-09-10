@@ -13,12 +13,12 @@
 // limitations under the License.
 
 import UIKit
-import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialNavigationDrawer
+import MaterialComponents.MaterialColorScheme
 
 class DrawerContentViewController: UIViewController {
   var preferredHeight: CGFloat = 2000
-  let bodyLabel : UILabel = {
+  let bodyLabel: UILabel = {
     let label = UILabel(frame: .zero)
     label.text = "Example body"
     label.sizeToFit()
@@ -54,7 +54,7 @@ class DrawerContentViewController: UIViewController {
 
 }
 
-class DrawerHeaderViewController: UIViewController,MDCBottomDrawerHeader {
+class DrawerHeaderViewController: UIViewController, MDCBottomDrawerHeader {
   let preferredHeight: CGFloat = 80
 
   lazy var closeButton: UIButton = {
@@ -65,7 +65,7 @@ class DrawerHeaderViewController: UIViewController,MDCBottomDrawerHeader {
     return button
   }()
 
-  let titleLabel : UILabel = {
+  let titleLabel: UILabel = {
     let label = UILabel(frame: .zero)
     label.text = "Example Header"
     label.accessibilityTraits = .header

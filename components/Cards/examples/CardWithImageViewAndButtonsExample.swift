@@ -13,14 +13,14 @@
 // limitations under the License.
 
 import UIKit
-import MaterialComponents.MaterialButtons_ButtonThemer
+import MaterialComponents.MaterialButtons_ButtonThemer 
+import MaterialComponents.MaterialButtons_Theming 
+import MaterialComponents.MaterialCards_Theming 
 import MaterialComponents.MaterialContainerScheme
-import MaterialComponents.MaterialCards_Theming
-import MaterialComponents.MaterialButtons_Theming
 
 class CustomCard: MDCCard {
-  
-  static let cardWidth: CGFloat = 300;
+
+  static let cardWidth: CGFloat = 300
   let imageView: UIImageView = UIImageView()
   let cardButton1: MDCButton = MDCButton()
   let cardButton2: MDCButton = MDCButton()
@@ -32,20 +32,23 @@ class CustomCard: MDCCard {
     if cardButton2.superview == nil { addSubview(cardButton2) }
     cardButton1.sizeToFit()
     cardButton2.sizeToFit()
-    imageView.frame = CGRect(x: 0,
-                             y: 0,
-                             width: CustomCard.cardWidth,
-                             height: 200)
-    cardButton1.frame = CGRect(x: 8,
-                               y: imageView.frame.maxY + 8,
-                               width: cardButton1.frame.width,
-                               height: cardButton1.frame.height)
-    cardButton2.frame = CGRect(x: 8,
-                               y: cardButton1.frame.maxY + 8,
-                               width: cardButton2.frame.width,
-                               height: cardButton2.frame.height)
+    imageView.frame = CGRect(
+      x: 0,
+      y: 0,
+      width: CustomCard.cardWidth,
+      height: 200)
+    cardButton1.frame = CGRect(
+      x: 8,
+      y: imageView.frame.maxY + 8,
+      width: cardButton1.frame.width,
+      height: cardButton1.frame.height)
+    cardButton2.frame = CGRect(
+      x: 8,
+      y: cardButton1.frame.maxY + 8,
+      width: cardButton2.frame.width,
+      height: cardButton2.frame.height)
   }
-  
+
   override var intrinsicContentSize: CGSize {
     return CGSize(width: CustomCard.cardWidth, height: cardButton2.frame.maxY + 8)
   }
@@ -86,10 +89,11 @@ class CardWithImageViewAndButtonsExample: UIViewController {
     card.applyTheme(withScheme: containerScheme)
     card.setNeedsLayout()
     card.layoutIfNeeded()
-    card.frame = CGRect(x: card.frame.minX,
-                        y: card.frame.minY,
-                        width: card.intrinsicContentSize.width,
-                        height: card.intrinsicContentSize.height)
+    card.frame = CGRect(
+      x: card.frame.minX,
+      y: card.frame.minY,
+      width: card.intrinsicContentSize.width,
+      height: card.intrinsicContentSize.height)
     if card.superview == nil { view.addSubview(card) }
     card.center = view.center
   }

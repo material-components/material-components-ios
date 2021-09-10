@@ -13,10 +13,10 @@
 // limitations under the License.
 
 import UIKit
-import MaterialComponents.MaterialButtons_ButtonThemer
+import MaterialComponents.MaterialButtons_ButtonThemer 
+import MaterialComponents.MaterialButtons_Theming 
+import MaterialComponents.MaterialCards_Theming 
 import MaterialComponents.MaterialContainerScheme
-import MaterialComponents.MaterialCards_Theming
-import MaterialComponents.MaterialButtons_Theming
 
 class CardWithRippleExample: UIViewController {
   var card = MDCCard()
@@ -45,25 +45,35 @@ class CardWithRippleExample: UIViewController {
     card.addSubview(button)
     card.translatesAutoresizingMaskIntoConstraints = false
     button.translatesAutoresizingMaskIntoConstraints = false
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-(30)-[card]-(30)-|",
-                                                       options: [],
-                                                       metrics: nil,
-                                                       views: ["card": card]))
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(120)-[card]-(60)-|",
-                                                       options: [],
-                                                       metrics: nil,
-                                                       views: ["card": card]))
-    card.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[button]-|",
-                                                       options: [],
-                                                       metrics: nil,
-                                                       views: ["button": button]))
-    card.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[button]",
-                                                       options: [],
-                                                       metrics: nil,
-                                                       views: ["button": button]))
-    button.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal,
-                                            toItem: nil, attribute: .notAnAttribute, multiplier: 1,
-                                            constant: 60))
+    view.addConstraints(
+      NSLayoutConstraint.constraints(
+        withVisualFormat: "H:|-(30)-[card]-(30)-|",
+        options: [],
+        metrics: nil,
+        views: ["card": card]))
+    view.addConstraints(
+      NSLayoutConstraint.constraints(
+        withVisualFormat: "V:|-(120)-[card]-(60)-|",
+        options: [],
+        metrics: nil,
+        views: ["card": card]))
+    card.addConstraints(
+      NSLayoutConstraint.constraints(
+        withVisualFormat: "H:|-[button]-|",
+        options: [],
+        metrics: nil,
+        views: ["button": button]))
+    card.addConstraints(
+      NSLayoutConstraint.constraints(
+        withVisualFormat: "V:|-[button]",
+        options: [],
+        metrics: nil,
+        views: ["button": button]))
+    button.addConstraint(
+      NSLayoutConstraint(
+        item: button, attribute: .height, relatedBy: .equal,
+        toItem: nil, attribute: .notAnAttribute, multiplier: 1,
+        constant: 60))
 
     view.accessibilityElements = [card, button]
     card.isAccessibilityElement = true

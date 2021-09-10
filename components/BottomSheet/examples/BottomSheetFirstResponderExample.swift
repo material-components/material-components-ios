@@ -15,9 +15,9 @@
 import Foundation
 import MaterialComponents.MaterialBottomSheet
 import MaterialComponents.MaterialButtons
-import MaterialComponents.MaterialButtons_Theming
-import MaterialComponents.MaterialContainerScheme
+import MaterialComponents.MaterialButtons_Theming 
 import MaterialComponents.MaterialTextFields
+import MaterialComponents.MaterialContainerScheme
 
 class BottomSheetFirstResponderExample: UIViewController {
   @objc var containerScheme: MDCContainerScheming = MDCContainerScheme()
@@ -33,9 +33,9 @@ class BottomSheetFirstResponderExample: UIViewController {
     let label = UILabel()
     label.numberOfLines = 0
     label.text = """
-    With VoiceOver on, the focused text field steals focus back from the bottom sheet
-    if resignFirstResponder is not called.
-    """
+      With VoiceOver on, the focused text field steals focus back from the bottom sheet
+      if resignFirstResponder is not called.
+      """
     label.textColor = .black
     return label
   }()
@@ -53,9 +53,10 @@ class BottomSheetFirstResponderExample: UIViewController {
 
     let button = MDCButton()
     button.setTitle("Show bottom sheet", for: .normal)
-    button.addTarget(self,
-                     action: #selector(BottomSheetFirstResponderExample.didTapButton),
-                     for: .touchUpInside)
+    button.addTarget(
+      self,
+      action: #selector(BottomSheetFirstResponderExample.didTapButton),
+      for: .touchUpInside)
 
     button.applyContainedTheme(withScheme: containerScheme)
     button.sizeToFit()
@@ -67,9 +68,9 @@ class BottomSheetFirstResponderExample: UIViewController {
     contentStackView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(contentStackView)
     contentStackView.leadingAnchor
-        .constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
+      .constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
     contentStackView.trailingAnchor
-        .constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
+      .constraint(equalTo: view.trailingAnchor, constant: -10).isActive = true
     contentStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
   }
 

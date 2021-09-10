@@ -40,13 +40,14 @@ class FlexibleHeaderScrollViewObservationTests: XCTestCase {
     // Given
     let contentViewController = UITableViewController()
     contentViewController.tableView.contentSize =
-      CGSize(width: contentViewController.tableView.bounds.width,
-             height: contentViewController.tableView.bounds.height * 2)
+      CGSize(
+        width: contentViewController.tableView.bounds.width,
+        height: contentViewController.tableView.bounds.height * 2)
     fhvc.headerView.trackingScrollView = contentViewController.tableView
     contentViewController.addChild(fhvc)
     contentViewController.view.addSubview(fhvc.view)
     fhvc.didMove(toParent: contentViewController)
-    
+
     // When
     let overshoot: CGFloat = 10
     contentViewController.tableView.contentOffset =
@@ -63,8 +64,9 @@ class FlexibleHeaderScrollViewObservationTests: XCTestCase {
     // Given
     let contentViewController = UITableViewController()
     contentViewController.tableView.contentSize =
-      CGSize(width: contentViewController.tableView.bounds.width,
-             height: contentViewController.tableView.bounds.height * 2)
+      CGSize(
+        width: contentViewController.tableView.bounds.width,
+        height: contentViewController.tableView.bounds.height * 2)
     fhvc.headerView.trackingScrollView = contentViewController.tableView
 
     contentViewController.addChild(fhvc)
@@ -79,12 +81,12 @@ class FlexibleHeaderScrollViewObservationTests: XCTestCase {
       CGPoint(x: 0, y: -contentViewController.tableView.contentInset.top + scrollAmount)
 
     // Then
-    XCTAssertGreaterThan(fhvc.headerView.layer.shadowOpacity, 0,
-                         "Shadow opacity was expected to be non-zero due to scrolling amount.")
+    XCTAssertGreaterThan(
+      fhvc.headerView.layer.shadowOpacity, 0,
+      "Shadow opacity was expected to be non-zero due to scrolling amount.")
 
     // Required teardown when observation is enabled on pre-iOS 11 devices
     fhvc.headerView.trackingScrollView = nil
   }
 
 }
-

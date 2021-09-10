@@ -17,22 +17,22 @@ import UIKit
 class ZShadow: UIView {
   @IBOutlet weak var greenTappable: MaterialShadowedView!
   @IBOutlet weak var greenBanner: MaterialShadowedView!
-  
+
   @IBOutlet weak var blueTappable: VanillaShadowedView!
   @IBOutlet weak var blueBanner: VanillaShadowedView!
-  
+
   @IBOutlet var containerView: UIView!
 
   override init(frame: CGRect) {
     super.init(frame: frame)
     commonInit()
   }
-  
+
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
     commonInit()
   }
-  
+
   func commonInit() {
     let bundle = Bundle(for: ZShadow.self)
     bundle.loadNibNamed("ZShadow", owner: self, options: nil)
@@ -45,30 +45,36 @@ class ZShadow: UIView {
 }
 
 class ZShadowViewController: UIViewController {
-  
+
   var greenBannerLeadingConstraintCollapsed: NSLayoutConstraint!
   var blueBannerLeadingConstraintCollapsed: NSLayoutConstraint!
   var contentView: ZShadow!
-  
+
   override func viewDidLoad() {
     super.viewDidLoad()
     contentView = ZShadow(frame: self.view.bounds)
     self.view.addSubview(contentView)
     contentView.translatesAutoresizingMaskIntoConstraints = false
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|",
-                                                       options: [],
-                                                       metrics: nil,
-                                                       views: ["view": contentView]));
-    view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|",
-                                                       options: [],
-                                                       metrics: nil,
-                                                       views: ["view": contentView]));
-    greenBannerLeadingConstraintCollapsed = contentView.greenBanner.trailingAnchor.constraint(equalTo: contentView.greenTappable.trailingAnchor)
+    view.addConstraints(
+      NSLayoutConstraint.constraints(
+        withVisualFormat: "H:|[view]|",
+        options: [],
+        metrics: nil,
+        views: ["view": contentView]))
+    view.addConstraints(
+      NSLayoutConstraint.constraints(
+        withVisualFormat: "V:|[view]|",
+        options: [],
+        metrics: nil,
+        views: ["view": contentView]))
+    greenBannerLeadingConstraintCollapsed = contentView.greenBanner.trailingAnchor.constraint(
+      equalTo: contentView.greenTappable.trailingAnchor)
     greenBannerLeadingConstraintCollapsed.isActive = false
-    
-    blueBannerLeadingConstraintCollapsed = contentView.blueBanner.trailingAnchor.constraint(equalTo: contentView.blueTappable.trailingAnchor)
+
+    blueBannerLeadingConstraintCollapsed = contentView.blueBanner.trailingAnchor.constraint(
+      equalTo: contentView.blueTappable.trailingAnchor)
     blueBannerLeadingConstraintCollapsed.isActive = false
-    
+
     let tap = UITapGestureRecognizer(target: self, action: #selector(squaresTapped))
     contentView.greenTappable.addGestureRecognizer(tap)
     contentView.greenTappable.isAccessibilityElement = true
@@ -80,19 +86,21 @@ class ZShadowViewController: UIViewController {
     contentView.blueTappable.accessibilityTraits = .button
     contentView.blueTappable.accessibilityLabel = "Toggle UIKit Shadow"
   }
-  
+
   @objc func squaresTapped() {
     greenBannerLeadingConstraintCollapsed.isActive = !greenBannerLeadingConstraintCollapsed.isActive
     blueBannerLeadingConstraintCollapsed.isActive = !blueBannerLeadingConstraintCollapsed.isActive
-    
-    UIView.animate(withDuration: 5, animations: {
-      self.view.layoutIfNeeded()
-    })
+
+    UIView.animate(
+      withDuration: 5,
+      animations: {
+        self.view.layoutIfNeeded()
+      })
   }
 }
 
 extension ZShadowViewController {
-  
+
   // MARK: Catalog by convention
 
   @objc class func catalogMetadata() -> [String: Any] {
@@ -103,4 +111,3 @@ extension ZShadowViewController {
     ]
   }
 }
-

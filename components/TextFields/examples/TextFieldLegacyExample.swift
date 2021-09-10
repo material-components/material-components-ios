@@ -86,7 +86,7 @@ final class TextFieldLegacySwiftExample: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = UIColor(white:0.97, alpha: 1.0)
+    view.backgroundColor = UIColor(white: 0.97, alpha: 1.0)
 
     title = "Material Text Fields"
 
@@ -96,10 +96,11 @@ final class TextFieldLegacySwiftExample: UIViewController {
     registerKeyboardNotifications()
     addGestureRecognizer()
 
-    let styleButton = UIBarButtonItem(title: "Style",
-                                      style: .plain,
-                                      target: self,
-                                      action: #selector(buttonDidTouch(sender: )))
+    let styleButton = UIBarButtonItem(
+      title: "Style",
+      style: .plain,
+      target: self,
+      action: #selector(buttonDidTouch(sender:)))
     self.navigationItem.rightBarButtonItem = styleButton
   }
 
@@ -150,10 +151,10 @@ final class TextFieldLegacySwiftExample: UIViewController {
     scrollView.addSubview(message)
     let messageController = MDCTextInputControllerLegacyDefault(textInput: message)
     message.text = """
-    This is where you could put a multi-line message like an email.
+      This is where you could put a multi-line message like an email.
 
-    It can even handle new lines.
-    """
+      It can even handle new lines.
+      """
     message.textView?.delegate = self
     messageController.placeholderText = "Message"
     allTextFieldControllers.append(messageController)
@@ -165,76 +166,96 @@ final class TextFieldLegacySwiftExample: UIViewController {
       tag += 1
     }
 
-    let views = [ "name": name,
-                  "address": address,
-                  "city": city,
-                  "stateZip": stateZip,
-                  "phone": phone,
-                  "message": message ]
-    var constraints = NSLayoutConstraint.constraints(withVisualFormat:
-      "V:[name]-[address]-[city]-[stateZip]-[phone]-[message]",
-                                                     options: [.alignAllLeading, .alignAllTrailing],
-                                                     metrics: nil,
-                                                     views: views)
+    let views = [
+      "name": name,
+      "address": address,
+      "city": city,
+      "stateZip": stateZip,
+      "phone": phone,
+      "message": message,
+    ]
+    var constraints = NSLayoutConstraint.constraints(
+      withVisualFormat:
+        "V:[name]-[address]-[city]-[stateZip]-[phone]-[message]",
+      options: [.alignAllLeading, .alignAllTrailing],
+      metrics: nil,
+      views: views)
 
-    constraints += [NSLayoutConstraint(item: name,
-                                       attribute: .leading,
-                                       relatedBy: .equal,
-                                       toItem: view,
-                                       attribute: .leadingMargin,
-                                       multiplier: 1,
-                                       constant: 0)]
-    constraints += [NSLayoutConstraint(item: name,
-                                       attribute: .trailing,
-                                       relatedBy: .equal,
-                                       toItem: view,
-                                       attribute: .trailingMargin,
-                                       multiplier: 1,
-                                       constant: 0)]
-    constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:[name]|",
-                                                  options: [],
-                                                  metrics: nil,
-                                                  views: views)
+    constraints += [
+      NSLayoutConstraint(
+        item: name,
+        attribute: .leading,
+        relatedBy: .equal,
+        toItem: view,
+        attribute: .leadingMargin,
+        multiplier: 1,
+        constant: 0)
+    ]
+    constraints += [
+      NSLayoutConstraint(
+        item: name,
+        attribute: .trailing,
+        relatedBy: .equal,
+        toItem: view,
+        attribute: .trailingMargin,
+        multiplier: 1,
+        constant: 0)
+    ]
+    constraints += NSLayoutConstraint.constraints(
+      withVisualFormat: "H:[name]|",
+      options: [],
+      metrics: nil,
+      views: views)
     if #available(iOS 11.0, *) {
-      constraints += [NSLayoutConstraint(item: name,
-                                         attribute: .top,
-                                         relatedBy: .equal,
-                                         toItem: scrollView.contentLayoutGuide,
-                                         attribute: .top,
-                                         multiplier: 1,
-                                         constant: 20),
-                      NSLayoutConstraint(item: message,
-                                         attribute: .bottom,
-                                         relatedBy: .equal,
-                                         toItem: scrollView.contentLayoutGuide,
-                                         attribute: .bottomMargin,
-                                         multiplier: 1,
-                                         constant: -20)]
+      constraints += [
+        NSLayoutConstraint(
+          item: name,
+          attribute: .top,
+          relatedBy: .equal,
+          toItem: scrollView.contentLayoutGuide,
+          attribute: .top,
+          multiplier: 1,
+          constant: 20),
+        NSLayoutConstraint(
+          item: message,
+          attribute: .bottom,
+          relatedBy: .equal,
+          toItem: scrollView.contentLayoutGuide,
+          attribute: .bottomMargin,
+          multiplier: 1,
+          constant: -20),
+      ]
     } else {
-      constraints += [NSLayoutConstraint(item: name,
-                                         attribute: .top,
-                                         relatedBy: .equal,
-                                         toItem: scrollView,
-                                         attribute: .top,
-                                         multiplier: 1,
-                                         constant: 20),
-                      NSLayoutConstraint(item: message,
-                                         attribute: .bottom,
-                                         relatedBy: .equal,
-                                         toItem: scrollView,
-                                         attribute: .bottomMargin,
-                                         multiplier: 1,
-                                         constant: -20)]
+      constraints += [
+        NSLayoutConstraint(
+          item: name,
+          attribute: .top,
+          relatedBy: .equal,
+          toItem: scrollView,
+          attribute: .top,
+          multiplier: 1,
+          constant: 20),
+        NSLayoutConstraint(
+          item: message,
+          attribute: .bottom,
+          relatedBy: .equal,
+          toItem: scrollView,
+          attribute: .bottomMargin,
+          multiplier: 1,
+          constant: -20),
+      ]
     }
-    let stateZipViews = [ "state": state, "zip": zip ]
-    constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|[state(80)]-[zip]|",
-                                                  options: [.alignAllTop],
-                                                  metrics: nil,
-                                                  views: stateZipViews)
-    constraints += NSLayoutConstraint.constraints(withVisualFormat: "V:|[state]|",
-                                                  options: [],
-                                                  metrics: nil,
-                                                  views: stateZipViews)
+    let stateZipViews = ["state": state, "zip": zip]
+    constraints += NSLayoutConstraint.constraints(
+      withVisualFormat: "H:|[state(80)]-[zip]|",
+      options: [.alignAllTop],
+      metrics: nil,
+      views: stateZipViews)
+    constraints += NSLayoutConstraint.constraints(
+      withVisualFormat: "V:|[state]|",
+      options: [],
+      metrics: nil,
+      views: stateZipViews)
 
     NSLayoutConstraint.activate(constraints)
   }
@@ -243,15 +264,18 @@ final class TextFieldLegacySwiftExample: UIViewController {
     view.addSubview(scrollView)
     scrollView.translatesAutoresizingMaskIntoConstraints = false
 
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(
-      withVisualFormat: "V:|[scrollView]|",
-      options: [],
-      metrics: nil,
-      views: ["scrollView": scrollView]))
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|[scrollView]|",
-                                                               options: [],
-                                                               metrics: nil,
-                                                               views: ["scrollView": scrollView]))
+    NSLayoutConstraint.activate(
+      NSLayoutConstraint.constraints(
+        withVisualFormat: "V:|[scrollView]|",
+        options: [],
+        metrics: nil,
+        views: ["scrollView": scrollView]))
+    NSLayoutConstraint.activate(
+      NSLayoutConstraint.constraints(
+        withVisualFormat: "H:|[scrollView]|",
+        options: [],
+        metrics: nil,
+        views: ["scrollView": scrollView]))
     let marginOffset: CGFloat = 16
     let margins = UIEdgeInsets(top: 0, left: marginOffset, bottom: 0, right: marginOffset)
 
@@ -259,8 +283,9 @@ final class TextFieldLegacySwiftExample: UIViewController {
   }
 
   func addGestureRecognizer() {
-    let tapRecognizer = UITapGestureRecognizer(target: self,
-                                               action: #selector(tapDidTouch(sender: )))
+    let tapRecognizer = UITapGestureRecognizer(
+      target: self,
+      action: #selector(tapDidTouch(sender:)))
     self.scrollView.addGestureRecognizer(tapRecognizer)
   }
 
@@ -272,19 +297,24 @@ final class TextFieldLegacySwiftExample: UIViewController {
 
   @objc func buttonDidTouch(sender: Any) {
     let isFloatingEnabled = allTextFieldControllers.first?.isFloatingEnabled ?? false
-    let alert = UIAlertController(title: "Floating Labels",
-                                  message: nil,
-                                  preferredStyle: .actionSheet)
+    let alert = UIAlertController(
+      title: "Floating Labels",
+      message: nil,
+      preferredStyle: .actionSheet)
 
-    let defaultAction = UIAlertAction(title: "Default (Yes)" + (isFloatingEnabled ? " ✓" : ""),
-                                      style: .default) { _ in
+    let defaultAction = UIAlertAction(
+      title: "Default (Yes)" + (isFloatingEnabled ? " ✓" : ""),
+      style: .default
+    ) { _ in
       self.allTextFieldControllers.forEach({ (controller) in
         controller.isFloatingEnabled = true
       })
     }
     alert.addAction(defaultAction)
-    let floatingAction = UIAlertAction(title: "No" + (isFloatingEnabled ? "" : " ✓"),
-                                       style: .default) { _ in
+    let floatingAction = UIAlertAction(
+      title: "No" + (isFloatingEnabled ? "" : " ✓"),
+      style: .default
+    ) { _ in
       self.allTextFieldControllers.forEach({ (controller) in
         controller.isFloatingEnabled = false
       })
@@ -295,9 +325,11 @@ final class TextFieldLegacySwiftExample: UIViewController {
 }
 
 extension TextFieldLegacySwiftExample: UITextFieldDelegate {
-  func textField(_ textField: UITextField,
-                 shouldChangeCharactersIn range: NSRange,
-                 replacementString string: String) -> Bool {
+  func textField(
+    _ textField: UITextField,
+    shouldChangeCharactersIn range: NSRange,
+    replacementString string: String
+  ) -> Bool {
     guard let rawText = textField.text else {
       return true
     }
@@ -306,20 +338,25 @@ extension TextFieldLegacySwiftExample: UITextFieldDelegate {
 
     if textField == zip {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.letters),
-        String(fullString[range]).characterCount > 0 {
-        zipController.setErrorText("Error: Zip can only contain numbers",
-                                   errorAccessibilityValue: nil)
+        String(fullString[range]).characterCount > 0
+      {
+        zipController.setErrorText(
+          "Error: Zip can only contain numbers",
+          errorAccessibilityValue: nil)
       } else if fullString.characterCount > 5 {
-        zipController.setErrorText("Error: Zip can only contain five digits",
-                                   errorAccessibilityValue: nil)
+        zipController.setErrorText(
+          "Error: Zip can only contain five digits",
+          errorAccessibilityValue: nil)
       } else {
         zipController.setErrorText(nil, errorAccessibilityValue: nil)
       }
     } else if textField == city {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.decimalDigits),
-        String(fullString[range]).characterCount > 0 {
-        cityController.setErrorText("Error: City can only contain letters",
-                                    errorAccessibilityValue: nil)
+        String(fullString[range]).characterCount > 0
+      {
+        cityController.setErrorText(
+          "Error: City can only contain letters",
+          errorAccessibilityValue: nil)
       } else {
         cityController.setErrorText(nil, errorAccessibilityValue: nil)
       }
@@ -330,7 +367,8 @@ extension TextFieldLegacySwiftExample: UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     let index = textField.tag
     if index + 1 < allTextFieldControllers.count,
-      let nextField = allTextFieldControllers[index + 1].textInput {
+      let nextField = allTextFieldControllers[index + 1].textInput
+    {
       nextField.becomeFirstResponder()
     } else {
       textField.resignFirstResponder()
@@ -372,10 +410,11 @@ extension TextFieldLegacySwiftExample {
     guard let frame = notif.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
       return
     }
-    scrollView.contentInset = UIEdgeInsets(top: 0.0,
-                                           left: 0.0,
-                                           bottom: frame.height,
-                                           right: 0.0)
+    scrollView.contentInset = UIEdgeInsets(
+      top: 0.0,
+      left: 0.0,
+      bottom: frame.height,
+      right: 0.0)
   }
 
   @objc func keyboardWillHide(notif: Notification) {

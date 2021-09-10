@@ -14,8 +14,8 @@
 
 import UIKit
 import MaterialComponents.MaterialBottomAppBar
-import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialNavigationDrawer
+import MaterialComponents.MaterialColorScheme
 
 class BottomDrawerNoHeaderLessContentExample: UIViewController {
   @objc var colorScheme = MDCSemanticColorScheme(defaults: .material201804)
@@ -34,13 +34,13 @@ class BottomDrawerNoHeaderLessContentExample: UIViewController {
 
     bottomAppBar.isFloatingButtonHidden = true
     let barButtonLeadingItem = UIBarButtonItem()
-    let menuImage = UIImage(named:"ic_menu")?.withRenderingMode(.alwaysTemplate)
+    let menuImage = UIImage(named: "ic_menu")?.withRenderingMode(.alwaysTemplate)
     barButtonLeadingItem.image = menuImage
     barButtonLeadingItem.target = self
     barButtonLeadingItem.action = #selector(presentNavigationDrawer)
-    bottomAppBar.leadingBarButtonItems = [ barButtonLeadingItem ]
+    bottomAppBar.leadingBarButtonItems = [barButtonLeadingItem]
 
-    bottomAppBar.barTintColor = colorScheme.surfaceColor;
+    bottomAppBar.barTintColor = colorScheme.surfaceColor
     let barItemTintColor = colorScheme.onSurfaceColor.withAlphaComponent(0.6)
     bottomAppBar.leadingBarItemsTintColor = barItemTintColor
     bottomAppBar.trailingBarItemsTintColor = barItemTintColor
@@ -59,10 +59,11 @@ class BottomDrawerNoHeaderLessContentExample: UIViewController {
 
   private func layoutBottomAppBar() {
     let size = bottomAppBar.sizeThatFits(view.bounds.size)
-    var bottomBarViewFrame = CGRect(x: 0,
-                                    y: view.bounds.size.height - size.height,
-                                    width: size.width,
-                                    height: size.height)
+    var bottomBarViewFrame = CGRect(
+      x: 0,
+      y: view.bounds.size.height - size.height,
+      width: size.width,
+      height: size.height)
     if #available(iOS 11.0, *) {
       bottomBarViewFrame.size.height += view.safeAreaInsets.bottom
       bottomBarViewFrame.origin.y -= view.safeAreaInsets.bottom

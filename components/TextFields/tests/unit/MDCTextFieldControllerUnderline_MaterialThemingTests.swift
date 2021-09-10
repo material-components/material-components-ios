@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import XCTest
 import MaterialComponents.MaterialTextFields
+import MaterialComponents.MaterialTextFields_Theming 
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialTypographyScheme
-import MaterialComponents.MaterialTextFields_Theming
-import XCTest
 
 class MDCTextFieldControllerUnderline_MaterialThemingTests: XCTestCase {
   func testWithDefaultContainerSchemeStylesAppropriately() {
@@ -45,8 +45,9 @@ class MDCTextFieldControllerUnderline_MaterialThemingTests: XCTestCase {
     XCTAssertEqual(textFieldControllerUnderline.trailingUnderlineLabelTextColor, onSurface60Opacity)
     XCTAssertEqual(textFieldControllerUnderline.leadingUnderlineLabelTextColor, onSurface60Opacity)
     XCTAssertEqual(floatingPlaceholderController.floatingPlaceholderNormalColor, onSurface60Opacity)
-    XCTAssertEqual(floatingPlaceholderController.floatingPlaceholderActiveColor,
-                   scheme.colorScheme.primaryColor.withAlphaComponent(0.87)
+    XCTAssertEqual(
+      floatingPlaceholderController.floatingPlaceholderActiveColor,
+      scheme.colorScheme.primaryColor.withAlphaComponent(0.87)
     )
     // Typography
     XCTAssertEqual(textFieldControllerUnderline.inlinePlaceholderFont, typographyScheme.subtitle1)

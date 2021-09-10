@@ -14,16 +14,17 @@
 
 import XCTest
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialAppBar_TypographyThemer
+import MaterialComponents.MaterialAppBar_TypographyThemer 
 import MaterialComponents.MaterialTypography
 
 class AppBarTypographyThemerTests: XCTestCase {
 
   func traitsForFont(_ font: UIFont) -> [String: NSNumber] {
-    guard let fontTraits = font.fontDescriptor.object(forKey: UIFontDescriptor.AttributeName.traits)
-      as? [String: NSNumber]
-      else {
-        return [:]
+    guard
+      let fontTraits = font.fontDescriptor.object(forKey: UIFontDescriptor.AttributeName.traits)
+        as? [String: NSNumber]
+    else {
+      return [:]
     }
 
     return fontTraits
@@ -40,7 +41,8 @@ class AppBarTypographyThemerTests: XCTestCase {
     // Then
     XCTAssertEqual(appBar.navigationBar.titleFont.fontName, typographyScheme.headline6.fontName)
     XCTAssertEqual(appBar.navigationBar.titleFont.pointSize, typographyScheme.headline6.pointSize)
-    XCTAssertEqual(traitsForFont(appBar.navigationBar.titleFont),
-                   traitsForFont(typographyScheme.headline6))
+    XCTAssertEqual(
+      traitsForFont(appBar.navigationBar.titleFont),
+      traitsForFont(typographyScheme.headline6))
   }
 }

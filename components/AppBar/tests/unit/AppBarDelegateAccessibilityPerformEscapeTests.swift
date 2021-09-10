@@ -19,7 +19,9 @@ private class FakeDelegate: NSObject, MDCAppBarViewControllerAccessibilityPerfor
   var accessibilityPerformEscapeResult = false
   var didInvokeAppBarViewControllerAccessibilityPerformEscape = false
 
-  func appBarViewControllerAccessibilityPerformEscape(_ appBarViewController: MDCAppBarViewController) -> Bool {
+  func appBarViewControllerAccessibilityPerformEscape(
+    _ appBarViewController: MDCAppBarViewController
+  ) -> Bool {
     didInvokeAppBarViewControllerAccessibilityPerformEscape = true
     return accessibilityPerformEscapeResult
   }

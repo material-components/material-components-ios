@@ -86,7 +86,7 @@ final class TextFieldManualLayoutLegacySwiftExample: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = UIColor(white:0.97, alpha: 1.0)
+    view.backgroundColor = UIColor(white: 0.97, alpha: 1.0)
 
     title = "Legacy Manual Text Fields"
 
@@ -98,10 +98,11 @@ final class TextFieldManualLayoutLegacySwiftExample: UIViewController {
     registerKeyboardNotifications()
     addGestureRecognizer()
 
-    let styleButton = UIBarButtonItem(title: "Style",
-                                      style: .plain,
-                                      target: self,
-                                      action: #selector(buttonDidTouch(sender: )))
+    let styleButton = UIBarButtonItem(
+      title: "Style",
+      style: .plain,
+      target: self,
+      action: #selector(buttonDidTouch(sender:)))
     self.navigationItem.rightBarButtonItem = styleButton
   }
 
@@ -161,13 +162,15 @@ final class TextFieldManualLayoutLegacySwiftExample: UIViewController {
     view.addSubview(scrollView)
 
     scrollView.contentSize =
-      CGSize(width: scrollView.bounds.width - 2 * LayoutConstants.largeMargin,
-             height: 500.0)
+      CGSize(
+        width: scrollView.bounds.width - 2 * LayoutConstants.largeMargin,
+        height: 500.0)
   }
 
   func addGestureRecognizer() {
-    let tapRecognizer = UITapGestureRecognizer(target: self,
-                                               action: #selector(tapDidTouch(sender: )))
+    let tapRecognizer = UITapGestureRecognizer(
+      target: self,
+      action: #selector(tapDidTouch(sender:)))
     self.scrollView.addGestureRecognizer(tapRecognizer)
   }
 
@@ -175,45 +178,52 @@ final class TextFieldManualLayoutLegacySwiftExample: UIViewController {
     let commonWidth = view.bounds.width - 2 * LayoutConstants.largeMargin
     var height = LayoutConstants.floatingHeight
     if let controller = allTextFieldControllers.first {
-      height = controller.isFloatingEnabled ?
-        LayoutConstants.floatingHeight : LayoutConstants.defaultHeight
+      height =
+        controller.isFloatingEnabled
+        ? LayoutConstants.floatingHeight : LayoutConstants.defaultHeight
     }
 
-    name.frame = CGRect(x: LayoutConstants.largeMargin,
-                        y: LayoutConstants.smallMargin,
-                        width: commonWidth,
-                        height: height)
+    name.frame = CGRect(
+      x: LayoutConstants.largeMargin,
+      y: LayoutConstants.smallMargin,
+      width: commonWidth,
+      height: height)
 
-    address.frame = CGRect(x: LayoutConstants.largeMargin,
-                           y: name.frame.minY + height + LayoutConstants.smallMargin,
-                           width: commonWidth,
-                           height: height)
+    address.frame = CGRect(
+      x: LayoutConstants.largeMargin,
+      y: name.frame.minY + height + LayoutConstants.smallMargin,
+      width: commonWidth,
+      height: height)
 
-    city.frame = CGRect(x: LayoutConstants.largeMargin,
-                        y: address.frame.minY + height + LayoutConstants.smallMargin,
-                        width: commonWidth,
-                        height: height)
+    city.frame = CGRect(
+      x: LayoutConstants.largeMargin,
+      y: address.frame.minY + height + LayoutConstants.smallMargin,
+      width: commonWidth,
+      height: height)
 
-    stateZip.frame = CGRect(x: LayoutConstants.largeMargin,
-                            y: city.frame.minY + height + LayoutConstants.smallMargin,
-                            width: commonWidth,
-                            height: height)
+    stateZip.frame = CGRect(
+      x: LayoutConstants.largeMargin,
+      y: city.frame.minY + height + LayoutConstants.smallMargin,
+      width: commonWidth,
+      height: height)
 
-    state.frame = CGRect(x: 0,
-                         y: 0,
-                         width: LayoutConstants.stateWidth,
-                         height: height)
+    state.frame = CGRect(
+      x: 0,
+      y: 0,
+      width: LayoutConstants.stateWidth,
+      height: height)
 
-    zip.frame = CGRect(x: LayoutConstants.stateWidth + LayoutConstants.smallMargin,
-                       y: 0,
-                       width: stateZip.bounds.width - LayoutConstants.stateWidth -
-                        LayoutConstants.smallMargin,
-                       height: height)
+    zip.frame = CGRect(
+      x: LayoutConstants.stateWidth + LayoutConstants.smallMargin,
+      y: 0,
+      width: stateZip.bounds.width - LayoutConstants.stateWidth - LayoutConstants.smallMargin,
+      height: height)
 
-    phone.frame = CGRect(x: LayoutConstants.largeMargin,
-                         y: stateZip.frame.minY + height + LayoutConstants.smallMargin,
-                         width: commonWidth,
-                         height: height)
+    phone.frame = CGRect(
+      x: LayoutConstants.largeMargin,
+      y: stateZip.frame.minY + height + LayoutConstants.smallMargin,
+      width: commonWidth,
+      height: height)
   }
 
   // MARK: - Actions
@@ -223,9 +233,10 @@ final class TextFieldManualLayoutLegacySwiftExample: UIViewController {
   }
 
   @objc func buttonDidTouch(sender: Any) {
-    let alert = UIAlertController(title: "Floating Enabled",
-                                  message: nil,
-                                  preferredStyle: .actionSheet)
+    let alert = UIAlertController(
+      title: "Floating Enabled",
+      message: nil,
+      preferredStyle: .actionSheet)
     let defaultAction = UIAlertAction(title: "Default (Yes)", style: .default) { _ in
       self.allTextFieldControllers.forEach({ (controller) in
         controller.isFloatingEnabled = true
@@ -245,9 +256,11 @@ final class TextFieldManualLayoutLegacySwiftExample: UIViewController {
 }
 
 extension TextFieldManualLayoutLegacySwiftExample: UITextFieldDelegate {
-  func textField(_ textField: UITextField,
-                 shouldChangeCharactersIn range: NSRange,
-                 replacementString string: String) -> Bool {
+  func textField(
+    _ textField: UITextField,
+    shouldChangeCharactersIn range: NSRange,
+    replacementString string: String
+  ) -> Bool {
     guard let rawText = textField.text else {
       return true
     }
@@ -256,20 +269,25 @@ extension TextFieldManualLayoutLegacySwiftExample: UITextFieldDelegate {
 
     if textField == zip {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.letters),
-        String(fullString[range]).characterCount > 0 {
-        zipController.setErrorText("Error: Zip can only contain numbers",
-                                   errorAccessibilityValue: nil)
+        String(fullString[range]).characterCount > 0
+      {
+        zipController.setErrorText(
+          "Error: Zip can only contain numbers",
+          errorAccessibilityValue: nil)
       } else if fullString.characterCount > 5 {
-        zipController.setErrorText("Error: Zip can only contain five digits",
-                                   errorAccessibilityValue: nil)
+        zipController.setErrorText(
+          "Error: Zip can only contain five digits",
+          errorAccessibilityValue: nil)
       } else {
         zipController.setErrorText(nil, errorAccessibilityValue: nil)
       }
     } else if textField == city {
       if let range = fullString.rangeOfCharacter(from: CharacterSet.decimalDigits),
-        String(fullString[range]).characterCount > 0 {
-        cityController.setErrorText("Error: City can only contain letters",
-                                    errorAccessibilityValue: nil)
+        String(fullString[range]).characterCount > 0
+      {
+        cityController.setErrorText(
+          "Error: City can only contain letters",
+          errorAccessibilityValue: nil)
       } else {
         cityController.setErrorText(nil, errorAccessibilityValue: nil)
       }
@@ -280,7 +298,8 @@ extension TextFieldManualLayoutLegacySwiftExample: UITextFieldDelegate {
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     let index = textField.tag
     if index + 1 < allTextFieldControllers.count,
-      let nextField = allTextFieldControllers[index + 1].textInput {
+      let nextField = allTextFieldControllers[index + 1].textInput
+    {
       nextField.becomeFirstResponder()
     } else {
       textField.resignFirstResponder()
@@ -316,10 +335,11 @@ extension TextFieldManualLayoutLegacySwiftExample {
     guard let frame = notif.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
       return
     }
-    scrollView.contentInset = UIEdgeInsets(top: 0.0,
-                                           left: 0.0,
-                                           bottom: frame.height,
-                                           right: 0.0)
+    scrollView.contentInset = UIEdgeInsets(
+      top: 0.0,
+      left: 0.0,
+      bottom: frame.height,
+      right: 0.0)
   }
 
   @objc func keyboardWillHide(notif: Notification) {

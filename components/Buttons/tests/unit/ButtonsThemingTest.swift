@@ -13,15 +13,14 @@
 // limitations under the License.
 
 import XCTest
-
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialButtons_Theming 
+import MaterialComponents.MaterialShadowElevations
+import MaterialComponents.MaterialShapeLibrary
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialContainerScheme
-import MaterialComponents.MaterialShadowElevations
 import MaterialComponents.MaterialShapeScheme
-import MaterialComponents.MaterialShapeLibrary
 import MaterialComponents.MaterialTypographyScheme
-import MaterialComponents.MaterialButtons_Theming
 
 class ButtonsThemingTest: XCTestCase {
 
@@ -54,18 +53,20 @@ class ButtonsThemingTest: XCTestCase {
     // Test Colors
     XCTAssertEqual(button.backgroundColor(for: .normal), testScheme.colorScheme.primaryColor)
     XCTAssertEqual(
-        button.backgroundColor(for: .disabled),
-        testScheme.colorScheme.onSurfaceColor.withAlphaComponent(ButtonsThemingTest.disabledBackgroundOpacity))
+      button.backgroundColor(for: .disabled),
+      testScheme.colorScheme.onSurfaceColor.withAlphaComponent(
+        ButtonsThemingTest.disabledBackgroundOpacity))
     XCTAssertEqual(button.titleColor(for: .normal), testScheme.colorScheme.onPrimaryColor)
     XCTAssertEqual(
-        button.titleColor(for: .disabled),
-        testScheme.colorScheme.onSurfaceColor.withAlphaComponent(ButtonsThemingTest.disabledOpacity))
+      button.titleColor(for: .disabled),
+      testScheme.colorScheme.onSurfaceColor.withAlphaComponent(ButtonsThemingTest.disabledOpacity))
     XCTAssertEqual(button.imageTintColor(for: .normal), testScheme.colorScheme.onPrimaryColor)
     XCTAssertEqual(
-        button.imageTintColor(for: .disabled),
-        testScheme.colorScheme.onSurfaceColor.withAlphaComponent(ButtonsThemingTest.disabledOpacity))
-    XCTAssertEqual(button.inkColor,
-                   testScheme.colorScheme.onPrimaryColor.withAlphaComponent(ButtonsThemingTest.inkOpacity))
+      button.imageTintColor(for: .disabled),
+      testScheme.colorScheme.onSurfaceColor.withAlphaComponent(ButtonsThemingTest.disabledOpacity))
+    XCTAssertEqual(
+      button.inkColor,
+      testScheme.colorScheme.onPrimaryColor.withAlphaComponent(ButtonsThemingTest.inkOpacity))
     // Test shape
     XCTAssertEqual(button.layer.cornerRadius, baselineCornerRadius, accuracy: 0.001)
     // Test typography
@@ -103,8 +104,9 @@ class ButtonsThemingTest: XCTestCase {
     XCTAssertEqual(
       button.imageTintColor(for: .disabled),
       colorScheme.onSurfaceColor.withAlphaComponent(ButtonsThemingTest.disabledOpacity))
-    XCTAssertEqual(button.inkColor,
-                   colorScheme.onPrimaryColor.withAlphaComponent(ButtonsThemingTest.inkOpacity))
+    XCTAssertEqual(
+      button.inkColor,
+      colorScheme.onPrimaryColor.withAlphaComponent(ButtonsThemingTest.inkOpacity))
     // Test shape
     XCTAssertEqual(button.layer.cornerRadius, baselineCornerRadius, accuracy: 0.001)
     // Test typography
@@ -131,8 +133,9 @@ class ButtonsThemingTest: XCTestCase {
     if let buttonShape = button.shapeGenerator as? MDCRectangleShapeGenerator {
       XCTAssertEqual(buttonShape.topLeftCorner, shapeScheme.smallComponentShape.topLeftCorner)
       XCTAssertEqual(buttonShape.topRightCorner, shapeScheme.smallComponentShape.topRightCorner)
-      XCTAssertEqual(buttonShape.bottomRightCorner,
-                     shapeScheme.smallComponentShape.bottomRightCorner)
+      XCTAssertEqual(
+        buttonShape.bottomRightCorner,
+        shapeScheme.smallComponentShape.bottomRightCorner)
       XCTAssertEqual(buttonShape.bottomLeftCorner, shapeScheme.smallComponentShape.bottomLeftCorner)
     } else {
       XCTFail("Button.shapeGenerator was not a MDCRectangularShapeGenerator")
@@ -161,8 +164,8 @@ class ButtonsThemingTest: XCTestCase {
     XCTAssertEqual(
       button.titleColor(for: .disabled),
       colorScheme.onSurfaceColor.withAlphaComponent(0.38))
-    XCTAssertEqual(button.disabledAlpha,1)
-    XCTAssertEqual(button.inkColor,colorScheme.primaryColor.withAlphaComponent(0.12))
+    XCTAssertEqual(button.disabledAlpha, 1)
+    XCTAssertEqual(button.inkColor, colorScheme.primaryColor.withAlphaComponent(0.12))
     XCTAssertEqual(
       button.borderColor(for: .normal),
       colorScheme.onSurfaceColor.withAlphaComponent(0.12))
@@ -201,8 +204,8 @@ class ButtonsThemingTest: XCTestCase {
     XCTAssertEqual(
       button.titleColor(for: .disabled),
       colorScheme.onSurfaceColor.withAlphaComponent(0.38))
-    XCTAssertEqual(button.disabledAlpha,1)
-    XCTAssertEqual(button.inkColor,colorScheme.primaryColor.withAlphaComponent(0.12))
+    XCTAssertEqual(button.disabledAlpha, 1)
+    XCTAssertEqual(button.inkColor, colorScheme.primaryColor.withAlphaComponent(0.12))
     XCTAssertEqual(
       button.borderColor(for: .normal),
       colorScheme.onSurfaceColor.withAlphaComponent(0.12))
@@ -233,7 +236,8 @@ class ButtonsThemingTest: XCTestCase {
     if let buttonShape = button.shapeGenerator as? MDCRectangleShapeGenerator {
       XCTAssertEqual(buttonShape.topLeftCorner, shapeScheme.smallComponentShape.topLeftCorner)
       XCTAssertEqual(buttonShape.topRightCorner, shapeScheme.smallComponentShape.topRightCorner)
-      XCTAssertEqual(buttonShape.bottomRightCorner, shapeScheme.smallComponentShape.bottomRightCorner)
+      XCTAssertEqual(
+        buttonShape.bottomRightCorner, shapeScheme.smallComponentShape.bottomRightCorner)
       XCTAssertEqual(buttonShape.bottomLeftCorner, shapeScheme.smallComponentShape.bottomLeftCorner)
     } else {
       XCTFail("Button.shapeGenerator was not a MDCRectangularShapeGenerator")
@@ -304,13 +308,15 @@ class ButtonsThemingTest: XCTestCase {
     XCTAssertEqual(button.borderColor(for: .normal), nil)
     XCTAssertEqual(button.inkColor, colorScheme.primaryColor.withAlphaComponent(0.16))
     XCTAssertEqual(button.titleColor(for: [.normal, .highlighted]), colorScheme.primaryColor)
-    XCTAssertEqual(button.titleColor(for: .disabled),
-                   colorScheme.onSurfaceColor.withAlphaComponent(0.38))
+    XCTAssertEqual(
+      button.titleColor(for: .disabled),
+      colorScheme.onSurfaceColor.withAlphaComponent(0.38))
     [.normal, .highlighted].forEach {
       XCTAssertEqual(button.imageTintColor(for: $0), colorScheme.primaryColor)
     }
-    XCTAssertEqual(button.imageTintColor(for: .disabled),
-                   colorScheme.onSurfaceColor.withAlphaComponent(0.38))
+    XCTAssertEqual(
+      button.imageTintColor(for: .disabled),
+      colorScheme.onSurfaceColor.withAlphaComponent(0.38))
 
     // Test typography
     if button.enableTitleFontForState {

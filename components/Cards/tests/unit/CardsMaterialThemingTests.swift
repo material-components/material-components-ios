@@ -13,11 +13,10 @@
 // limitations under the License.
 
 import XCTest
-
 import MaterialComponents.MaterialCards
-import MaterialComponents.MaterialContainerScheme
+import MaterialComponents.MaterialCards_Theming 
 import MaterialComponents.MaterialShapeLibrary
-import MaterialComponents.MaterialCards_Theming
+import MaterialComponents.MaterialContainerScheme
 
 class CardsMaterialThemingTests: XCTestCase {
 
@@ -41,8 +40,9 @@ class CardsMaterialThemingTests: XCTestCase {
     if let cardShape = card.shapeGenerator as? MDCRectangleShapeGenerator {
       XCTAssertEqual(cardShape.topLeftCorner, shapeScheme.mediumComponentShape.topLeftCorner)
       XCTAssertEqual(cardShape.topRightCorner, shapeScheme.mediumComponentShape.topRightCorner)
-      XCTAssertEqual(cardShape.bottomRightCorner,
-                     shapeScheme.mediumComponentShape.bottomRightCorner)
+      XCTAssertEqual(
+        cardShape.bottomRightCorner,
+        shapeScheme.mediumComponentShape.bottomRightCorner)
       XCTAssertEqual(cardShape.bottomLeftCorner, shapeScheme.mediumComponentShape.bottomLeftCorner)
     } else {
       XCTFail("Card.shapeGenerator was not a MDCRectangularShapeGenerator")
@@ -82,15 +82,17 @@ class CardsMaterialThemingTests: XCTestCase {
     // Then
     // Test Colors
     XCTAssertEqual(card.backgroundColor, colorScheme.surfaceColor)
-    XCTAssertEqual(card.borderColor(for: .normal),
-                   colorScheme.onSurfaceColor.withAlphaComponent(0.37))
+    XCTAssertEqual(
+      card.borderColor(for: .normal),
+      colorScheme.onSurfaceColor.withAlphaComponent(0.37))
 
     // Test shape
     if let cardShape = card.shapeGenerator as? MDCRectangleShapeGenerator {
       XCTAssertEqual(cardShape.topLeftCorner, shapeScheme.mediumComponentShape.topLeftCorner)
       XCTAssertEqual(cardShape.topRightCorner, shapeScheme.mediumComponentShape.topRightCorner)
-      XCTAssertEqual(cardShape.bottomRightCorner,
-                     shapeScheme.mediumComponentShape.bottomRightCorner)
+      XCTAssertEqual(
+        cardShape.bottomRightCorner,
+        shapeScheme.mediumComponentShape.bottomRightCorner)
       XCTAssertEqual(cardShape.bottomLeftCorner, shapeScheme.mediumComponentShape.bottomLeftCorner)
     } else {
       XCTFail("Card.shapeGenerator was not a MDCRectangularShapeGenerator")
@@ -98,13 +100,15 @@ class CardsMaterialThemingTests: XCTestCase {
 
     // Test remaining properties
     [UIControl.State.normal, .highlighted, .selected, .disabled].forEach {
-      XCTAssertEqual(card.shadowElevation(for: $0),
-                     ShadowElevation.none,
-                     "Shadow elevation incorrect for state \($0)")
-      XCTAssertEqual(card.borderWidth(for: $0),
-                     1,
-                     accuracy: 0.001,
-                     "Border width incorrect for state \($0)")
+      XCTAssertEqual(
+        card.shadowElevation(for: $0),
+        ShadowElevation.none,
+        "Shadow elevation incorrect for state \($0)")
+      XCTAssertEqual(
+        card.borderWidth(for: $0),
+        1,
+        accuracy: 0.001,
+        "Border width incorrect for state \($0)")
     }
   }
 
@@ -141,8 +145,9 @@ class CardsMaterialThemingTests: XCTestCase {
     if let cardShape = cardCell.shapeGenerator as? MDCRectangleShapeGenerator {
       XCTAssertEqual(cardShape.topLeftCorner, shapeScheme.mediumComponentShape.topLeftCorner)
       XCTAssertEqual(cardShape.topRightCorner, shapeScheme.mediumComponentShape.topRightCorner)
-      XCTAssertEqual(cardShape.bottomRightCorner,
-                     shapeScheme.mediumComponentShape.bottomRightCorner)
+      XCTAssertEqual(
+        cardShape.bottomRightCorner,
+        shapeScheme.mediumComponentShape.bottomRightCorner)
       XCTAssertEqual(cardShape.bottomLeftCorner, shapeScheme.mediumComponentShape.bottomLeftCorner)
     } else {
       XCTFail("Card.shapeGenerator was not a MDCRectangularShapeGenerator")
@@ -183,15 +188,17 @@ class CardsMaterialThemingTests: XCTestCase {
     // Then
     // Test Colors
     XCTAssertEqual(cardCell.backgroundColor, colorScheme.surfaceColor)
-    XCTAssertEqual(cardCell.borderColor(for: .normal),
-                   colorScheme.onSurfaceColor.withAlphaComponent(0.37))
+    XCTAssertEqual(
+      cardCell.borderColor(for: .normal),
+      colorScheme.onSurfaceColor.withAlphaComponent(0.37))
 
     // Test shape
     if let cardShape = cardCell.shapeGenerator as? MDCRectangleShapeGenerator {
       XCTAssertEqual(cardShape.topLeftCorner, shapeScheme.mediumComponentShape.topLeftCorner)
       XCTAssertEqual(cardShape.topRightCorner, shapeScheme.mediumComponentShape.topRightCorner)
-      XCTAssertEqual(cardShape.bottomRightCorner,
-                     shapeScheme.mediumComponentShape.bottomRightCorner)
+      XCTAssertEqual(
+        cardShape.bottomRightCorner,
+        shapeScheme.mediumComponentShape.bottomRightCorner)
       XCTAssertEqual(cardShape.bottomLeftCorner, shapeScheme.mediumComponentShape.bottomLeftCorner)
     } else {
       XCTFail("Card.shapeGenerator was not a MDCRectangularShapeGenerator")

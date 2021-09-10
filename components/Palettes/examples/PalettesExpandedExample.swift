@@ -22,10 +22,11 @@ private func generateRandomPalettes(_ count: Int) -> [(name: String, palette: MD
   var palettes = [(name: String, palette: MDCPalette)]()
   for _ in 1...count {
     let rgb = [randomFloat(), randomFloat(), randomFloat()]
-    let name = String(format: "Generated from #%2X%2X%2X",
-                      Int(rgb[0] * 255),
-                      Int(rgb[1] * 255),
-                      Int(rgb[2] * 255))
+    let name = String(
+      format: "Generated from #%2X%2X%2X",
+      Int(rgb[0] * 255),
+      Int(rgb[1] * 255),
+      Int(rgb[2] * 255))
     let color = UIColor.init(red: rgb[0], green: rgb[1], blue: rgb[2], alpha: 1)
     palettes.append((name, MDCPalette.init(generatedFrom: color)))
   }

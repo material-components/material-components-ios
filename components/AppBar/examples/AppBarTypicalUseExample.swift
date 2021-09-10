@@ -14,7 +14,7 @@
 
 import Foundation
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialAppBar_Theming
+import MaterialComponents.MaterialAppBar_Theming 
 import MaterialComponents.MaterialContainerScheme
 
 class AppBarTypicalUseSwiftExample: UITableViewController {
@@ -110,14 +110,16 @@ extension AppBarTypicalUseSwiftExample {
 
   override func tableView(
     _ tableView: UITableView,
-    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    
-    let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell") ??
-        UITableViewCell(style: .default, reuseIdentifier: "cell")
-      cell.layoutMargins = .zero
-      cell.textLabel?.text = "\(indexPath.row)"
-      cell.selectionStyle = .none
-      return cell
+    cellForRowAt indexPath: IndexPath
+  ) -> UITableViewCell {
+
+    let cell =
+      self.tableView.dequeueReusableCell(withIdentifier: "cell")
+      ?? UITableViewCell(style: .default, reuseIdentifier: "cell")
+    cell.layoutMargins = .zero
+    cell.textLabel?.text = "\(indexPath.row)"
+    cell.selectionStyle = .none
+    return cell
   }
 
 }

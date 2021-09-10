@@ -33,7 +33,7 @@ class ButtonBarIssue516Tests: XCTestCase {
   func testLayoutPositionDefault() {
     let items = [
       UIBarButtonItem(title: "LEFT", style: .plain, target: nil, action: nil),
-      UIBarButtonItem(title: "RIGHT", style: .plain, target: nil, action: nil)
+      UIBarButtonItem(title: "RIGHT", style: .plain, target: nil, action: nil),
     ]
     buttonBar.items = items
     buttonBar.layoutSubviews()
@@ -49,7 +49,7 @@ class ButtonBarIssue516Tests: XCTestCase {
   func testLayoutPositionLeading() {
     let items = [
       UIBarButtonItem(title: "LEFT", style: .plain, target: nil, action: nil),
-      UIBarButtonItem(title: "RIGHT", style: .plain, target: nil, action: nil)
+      UIBarButtonItem(title: "RIGHT", style: .plain, target: nil, action: nil),
     ]
     buttonBar.items = items
     buttonBar.layoutPosition = .leading
@@ -66,7 +66,7 @@ class ButtonBarIssue516Tests: XCTestCase {
   func testLayoutPositionTrailing() {
     let items = [
       UIBarButtonItem(title: "LEFT", style: .plain, target: nil, action: nil),
-      UIBarButtonItem(title: "RIGHT", style: .plain, target: nil, action: nil)
+      UIBarButtonItem(title: "RIGHT", style: .plain, target: nil, action: nil),
     ]
     buttonBar.items = items
     buttonBar.layoutPosition = .trailing

@@ -20,8 +20,9 @@ class ActivityIndicatorTests: XCTestCase {
   func testCycleColorDefaultValue() {
     let indicator = MDCActivityIndicator()
 
-    XCTAssertGreaterThan(indicator.cycleColors.count, 0,
-                         "The default value for |cycleColors| should be a non-empty array.")
+    XCTAssertGreaterThan(
+      indicator.cycleColors.count, 0,
+      "The default value for |cycleColors| should be a non-empty array.")
 
   }
 
@@ -30,9 +31,10 @@ class ActivityIndicatorTests: XCTestCase {
 
     indicator.cycleColors = []
 
-    XCTAssertGreaterThan(indicator.cycleColors.count, 0,
-                         "Assigning an empty array for |cycleColors| should result in a default " +
-                         "value being used instead.")
+    XCTAssertGreaterThan(
+      indicator.cycleColors.count, 0,
+      "Assigning an empty array for |cycleColors| should result in a default "
+        + "value being used instead.")
   }
 
 }

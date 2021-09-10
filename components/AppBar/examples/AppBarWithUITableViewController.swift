@@ -13,9 +13,8 @@
 // limitations under the License.
 
 import UIKit
-
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialAppBar_Theming
+import MaterialComponents.MaterialAppBar_Theming 
 import MaterialComponents.MaterialContainerScheme
 
 // This example shows a bug when using an MDCFlexibleHeaderView in a UITableViewController.
@@ -68,7 +67,7 @@ class AppBarWithUITableViewController: UITableViewController {
     appBarViewController.didMove(toParent: self)
 
     appBarViewController.applyPrimaryTheme(withScheme: containerScheme)
-    
+
     self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
     let headerView = appBarViewController.headerView
     headerView.trackingScrollView = self.tableView
@@ -90,7 +89,9 @@ class AppBarWithUITableViewController: UITableViewController {
     return numberOfRows
   }
 
-  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)
+    -> UITableViewCell
+  {
     let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
     cell.textLabel?.text = "Cell #\(indexPath.item)"
     return cell
@@ -99,7 +100,7 @@ class AppBarWithUITableViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     tableView.beginUpdates()
-    tableView.insertRows(at: [IndexPath(item: indexPath.item+1, section: 0)], with: .automatic)
+    tableView.insertRows(at: [IndexPath(item: indexPath.item + 1, section: 0)], with: .automatic)
     numberOfRows += 1
     tableView.endUpdates()
   }

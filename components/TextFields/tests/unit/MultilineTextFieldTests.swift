@@ -37,7 +37,8 @@ class MultilineTextFieldTests: XCTestCase {
 
     textField.textInsetsMode = .never
     textField.borderView?.borderFillColor = .blue
-    textField.borderView?.borderPath = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 100, height: 100))
+    textField.borderView?.borderPath = UIBezierPath(
+      ovalIn: CGRect(x: 0, y: 0, width: 100, height: 100))
     textField.borderView?.borderPath?.lineWidth = 2
     textField.borderView?.borderStrokeColor = .green
     textField.clearButton.tintColor = .red
@@ -60,18 +61,24 @@ class MultilineTextFieldTests: XCTestCase {
       XCTAssertEqual(textField.textInsetsMode, textFieldCopy.textInsetsMode)
       XCTAssertEqual(textField.attributedPlaceholder, textFieldCopy.attributedPlaceholder)
       XCTAssertEqual(textField.attributedText, textFieldCopy.attributedText)
-      XCTAssertEqual(textField.borderView?.borderFillColor, textFieldCopy.borderView?.borderFillColor)
-      XCTAssertEqual(textField.borderView?.borderPath?.bounds, textFieldCopy.borderView?.borderPath?.bounds)
-      XCTAssertEqual(textField.borderView?.borderPath?.lineWidth, textFieldCopy.borderView?.borderPath?.lineWidth)
-      XCTAssertEqual(textField.borderView?.borderStrokeColor, textFieldCopy.borderView?.borderStrokeColor)
+      XCTAssertEqual(
+        textField.borderView?.borderFillColor, textFieldCopy.borderView?.borderFillColor)
+      XCTAssertEqual(
+        textField.borderView?.borderPath?.bounds, textFieldCopy.borderView?.borderPath?.bounds)
+      XCTAssertEqual(
+        textField.borderView?.borderPath?.lineWidth, textFieldCopy.borderView?.borderPath?.lineWidth
+      )
+      XCTAssertEqual(
+        textField.borderView?.borderStrokeColor, textFieldCopy.borderView?.borderStrokeColor)
       XCTAssertEqual(textField.clearButton.tintColor, textFieldCopy.clearButton.tintColor)
       XCTAssertEqual(textField.clearButtonMode, textFieldCopy.clearButtonMode)
       XCTAssertEqual(textField.cursorColor, textFieldCopy.cursorColor)
       XCTAssertEqual(textField.font, textFieldCopy.font)
       XCTAssertEqual(textField.hidesPlaceholderOnInput, textFieldCopy.hidesPlaceholderOnInput)
       XCTAssertEqual(textField.isEnabled, textFieldCopy.isEnabled)
-      XCTAssertEqual(textField.mdc_adjustsFontForContentSizeCategory,
-                     textFieldCopy.mdc_adjustsFontForContentSizeCategory)
+      XCTAssertEqual(
+        textField.mdc_adjustsFontForContentSizeCategory,
+        textFieldCopy.mdc_adjustsFontForContentSizeCategory)
       XCTAssertEqual(textField.placeholder, textFieldCopy.placeholder)
       XCTAssertEqual(textField.text, textFieldCopy.text)
       XCTAssertEqual(textField.textColor, textFieldCopy.textColor)
@@ -168,7 +175,7 @@ class MultilineTextFieldTests: XCTestCase {
 
   func testDefaultBaseElevationOverrideIsNegative() {
     // Then
-    XCTAssertLessThan(MDCMultilineTextField().mdc_overrideBaseElevation, 0);
+    XCTAssertLessThan(MDCMultilineTextField().mdc_overrideBaseElevation, 0)
   }
 
   func testSettingOverrideBaseElevationReturnsSetValue() {

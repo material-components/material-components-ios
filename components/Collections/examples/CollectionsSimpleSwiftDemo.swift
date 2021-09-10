@@ -13,20 +13,20 @@
 // limitations under the License.
 
 import UIKit
-
 import MaterialComponents.MaterialCollections
 
 class CollectionsSimpleSwiftDemo: MDCCollectionViewController {
 
   let reusableIdentifierItem = "itemCellIdentifier"
-  let colors = [ "red", "blue", "green", "black", "yellow", "purple" ]
+  let colors = ["red", "blue", "green", "black", "yellow", "purple"]
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
     // Register cell class.
-    self.collectionView?.register(MDCCollectionViewTextCell.self,
-                                       forCellWithReuseIdentifier: reusableIdentifierItem)
+    self.collectionView?.register(
+      MDCCollectionViewTextCell.self,
+      forCellWithReuseIdentifier: reusableIdentifierItem)
 
     // Customize collection view settings.
     self.styler.cellStyle = .card
@@ -34,15 +34,20 @@ class CollectionsSimpleSwiftDemo: MDCCollectionViewController {
 
   // MARK: UICollectionViewDataSource
 
-  override func collectionView(_ collectionView: UICollectionView,
-                               numberOfItemsInSection section: Int) -> Int {
+  override func collectionView(
+    _ collectionView: UICollectionView,
+    numberOfItemsInSection section: Int
+  ) -> Int {
     return colors.count
   }
 
-  override func collectionView(_ collectionView: UICollectionView,
-                               cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusableIdentifierItem,
-                                                                     for: indexPath)
+  override func collectionView(
+    _ collectionView: UICollectionView,
+    cellForItemAt indexPath: IndexPath
+  ) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(
+      withReuseIdentifier: reusableIdentifierItem,
+      for: indexPath)
     if let cell = cell as? MDCCollectionViewTextCell {
       cell.textLabel?.text = colors[indexPath.item]
     }
@@ -56,7 +61,7 @@ extension CollectionsSimpleSwiftDemo {
 
   @objc class func catalogMetadata() -> [String: Any] {
     return [
-      "breadcrumbs": [ "Collections", "Simple Swift Demo"],
+      "breadcrumbs": ["Collections", "Simple Swift Demo"],
       "primaryDemo": false,
       "presentable": false,
     ]

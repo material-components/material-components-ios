@@ -13,10 +13,9 @@
 // limitations under the License.
 
 import UIKit
-
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialButtons_Theming 
 import MaterialComponents.MaterialContainerScheme
-import MaterialComponents.MaterialButtons_Theming
 
 class FloatingButtonTypicalUseSwiftExample: UIViewController {
 
@@ -51,8 +50,9 @@ class FloatingButtonTypicalUseSwiftExample: UIViewController {
     largeIconFloatingButton.translatesAutoresizingMaskIntoConstraints = false
     largeIconFloatingButton.setImage(plusImage36, for: .normal)
     largeIconFloatingButton.accessibilityLabel = "Create"
-    largeIconFloatingButton.setContentEdgeInsets(UIEdgeInsets(top: -6, left: -6, bottom: -6, right: 0), for: .default,
-                                                 in: .expanded)
+    largeIconFloatingButton.setContentEdgeInsets(
+      UIEdgeInsets(top: -6, left: -6, bottom: -6, right: 0), for: .default,
+      in: .expanded)
     largeIconFloatingButton.applySecondaryTheme(withScheme: containerScheme)
 
     let label = UILabel()
@@ -64,52 +64,63 @@ class FloatingButtonTypicalUseSwiftExample: UIViewController {
     view.addSubview(defaultFloatingButton)
     view.addSubview(largeIconFloatingButton)
 
-    let totalHeight = miniFloatingButton.bounds.standardized.height +
-                      defaultFloatingButton.bounds.standardized.height +
-                      largeIconFloatingButton.bounds.standardized.height +
-                      20 // 10 points between buttons
+    let totalHeight =
+      miniFloatingButton.bounds.standardized.height
+      + defaultFloatingButton.bounds.standardized.height
+      + largeIconFloatingButton.bounds.standardized.height + 20  // 10 points between buttons
 
-    let miniDefaultDifference = defaultFloatingButton.bounds.standardized.width -
-                                miniFloatingButton.bounds.standardized.width
+    let miniDefaultDifference =
+      defaultFloatingButton.bounds.standardized.width - miniFloatingButton.bounds.standardized.width
 
-    leadingAlignView(view: miniFloatingButton, onView: self.view,
-                     horizontalOffset: 10 + miniDefaultDifference / 2,
-                     verticalOffset: -totalHeight / 2)
-    leadingAlignView(view: defaultFloatingButton, onView: miniFloatingButton,
-                     horizontalOffset: -miniDefaultDifference / 2,
-                     verticalOffset: defaultFloatingButton.bounds.standardized.height + 10)
-    leadingAlignView(view: largeIconFloatingButton, onView: defaultFloatingButton,
-                     horizontalOffset: 0,
-                     verticalOffset: defaultFloatingButton.bounds.standardized.height + 10)
-    self.view.addConstraint(NSLayoutConstraint(item: label, attribute: .centerX, relatedBy: .equal,
-                                               toItem: view, attribute: .centerX, multiplier: 1,
-                                               constant: 0))
-    self.view.addConstraint(NSLayoutConstraint(item: label, attribute: .bottom, relatedBy: .equal,
-                                               toItem: miniFloatingButton, attribute: .top,
-                                               multiplier: 1, constant: -20))
+    leadingAlignView(
+      view: miniFloatingButton, onView: self.view,
+      horizontalOffset: 10 + miniDefaultDifference / 2,
+      verticalOffset: -totalHeight / 2)
+    leadingAlignView(
+      view: defaultFloatingButton, onView: miniFloatingButton,
+      horizontalOffset: -miniDefaultDifference / 2,
+      verticalOffset: defaultFloatingButton.bounds.standardized.height + 10)
+    leadingAlignView(
+      view: largeIconFloatingButton, onView: defaultFloatingButton,
+      horizontalOffset: 0,
+      verticalOffset: defaultFloatingButton.bounds.standardized.height + 10)
+    self.view.addConstraint(
+      NSLayoutConstraint(
+        item: label, attribute: .centerX, relatedBy: .equal,
+        toItem: view, attribute: .centerX, multiplier: 1,
+        constant: 0))
+    self.view.addConstraint(
+      NSLayoutConstraint(
+        item: label, attribute: .bottom, relatedBy: .equal,
+        toItem: miniFloatingButton, attribute: .top,
+        multiplier: 1, constant: -20))
   }
 
   // MARK: Private
 
-  private func leadingAlignView(view: UIView, onView: UIView, horizontalOffset: CGFloat,
-                                verticalOffset: CGFloat) {
-    self.view.addConstraint(NSLayoutConstraint(
-      item: view,
-      attribute: .leading,
-      relatedBy: .equal,
-      toItem: onView,
-      attribute: .leading,
-      multiplier: 1.0,
-      constant: horizontalOffset))
+  private func leadingAlignView(
+    view: UIView, onView: UIView, horizontalOffset: CGFloat,
+    verticalOffset: CGFloat
+  ) {
+    self.view.addConstraint(
+      NSLayoutConstraint(
+        item: view,
+        attribute: .leading,
+        relatedBy: .equal,
+        toItem: onView,
+        attribute: .leading,
+        multiplier: 1.0,
+        constant: horizontalOffset))
 
-    self.view.addConstraint(NSLayoutConstraint(
-      item: view,
-      attribute: .centerY,
-      relatedBy: .equal,
-      toItem: onView,
-      attribute: .centerY,
-      multiplier: 1.0,
-      constant: verticalOffset))
+    self.view.addConstraint(
+      NSLayoutConstraint(
+        item: view,
+        attribute: .centerY,
+        relatedBy: .equal,
+        toItem: onView,
+        attribute: .centerY,
+        multiplier: 1.0,
+        constant: verticalOffset))
   }
 }
 
@@ -126,19 +137,19 @@ extension FloatingButtonTypicalUseSwiftExample {
 
 extension FloatingButtonTypicalUseSwiftExample {
   func updateFloatingButtons(to mode: MDCFloatingButtonMode) {
-    if (miniFloatingButton.mode != mode) {
+    if miniFloatingButton.mode != mode {
       miniFloatingButton.mode = mode
     }
-    if (defaultFloatingButton.mode != mode) {
+    if defaultFloatingButton.mode != mode {
       defaultFloatingButton.mode = mode
     }
-    if (largeIconFloatingButton.mode != mode) {
+    if largeIconFloatingButton.mode != mode {
       largeIconFloatingButton.mode = mode
     }
   }
 
   func updateFloatingButtons(whenSizeClass isRegularRegular: Bool) {
-    if (isRegularRegular) {
+    if isRegularRegular {
       updateFloatingButtons(to: .expanded)
       miniFloatingButton.setTitle("Add", for: .normal)
       defaultFloatingButton.setTitle("Create", for: .normal)
@@ -159,20 +170,22 @@ extension FloatingButtonTypicalUseSwiftExample {
     updateFloatingButtons(whenSizeClass: isRegularRegular)
   }
 
-  override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+  override func willTransition(
+    to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator
+  ) {
     super.willTransition(to: newCollection, with: coordinator)
     let currentTraits = traitCollection
     let sizeClassChanged =
-      newCollection.horizontalSizeClass != currentTraits.horizontalSizeClass ||
-        newCollection.verticalSizeClass != currentTraits.verticalSizeClass
-    if (sizeClassChanged) {
+      newCollection.horizontalSizeClass != currentTraits.horizontalSizeClass
+      || newCollection.verticalSizeClass != currentTraits.verticalSizeClass
+    if sizeClassChanged {
       let willBeRegularRegular =
-        newCollection.horizontalSizeClass == .regular &&
-          newCollection.verticalSizeClass == .regular
+        newCollection.horizontalSizeClass == .regular && newCollection.verticalSizeClass == .regular
 
-      coordinator.animate(alongsideTransition:{ (_) in
-        self.updateFloatingButtons(whenSizeClass: willBeRegularRegular)
-      }, completion: nil)
+      coordinator.animate(
+        alongsideTransition: { (_) in
+          self.updateFloatingButtons(whenSizeClass: willBeRegularRegular)
+        }, completion: nil)
     }
   }
 }

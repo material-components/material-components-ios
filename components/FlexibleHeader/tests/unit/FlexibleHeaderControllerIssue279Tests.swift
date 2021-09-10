@@ -41,7 +41,7 @@ class FlexibleHeaderControllerIssue279Tests: XCTestCase {
   override func tearDown() {
     tableViewController = nil
     fhvc = nil
-    
+
     super.tearDown()
   }
 

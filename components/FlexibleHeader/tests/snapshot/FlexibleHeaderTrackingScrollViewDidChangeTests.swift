@@ -58,8 +58,10 @@ class FlexibleHeaderTrackingScrollViewDidChangeTests: XCTestCase {
     XCTAssertNotNil(fhvc.headerView.layer.animation(forKey: "bounds.origin"))
     XCTAssertNotNil(fhvc.headerView.layer.animation(forKey: "position"))
 
-    guard let animationDuration =
-        fhvc.headerView.layer.animation(forKey: "bounds.size")?.duration else {
+    guard
+      let animationDuration =
+        fhvc.headerView.layer.animation(forKey: "bounds.size")?.duration
+    else {
       XCTFail("Missing bounds.size animation")
       return
     }

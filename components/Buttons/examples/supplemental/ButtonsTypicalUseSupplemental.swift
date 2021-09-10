@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import UIKit
-
 import MaterialComponents.MaterialButtons
 
 class ButtonsTypicalUseSupplemental: NSObject {
@@ -44,8 +43,9 @@ class ButtonsTypicalUseSupplemental: NSObject {
     plusShape.path = ButtonsTypicalUseSupplemental.plusShapePath().cgPath
     plusShape.fillColor = UIColor.white.cgColor
     plusShape.position =
-      CGPoint(x: (floatingButton.frame.size.width - floatingButtonPlusDimension) / 2,
-                  y: (floatingButton.frame.size.height - floatingButtonPlusDimension) / 2)
+      CGPoint(
+        x: (floatingButton.frame.size.width - floatingButtonPlusDimension) / 2,
+        y: (floatingButton.frame.size.height - floatingButtonPlusDimension) / 2)
     return plusShape
   }
 

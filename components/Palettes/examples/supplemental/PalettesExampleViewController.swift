@@ -15,23 +15,25 @@
 import MaterialComponents.MaterialPalettes
 import MDFTextAccessibility
 
-/**
- Returns a high-contrast color for text against @c backgroundColor. If no such color can be found,
- returns black.
-
- @params backgroundColor the background color to use for contrast calculations.
-
- @returns a color with sufficiently-high contrast against @c backgroundColor, else just returns
-          black.
- */
+/// Returns a high-contrast color for text against @c backgroundColor. If no such color can be found,
+/// returns black.
+///
+/// @params backgroundColor the background color to use for contrast calculations.
+///
+/// @returns a color with sufficiently-high contrast against @c backgroundColor, else just returns
+///          black.
 func TextColorFor(backgroundColor: UIColor) -> UIColor {
-  if let safeColor = MDFTextAccessibility.textColor(fromChoices: [.black, .white],
-                                                    onBackgroundColor: backgroundColor,
-                                                    options: [ .enhancedContrast, .preferDarker ]) {
+  if let safeColor = MDFTextAccessibility.textColor(
+    fromChoices: [.black, .white],
+    onBackgroundColor: backgroundColor,
+    options: [.enhancedContrast, .preferDarker])
+  {
     return safeColor
-  } else if let safeColor = MDFTextAccessibility.textColor(fromChoices: [.black, .white],
-                                                           onBackgroundColor: backgroundColor,
-                                                            options: .preferDarker) {
+  } else if let safeColor = MDFTextAccessibility.textColor(
+    fromChoices: [.black, .white],
+    onBackgroundColor: backgroundColor,
+    options: .preferDarker)
+  {
     return safeColor
   }
   return .black
@@ -44,8 +46,8 @@ func ExampleTonesForPalette(_ palette: MDCPalette) -> [ExampleTone] {
     (MDCPaletteTint.tint100Name.rawValue, palette.tint100),
     (MDCPaletteTint.tint300Name.rawValue, palette.tint300),
     (MDCPaletteTint.tint500Name.rawValue, palette.tint500),
-    (MDCPaletteTint.tint700Name.rawValue, palette.tint700)
-    ]
+    (MDCPaletteTint.tint700Name.rawValue, palette.tint700),
+  ]
 
   if let accent = palette.accent400 {
     tones.append((MDCPaletteAccent.accent400Name.rawValue, accent))
@@ -55,7 +57,7 @@ func ExampleTonesForPalette(_ palette: MDCPalette) -> [ExampleTone] {
 }
 
 class PalettesExampleViewController: UITableViewController {
-  var palettes : [(name: String, palette: MDCPalette)] = []
+  var palettes: [(name: String, palette: MDCPalette)] = []
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -73,10 +75,13 @@ class PalettesExampleViewController: UITableViewController {
     return ExampleTonesForPalette(palette).count
   }
 
-  override func tableView(_ tableView: UITableView,
-                          cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "cell") ??
-        UITableViewCell(style: .default, reuseIdentifier: "cell")
+  override func tableView(
+    _ tableView: UITableView,
+    cellForRowAt indexPath: IndexPath
+  ) -> UITableViewCell {
+    let cell =
+      tableView.dequeueReusableCell(withIdentifier: "cell")
+      ?? UITableViewCell(style: .default, reuseIdentifier: "cell")
     let paletteInfo = palettes[indexPath.section]
     let tones = ExampleTonesForPalette(paletteInfo.palette)
     cell.textLabel?.text = tones[indexPath.row].name
@@ -88,11 +93,15 @@ class PalettesExampleViewController: UITableViewController {
 
     return cell
   }
-  override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView,
-                          forSection section: Int) {
+  override func tableView(
+    _ tableView: UITableView, willDisplayHeaderView view: UIView,
+    forSection section: Int
+  ) {
     if let headerView = view as? UITableViewHeaderFooterView {
-      if let backgroundColor = headerView.backgroundColor != nil ? headerView.backgroundColor
-                                                                 : tableView.backgroundColor {
+      if let backgroundColor = headerView.backgroundColor != nil
+        ? headerView.backgroundColor
+        : tableView.backgroundColor
+      {
         headerView.textLabel?.textColor = TextColorFor(backgroundColor: backgroundColor)
       } else {
         headerView.textLabel?.textColor = .black
@@ -100,8 +109,10 @@ class PalettesExampleViewController: UITableViewController {
     }
   }
 
-  override func tableView(_ tableView: UITableView,
-                          titleForHeaderInSection section: Int) -> String? {
+  override func tableView(
+    _ tableView: UITableView,
+    titleForHeaderInSection section: Int
+  ) -> String? {
     return palettes[section].name
   }
 

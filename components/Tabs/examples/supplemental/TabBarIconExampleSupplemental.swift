@@ -16,12 +16,11 @@
 // swiftlint:disable line_length
 
 import UIKit
-
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialAppBar_ColorThemer
-import MaterialComponents.MaterialAppBar_TypographyThemer
+import MaterialComponents.MaterialAppBar_ColorThemer 
+import MaterialComponents.MaterialAppBar_TypographyThemer 
+import MaterialComponents.MaterialButtons_ButtonThemer 
 import MaterialComponents.MaterialButtons
-import MaterialComponents.MaterialButtons_ButtonThemer
 import MaterialComponents.MaterialPalettes
 
 extension TabBarIconSwiftExample {
@@ -40,20 +39,24 @@ extension TabBarIconSwiftExample {
     self.view.addSubview(alignmentButton)
     alignmentButton.translatesAutoresizingMaskIntoConstraints = false
 
-    NSLayoutConstraint(item: alignmentButton,
-                       attribute: .centerX,
-                       relatedBy: .equal,
-                       toItem: self.view,
-                       attribute: .centerX,
-                       multiplier: 1,
-                       constant: 0).isActive = true
-    NSLayoutConstraint(item: alignmentButton,
-                       attribute: .bottom,
-                       relatedBy: .equal,
-                       toItem: self.view,
-                       attribute: .bottom,
-                       multiplier: 1,
-                       constant: -40).isActive = true
+    NSLayoutConstraint(
+      item: alignmentButton,
+      attribute: .centerX,
+      relatedBy: .equal,
+      toItem: self.view,
+      attribute: .centerX,
+      multiplier: 1,
+      constant: 0
+    ).isActive = true
+    NSLayoutConstraint(
+      item: alignmentButton,
+      attribute: .bottom,
+      relatedBy: .equal,
+      toItem: self.view,
+      attribute: .bottom,
+      multiplier: 1,
+      constant: -40
+    ).isActive = true
 
     return alignmentButton
   }
@@ -66,7 +69,8 @@ extension TabBarIconSwiftExample {
     appBarViewController.headerView.minimumHeight = 56 + 72
     appBarViewController.headerView.tintColor = MDCPalette.blue.tint500
     MDCAppBarColorThemer.applyColorScheme(containerScheme.colorScheme, to: appBarViewController)
-    MDCAppBarTypographyThemer.applyTypographyScheme(containerScheme.typographyScheme, to: appBarViewController)
+    MDCAppBarTypographyThemer.applyTypographyScheme(
+      containerScheme.typographyScheme, to: appBarViewController)
 
     appBarViewController.headerStackView.bottomBar = self.tabBar
     appBarViewController.headerStackView.setNeedsLayout()
@@ -79,10 +83,11 @@ extension TabBarIconSwiftExample {
     view.addSubview(appBarViewController.view)
     appBarViewController.didMove(toParent: self)
 
-    let badgeIncrementItem = UIBarButtonItem(title: "Add",
-                                             style: .plain,
-                                             target: self,
-                                             action:#selector(incrementDidTouch(sender: )))
+    let badgeIncrementItem = UIBarButtonItem(
+      title: "Add",
+      style: .plain,
+      target: self,
+      action: #selector(incrementDidTouch(sender:)))
 
     self.navigationItem.rightBarButtonItem = badgeIncrementItem
 
@@ -100,16 +105,20 @@ extension TabBarIconSwiftExample {
 
     let views: [String: UIView] = [
       "scrollView": scrollView,
-      "header": self.appBarViewController.headerStackView
+      "header": self.appBarViewController.headerStackView,
     ]
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:[header][scrollView]|",
-                                                               options: [],
-                                                               metrics: nil,
-                                                               views: views))
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|[scrollView]|",
-                                                               options: [],
-                                                               metrics: nil,
-                                                               views: views))
+    NSLayoutConstraint.activate(
+      NSLayoutConstraint.constraints(
+        withVisualFormat: "V:[header][scrollView]|",
+        options: [],
+        metrics: nil,
+        views: views))
+    NSLayoutConstraint.activate(
+      NSLayoutConstraint.constraints(
+        withVisualFormat: "H:|[scrollView]|",
+        options: [],
+        metrics: nil,
+        views: views))
 
     return scrollView
   }
@@ -130,66 +139,85 @@ extension TabBarIconSwiftExample {
     infoLabel.translatesAutoresizingMaskIntoConstraints = false
     infoLabel.textColor = UIColor.white
     infoLabel.numberOfLines = 0
-    infoLabel.text = "Tabs enable content organization at a high level,"
-        + " such as switching between views"
+    infoLabel.text =
+      "Tabs enable content organization at a high level,"
+      + " such as switching between views"
     infoPage.addSubview(infoLabel)
 
     // Layout the views to be equal height and width to each other and self.view,
     // hug the edges of the scrollView and meet in the middle.
 
-    NSLayoutConstraint(item: infoLabel,
-                       attribute: .centerX,
-                       relatedBy: .equal,
-                       toItem: infoPage,
-                       attribute: .centerX,
-                       multiplier: 1,
-                       constant: 0).isActive = true
-    NSLayoutConstraint(item: infoLabel,
-                       attribute: .centerY,
-                       relatedBy: .equal,
-                       toItem: infoPage,
-                       attribute: .centerY,
-                       multiplier: 1,
-                       constant: -50).isActive = true
+    NSLayoutConstraint(
+      item: infoLabel,
+      attribute: .centerX,
+      relatedBy: .equal,
+      toItem: infoPage,
+      attribute: .centerX,
+      multiplier: 1,
+      constant: 0
+    ).isActive = true
+    NSLayoutConstraint(
+      item: infoLabel,
+      attribute: .centerY,
+      relatedBy: .equal,
+      toItem: infoPage,
+      attribute: .centerY,
+      multiplier: 1,
+      constant: -50
+    ).isActive = true
 
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|-50-[infoLabel]-50-|",
-                                                               options: [],
-                                                               metrics: nil,
-                                                               views: ["infoLabel": infoLabel]))
-    NSLayoutConstraint(item: infoPage,
-                       attribute: .width,
-                       relatedBy: .equal,
-                       toItem: self.view,
-                       attribute: .width,
-                       multiplier: 1,
-                       constant: 0).isActive = true
-    NSLayoutConstraint(item: infoPage,
-                       attribute: .height,
-                       relatedBy: .equal,
-                       toItem: self.scrollView,
-                       attribute: .height,
-                       multiplier: 1,
-                       constant: 0).isActive = true
+    NSLayoutConstraint.activate(
+      NSLayoutConstraint.constraints(
+        withVisualFormat: "H:|-50-[infoLabel]-50-|",
+        options: [],
+        metrics: nil,
+        views: ["infoLabel": infoLabel]))
+    NSLayoutConstraint(
+      item: infoPage,
+      attribute: .width,
+      relatedBy: .equal,
+      toItem: self.view,
+      attribute: .width,
+      multiplier: 1,
+      constant: 0
+    ).isActive = true
+    NSLayoutConstraint(
+      item: infoPage,
+      attribute: .height,
+      relatedBy: .equal,
+      toItem: self.scrollView,
+      attribute: .height,
+      multiplier: 1,
+      constant: 0
+    ).isActive = true
 
-    NSLayoutConstraint(item: self.starPage,
-                       attribute: .width,
-                       relatedBy: .equal,
-                       toItem: infoPage,
-                       attribute: .width,
-                       multiplier: 1,
-                       constant: 0).isActive = true
+    NSLayoutConstraint(
+      item: self.starPage,
+      attribute: .width,
+      relatedBy: .equal,
+      toItem: infoPage,
+      attribute: .width,
+      multiplier: 1,
+      constant: 0
+    ).isActive = true
 
     let views = ["infoPage": infoPage, "starPage": self.starPage]
 
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|[infoPage][starPage]|",
-                                                               options: [.alignAllTop,
-                                                                         .alignAllBottom],
-                                                               metrics: nil,
-                                                               views: views))
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:|[infoPage]|",
-                                                               options: [],
-                                                               metrics: nil,
-                                                               views: views))
+    NSLayoutConstraint.activate(
+      NSLayoutConstraint.constraints(
+        withVisualFormat: "H:|[infoPage][starPage]|",
+        options: [
+          .alignAllTop,
+          .alignAllBottom,
+        ],
+        metrics: nil,
+        views: views))
+    NSLayoutConstraint.activate(
+      NSLayoutConstraint.constraints(
+        withVisualFormat: "V:|[infoPage]|",
+        options: [],
+        metrics: nil,
+        views: views))
 
     addStar(centered: true)
   }
@@ -204,31 +232,36 @@ extension TabBarIconSwiftExample {
   }
 
   func addStar(centered: Bool) {
-    let starImage = UIImage(named:"TabBarDemo_ic_star",
-                            in:Bundle(for: TabBarIconSwiftExample.self),
-                            compatibleWith:nil)
+    let starImage = UIImage(
+      named: "TabBarDemo_ic_star",
+      in: Bundle(for: TabBarIconSwiftExample.self),
+      compatibleWith: nil)
     let starView = UIImageView(image: starImage)
     starView.translatesAutoresizingMaskIntoConstraints = false
     starPage.addSubview(starView)
     starView.sizeToFit()
 
-    let x = centered ? 1.0 : (CGFloat(arc4random_uniform(199) + 1) / 100.0) // 0 < x <=2
-    let y = centered ? 1.0 : (CGFloat(arc4random_uniform(199) + 1) / 100.0) // 0 < y <=2
+    let x = centered ? 1.0 : (CGFloat(arc4random_uniform(199) + 1) / 100.0)  // 0 < x <=2
+    let y = centered ? 1.0 : (CGFloat(arc4random_uniform(199) + 1) / 100.0)  // 0 < y <=2
 
-    NSLayoutConstraint(item: starView,
-                       attribute: .centerX,
-                       relatedBy: .equal,
-                       toItem: starPage,
-                       attribute: .centerX,
-                       multiplier: x,
-                       constant: 0).isActive = true
-    NSLayoutConstraint(item: starView,
-                       attribute: .centerY,
-                       relatedBy: .equal,
-                       toItem: self.starPage,
-                       attribute: .centerY,
-                       multiplier: y,
-                       constant: 0).isActive = true
+    NSLayoutConstraint(
+      item: starView,
+      attribute: .centerX,
+      relatedBy: .equal,
+      toItem: starPage,
+      attribute: .centerX,
+      multiplier: x,
+      constant: 0
+    ).isActive = true
+    NSLayoutConstraint(
+      item: starView,
+      attribute: .centerY,
+      relatedBy: .equal,
+      toItem: self.starPage,
+      attribute: .centerY,
+      multiplier: y,
+      constant: 0
+    ).isActive = true
   }
 }
 
@@ -237,12 +270,15 @@ extension TabBarIconSwiftExample {
     return appBarViewController
   }
 
-  override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-    coordinator.animate(alongsideTransition: { (_) in
-      if let selectedItem = self.tabBar.selectedItem {
-        self.tabBar(self.tabBar, didSelect: selectedItem)
-      }
-    }, completion: nil)
+  override func viewWillTransition(
+    to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator
+  ) {
+    coordinator.animate(
+      alongsideTransition: { (_) in
+        if let selectedItem = self.tabBar.selectedItem {
+          self.tabBar(self.tabBar, didSelect: selectedItem)
+        }
+      }, completion: nil)
     super.viewWillTransition(to: size, with: coordinator)
   }
 }

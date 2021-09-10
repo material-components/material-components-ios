@@ -14,8 +14,8 @@
 
 import UIKit
 import MaterialComponents.MaterialBottomAppBar
-import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialNavigationDrawer
+import MaterialComponents.MaterialColorScheme
 
 class BottomDrawerWithChangingContentSizeExample: UIViewController {
   @objc var colorScheme = MDCSemanticColorScheme(defaults: .material201804)
@@ -31,13 +31,13 @@ class BottomDrawerWithChangingContentSizeExample: UIViewController {
 
     bottomAppBar.isFloatingButtonHidden = true
     let barButtonLeadingItem = UIBarButtonItem()
-    let menuImage = UIImage(named:"ic_menu")?.withRenderingMode(.alwaysTemplate)
+    let menuImage = UIImage(named: "ic_menu")?.withRenderingMode(.alwaysTemplate)
     barButtonLeadingItem.image = menuImage
     barButtonLeadingItem.target = self
     barButtonLeadingItem.action = #selector(presentNavigationDrawer)
-    bottomAppBar.leadingBarButtonItems = [ barButtonLeadingItem ]
+    bottomAppBar.leadingBarButtonItems = [barButtonLeadingItem]
 
-    bottomAppBar.barTintColor = colorScheme.surfaceColor;
+    bottomAppBar.barTintColor = colorScheme.surfaceColor
     let barItemTintColor = colorScheme.onSurfaceColor.withAlphaComponent(0.6)
     bottomAppBar.leadingBarItemsTintColor = barItemTintColor
     bottomAppBar.trailingBarItemsTintColor = barItemTintColor
@@ -50,10 +50,11 @@ class BottomDrawerWithChangingContentSizeExample: UIViewController {
 
   private func layoutBottomAppBar() {
     let size = bottomAppBar.sizeThatFits(view.bounds.size)
-    var bottomBarViewFrame = CGRect(x: 0,
-                                    y: view.bounds.size.height - size.height,
-                                    width: size.width,
-                                    height: size.height)
+    var bottomBarViewFrame = CGRect(
+      x: 0,
+      y: view.bounds.size.height - size.height,
+      width: size.width,
+      height: size.height)
     if #available(iOS 11.0, *) {
       bottomBarViewFrame.size.height += view.safeAreaInsets.bottom
       bottomBarViewFrame.origin.y -= view.safeAreaInsets.bottom
@@ -75,18 +76,20 @@ class BottomDrawerWithChangingContentSizeExample: UIViewController {
     bottomDrawerViewController.contentViewController = contentViewController
     bottomDrawerViewController.headerViewController = headerViewController
     bottomDrawerViewController.trackingScrollView = contentViewController.collectionView
-    bottomDrawerViewController.headerViewController?.view.backgroundColor = colorScheme.surfaceColor;
-    bottomDrawerViewController.contentViewController?.view.backgroundColor = colorScheme.surfaceColor;
+    bottomDrawerViewController.headerViewController?.view.backgroundColor = colorScheme.surfaceColor
+    bottomDrawerViewController.contentViewController?.view.backgroundColor =
+      colorScheme.surfaceColor
     bottomDrawerViewController.scrimColor = colorScheme.onSurfaceColor.withAlphaComponent(0.32)
     present(bottomDrawerViewController, animated: true, completion: nil)
   }
 }
 
 class DrawerChangingContentSizeViewController: UIViewController,
-UICollectionViewDelegate, UICollectionViewDataSource {
+  UICollectionViewDelegate, UICollectionViewDataSource
+{
   @objc var colorScheme: MDCSemanticColorScheme!
-  let numberOfRowsShort : Int = 2
-  let numberOfRowsLong : Int = 12
+  let numberOfRowsShort: Int = 2
+  let numberOfRowsLong: Int = 12
   var longList = false
 
   let collectionView: UICollectionView
@@ -104,8 +107,9 @@ UICollectionViewDelegate, UICollectionViewDataSource {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    collectionView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width,
-                                  height: self.view.bounds.height)
+    collectionView.frame = CGRect(
+      x: 0, y: 0, width: self.view.bounds.width,
+      height: self.view.bounds.height)
     collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
     collectionView.delegate = self
     collectionView.dataSource = self
@@ -114,7 +118,8 @@ UICollectionViewDelegate, UICollectionViewDataSource {
     layout.minimumInteritemSpacing = 0
     self.view.addSubview(collectionView)
 
-    let tapGestureRecognizer = UITapGestureRecognizer(target: self, action:#selector(didTap(gestureRecognizer:)))
+    let tapGestureRecognizer = UITapGestureRecognizer(
+      target: self, action: #selector(didTap(gestureRecognizer:)))
     collectionView.addGestureRecognizer(tapGestureRecognizer)
   }
 
@@ -122,16 +127,21 @@ UICollectionViewDelegate, UICollectionViewDataSource {
     super.viewWillLayoutSubviews()
     let s = self.view.frame.size.width / 3
     layout.itemSize = CGSize(width: s, height: s)
-    self.preferredContentSize = CGSize(width: view.bounds.width,
-                                       height: layout.collectionViewContentSize.height)
+    self.preferredContentSize = CGSize(
+      width: view.bounds.width,
+      height: layout.collectionViewContentSize.height)
   }
 
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int)
+    -> Int
+  {
     let numberOfRows = longList ? numberOfRowsLong : numberOfRowsShort
     return numberOfRows * 3
   }
 
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath)
+    -> UICollectionViewCell
+  {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
     let colorPick = indexPath.row % 2 == 0
     print(indexPath.item)
@@ -149,11 +159,12 @@ UICollectionViewDelegate, UICollectionViewDataSource {
     return 1
   }
 
-  @objc func didTap(gestureRecognizer : UITapGestureRecognizer) {
+  @objc func didTap(gestureRecognizer: UITapGestureRecognizer) {
     longList = !longList
     collectionView.reloadData()
-    self.preferredContentSize = CGSize(width: self.view.bounds.width,
-                                       height: self.layout.collectionViewContentSize.height)
+    self.preferredContentSize = CGSize(
+      width: self.view.bounds.width,
+      height: self.layout.collectionViewContentSize.height)
   }
 }
 

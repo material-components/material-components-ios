@@ -15,10 +15,10 @@
 import CoreGraphics
 import UIKit
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialAppBar_Theming
-import MaterialComponents.MaterialContainerScheme
-import MaterialComponents.MaterialFlexibleHeader_CanAlwaysExpandToMaximumHeight
+import MaterialComponents.MaterialAppBar_Theming 
+import MaterialComponents.MaterialFlexibleHeader_CanAlwaysExpandToMaximumHeight 
 import MaterialComponents.MaterialTabs
+import MaterialComponents.MaterialContainerScheme
 
 // This example demonstrates issues with flexible header tabs and animations.
 class AppBarInheritedAnimatedJumpExample: UIViewController {
@@ -73,7 +73,9 @@ class AppBarInheritedAnimatedJumpExample: UIViewController {
     switchToTab(tabs[0], animated: false)
   }
 
-  fileprivate func switchToTab(_ tab: ChildOfTrackingScrollViewViewController, animated: Bool = true) {
+  fileprivate func switchToTab(
+    _ tab: ChildOfTrackingScrollViewViewController, animated: Bool = true
+  ) {
 
     appBarViewController.headerView.trackingScrollWillChange(toScroll: tab.tableView)
 
@@ -119,13 +121,16 @@ class AppBarInheritedAnimatedJumpExample: UIViewController {
     }
 
     if animated {
-      UIView.animate(withDuration: 1, animations: {
-        animateOut()
-        animateIn()
-      }, completion: { _ in
-        removeOld()
-        finishMove()
-      })
+      UIView.animate(
+        withDuration: 1,
+        animations: {
+          animateOut()
+          animateIn()
+        },
+        completion: { _ in
+          removeOld()
+          finishMove()
+        })
     } else {
       animateOut()
       removeOld()

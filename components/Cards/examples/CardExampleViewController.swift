@@ -13,10 +13,10 @@
 // limitations under the License.
 
 import UIKit
-import MaterialComponents.MaterialButtons_ButtonThemer
+import MaterialComponents.MaterialButtons_ButtonThemer 
+import MaterialComponents.MaterialButtons_Theming 
+import MaterialComponents.MaterialCards_Theming 
 import MaterialComponents.MaterialContainerScheme
-import MaterialComponents.MaterialCards_Theming
-import MaterialComponents.MaterialButtons_Theming
 
 class CardExampleViewController: UIViewController {
   @IBOutlet weak var imageView: UIImageView!

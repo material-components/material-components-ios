@@ -16,10 +16,11 @@ import Foundation
 import UIKit
 import MaterialComponents.MaterialRipple
 
-class RippleView : UIView {
+class RippleView: UIView {
   let statefulRippleView = MDCStatefulRippleView()
   var didLongPress = false
-  lazy var longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(didLongPress(gesture:)))
+  lazy var longPressGesture = UILongPressGestureRecognizer(
+    target: self, action: #selector(didLongPress(gesture:)))
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -61,7 +62,7 @@ class RippleView : UIView {
     super.touchesEnded(touches, with: event)
 
     statefulRippleView.isRippleHighlighted = false
-    if (!didLongPress) {
+    if !didLongPress {
       statefulRippleView.isSelected = !statefulRippleView.isSelected
     }
     didLongPress = false
@@ -75,9 +76,9 @@ class RippleView : UIView {
   }
 
   @objc func didLongPress(gesture: UILongPressGestureRecognizer) {
-    switch(gesture.state) {
+    switch gesture.state {
     case .began:
-      if (!statefulRippleView.allowsSelection) {
+      if !statefulRippleView.allowsSelection {
         statefulRippleView.allowsSelection = true
         statefulRippleView.isRippleHighlighted = false
         statefulRippleView.isSelected = true
@@ -89,7 +90,7 @@ class RippleView : UIView {
   }
 }
 
-class StatefulRippleExample : UIViewController {
+class StatefulRippleExample: UIViewController {
   @IBOutlet weak var interactiveView: RippleView!
   @IBOutlet weak var highlightedView: RippleView!
   @IBOutlet weak var selectedView: RippleView!

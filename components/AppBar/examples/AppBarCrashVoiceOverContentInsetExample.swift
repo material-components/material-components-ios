@@ -15,13 +15,11 @@
 import Foundation
 import MaterialComponents.MaterialAppBar
 
-/**
- To demonstrate the crash, run this example with VoiceOver on:
-
- 1. Run MDCDragons on a phone with VoiceOver turned on.
- 2. Tap App Bar -> App Bar Crash: Voiceover + Content Inset
- 3. Crash.
- */
+/// To demonstrate the crash, run this example with VoiceOver on:
+///
+/// 1. Run MDCDragons on a phone with VoiceOver turned on.
+/// 2. Tap App Bar -> App Bar Crash: Voiceover + Content Inset
+/// 3. Crash.
 class AppBarCrashVoiceOverContentInsetExample: UITableViewController {
 
   let appBarViewController = MDCAppBarViewController()
@@ -54,7 +52,7 @@ class AppBarCrashVoiceOverContentInsetExample: UITableViewController {
       UIBarButtonItem(title: "Right", style: .done, target: nil, action: nil)
 
     // Causes Crash
-    self.tableView.contentInset = UIEdgeInsets(top: 100, left: 0, bottom: 0, right: 0);
+    self.tableView.contentInset = UIEdgeInsets(top: 100, left: 0, bottom: 0, right: 0)
   }
 
 }
@@ -86,13 +84,15 @@ extension AppBarCrashVoiceOverContentInsetExample {
 
   override func tableView(
     _ tableView: UITableView,
-    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell") ??
-        UITableViewCell(style: .default, reuseIdentifier: "cell")
-      cell.layoutMargins = .zero
-      cell.textLabel?.text = "\(indexPath.row)"
-      cell.selectionStyle = .none
-      return cell
+    cellForRowAt indexPath: IndexPath
+  ) -> UITableViewCell {
+    let cell =
+      self.tableView.dequeueReusableCell(withIdentifier: "cell")
+      ?? UITableViewCell(style: .default, reuseIdentifier: "cell")
+    cell.layoutMargins = .zero
+    cell.textLabel?.text = "\(indexPath.row)"
+    cell.selectionStyle = .none
+    return cell
   }
 
 }

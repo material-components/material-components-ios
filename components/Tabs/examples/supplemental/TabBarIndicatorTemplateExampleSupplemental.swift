@@ -13,10 +13,9 @@
 // limitations under the License.
 
 import UIKit
-
 import MaterialComponents.MaterialAppBar
+import MaterialComponents.MaterialButtons_ButtonThemer 
 import MaterialComponents.MaterialButtons
-import MaterialComponents.MaterialButtons_ButtonThemer
 
 extension TabBarIndicatorTemplateExample {
 
@@ -76,36 +75,40 @@ extension TabBarIndicatorTemplateExample {
 
     NSLayoutConstraint.activate([
       // Center alignment button
-      NSLayoutConstraint(item: alignmentButton,
-                         attribute: .centerX,
-                         relatedBy: .equal,
-                         toItem: self.view,
-                         attribute: .centerX,
-                         multiplier: 1,
-                         constant: 0),
-      NSLayoutConstraint(item: alignmentButton,
-                         attribute: .bottom,
-                         relatedBy: .equal,
-                         toItem: alignmentGuide,
-                         attribute: .bottom,
-                         multiplier: 1,
-                         constant: -40),
+      NSLayoutConstraint(
+        item: alignmentButton,
+        attribute: .centerX,
+        relatedBy: .equal,
+        toItem: self.view,
+        attribute: .centerX,
+        multiplier: 1,
+        constant: 0),
+      NSLayoutConstraint(
+        item: alignmentButton,
+        attribute: .bottom,
+        relatedBy: .equal,
+        toItem: alignmentGuide,
+        attribute: .bottom,
+        multiplier: 1,
+        constant: -40),
 
       // Place appearance button above
-      NSLayoutConstraint(item: appearanceButton,
-                         attribute: .centerX,
-                         relatedBy: .equal,
-                         toItem: self.view,
-                         attribute: .centerX,
-                         multiplier: 1,
-                         constant: 0),
-      NSLayoutConstraint(item: appearanceButton,
-                         attribute: .bottom,
-                         relatedBy: .equal,
-                         toItem: alignmentButton,
-                         attribute: .top,
-                         multiplier: 1,
-                         constant: -8),
+      NSLayoutConstraint(
+        item: appearanceButton,
+        attribute: .centerX,
+        relatedBy: .equal,
+        toItem: self.view,
+        attribute: .centerX,
+        multiplier: 1,
+        constant: 0),
+      NSLayoutConstraint(
+        item: appearanceButton,
+        attribute: .bottom,
+        relatedBy: .equal,
+        toItem: alignmentButton,
+        attribute: .top,
+        multiplier: 1,
+        constant: -8),
     ])
 
     self.title = "Custom Selection Indicator"

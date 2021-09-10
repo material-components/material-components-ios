@@ -32,24 +32,24 @@ class FlexibleHeaderContainerViewControllerTests: XCTestCase {
   }
 
   func testTraitCollectionDidChangeBlockCalledWithExpectedParameters() {
-  // Given
-  let flexibleHeader = MDCFlexibleHeaderContainerViewController()
-  let expectation = XCTestExpectation(description: "traitCollectionDidChange")
-  var passedTraitCollection: UITraitCollection? = nil
-  var passedFlexibleHeader: MDCFlexibleHeaderContainerViewController? = nil
-  flexibleHeader.traitCollectionDidChangeBlock = { (flexibleHeader, traitCollection) in
-    passedTraitCollection = traitCollection
-    passedFlexibleHeader = flexibleHeader
-    expectation.fulfill()
-  }
-  let fakeTraitCollection = UITraitCollection(displayScale: 77)
+    // Given
+    let flexibleHeader = MDCFlexibleHeaderContainerViewController()
+    let expectation = XCTestExpectation(description: "traitCollectionDidChange")
+    var passedTraitCollection: UITraitCollection? = nil
+    var passedFlexibleHeader: MDCFlexibleHeaderContainerViewController? = nil
+    flexibleHeader.traitCollectionDidChangeBlock = { (flexibleHeader, traitCollection) in
+      passedTraitCollection = traitCollection
+      passedFlexibleHeader = flexibleHeader
+      expectation.fulfill()
+    }
+    let fakeTraitCollection = UITraitCollection(displayScale: 77)
 
-  // When
-  flexibleHeader.traitCollectionDidChange(fakeTraitCollection)
+    // When
+    flexibleHeader.traitCollectionDidChange(fakeTraitCollection)
 
-  // Then
-  self.wait(for: [expectation], timeout: 1)
-  XCTAssertEqual(passedTraitCollection, fakeTraitCollection);
-  XCTAssertEqual(passedFlexibleHeader, flexibleHeader);
+    // Then
+    self.wait(for: [expectation], timeout: 1)
+    XCTAssertEqual(passedTraitCollection, fakeTraitCollection)
+    XCTAssertEqual(passedFlexibleHeader, flexibleHeader)
   }
 }

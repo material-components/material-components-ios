@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import MaterialComponents.MaterialCards_Theming
 import UIKit
+import MaterialComponents.MaterialCards_Theming 
 
 class ToggleButtonCell: MDCCardCollectionCell {
 
@@ -67,7 +67,7 @@ class ToggleButtonCell: MDCCardCollectionCell {
         contentView.leftAnchor.constraint(equalTo: imageView.leftAnchor),
         contentView.rightAnchor.constraint(equalTo: imageView.rightAnchor),
         contentView.topAnchor.constraint(equalTo: imageView.topAnchor),
-        contentView.bottomAnchor.constraint(equalTo: imageView.bottomAnchor)
+        contentView.bottomAnchor.constraint(equalTo: imageView.bottomAnchor),
       ])
     } else {
       preiOS11Constraints()

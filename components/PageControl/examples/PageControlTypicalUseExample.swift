@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import Foundation
-
 import MaterialComponents.MaterialPageControl
 
 class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDelegate {
@@ -36,7 +35,7 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
 
   let scrollView = UIScrollView()
   let pageLabels: [UILabel] = PageControlSwiftExampleViewController.pageColors.enumerated().map {
-      enumeration in
+    enumeration in
     let (i, pageColor) = enumeration
     let pageLabel = UILabel()
     pageLabel.text = "Page \(i + 1)"
@@ -56,8 +55,9 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
     scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     scrollView.delegate = self
     scrollView.isPagingEnabled = true
-    scrollView.contentSize = CGSize(width: view.bounds.width * CGFloat(pageLabels.count),
-                                    height: view.bounds.height)
+    scrollView.contentSize = CGSize(
+      width: view.bounds.width * CGFloat(pageLabels.count),
+      height: view.bounds.height)
     scrollView.showsHorizontalScrollIndicator = false
     view.addSubview(scrollView)
 
@@ -83,21 +83,22 @@ class PageControlSwiftExampleViewController: UIViewController, UIScrollViewDeleg
     for (i, pageLabel) in pageLabels.enumerated() {
       pageLabel.frame = view.bounds.offsetBy(dx: CGFloat(i) * view.bounds.width, dy: 0)
     }
-    scrollView.contentSize = CGSize(width: view.bounds.width * CGFloat(pageLabels.count),
-                                    height: view.bounds.height)
+    scrollView.contentSize = CGSize(
+      width: view.bounds.width * CGFloat(pageLabels.count),
+      height: view.bounds.height)
     var offset = scrollView.contentOffset
     offset.x = CGFloat(pageBeforeFrameChange) * view.bounds.width
     // This non-anmiated change of offset ensures we keep the same page
     scrollView.contentOffset = offset
 
-    var edgeInsets = UIEdgeInsets.zero;
+    var edgeInsets = UIEdgeInsets.zero
     if #available(iOS 11, *) {
       edgeInsets = self.view.safeAreaInsets
     }
     let pageControlSize = pageControl.sizeThatFits(view.bounds.size)
-    let yOffset = self.view.bounds.height - pageControlSize.height - 8 - edgeInsets.bottom;
+    let yOffset = self.view.bounds.height - pageControlSize.height - 8 - edgeInsets.bottom
     pageControl.frame =
-        CGRect(x: 0, y: yOffset, width: view.bounds.width, height: pageControlSize.height)
+      CGRect(x: 0, y: yOffset, width: view.bounds.width, height: pageControlSize.height)
   }
 
   // MARK: - UIScrollViewDelegate

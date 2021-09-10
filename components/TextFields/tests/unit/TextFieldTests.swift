@@ -33,9 +33,10 @@ class TextFieldTests: XCTestCase {
     let textField = MDCTextField()
 
     for constraint in textField.constraints {
-      XCTAssertLessThanOrEqual(constraint.priority.rawValue,
-                               UILayoutPriority.defaultLow.rawValue + 10,
-                               String(describing: constraint))
+      XCTAssertLessThanOrEqual(
+        constraint.priority.rawValue,
+        UILayoutPriority.defaultLow.rawValue + 10,
+        String(describing: constraint))
     }
   }
 
@@ -71,14 +72,18 @@ class TextFieldTests: XCTestCase {
       XCTAssertEqual(textField.textInsetsMode, textFieldCopy.textInsetsMode)
       XCTAssertEqual(textField.attributedPlaceholder, textFieldCopy.attributedPlaceholder)
       XCTAssertEqual(textField.attributedText, textFieldCopy.attributedText)
-      XCTAssertEqual(textField.borderView?.borderFillColor,
-                     textFieldCopy.borderView?.borderFillColor)
-      XCTAssertEqual(textField.borderView?.borderStrokeColor,
-                    textFieldCopy.borderView?.borderStrokeColor)
-      XCTAssertEqual(textField.borderView?.borderPath?.bounds.integral,
-                     textFieldCopy.borderView?.borderPath?.bounds.integral)
-      XCTAssertEqual(textField.borderView?.borderStrokeColor,
-                     textFieldCopy.borderView?.borderStrokeColor)
+      XCTAssertEqual(
+        textField.borderView?.borderFillColor,
+        textFieldCopy.borderView?.borderFillColor)
+      XCTAssertEqual(
+        textField.borderView?.borderStrokeColor,
+        textFieldCopy.borderView?.borderStrokeColor)
+      XCTAssertEqual(
+        textField.borderView?.borderPath?.bounds.integral,
+        textFieldCopy.borderView?.borderPath?.bounds.integral)
+      XCTAssertEqual(
+        textField.borderView?.borderStrokeColor,
+        textFieldCopy.borderView?.borderStrokeColor)
       XCTAssertEqual(textField.clearButton.tintColor, textFieldCopy.clearButton.tintColor)
       XCTAssertEqual(textField.clearButtonMode, textFieldCopy.clearButtonMode)
       XCTAssertEqual(textField.cursorColor, textFieldCopy.cursorColor)
@@ -86,8 +91,9 @@ class TextFieldTests: XCTestCase {
       XCTAssertEqual(textField.hidesPlaceholderOnInput, textFieldCopy.hidesPlaceholderOnInput)
       XCTAssertEqual(textField.isEnabled, textFieldCopy.isEnabled)
       XCTAssertEqual(textField.leadingViewMode, textFieldCopy.leadingViewMode)
-      XCTAssertEqual(textField.mdc_adjustsFontForContentSizeCategory,
-                     textFieldCopy.mdc_adjustsFontForContentSizeCategory)
+      XCTAssertEqual(
+        textField.mdc_adjustsFontForContentSizeCategory,
+        textFieldCopy.mdc_adjustsFontForContentSizeCategory)
       XCTAssertEqual(textField.placeholder, textFieldCopy.placeholder)
       XCTAssertEqual(textField.text, textFieldCopy.text)
       XCTAssertEqual(textField.textColor, textFieldCopy.textColor)
@@ -122,8 +128,9 @@ class TextFieldTests: XCTestCase {
     XCTAssertTrue(textField.mdc_adjustsFontForContentSizeCategory)
 
     if #available(iOS 10, *) {
-      XCTAssertEqual(textField.mdc_adjustsFontForContentSizeCategory,
-                     textField.adjustsFontForContentSizeCategory)
+      XCTAssertEqual(
+        textField.mdc_adjustsFontForContentSizeCategory,
+        textField.adjustsFontForContentSizeCategory)
     }
   }
 
@@ -224,7 +231,7 @@ class TextFieldTests: XCTestCase {
 
   func testDefaultBaseElevationOverrideIsNegative() {
     // Then
-    XCTAssertLessThan(MDCTextField().mdc_overrideBaseElevation, 0);
+    XCTAssertLessThan(MDCTextField().mdc_overrideBaseElevation, 0)
   }
 
   func testSettingOverrideBaseElevationReturnsSetValue() {

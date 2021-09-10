@@ -13,13 +13,12 @@
 // limitations under the License.
 
 import UIKit
-
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialButtons
-import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialPalettes
 import MaterialComponents.MaterialTabs
-import MaterialComponents.MaterialTabs_Theming
+import MaterialComponents.MaterialTabs_Theming 
+import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialTypographyScheme
 
 class TabBarIconSwiftExample: UIViewController {
@@ -46,11 +45,13 @@ class TabBarIconSwiftExample: UIViewController {
     tabBar.alignment = .centerSelected
 
     let bundle = Bundle(for: TabBarIconSwiftExample.self)
-    let info = UIImage.init(named: "TabBarDemo_ic_info", in: bundle, compatibleWith:nil)
-    let star = UIImage.init(named: "TabBarDemo_ic_star", in: bundle, compatibleWith:nil)
+    let info = UIImage.init(named: "TabBarDemo_ic_info", in: bundle, compatibleWith: nil)
+    let star = UIImage.init(named: "TabBarDemo_ic_star", in: bundle, compatibleWith: nil)
 
-    tabBar.items = [UITabBarItem(title: "Info", image: info, tag:0),
-                    UITabBarItem(title: "Stars", image: star, tag:0)]
+    tabBar.items = [
+      UITabBarItem(title: "Info", image: info, tag: 0),
+      UITabBarItem(title: "Stars", image: star, tag: 0),
+    ]
     tabBar.items[1].badgeValue = "1"
 
     tabBar.applyPrimaryTheme(withScheme: containerScheme)
@@ -68,43 +69,59 @@ class TabBarIconSwiftExample: UIViewController {
 
     setupExampleViews()
 
-    alignmentButton.addTarget(self,
-                              action:#selector(changeAlignmentDidTouch(sender:)),
-                              for: .touchUpInside)
+    alignmentButton.addTarget(
+      self,
+      action: #selector(changeAlignmentDidTouch(sender:)),
+      for: .touchUpInside)
   }
 
   @objc func changeAlignmentDidTouch(sender: UIButton) {
     let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     sheet.popoverPresentationController?.sourceView = self.alignmentButton
     sheet.popoverPresentationController?.sourceRect = self.alignmentButton.bounds
-    sheet.addAction(UIAlertAction(title: "Leading", style: .default, handler: { _ in
-      self.alignment = .leading
-    }))
-    sheet.addAction(UIAlertAction(title: "Center", style: .default, handler: { _ in
-      self.alignment = .center
-    }))
-    sheet.addAction(UIAlertAction(title: "Justified", style: .default, handler: { _ in
-      self.alignment = .justified
-    }))
-    sheet.addAction(UIAlertAction(title: "Selected Center", style: .default, handler: { _ in
-      self.alignment = .centerSelected
-    }))
-    present(sheet, animated: true, completion:nil)
+    sheet.addAction(
+      UIAlertAction(
+        title: "Leading", style: .default,
+        handler: { _ in
+          self.alignment = .leading
+        }))
+    sheet.addAction(
+      UIAlertAction(
+        title: "Center", style: .default,
+        handler: { _ in
+          self.alignment = .center
+        }))
+    sheet.addAction(
+      UIAlertAction(
+        title: "Justified", style: .default,
+        handler: { _ in
+          self.alignment = .justified
+        }))
+    sheet.addAction(
+      UIAlertAction(
+        title: "Selected Center", style: .default,
+        handler: { _ in
+          self.alignment = .centerSelected
+        }))
+    present(sheet, animated: true, completion: nil)
   }
 
   func incrementStarBadge() {
     let starItem = tabBar.items[1]
     guard let badgeValue = starItem.badgeValue,
-      let badgeNumber = Int(badgeValue), badgeNumber > 0 else {
+      let badgeNumber = Int(badgeValue), badgeNumber > 0
+    else {
       return
     }
 
-    starItem.badgeValue = NumberFormatter.localizedString(from:(badgeNumber + 1) as NSNumber,
-                                                          number: .none)
+    starItem.badgeValue = NumberFormatter.localizedString(
+      from: (badgeNumber + 1) as NSNumber,
+      number: .none)
   }
 
   // MARK: Action
-  @objc func incrementDidTouch(sender: UIBarButtonItem) { incrementStarBadge()
+  @objc func incrementDidTouch(sender: UIBarButtonItem) {
+    incrementStarBadge()
 
     addStar(centered: false)
   }
@@ -118,7 +135,8 @@ extension TabBarIconSwiftExample: MDCTabBarDelegate {
       fatalError("MDCTabBarDelegate given selected item not found in tabBar.items")
     }
 
-    scrollView.setContentOffset(CGPoint(x: CGFloat(index) * view.bounds.width, y: 0),
-                                animated: true)
+    scrollView.setContentOffset(
+      CGPoint(x: CGFloat(index) * view.bounds.width, y: 0),
+      animated: true)
   }
 }

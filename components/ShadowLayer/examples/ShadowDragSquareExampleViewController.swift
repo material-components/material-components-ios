@@ -58,7 +58,7 @@ class ShadowDragSquareExampleViewController: UIViewController {
     } else if sender.state == .changed {
       let selfPoint = sender.location(in: self.view)
       let newCenterPoint =
-          CGPoint(x: selfPoint.x - movingViewOffset.x, y: selfPoint.y - movingViewOffset.y)
+        CGPoint(x: selfPoint.x - movingViewOffset.x, y: selfPoint.y - movingViewOffset.y)
       self.blueView.center = newCenterPoint
 
     } else if sender.state == .ended {
@@ -72,7 +72,7 @@ class ShadowDragSquareExampleViewController: UIViewController {
 
   @objc class func catalogMetadata() -> [String: Any] {
     return [
-      "breadcrumbs": [ "Shadow", "Shadow Layer"],
+      "breadcrumbs": ["Shadow", "Shadow Layer"],
       "description": "Shadow Layer implements the Material Design specifications for "
         + "elevation and shadows.",
       "primaryDemo": true,

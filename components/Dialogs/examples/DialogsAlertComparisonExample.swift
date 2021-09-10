@@ -13,15 +13,14 @@
 // limitations under the License.
 
 import UIKit
-
 import MaterialComponents.MaterialButtons
-import MaterialComponents.MaterialButtons_Theming
+import MaterialComponents.MaterialButtons_Theming 
+import MaterialComponents.MaterialButtons_Theming 
+import MaterialComponents.MaterialDialogs
+import MaterialComponents.MaterialDialogs_Theming 
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialContainerScheme
-import MaterialComponents.MaterialDialogs
-import MaterialComponents.MaterialDialogs_Theming
 import MaterialComponents.MaterialTypographyScheme
-import MaterialComponents.MaterialButtons_Theming
 
 /// This interface allows a user to present a UIKit Alert Controller and a Material Alert
 /// Controller.
@@ -39,78 +38,84 @@ class DialogsAlertComparisonExample: UIViewController {
 
     materialButton.translatesAutoresizingMaskIntoConstraints = false
     materialButton.setTitle("Material Alert", for: .normal)
-    materialButton.setTitleColor(UIColor(white: 0.1, alpha:1), for: .normal)
+    materialButton.setTitleColor(UIColor(white: 0.1, alpha: 1), for: .normal)
     materialButton.sizeToFit()
     materialButton.addTarget(self, action: #selector(tapMaterial), for: .touchUpInside)
     materialButton.applyTextTheme(withScheme: containerScheme)
     self.view.addSubview(materialButton)
 
     NSLayoutConstraint.activate([
-      NSLayoutConstraint(item:materialButton,
-                       attribute: .centerX,
-                       relatedBy: .equal,
-                       toItem: self.view,
-                       attribute: .centerX,
-                       multiplier: 1.0,
-                       constant: 0.0),
-      NSLayoutConstraint(item: materialButton,
-                       attribute: .centerY,
-                       relatedBy: .equal,
-                       toItem: self.view,
-                       attribute: .centerY,
-                       multiplier: 1.0,
-                       constant: 0.0)
-      ])
+      NSLayoutConstraint(
+        item: materialButton,
+        attribute: .centerX,
+        relatedBy: .equal,
+        toItem: self.view,
+        attribute: .centerX,
+        multiplier: 1.0,
+        constant: 0.0),
+      NSLayoutConstraint(
+        item: materialButton,
+        attribute: .centerY,
+        relatedBy: .equal,
+        toItem: self.view,
+        attribute: .centerY,
+        multiplier: 1.0,
+        constant: 0.0),
+    ])
 
     themedButton.translatesAutoresizingMaskIntoConstraints = false
     themedButton.setTitle("Material Alert (Themed)", for: .normal)
-    themedButton.setTitleColor(UIColor(white: 0.1, alpha:1), for: .normal)
+    themedButton.setTitleColor(UIColor(white: 0.1, alpha: 1), for: .normal)
     themedButton.sizeToFit()
     themedButton.addTarget(self, action: #selector(tapThemed), for: .touchUpInside)
     themedButton.applyTextTheme(withScheme: containerScheme)
     self.view.addSubview(themedButton)
 
     NSLayoutConstraint.activate([
-      NSLayoutConstraint(item: themedButton,
-                         attribute: .centerX,
-                         relatedBy: .equal,
-                         toItem: self.view,
-                         attribute: .centerX,
-                         multiplier: 1.0,
-                         constant: 0.0),
-      NSLayoutConstraint(item:themedButton,
-                         attribute: .top,
-                         relatedBy: .equal,
-                         toItem: materialButton,
-                         attribute: .bottom,
-                         multiplier: 1.0,
-                         constant: 8.0)
-      ])
+      NSLayoutConstraint(
+        item: themedButton,
+        attribute: .centerX,
+        relatedBy: .equal,
+        toItem: self.view,
+        attribute: .centerX,
+        multiplier: 1.0,
+        constant: 0.0),
+      NSLayoutConstraint(
+        item: themedButton,
+        attribute: .top,
+        relatedBy: .equal,
+        toItem: materialButton,
+        attribute: .bottom,
+        multiplier: 1.0,
+        constant: 8.0),
+    ])
 
-      uikitButton.translatesAutoresizingMaskIntoConstraints = false
-      uikitButton.setTitle("UIKit Alert", for: UIControl.State())
-      uikitButton.setTitleColor(UIColor(white: 0.1, alpha:1), for: .normal)
-      uikitButton.sizeToFit()
-      uikitButton.addTarget(self, action: #selector(tapUIKit), for: .touchUpInside)
-      uikitButton.applyTextTheme(withScheme: containerScheme)
-      self.view.addSubview(uikitButton)
+    uikitButton.translatesAutoresizingMaskIntoConstraints = false
+    uikitButton.setTitle("UIKit Alert", for: UIControl.State())
+    uikitButton.setTitleColor(UIColor(white: 0.1, alpha: 1), for: .normal)
+    uikitButton.sizeToFit()
+    uikitButton.addTarget(self, action: #selector(tapUIKit), for: .touchUpInside)
+    uikitButton.applyTextTheme(withScheme: containerScheme)
+    self.view.addSubview(uikitButton)
 
-      NSLayoutConstraint.activate([
-        NSLayoutConstraint(item: uikitButton,
-                           attribute: .centerX,
-                           relatedBy: .equal,
-                           toItem: self.view,
-                           attribute: .centerX,
-                           multiplier: 1.0,
-                           constant: 0.0),
-        NSLayoutConstraint(item: uikitButton,
-                           attribute: .top,
-                           relatedBy: .equal,
-                           toItem: themedButton,
-                           attribute: .bottom,
-                           multiplier: 1.0,
-                           constant: 8.0)
-        ])
+    NSLayoutConstraint.activate([
+      NSLayoutConstraint(
+        item: uikitButton,
+        attribute: .centerX,
+        relatedBy: .equal,
+        toItem: self.view,
+        attribute: .centerX,
+        multiplier: 1.0,
+        constant: 0.0),
+      NSLayoutConstraint(
+        item: uikitButton,
+        attribute: .top,
+        relatedBy: .equal,
+        toItem: themedButton,
+        attribute: .bottom,
+        multiplier: 1.0,
+        constant: 8.0),
+    ])
   }
 
   @objc func tapMaterial(_ sender: Any) {
@@ -130,26 +135,27 @@ class DialogsAlertComparisonExample: UIViewController {
   }
 
   private var titleAndMessage: (title: String, message: String) {
-    return (title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur",
-            message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur " +
-      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus " +
-      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, " +
-      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. " +
-      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus " +
-      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, " +
-      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. " +
-      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus " +
-      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, " +
-      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. " +
-      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus " +
-      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, " +
-      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. " +
-      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus " +
-      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, " +
-      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. " +
-      "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus " +
-      "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, " +
-      "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
+    return (
+      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur",
+      message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur "
+        + "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
+        + "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, "
+        + "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
+        + "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
+        + "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, "
+        + "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
+        + "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
+        + "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, "
+        + "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
+        + "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
+        + "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, "
+        + "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
+        + "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
+        + "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, "
+        + "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
+        + "ultricies diam libero, eget porta arcu feugiat sit amet. Maecenas placerat felis sed risus "
+        + "maximus tempus. Integer feugiat, augue in pellentesque dictum, justo erat ultricies leo, "
+        + "quis eleifend nisi eros dictum mi. In finibus vulputate eros, in luctus diam auctor in. "
     )
   }
 
@@ -158,13 +164,13 @@ class DialogsAlertComparisonExample: UIViewController {
     let texts = titleAndMessage
     let alertController = MDCAlertController(title: texts.title, message: texts.message)
 
-    let acceptAction = MDCAlertAction(title:"Accept") { (_) in print("Accept") }
+    let acceptAction = MDCAlertAction(title: "Accept") { (_) in print("Accept") }
     alertController.addAction(acceptAction)
 
-    let considerAction = MDCAlertAction(title:"Consider") { (_) in print("Consider") }
+    let considerAction = MDCAlertAction(title: "Consider") { (_) in print("Consider") }
     alertController.addAction(considerAction)
 
-    let rejectAction = MDCAlertAction(title:"Reject") { (_) in print("Reject") }
+    let rejectAction = MDCAlertAction(title: "Reject") { (_) in print("Reject") }
     alertController.addAction(rejectAction)
 
     return alertController
@@ -173,17 +179,19 @@ class DialogsAlertComparisonExample: UIViewController {
   private func createUIAlertController() -> UIAlertController {
 
     let texts = titleAndMessage
-    let alertController = UIAlertController(title: texts.title, message: texts.message,
-                                            preferredStyle:.alert)
+    let alertController = UIAlertController(
+      title: texts.title, message: texts.message,
+      preferredStyle: .alert)
 
-    let acceptAction = UIAlertAction(title:"Accept", style:.default) { (_) in print("Accept") }
+    let acceptAction = UIAlertAction(title: "Accept", style: .default) { (_) in print("Accept") }
     alertController.addAction(acceptAction)
 
-    let considerAction = UIAlertAction(title:"Consider", style:.default)
-      { (_) in print("Consider") }
+    let considerAction = UIAlertAction(title: "Consider", style: .default) { (_) in
+      print("Consider")
+    }
     alertController.addAction(considerAction)
 
-    let rejectAction = UIAlertAction(title:"Reject", style:.default) { (_) in print("Reject") }
+    let rejectAction = UIAlertAction(title: "Reject", style: .default) { (_) in print("Reject") }
     alertController.addAction(rejectAction)
 
     return alertController

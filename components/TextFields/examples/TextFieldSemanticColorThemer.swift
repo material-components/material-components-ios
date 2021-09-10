@@ -14,7 +14,7 @@
 
 // swiftlint:disable function_body_length
 
-import MaterialComponents.MaterialTextFields_Theming
+import MaterialComponents.MaterialTextFields_Theming 
 
 final class TextFieldSemanticColorThemer: UIViewController {
 
@@ -75,59 +75,75 @@ final class TextFieldSemanticColorThemer: UIViewController {
     alternativeController.placeholderText = "Alternative"
 
     //NOTE: In iOS 9+, you could accomplish this with a UILayoutGuide.
-    let views = [ "standard": textfieldStandard,
-                  "alternative": textfieldAlternative,
-                  ]
-    var constraints = NSLayoutConstraint.constraints(withVisualFormat: "V:[standard]-[alternative]",
-                                                     options: [.alignAllLeading, .alignAllTrailing],
-                                                     metrics: nil,
-                                                     views: views)
+    let views = [
+      "standard": textfieldStandard,
+      "alternative": textfieldAlternative,
+    ]
+    var constraints = NSLayoutConstraint.constraints(
+      withVisualFormat: "V:[standard]-[alternative]",
+      options: [.alignAllLeading, .alignAllTrailing],
+      metrics: nil,
+      views: views)
 
-    constraints += [NSLayoutConstraint(item: textfieldStandard,
-                                       attribute: .leading,
-                                       relatedBy: .equal,
-                                       toItem: view,
-                                       attribute: .leadingMargin,
-                                       multiplier: 1,
-                                       constant: 0)]
-    constraints += [NSLayoutConstraint(item: textfieldStandard,
-                                       attribute: .trailing,
-                                       relatedBy: .equal,
-                                       toItem: view,
-                                       attribute: .trailingMargin,
-                                       multiplier: 1,
-                                       constant: 0)]
+    constraints += [
+      NSLayoutConstraint(
+        item: textfieldStandard,
+        attribute: .leading,
+        relatedBy: .equal,
+        toItem: view,
+        attribute: .leadingMargin,
+        multiplier: 1,
+        constant: 0)
+    ]
+    constraints += [
+      NSLayoutConstraint(
+        item: textfieldStandard,
+        attribute: .trailing,
+        relatedBy: .equal,
+        toItem: view,
+        attribute: .trailingMargin,
+        multiplier: 1,
+        constant: 0)
+    ]
 
     if #available(iOS 11.0, *) {
-      constraints += [NSLayoutConstraint(item: textfieldStandard,
-                                         attribute: .top,
-                                         relatedBy: .equal,
-                                         toItem: scrollView.contentLayoutGuide,
-                                         attribute: .top,
-                                         multiplier: 1,
-                                         constant: 20),
-                      NSLayoutConstraint(item: textfieldAlternative,
-                                         attribute: .bottom,
-                                         relatedBy: .equal,
-                                         toItem: scrollView.contentLayoutGuide,
-                                         attribute: .bottomMargin,
-                                         multiplier: 1,
-                                         constant: -20)]
+      constraints += [
+        NSLayoutConstraint(
+          item: textfieldStandard,
+          attribute: .top,
+          relatedBy: .equal,
+          toItem: scrollView.contentLayoutGuide,
+          attribute: .top,
+          multiplier: 1,
+          constant: 20),
+        NSLayoutConstraint(
+          item: textfieldAlternative,
+          attribute: .bottom,
+          relatedBy: .equal,
+          toItem: scrollView.contentLayoutGuide,
+          attribute: .bottomMargin,
+          multiplier: 1,
+          constant: -20),
+      ]
     } else {
-      constraints += [NSLayoutConstraint(item: textfieldStandard,
-                                         attribute: .top,
-                                         relatedBy: .equal,
-                                         toItem: scrollView,
-                                         attribute: .top,
-                                         multiplier: 1,
-                                         constant: 20),
-                      NSLayoutConstraint(item: textfieldAlternative,
-                                         attribute: .bottom,
-                                         relatedBy: .equal,
-                                         toItem: scrollView,
-                                         attribute: .bottomMargin,
-                                         multiplier: 1,
-                                         constant: -20)]
+      constraints += [
+        NSLayoutConstraint(
+          item: textfieldStandard,
+          attribute: .top,
+          relatedBy: .equal,
+          toItem: scrollView,
+          attribute: .top,
+          multiplier: 1,
+          constant: 20),
+        NSLayoutConstraint(
+          item: textfieldAlternative,
+          attribute: .bottom,
+          relatedBy: .equal,
+          toItem: scrollView,
+          attribute: .bottomMargin,
+          multiplier: 1,
+          constant: -20),
+      ]
     }
 
     NSLayoutConstraint.activate(constraints)
@@ -137,24 +153,28 @@ final class TextFieldSemanticColorThemer: UIViewController {
     view.addSubview(scrollView)
     scrollView.translatesAutoresizingMaskIntoConstraints = false
 
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "V:|[scrollView]|",
-                                                               options: [],
-                                                               metrics: nil,
-                                                               views: ["scrollView": scrollView]))
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|[scrollView]|",
-                                                               options: [],
-                                                               metrics: nil,
-                                                               views: ["scrollView": scrollView]))
+    NSLayoutConstraint.activate(
+      NSLayoutConstraint.constraints(
+        withVisualFormat: "V:|[scrollView]|",
+        options: [],
+        metrics: nil,
+        views: ["scrollView": scrollView]))
+    NSLayoutConstraint.activate(
+      NSLayoutConstraint.constraints(
+        withVisualFormat: "H:|[scrollView]|",
+        options: [],
+        metrics: nil,
+        views: ["scrollView": scrollView]))
     let marginOffset: CGFloat = 16
     let margins = UIEdgeInsets(top: 0, left: marginOffset, bottom: 0, right: marginOffset)
 
     scrollView.layoutMargins = margins
   }
 
-
   func addGestureRecognizer() {
-    let tapRecognizer = UITapGestureRecognizer(target: self,
-                                               action: #selector(tapDidTouch(sender: )))
+    let tapRecognizer = UITapGestureRecognizer(
+      target: self,
+      action: #selector(tapDidTouch(sender:)))
     self.scrollView.addGestureRecognizer(tapRecognizer)
   }
 
@@ -192,10 +212,11 @@ extension TextFieldSemanticColorThemer {
     guard let frame = notif.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
       return
     }
-    scrollView.contentInset = UIEdgeInsets(top: 0.0,
-                                           left: 0.0,
-                                           bottom: frame.height,
-                                           right: 0.0)
+    scrollView.contentInset = UIEdgeInsets(
+      top: 0.0,
+      left: 0.0,
+      bottom: frame.height,
+      right: 0.0)
   }
 
   @objc func keyboardWillHide(notif: Notification) {

@@ -15,13 +15,17 @@
 import XCTest
 import MaterialComponents.MaterialFlexibleHeader
 
-private class MockMDCFlexibleHeaderViewAnimationDelegate: NSObject, MDCFlexibleHeaderViewAnimationDelegate {
+private class MockMDCFlexibleHeaderViewAnimationDelegate: NSObject,
+  MDCFlexibleHeaderViewAnimationDelegate
+{
   let didChangeAnimatedExpectation: XCTestExpectation?
   let didChangeNotAnimatedExpectation: XCTestExpectation?
   let didCompleteExpectation: XCTestExpectation?
-  init(didChangeAnimatedExpectation: XCTestExpectation?,
-       didChangeNotAnimatedExpectation: XCTestExpectation?,
-       didCompleteExpectation: XCTestExpectation?) {
+  init(
+    didChangeAnimatedExpectation: XCTestExpectation?,
+    didChangeNotAnimatedExpectation: XCTestExpectation?,
+    didCompleteExpectation: XCTestExpectation?
+  ) {
     self.didChangeAnimatedExpectation = didChangeAnimatedExpectation
     self.didChangeNotAnimatedExpectation = didChangeNotAnimatedExpectation
     self.didCompleteExpectation = didCompleteExpectation
@@ -30,8 +34,10 @@ private class MockMDCFlexibleHeaderViewAnimationDelegate: NSObject, MDCFlexibleH
   }
 
   @objc
-  func flexibleHeaderView(_ flexibleHeaderView: MDCFlexibleHeaderView,
-                          didChangeTrackingScrollViewAnimated animated: Bool) {
+  func flexibleHeaderView(
+    _ flexibleHeaderView: MDCFlexibleHeaderView,
+    didChangeTrackingScrollViewAnimated animated: Bool
+  ) {
     if animated {
       didChangeAnimatedExpectation?.fulfill()
     } else {
@@ -40,7 +46,9 @@ private class MockMDCFlexibleHeaderViewAnimationDelegate: NSObject, MDCFlexibleH
   }
 
   @objc
-  func flexibleHeaderViewChangeTrackingScrollViewAnimationDidComplete(_ flexibleHeaderView: MDCFlexibleHeaderView) {
+  func flexibleHeaderViewChangeTrackingScrollViewAnimationDidComplete(
+    _ flexibleHeaderView: MDCFlexibleHeaderView
+  ) {
     didCompleteExpectation?.fulfill()
   }
 }
@@ -67,9 +75,10 @@ class FlexibleHeaderViewAnimationDelegateTests: XCTestCase {
 
     let didCompleteExpectation = expectation(description: "didComplete")
     let mockDelegate =
-      MockMDCFlexibleHeaderViewAnimationDelegate(didChangeAnimatedExpectation: nil,
-                                                 didChangeNotAnimatedExpectation: nil,
-                                                 didCompleteExpectation: didCompleteExpectation)
+      MockMDCFlexibleHeaderViewAnimationDelegate(
+        didChangeAnimatedExpectation: nil,
+        didChangeNotAnimatedExpectation: nil,
+        didCompleteExpectation: didCompleteExpectation)
     fhv.animationDelegate = mockDelegate
 
     // When
@@ -105,9 +114,10 @@ class FlexibleHeaderViewAnimationDelegateTests: XCTestCase {
 
     let didCompleteExpectation = expectation(description: "didComplete")
     let mockDelegate =
-      MockMDCFlexibleHeaderViewAnimationDelegate(didChangeAnimatedExpectation: nil,
-                                                 didChangeNotAnimatedExpectation: nil,
-                                                 didCompleteExpectation: didCompleteExpectation)
+      MockMDCFlexibleHeaderViewAnimationDelegate(
+        didChangeAnimatedExpectation: nil,
+        didChangeNotAnimatedExpectation: nil,
+        didCompleteExpectation: didCompleteExpectation)
     fhv.animationDelegate = mockDelegate
 
     // When
@@ -144,9 +154,10 @@ class FlexibleHeaderViewAnimationDelegateTests: XCTestCase {
 
     let didChangeAnimatedExpectation = expectation(description: "didChangeAnimated")
     let mockDelegate =
-      MockMDCFlexibleHeaderViewAnimationDelegate(didChangeAnimatedExpectation: didChangeAnimatedExpectation,
-                                                 didChangeNotAnimatedExpectation: nil,
-                                                 didCompleteExpectation: nil)
+      MockMDCFlexibleHeaderViewAnimationDelegate(
+        didChangeAnimatedExpectation: didChangeAnimatedExpectation,
+        didChangeNotAnimatedExpectation: nil,
+        didCompleteExpectation: nil)
     fhv.animationDelegate = mockDelegate
 
     // When

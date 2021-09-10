@@ -14,7 +14,7 @@
 
 import Foundation
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialAppBar_Theming
+import MaterialComponents.MaterialAppBar_Theming 
 import MaterialComponents.MaterialContainerScheme
 
 class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
@@ -85,10 +85,12 @@ class AppBarModalPresentationSwiftExamplePresented: UITableViewController {
 
   override func tableView(
     _ tableView: UITableView,
-    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    
-    let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell") ??
-          UITableViewCell(style: .default, reuseIdentifier: "cell")
+    cellForRowAt indexPath: IndexPath
+  ) -> UITableViewCell {
+
+    let cell =
+      self.tableView.dequeueReusableCell(withIdentifier: "cell")
+      ?? UITableViewCell(style: .default, reuseIdentifier: "cell")
     cell.layoutMargins = .zero
     return cell
   }
@@ -119,7 +121,7 @@ class AppBarModalPresentationSwiftExample: UITableViewController {
     super.viewDidLoad()
 
     appBarViewController.applyPrimaryTheme(withScheme: containerScheme)
-    
+
     appBarViewController.headerView.trackingScrollView = self.tableView
     self.tableView.delegate = appBarViewController
 
@@ -177,10 +179,12 @@ extension AppBarModalPresentationSwiftExample {
 
   override func tableView(
     _ tableView: UITableView,
-    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    
-    let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell") ??
-        UITableViewCell(style: .default, reuseIdentifier: "cell")
+    cellForRowAt indexPath: IndexPath
+  ) -> UITableViewCell {
+
+    let cell =
+      self.tableView.dequeueReusableCell(withIdentifier: "cell")
+      ?? UITableViewCell(style: .default, reuseIdentifier: "cell")
     cell.layoutMargins = .zero
     return cell
   }

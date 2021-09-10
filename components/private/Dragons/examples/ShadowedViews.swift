@@ -28,15 +28,15 @@ class MaterialShadowedView: UIView {
   override class var layerClass: AnyClass {
     return MDCShadowLayer.self
   }
-  
+
   func shadowLayer() -> MDCShadowLayer {
     return self.layer as! MDCShadowLayer
   }
-  
+
   func setElevation(points: CGFloat) {
     (self.layer as! MDCShadowLayer).elevation = ShadowElevation(rawValue: points)
   }
-  
+
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
     self.setElevation(points: 12)

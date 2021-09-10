@@ -22,9 +22,10 @@ class AppBarViewControllerInitializationTests: XCTestCase {
     let appBarViewController = MDCAppBarViewController()
 
     // Then
-    XCTAssertEqual(appBarViewController.headerStackView.topBar,
-                   appBarViewController.navigationBar,
-                   "Expected the app bar's top bar to be set to the navigation bar after"
-                    + " initialization.")
+    XCTAssertEqual(
+      appBarViewController.headerStackView.topBar,
+      appBarViewController.navigationBar,
+      "Expected the app bar's top bar to be set to the navigation bar after"
+        + " initialization.")
   }
 }

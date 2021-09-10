@@ -14,7 +14,7 @@
 
 import XCTest
 import MaterialComponents.MaterialBottomSheet
-import MaterialComponents.MaterialBottomSheet_ShapeThemer
+import MaterialComponents.MaterialBottomSheet_ShapeThemer 
 import MaterialComponents.MaterialShapeLibrary
 
 class BottomSheetShapeThemerTests: XCTestCase {
@@ -34,10 +34,12 @@ class BottomSheetShapeThemerTests: XCTestCase {
     let preferredShapeGenerator = bottomSheet.shapeGenerator(for: .preferred)
     XCTAssert(preferredShapeGenerator is MDCRectangleShapeGenerator)
     if let rectangleGenerator = preferredShapeGenerator as? MDCRectangleShapeGenerator {
-      XCTAssertEqual(rectangleGenerator.topLeftCorner,
-                     shapeScheme.largeComponentShape.topLeftCorner)
-      XCTAssertEqual(rectangleGenerator.topRightCorner,
-                     shapeScheme.largeComponentShape.topRightCorner)
+      XCTAssertEqual(
+        rectangleGenerator.topLeftCorner,
+        shapeScheme.largeComponentShape.topLeftCorner)
+      XCTAssertEqual(
+        rectangleGenerator.topRightCorner,
+        shapeScheme.largeComponentShape.topRightCorner)
       XCTAssertEqual(rectangleGenerator.bottomLeftCorner, MDCCornerTreatment())
       XCTAssertEqual(rectangleGenerator.bottomRightCorner, MDCCornerTreatment())
     }

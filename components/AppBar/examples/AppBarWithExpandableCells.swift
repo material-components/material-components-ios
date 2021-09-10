@@ -13,9 +13,8 @@
 // limitations under the License.
 
 import UIKit
-
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialAppBar_Theming
+import MaterialComponents.MaterialAppBar_Theming 
 import MaterialComponents.MaterialContainerScheme
 
 // This example shows a bug when using an FlexibleHeader in a UITableViewController with expandable
@@ -72,7 +71,7 @@ class AppBarWithExpandableCells: UITableViewController {
     appBarViewController.didMove(toParent: self)
 
     appBarViewController.applyPrimaryTheme(withScheme: containerScheme)
-    
+
     self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
     let headerView = appBarViewController.headerView
     headerView.trackingScrollView = self.tableView
@@ -94,7 +93,9 @@ class AppBarWithExpandableCells: UITableViewController {
     return numberOfRows
   }
 
-  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)
+    -> UITableViewCell
+  {
     let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
     if indexPath == tableView.indexPathForSelectedRow {
       cell.textLabel?.text = "Cell #\(indexPath.item)\nline 2\nline 3"

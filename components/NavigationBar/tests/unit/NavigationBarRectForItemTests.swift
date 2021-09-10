@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import XCTest
-import MaterialComponents.MaterialNavigationBar
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialNavigationBar
 
 // Tests for Navigation Bar's rectFor*ItemAtIndex:inCoordinateSpace: APIs.
 class NavigationBarRectForItemTests: XCTestCase {
@@ -62,10 +62,13 @@ class NavigationBarRectForItemTests: XCTestCase {
 
   func testLeadingLongTextButtonMatchesExpectedFrame() {
     // Given
-    let items = [UIBarButtonItem(title: "Text that is relatively long",
-                                 style: .plain,
-                                 target: nil,
-                                 action: nil)]
+    let items = [
+      UIBarButtonItem(
+        title: "Text that is relatively long",
+        style: .plain,
+        target: nil,
+        action: nil)
+    ]
     navigationBar.leadingBarButtonItems = items
     navigationBar.layoutIfNeeded()
 
@@ -78,10 +81,13 @@ class NavigationBarRectForItemTests: XCTestCase {
 
   func testTrailingLongTextButtonMatchesExpectedFrame() {
     // Given
-    let items = [UIBarButtonItem(title: "Text that is relatively long",
-                                 style: .plain,
-                                 target: nil,
-                                 action: nil)]
+    let items = [
+      UIBarButtonItem(
+        title: "Text that is relatively long",
+        style: .plain,
+        target: nil,
+        action: nil)
+    ]
     navigationBar.trailingBarButtonItems = items
     navigationBar.layoutIfNeeded()
 
@@ -94,8 +100,10 @@ class NavigationBarRectForItemTests: XCTestCase {
 
   func testOriginOfEachLeadingButtonIncreases() {
     // Given
-    let items = [UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil),
-                 UIBarButtonItem(title: "Text 2", style: .plain, target: nil, action: nil)]
+    let items = [
+      UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil),
+      UIBarButtonItem(title: "Text 2", style: .plain, target: nil, action: nil),
+    ]
     navigationBar.leadingBarButtonItems = items
     navigationBar.layoutIfNeeded()
 
@@ -110,8 +118,10 @@ class NavigationBarRectForItemTests: XCTestCase {
 
   func testOriginOfEachTrailingButtonDecreases() {
     // Given
-    let items = [UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil),
-                 UIBarButtonItem(title: "Text 2", style: .plain, target: nil, action: nil)]
+    let items = [
+      UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil),
+      UIBarButtonItem(title: "Text 2", style: .plain, target: nil, action: nil),
+    ]
     navigationBar.trailingBarButtonItems = items
     navigationBar.layoutIfNeeded()
 

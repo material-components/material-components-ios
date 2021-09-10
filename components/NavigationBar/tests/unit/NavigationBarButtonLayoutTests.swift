@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import XCTest
-import MaterialComponents.MaterialNavigationBar
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialNavigationBar
 
 class NavigationBarButtonLayoutTests: XCTestCase {
 
@@ -52,8 +52,11 @@ class NavigationBarButtonLayoutTests: XCTestCase {
     // Then
     for view in recursiveSubviews(of: navigationBar) {
       if let button = view as? MDCButton {
-        let width = button.sizeThatFits(CGSize(width: CGFloat.infinity,
-                                               height: CGFloat.infinity)).width
+        let width = button.sizeThatFits(
+          CGSize(
+            width: CGFloat.infinity,
+            height: CGFloat.infinity)
+        ).width
         XCTAssertEqual(width, button.bounds.width)
       }
     }
@@ -80,8 +83,11 @@ class NavigationBarButtonLayoutTests: XCTestCase {
     // Then
     for view in recursiveSubviews(of: navigationBar) {
       if let button = view as? MDCButton {
-        let width = button.sizeThatFits(CGSize(width: CGFloat.infinity,
-                                               height: CGFloat.infinity)).width
+        let width = button.sizeThatFits(
+          CGSize(
+            width: CGFloat.infinity,
+            height: CGFloat.infinity)
+        ).width
         XCTAssertEqual(width, button.bounds.width)
       }
     }
@@ -103,8 +109,11 @@ class NavigationBarButtonLayoutTests: XCTestCase {
     // Then
     for view in recursiveSubviews(of: navigationBar) {
       if let button = view as? MDCButton {
-        let width = button.sizeThatFits(CGSize(width: CGFloat.infinity,
-                                               height: CGFloat.infinity)).width
+        let width = button.sizeThatFits(
+          CGSize(
+            width: CGFloat.infinity,
+            height: CGFloat.infinity)
+        ).width
         XCTAssertEqual(width, button.bounds.width)
       }
     }

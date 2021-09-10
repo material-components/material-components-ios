@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import XCTest
+import MaterialComponents.MaterialNavigationBar_ColorThemer 
 import MaterialComponents.MaterialNavigationBar
-import MaterialComponents.MaterialNavigationBar_ColorThemer
 
 class NavigationBarColorThemerTests: XCTestCase {
 
@@ -51,10 +51,12 @@ class NavigationBarColorThemerTests: XCTestCase {
     MDCNavigationBarColorThemer.applySurfaceVariant(withColorScheme: colorScheme, to: navigationBar)
 
     // Then
-    XCTAssertEqual(navigationBar.titleTextColor,
-                   colorScheme.onSurfaceColor.withAlphaComponent(0.87))
-    XCTAssertEqual(navigationBar.buttonsTitleColor(for: .normal),
-                   colorScheme.onSurfaceColor.withAlphaComponent(0.87))
+    XCTAssertEqual(
+      navigationBar.titleTextColor,
+      colorScheme.onSurfaceColor.withAlphaComponent(0.87))
+    XCTAssertEqual(
+      navigationBar.buttonsTitleColor(for: .normal),
+      colorScheme.onSurfaceColor.withAlphaComponent(0.87))
     XCTAssertEqual(navigationBar.tintColor, colorScheme.onSurfaceColor.withAlphaComponent(0.54))
   }
 }

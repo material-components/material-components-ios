@@ -22,16 +22,14 @@ class ShapesShadows: UIView {
     super.init(frame: frame)
     commonInit()
   }
-  
+
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
     commonInit()
   }
 
   override class var layerClass: AnyClass {
-    get {
-      return MDCShapedShadowLayer.self
-    }
+    return MDCShapedShadowLayer.self
   }
 
   func commonInit() {
@@ -50,23 +48,24 @@ class ShapesShadows: UIView {
 
 class ShapesShadowsController: UIViewController {
   var customView: ShapesShadows!
-  
+
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.backgroundColor = .white
     customView = ShapesShadows(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
     customView.center = CGPoint(x: self.view.center.x, y: 50)
     self.view.addSubview(customView)
-    UIView.animate(withDuration: 8.0, delay: 0, options: [.autoreverse, .repeat], animations:{
-      self.customView.center = CGPoint(x: self.view.center.x, y: self.view.bounds.height - 50)
-    }, completion: nil)
+    UIView.animate(
+      withDuration: 8.0, delay: 0, options: [.autoreverse, .repeat],
+      animations: {
+        self.customView.center = CGPoint(x: self.view.center.x, y: self.view.bounds.height - 50)
+      }, completion: nil)
   }
-
 
 }
 
 extension ShapesShadowsController {
-  
+
   // MARK: Catalog by convention
 
   @objc class func catalogMetadata() -> [String: Any] {
@@ -77,4 +76,3 @@ extension ShapesShadowsController {
     ]
   }
 }
-

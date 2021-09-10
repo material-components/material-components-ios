@@ -36,7 +36,7 @@ class PalettesStandardExampleViewController: PalettesExampleViewController {
       ("Deep Orange", .deepOrange),
       ("Brown", .brown),
       ("Grey", .grey),
-      ("Blue Grey", .blueGrey)
+      ("Blue Grey", .blueGrey),
     ]
   }
 }

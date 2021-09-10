@@ -13,14 +13,13 @@
 // limitations under the License.
 
 import XCTest
-
 import MaterialComponents.MaterialChips
+import MaterialComponents.MaterialChips_Theming 
+import MaterialComponents.MaterialShapeLibrary
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialShapeScheme
-import MaterialComponents.MaterialShapeLibrary
 import MaterialComponents.MaterialTypographyScheme
-import MaterialComponents.MaterialChips_Theming
 
 class ChipsMaterialThemingTests: XCTestCase {
 
@@ -39,17 +38,21 @@ class ChipsMaterialThemingTests: XCTestCase {
     let onSurface87OpacityColor = colorScheme.onSurfaceColor.withAlphaComponent(0.87)
     let onSurface16OpacityColor = colorScheme.onSurfaceColor.withAlphaComponent(0.16)
     let backgroundColor =
-        MDCSemanticColorScheme.blendColor(onSurface12OpacityColor,
-                                           withBackgroundColor: colorScheme.surfaceColor)
+      MDCSemanticColorScheme.blendColor(
+        onSurface12OpacityColor,
+        withBackgroundColor: colorScheme.surfaceColor)
     let selectedBackgroundColor =
-        MDCSemanticColorScheme.blendColor(onSurface12OpacityColor,
-                                           withBackgroundColor: backgroundColor)
+      MDCSemanticColorScheme.blendColor(
+        onSurface12OpacityColor,
+        withBackgroundColor: backgroundColor)
     let textColor =
-        MDCSemanticColorScheme.blendColor(onSurface87OpacityColor,
-                                           withBackgroundColor: backgroundColor)
+      MDCSemanticColorScheme.blendColor(
+        onSurface87OpacityColor,
+        withBackgroundColor: backgroundColor)
     let selectedTextColor =
-        MDCSemanticColorScheme.blendColor(onSurface87OpacityColor,
-                                           withBackgroundColor: selectedBackgroundColor)
+      MDCSemanticColorScheme.blendColor(
+        onSurface87OpacityColor,
+        withBackgroundColor: selectedBackgroundColor)
 
     // When
     chip.applyTheme(withScheme: scheme)
@@ -81,10 +84,11 @@ class ChipsMaterialThemingTests: XCTestCase {
 
     // Test remaining properties
     [.normal, .highlighted, .selected, .disabled].forEach {
-      XCTAssertEqual(chip.borderWidth(for: $0),
-                     0,
-                     accuracy: 0.001,
-                     "Border width incorrect for state \($0)")
+      XCTAssertEqual(
+        chip.borderWidth(for: $0),
+        0,
+        accuracy: 0.001,
+        "Border width incorrect for state \($0)")
     }
   }
 
@@ -103,17 +107,21 @@ class ChipsMaterialThemingTests: XCTestCase {
     let onSurface87OpacityColor = colorScheme.onSurfaceColor.withAlphaComponent(0.87)
     let onSurface16OpacityColor = colorScheme.onSurfaceColor.withAlphaComponent(0.16)
     let borderColor =
-      MDCSemanticColorScheme.blendColor(onSurface12OpacityColor,
-                                        withBackgroundColor: colorScheme.surfaceColor)
+      MDCSemanticColorScheme.blendColor(
+        onSurface12OpacityColor,
+        withBackgroundColor: colorScheme.surfaceColor)
     let selectedBackgroundColor =
-      MDCSemanticColorScheme.blendColor(onSurface12OpacityColor,
-                                        withBackgroundColor: colorScheme.surfaceColor)
+      MDCSemanticColorScheme.blendColor(
+        onSurface12OpacityColor,
+        withBackgroundColor: colorScheme.surfaceColor)
     let textColor =
-      MDCSemanticColorScheme.blendColor(onSurface87OpacityColor,
-                                        withBackgroundColor: colorScheme.surfaceColor)
+      MDCSemanticColorScheme.blendColor(
+        onSurface87OpacityColor,
+        withBackgroundColor: colorScheme.surfaceColor)
     let selectedTextColor =
-      MDCSemanticColorScheme.blendColor(onSurface87OpacityColor,
-                                        withBackgroundColor: selectedBackgroundColor)
+      MDCSemanticColorScheme.blendColor(
+        onSurface87OpacityColor,
+        withBackgroundColor: selectedBackgroundColor)
 
     // When
     chip.applyOutlinedTheme(withScheme: scheme)
@@ -125,7 +133,8 @@ class ChipsMaterialThemingTests: XCTestCase {
     XCTAssertEqual(chip.borderColor(for: .selected), .clear)
     XCTAssertEqual(chip.backgroundColor(for: .normal), colorScheme.surfaceColor)
     XCTAssertEqual(chip.backgroundColor(for: .selected), selectedBackgroundColor)
-    XCTAssertEqual(chip.backgroundColor(for: .disabled), colorScheme.surfaceColor.withAlphaComponent(0.38))
+    XCTAssertEqual(
+      chip.backgroundColor(for: .disabled), colorScheme.surfaceColor.withAlphaComponent(0.38))
     XCTAssertEqual(chip.titleColor(for: .normal), textColor)
     XCTAssertEqual(chip.titleColor(for: .selected), selectedTextColor)
     XCTAssertEqual(chip.titleColor(for: .disabled), textColor.withAlphaComponent(0.38))
@@ -147,10 +156,11 @@ class ChipsMaterialThemingTests: XCTestCase {
 
     // Test remaining properties
     [.normal, .highlighted, .selected, .disabled].forEach {
-      XCTAssertEqual(chip.borderWidth(for: $0),
-                     1,
-                     accuracy: 0.001,
-                     "Border width incorrect for state \($0)")
+      XCTAssertEqual(
+        chip.borderWidth(for: $0),
+        1,
+        accuracy: 0.001,
+        "Border width incorrect for state \($0)")
     }
   }
 }

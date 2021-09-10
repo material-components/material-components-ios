@@ -14,8 +14,8 @@
 
 import UIKit
 import MaterialComponents.MaterialBottomAppBar
-import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialNavigationDrawer
+import MaterialComponents.MaterialColorScheme
 
 class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewControllerDelegate {
 
@@ -31,13 +31,13 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
 
     bottomAppBar.isFloatingButtonHidden = true
     let barButtonLeadingItem = UIBarButtonItem()
-    let menuImage = UIImage(named:"ic_menu")?.withRenderingMode(.alwaysTemplate)
+    let menuImage = UIImage(named: "ic_menu")?.withRenderingMode(.alwaysTemplate)
     barButtonLeadingItem.image = menuImage
     barButtonLeadingItem.target = self
     barButtonLeadingItem.action = #selector(presentNavigationDrawer)
-    bottomAppBar.leadingBarButtonItems = [ barButtonLeadingItem ]
+    bottomAppBar.leadingBarButtonItems = [barButtonLeadingItem]
 
-    bottomAppBar.barTintColor = colorScheme.surfaceColor;
+    bottomAppBar.barTintColor = colorScheme.surfaceColor
     let barItemTintColor = colorScheme.onSurfaceColor.withAlphaComponent(0.6)
     bottomAppBar.leadingBarItemsTintColor = barItemTintColor
     bottomAppBar.trailingBarItemsTintColor = barItemTintColor
@@ -50,10 +50,11 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
 
   private func layoutBottomAppBar() {
     let size = bottomAppBar.sizeThatFits(view.bounds.size)
-    var bottomBarViewFrame = CGRect(x: 0,
-                                    y: view.bounds.size.height - size.height,
-                                    width: size.width,
-                                    height: size.height)
+    var bottomBarViewFrame = CGRect(
+      x: 0,
+      y: view.bounds.size.height - size.height,
+      width: size.width,
+      height: size.height)
     if #available(iOS 11.0, *) {
       bottomBarViewFrame.size.height += view.safeAreaInsets.bottom
       bottomBarViewFrame.origin.y -= view.safeAreaInsets.bottom
@@ -76,17 +77,21 @@ class BottomDrawerWithHeaderExample: UIViewController, MDCBottomDrawerViewContro
     bottomDrawerViewController.contentViewController = contentViewController
     bottomDrawerViewController.headerViewController = headerViewController
     bottomDrawerViewController.delegate = self
-    bottomDrawerViewController.headerViewController?.view.backgroundColor = colorScheme.surfaceColor;
-    bottomDrawerViewController.contentViewController?.view.backgroundColor = colorScheme.surfaceColor;
+    bottomDrawerViewController.headerViewController?.view.backgroundColor = colorScheme.surfaceColor
+    bottomDrawerViewController.contentViewController?.view.backgroundColor =
+      colorScheme.surfaceColor
     bottomDrawerViewController.scrimColor = colorScheme.onSurfaceColor.withAlphaComponent(0.32)
     present(bottomDrawerViewController, animated: true, completion: nil)
   }
 
-  func bottomDrawerControllerDidChangeTopInset(_ controller: MDCBottomDrawerViewController,
-                                               topInset: CGFloat) {
+  func bottomDrawerControllerDidChangeTopInset(
+    _ controller: MDCBottomDrawerViewController,
+    topInset: CGFloat
+  ) {
     headerViewController.titleLabel.center =
-      CGPoint(x: headerViewController.view.frame.size.width / 2,
-              y: (headerViewController.view.frame.size.height + topInset) / 2)
+      CGPoint(
+        x: headerViewController.view.frame.size.width / 2,
+        y: (headerViewController.view.frame.size.height + topInset) / 2)
   }
 }
 

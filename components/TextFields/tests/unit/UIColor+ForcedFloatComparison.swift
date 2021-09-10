@@ -35,6 +35,7 @@ extension UIColor {
     var alpha2: CGFloat = 0.0
     other?.getRed(&red2, green: &green2, blue: &blue2, alpha: &alpha2)
 
-    return Float(red1) == Float(red2) && Float(green1) == Float(green2) && Float(blue1) == Float(blue2) && Float(alpha1) == Float(alpha2)
+    return Float(red1) == Float(red2) && Float(green1) == Float(green2)
+      && Float(blue1) == Float(blue2) && Float(alpha1) == Float(alpha2)
   }
 }

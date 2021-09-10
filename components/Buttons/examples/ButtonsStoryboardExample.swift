@@ -14,10 +14,9 @@
 
 import Foundation
 import UIKit
-
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialButtons_Theming 
 import MaterialComponents.MaterialContainerScheme
-import MaterialComponents.MaterialButtons_Theming
 
 class ButtonsStoryboardExample: UIViewController {
 
@@ -63,21 +62,23 @@ class ButtonsStoryboardExample: UIViewController {
     containerView.addSubview(innerContainerView)
 
     NSLayoutConstraint.activate([
-      NSLayoutConstraint(item: innerContainerView,
-                         attribute: .centerX,
-                         relatedBy: .equal,
-                         toItem: containerView,
-                         attribute: .centerX,
-                         multiplier: 1.0,
-                         constant: 0),
-      NSLayoutConstraint(item: innerContainerView,
-                         attribute: .centerY,
-                         relatedBy: .equal,
-                         toItem: containerView,
-                         attribute: .centerY,
-                         multiplier: 1.0,
-                         constant: 0)
-      ])
+      NSLayoutConstraint(
+        item: innerContainerView,
+        attribute: .centerX,
+        relatedBy: .equal,
+        toItem: containerView,
+        attribute: .centerX,
+        multiplier: 1.0,
+        constant: 0),
+      NSLayoutConstraint(
+        item: innerContainerView,
+        attribute: .centerY,
+        relatedBy: .equal,
+        toItem: containerView,
+        attribute: .centerY,
+        multiplier: 1.0,
+        constant: 0),
+    ])
 
     buttonSetup()
 
@@ -107,35 +108,39 @@ class ButtonsStoryboardExample: UIViewController {
       return view
     }()
     NSLayoutConstraint.activate([
-      NSLayoutConstraint(item: containerView,
-                         attribute: .leading,
-                         relatedBy: .equal,
-                         toItem: viewLayoutGuide,
-                         attribute: .leading,
-                         multiplier: 1.0,
-                         constant: 0),
-      NSLayoutConstraint(item: containerView,
-                         attribute: .top,
-                         relatedBy: .equal,
-                         toItem: viewLayoutGuide,
-                         attribute: .top,
-                         multiplier: 1.0,
-                         constant: 0),
-      NSLayoutConstraint(item: containerView,
-                         attribute: .bottom,
-                         relatedBy: .equal,
-                         toItem: viewLayoutGuide,
-                         attribute: .bottom,
-                         multiplier: 1.0,
-                         constant: 0),
-      NSLayoutConstraint(item: containerView,
-                         attribute: .width,
-                         relatedBy: .equal,
-                         toItem: viewLayoutGuide,
-                         attribute: .width,
-                         multiplier: 0.5,
-                         constant: 0)
-      ])
+      NSLayoutConstraint(
+        item: containerView,
+        attribute: .leading,
+        relatedBy: .equal,
+        toItem: viewLayoutGuide,
+        attribute: .leading,
+        multiplier: 1.0,
+        constant: 0),
+      NSLayoutConstraint(
+        item: containerView,
+        attribute: .top,
+        relatedBy: .equal,
+        toItem: viewLayoutGuide,
+        attribute: .top,
+        multiplier: 1.0,
+        constant: 0),
+      NSLayoutConstraint(
+        item: containerView,
+        attribute: .bottom,
+        relatedBy: .equal,
+        toItem: viewLayoutGuide,
+        attribute: .bottom,
+        multiplier: 1.0,
+        constant: 0),
+      NSLayoutConstraint(
+        item: containerView,
+        attribute: .width,
+        relatedBy: .equal,
+        toItem: viewLayoutGuide,
+        attribute: .width,
+        multiplier: 0.5,
+        constant: 0),
+    ])
   }
 
   private func buttonSetup() {
@@ -166,41 +171,45 @@ class ButtonsStoryboardExample: UIViewController {
     let views = [
       "raised": containedButton,
       "flat": flatButton,
-      "floating": floatingButton
+      "floating": floatingButton,
     ]
 
-    view.addConstraint(NSLayoutConstraint(
-      item: containedButton,
-      attribute: .leading,
-      relatedBy: .equal,
-      toItem: innerContainerView,
-      attribute: .leading,
-      multiplier: 1.0,
-      constant: 0))
+    view.addConstraint(
+      NSLayoutConstraint(
+        item: containedButton,
+        attribute: .leading,
+        relatedBy: .equal,
+        toItem: innerContainerView,
+        attribute: .leading,
+        multiplier: 1.0,
+        constant: 0))
 
-    view.addConstraint(NSLayoutConstraint(
-      item: containedButton,
-      attribute: .trailing,
-      relatedBy: .equal,
-      toItem: innerContainerView,
-      attribute: .trailing,
-      multiplier: 1.0,
-      constant: 0))
+    view.addConstraint(
+      NSLayoutConstraint(
+        item: containedButton,
+        attribute: .trailing,
+        relatedBy: .equal,
+        toItem: innerContainerView,
+        attribute: .trailing,
+        multiplier: 1.0,
+        constant: 0))
 
-    view.addConstraint(NSLayoutConstraint(
-      item: containedButton,
-      attribute: .top,
-      relatedBy: .equal,
-      toItem: innerContainerView,
-      attribute: .top,
-      multiplier: 1.0,
-      constant: 0))
+    view.addConstraint(
+      NSLayoutConstraint(
+        item: containedButton,
+        attribute: .top,
+        relatedBy: .equal,
+        toItem: innerContainerView,
+        attribute: .top,
+        multiplier: 1.0,
+        constant: 0))
 
     view.addConstraints(
-      NSLayoutConstraint.constraints(withVisualFormat: "V:|[raised]-22-[flat]-22-[floating]|",
-                                     options: .alignAllCenterX,
-                                     metrics: nil,
-                                     views: views))
+      NSLayoutConstraint.constraints(
+        withVisualFormat: "V:|[raised]-22-[flat]-22-[floating]|",
+        options: .alignAllCenterX,
+        metrics: nil,
+        views: views))
   }
 
   @IBAction func tap(_ sender: Any) {

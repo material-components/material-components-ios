@@ -14,11 +14,10 @@
 
 import Foundation
 import UIKit
-
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialBottomAppBar
 import MaterialComponents.MaterialButtons
-import MaterialComponents.MaterialButtons_Theming
+import MaterialComponents.MaterialButtons_Theming 
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialTypographyScheme
@@ -35,11 +34,11 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
     self.title = "Bottom App Bar (Swift)"
     self.addChild(appBarViewController)
 
-    let color = UIColor(white: 0.2, alpha:1)
+    let color = UIColor(white: 0.2, alpha: 1)
     appBarViewController.headerView.backgroundColor = color
     appBarViewController.navigationBar.tintColor = .white
     appBarViewController.navigationBar.titleTextAttributes =
-      [NSAttributedString.Key.foregroundColor : UIColor.white]
+      [NSAttributedString.Key.foregroundColor: UIColor.white]
     commonInitBottomAppBarTypicalUseSwiftExample()
   }
 
@@ -56,16 +55,17 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
   }
 
   func commonInitBottomAppBarTypicalUseSwiftExample() {
-    bottomBarView.autoresizingMask = [ .flexibleWidth, .flexibleTopMargin ]
+    bottomBarView.autoresizingMask = [.flexibleWidth, .flexibleTopMargin]
     view.addSubview(bottomBarView)
 
     // Add touch handler to the floating button.
-    bottomBarView.floatingButton.addTarget(self,
-                                           action: #selector(didTapFloatingButton(_:)),
-                                           for: .touchUpInside)
+    bottomBarView.floatingButton.addTarget(
+      self,
+      action: #selector(didTapFloatingButton(_:)),
+      for: .touchUpInside)
 
     // Set the image on the floating button.
-    let addImage = UIImage(named:"ic_add")?.withRenderingMode(.alwaysTemplate)
+    let addImage = UIImage(named: "ic_add")?.withRenderingMode(.alwaysTemplate)
     bottomBarView.floatingButton.setImage(addImage, for: .normal)
     bottomBarView.floatingButton.setTitle("Add new item", for: .normal)
     bottomBarView.floatingButton.mode = .expanded
@@ -78,21 +78,21 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
 
     // Configure the navigation buttons to be shown on the bottom app bar.
     let barButtonLeadingItem = UIBarButtonItem()
-    let menuImage = UIImage(named:"ic_menu")?.withRenderingMode(.alwaysTemplate)
+    let menuImage = UIImage(named: "ic_menu")?.withRenderingMode(.alwaysTemplate)
     barButtonLeadingItem.image = menuImage
 
     let barButtonTrailingItem = UIBarButtonItem()
-    let searchImage = UIImage(named:"ic_search")?.withRenderingMode(.alwaysTemplate)
+    let searchImage = UIImage(named: "ic_search")?.withRenderingMode(.alwaysTemplate)
     barButtonTrailingItem.image = searchImage
 
-    bottomBarView.leadingBarButtonItems = [ barButtonLeadingItem ]
-    bottomBarView.trailingBarButtonItems = [ barButtonTrailingItem ]
+    bottomBarView.leadingBarButtonItems = [barButtonLeadingItem]
+    bottomBarView.trailingBarButtonItems = [barButtonTrailingItem]
   }
 
-  @objc func didTapFloatingButton(_ sender : MDCFloatingButton) {
+  @objc func didTapFloatingButton(_ sender: MDCFloatingButton) {
 
     // Example of how to animate position of the floating button.
-    if (bottomBarView.floatingButtonPosition == .center) {
+    if bottomBarView.floatingButtonPosition == .center {
       bottomBarView.setFloatingButtonPosition(.trailing, animated: true)
       bottomBarView.floatingButton.setTitle("", for: .normal)
       bottomBarView.floatingButton.mode = .normal
@@ -105,10 +105,11 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
 
   func layoutBottomAppBar() {
     let size = bottomBarView.sizeThatFits(view.bounds.size)
-    let bottomBarViewFrame = CGRect(x: 0,
-                                    y: view.bounds.size.height - size.height,
-                                    width: size.width,
-                                    height: size.height)
+    let bottomBarViewFrame = CGRect(
+      x: 0,
+      y: view.bounds.size.height - size.height,
+      width: size.width,
+      height: size.height)
     bottomBarView.frame = bottomBarViewFrame
   }
 

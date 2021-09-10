@@ -14,7 +14,7 @@
 
 import Foundation
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialAppBar_Theming
+import MaterialComponents.MaterialAppBar_Theming 
 import MaterialComponents.MaterialContainerScheme
 
 class AppBarThemingExample: UITableViewController {
@@ -53,10 +53,11 @@ class AppBarThemingExample: UITableViewController {
     appBarViewController.didMove(toParent: self)
 
     self.navigationItem.rightBarButtonItem =
-      UIBarButtonItem(title: "Toggle theme",
-                      style: .done,
-                      target: self,
-                      action: #selector(toggleTheme))
+      UIBarButtonItem(
+        title: "Toggle theme",
+        style: .done,
+        target: self,
+        action: #selector(toggleTheme))
   }
 
   enum ThemeVariant {
@@ -124,10 +125,12 @@ extension AppBarThemingExample {
 
   override func tableView(
     _ tableView: UITableView,
-    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    cellForRowAt indexPath: IndexPath
+  ) -> UITableViewCell {
 
-    let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell") ??
-      UITableViewCell(style: .default, reuseIdentifier: "cell")
+    let cell =
+      self.tableView.dequeueReusableCell(withIdentifier: "cell")
+      ?? UITableViewCell(style: .default, reuseIdentifier: "cell")
     cell.layoutMargins = .zero
     cell.textLabel?.text = "\(indexPath.row)"
     cell.selectionStyle = .none

@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import UIKit
 import CoreGraphics
+import UIKit
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialAppBar_Theming
-import MaterialComponents.MaterialContainerScheme
+import MaterialComponents.MaterialAppBar_Theming 
+import MaterialComponents.MaterialFlexibleHeader_CanAlwaysExpandToMaximumHeight 
 import MaterialComponents.MaterialTabs
-import MaterialComponents.MaterialFlexibleHeader_CanAlwaysExpandToMaximumHeight
+import MaterialComponents.MaterialContainerScheme
 
 // An example that demonstrates the behavior of an App Bar with Tabs and manually swapped tab view
 // controllers. This example is distinct from a typical tab bar view controller in that it does not
@@ -38,8 +38,8 @@ class AppBarManualTabsExample: UIViewController {
     let tabBar = MDCTabBar()
 
     tabBar.items = [
-      UITabBarItem(title: "First", image: nil, tag:0),
-      UITabBarItem(title: "Second", image: nil, tag:1)
+      UITabBarItem(title: "First", image: nil, tag: 0),
+      UITabBarItem(title: "Second", image: nil, tag: 1),
     ]
 
     tabBar.delegate = self

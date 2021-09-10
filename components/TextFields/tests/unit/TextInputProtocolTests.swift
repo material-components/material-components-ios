@@ -147,7 +147,7 @@ class TextInputTests: XCTestCase {
     let controller = MDCTextInputControllerLegacyDefault(textInput: textField)
     XCTAssertNotNil(controller.textInput)
 
-      RunLoop.main.run(until: Date.init(timeIntervalSinceNow: 1))
+    RunLoop.main.run(until: Date.init(timeIntervalSinceNow: 1))
 
   }
 

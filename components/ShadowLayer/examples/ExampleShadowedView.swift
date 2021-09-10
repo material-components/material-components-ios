@@ -13,9 +13,8 @@
 // limitations under the License.
 
 import UIKit
-
-import MaterialComponents.MaterialShadowLayer
 import MaterialComponents.MaterialShadowElevations
+import MaterialComponents.MaterialShadowLayer
 
 class ExampleShadowedView: UIView {
 

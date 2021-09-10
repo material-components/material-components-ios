@@ -14,7 +14,6 @@
 
 import Foundation
 import UIKit
-
 import MaterialComponents.MaterialContainerScheme
 
 class SegmentedControlTypicalUseExample: UIViewController {
@@ -33,7 +32,7 @@ class SegmentedControlTypicalUseExample: UIViewController {
       .flexibleLeftMargin,
       .flexibleTopMargin,
       .flexibleRightMargin,
-      .flexibleBottomMargin
+      .flexibleBottomMargin,
     ]
     segmentedControl.selectedSegmentIndex = 0
     view.addSubview(segmentedControl)

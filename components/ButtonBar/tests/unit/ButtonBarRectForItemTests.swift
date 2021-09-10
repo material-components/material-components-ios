@@ -49,10 +49,13 @@ class ButtonBarRectForItemTests: XCTestCase {
 
   func testLongTextButtonMatchesExpectedSize() {
     // Given
-    let items = [UIBarButtonItem(title: "Text that is relatively long",
-                                 style: .plain,
-                                 target: nil,
-                                 action: nil)]
+    let items = [
+      UIBarButtonItem(
+        title: "Text that is relatively long",
+        style: .plain,
+        target: nil,
+        action: nil)
+    ]
     buttonBar.items = items
     buttonBar.layoutIfNeeded()
 
@@ -65,8 +68,10 @@ class ButtonBarRectForItemTests: XCTestCase {
 
   func testOriginOfEachButtonIncreasesWhenLeading() {
     // Given
-    let items = [UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil),
-                 UIBarButtonItem(title: "Text 2", style: .plain, target: nil, action: nil)]
+    let items = [
+      UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil),
+      UIBarButtonItem(title: "Text 2", style: .plain, target: nil, action: nil),
+    ]
     buttonBar.items = items
     buttonBar.layoutPosition = .leading
     buttonBar.layoutIfNeeded()
@@ -82,8 +87,10 @@ class ButtonBarRectForItemTests: XCTestCase {
 
   func testOriginOfEachButtonDecreasesWhenTrailing() {
     // Given
-    let items = [UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil),
-                 UIBarButtonItem(title: "Text 2", style: .plain, target: nil, action: nil)]
+    let items = [
+      UIBarButtonItem(title: "Text", style: .plain, target: nil, action: nil),
+      UIBarButtonItem(title: "Text 2", style: .plain, target: nil, action: nil),
+    ]
     buttonBar.items = items
     buttonBar.layoutPosition = .trailing
     buttonBar.layoutIfNeeded()

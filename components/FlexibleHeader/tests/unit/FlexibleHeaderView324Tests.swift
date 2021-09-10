@@ -25,7 +25,7 @@ class FlexibleHeaderView324Tests: XCTestCase {
 
   override func setUp() {
     super.setUp()
-    
+
     headerView = MDCFlexibleHeaderView()
   }
 

@@ -18,7 +18,6 @@
 // swiftlint:disable function_body_length
 
 import UIKit
-
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialButtons
 import MaterialComponents.MaterialTextFields
@@ -26,23 +25,27 @@ import MaterialComponents.MaterialTextFields
 extension TextFieldKitchenSinkSwiftExample {
 
   func setupExampleViews() {
-    view.backgroundColor = UIColor(white:0.97, alpha: 1.0)
+    view.backgroundColor = UIColor(white: 0.97, alpha: 1.0)
 
     title = "Material Text Fields"
 
     let textFieldControllersFullWidth = setupFullWidthTextFields()
 
-    allTextFieldControllers = [setupFilledTextFields(), setupInlineUnderlineTextFields(),
-                               textFieldControllersFullWidth,
-                               setupFloatingUnderlineTextFields(),
-                               setupSpecialTextFields()].flatMap { $0 as! [MDCTextInputController] }
+    allTextFieldControllers = [
+      setupFilledTextFields(), setupInlineUnderlineTextFields(),
+      textFieldControllersFullWidth,
+      setupFloatingUnderlineTextFields(),
+      setupSpecialTextFields(),
+    ].flatMap { $0 as! [MDCTextInputController] }
 
     let multilineTextFieldControllersFullWidth = setupFullWidthMultilineTextFields()
 
-    allMultilineTextFieldControllers = [setupAreaTextFields(), setupUnderlineMultilineTextFields(),
-                              multilineTextFieldControllersFullWidth,
-                              setupFloatingMultilineTextFields(),
-                              setupSpecialMultilineTextFields()].flatMap { $0 }
+    allMultilineTextFieldControllers = [
+      setupAreaTextFields(), setupUnderlineMultilineTextFields(),
+      multilineTextFieldControllersFullWidth,
+      setupFloatingMultilineTextFields(),
+      setupSpecialMultilineTextFields(),
+    ].flatMap { $0 }
 
     controllersFullWidth = textFieldControllersFullWidth + multilineTextFieldControllersFullWidth
 
@@ -50,10 +53,11 @@ extension TextFieldKitchenSinkSwiftExample {
 
     setupScrollView()
 
-    NotificationCenter.default.addObserver(self,
-                                           selector: #selector(TextFieldKitchenSinkSwiftExample.contentSizeCategoryDidChange(notif:)),
-                                           name: UIContentSizeCategory.didChangeNotification,
-                                           object: nil)
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(TextFieldKitchenSinkSwiftExample.contentSizeCategoryDidChange(notif:)),
+      name: UIContentSizeCategory.didChangeNotification,
+      object: nil)
   }
 
   func setupButton() -> MDCButton {
@@ -73,9 +77,10 @@ extension TextFieldKitchenSinkSwiftExample {
 
     let errorSwitch = UISwitch()
     errorSwitch.translatesAutoresizingMaskIntoConstraints = false
-    errorSwitch.addTarget(self,
-                          action: #selector(TextFieldKitchenSinkSwiftExample.errorSwitchDidChange(errorSwitch:)),
-                          for: .touchUpInside)
+    errorSwitch.addTarget(
+      self,
+      action: #selector(TextFieldKitchenSinkSwiftExample.errorSwitchDidChange(errorSwitch:)),
+      for: .touchUpInside)
     container.addSubview(errorSwitch)
     errorSwitch.accessibilityLabel = "Show errors"
 
@@ -83,42 +88,57 @@ extension TextFieldKitchenSinkSwiftExample {
 
     let helperSwitch = UISwitch()
     helperSwitch.translatesAutoresizingMaskIntoConstraints = false
-    helperSwitch.addTarget(self,
-                           action: #selector(TextFieldKitchenSinkSwiftExample.helperSwitchDidChange(helperSwitch:)),
-                           for: .touchUpInside)
+    helperSwitch.addTarget(
+      self,
+      action: #selector(TextFieldKitchenSinkSwiftExample.helperSwitchDidChange(helperSwitch:)),
+      for: .touchUpInside)
     container.addSubview(helperSwitch)
     helperSwitch.accessibilityLabel = "Helper text"
 
-    let views = ["errorLabel": errorLabel, "errorSwitch": errorSwitch,
-                 "helperLabel": helperLabel, "helperSwitch": helperSwitch]
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
-      "H:|-[errorLabel]-[errorSwitch]|", options: [.alignAllCenterY], metrics: nil, views: views))
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
-      "H:|-[helperLabel]-[helperSwitch]|", options: [.alignAllCenterY], metrics: nil, views: views))
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat:
-      "V:|-[errorSwitch]-[helperSwitch]|", options: [], metrics: nil, views: views))
+    let views = [
+      "errorLabel": errorLabel, "errorSwitch": errorSwitch,
+      "helperLabel": helperLabel, "helperSwitch": helperSwitch,
+    ]
+    NSLayoutConstraint.activate(
+      NSLayoutConstraint.constraints(
+        withVisualFormat:
+          "H:|-[errorLabel]-[errorSwitch]|", options: [.alignAllCenterY], metrics: nil, views: views
+      ))
+    NSLayoutConstraint.activate(
+      NSLayoutConstraint.constraints(
+        withVisualFormat:
+          "H:|-[helperLabel]-[helperSwitch]|", options: [.alignAllCenterY], metrics: nil,
+        views: views))
+    NSLayoutConstraint.activate(
+      NSLayoutConstraint.constraints(
+        withVisualFormat:
+          "V:|-[errorSwitch]-[helperSwitch]|", options: [], metrics: nil, views: views))
 
-    textInsetsModeButton.addTarget(self,
-                                  action: #selector(textInsetsModeButtonDidTouch(button:)),
-                                  for: .touchUpInside)
+    textInsetsModeButton.addTarget(
+      self,
+      action: #selector(textInsetsModeButtonDidTouch(button:)),
+      for: .touchUpInside)
     textInsetsModeButton.setTitle("Text Insets Mode: If Content", for: .normal)
     scrollView.addSubview(textInsetsModeButton)
 
-    characterModeButton.addTarget(self,
-                                  action: #selector(textFieldModeButtonDidTouch(button:)),
-                                  for: .touchUpInside)
+    characterModeButton.addTarget(
+      self,
+      action: #selector(textFieldModeButtonDidTouch(button:)),
+      for: .touchUpInside)
     characterModeButton.setTitle("Character Count Mode: Always", for: .normal)
     scrollView.addSubview(characterModeButton)
 
-    clearModeButton.addTarget(self,
-                              action: #selector(textFieldModeButtonDidTouch(button:)),
-                              for: .touchUpInside)
+    clearModeButton.addTarget(
+      self,
+      action: #selector(textFieldModeButtonDidTouch(button:)),
+      for: .touchUpInside)
     clearModeButton.setTitle("Clear Button Mode: While Editing", for: .normal)
     scrollView.addSubview(clearModeButton)
 
-    underlineButton.addTarget(self,
-                              action: #selector(textFieldModeButtonDidTouch(button:)),
-                              for: .touchUpInside)
+    underlineButton.addTarget(
+      self,
+      action: #selector(textFieldModeButtonDidTouch(button:)),
+      for: .touchUpInside)
 
     underlineButton.setTitle("Underline Mode: While Editing", for: .normal)
     scrollView.addSubview(underlineButton)
@@ -131,36 +151,43 @@ extension TextFieldKitchenSinkSwiftExample {
     scrollView.addSubview(singleLabel)
     scrollView.addSubview(multiLabel)
 
-    NSLayoutConstraint(item: singleLabel,
-                       attribute: .leading,
-                       relatedBy: .equal,
-                       toItem: view,
-                       attribute: .leadingMargin,
-                       multiplier: 1,
-                       constant: 0).isActive = true
+    NSLayoutConstraint(
+      item: singleLabel,
+      attribute: .leading,
+      relatedBy: .equal,
+      toItem: view,
+      attribute: .leadingMargin,
+      multiplier: 1,
+      constant: 0
+    ).isActive = true
 
-    NSLayoutConstraint(item: singleLabel,
-                       attribute: .trailing,
-                       relatedBy: .equal,
-                       toItem: view,
-                       attribute: .trailingMargin,
-                       multiplier: 1,
-                       constant: 0).isActive = true
+    NSLayoutConstraint(
+      item: singleLabel,
+      attribute: .trailing,
+      relatedBy: .equal,
+      toItem: view,
+      attribute: .trailingMargin,
+      multiplier: 1,
+      constant: 0
+    ).isActive = true
   }
 
   func setupScrollView() {
     view.addSubview(scrollView)
     scrollView.translatesAutoresizingMaskIntoConstraints = false
 
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(
-      withVisualFormat: "V:|[topGuide]-[scrollView]|",
-      options: [],
-      metrics: nil,
-      views: ["scrollView": scrollView, "topGuide": topLayoutGuide]))
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: "H:|[scrollView]|",
-                                                               options: [],
-                                                               metrics: nil,
-                                                               views: ["scrollView": scrollView]))
+    NSLayoutConstraint.activate(
+      NSLayoutConstraint.constraints(
+        withVisualFormat: "V:|[topGuide]-[scrollView]|",
+        options: [],
+        metrics: nil,
+        views: ["scrollView": scrollView, "topGuide": topLayoutGuide]))
+    NSLayoutConstraint.activate(
+      NSLayoutConstraint.constraints(
+        withVisualFormat: "H:|[scrollView]|",
+        options: [],
+        metrics: nil,
+        views: ["scrollView": scrollView]))
     let marginOffset: CGFloat = 16
     let margins = UIEdgeInsets(top: 0, left: marginOffset, bottom: 0, right: marginOffset)
 
@@ -171,8 +198,7 @@ extension TextFieldKitchenSinkSwiftExample {
     let prefix = "view"
     let concatenatingClosure = {
       (accumulator, object: AnyObject) in
-      accumulator + "-[" + self.unique(from: object, with: prefix) +
-        "]"
+      accumulator + "-[" + self.unique(from: object, with: prefix) + "]"
     }
 
     let allControls = setupControls()
@@ -181,7 +207,7 @@ extension TextFieldKitchenSinkSwiftExample {
     var controls = [String: UIView]()
     allControls.forEach { control in
       controls[unique(from: control, with: prefix)] =
-      control
+        control
     }
 
     let allTextFields = allTextFieldControllers.compactMap { $0.textInput }
@@ -200,15 +226,17 @@ extension TextFieldKitchenSinkSwiftExample {
       textViews[unique(from: input, with: prefix)] = input
     }
 
-    let visualString = "V:[singleLabel]" +
-      textFieldsString + "[unstyledTextField]-20-[multiLabel]" + textViewsString +
-      "[unstyledTextView]-10-[controlLabel]" + controlsString
+    let visualString =
+      "V:[singleLabel]" + textFieldsString + "[unstyledTextField]-20-[multiLabel]" + textViewsString
+      + "[unstyledTextView]-10-[controlLabel]" + controlsString
 
-    let labels: [String: UIView] = ["controlLabel": controlLabel,
-                                    "singleLabel": singleLabel,
-                                    "multiLabel": multiLabel,
-                                    "unstyledTextField": unstyledTextField,
-                                    "unstyledTextView": unstyledMultilineTextField]
+    let labels: [String: UIView] = [
+      "controlLabel": controlLabel,
+      "singleLabel": singleLabel,
+      "multiLabel": multiLabel,
+      "unstyledTextField": unstyledTextField,
+      "unstyledTextView": unstyledMultilineTextField,
+    ]
 
     var views = [String: UIView]()
 
@@ -221,90 +249,108 @@ extension TextFieldKitchenSinkSwiftExample {
         // We have a scrollview and we're adding some elements that are subclassed from scrollviews.
         // So constraints need to be in relation to something that doesn't have a content size.
         // We'll use the view controller's view.
-        let leading = NSLayoutConstraint(item: value,
-                                         attribute: .leading,
-                                         relatedBy: .equal,
-                                         toItem: view,
-                                         attribute: .leadingMargin,
-                                         multiplier: 1.0,
-                                         constant: 0.0)
+        let leading = NSLayoutConstraint(
+          item: value,
+          attribute: .leading,
+          relatedBy: .equal,
+          toItem: view,
+          attribute: .leadingMargin,
+          multiplier: 1.0,
+          constant: 0.0)
         leading.priority = UILayoutPriority.defaultHigh
         leading.isActive = true
 
-        let trailing = NSLayoutConstraint(item: value,
-                                          attribute: .trailing,
-                                          relatedBy: .equal,
-                                          toItem: view,
-                                          attribute: .trailing,
-                                          multiplier: 1.0,
-                                          constant: 0.0)
+        let trailing = NSLayoutConstraint(
+          item: value,
+          attribute: .trailing,
+          relatedBy: .equal,
+          toItem: view,
+          attribute: .trailing,
+          multiplier: 1.0,
+          constant: 0.0)
         trailing.priority = UILayoutPriority.defaultHigh
         trailing.isActive = true
       }
     }
 
-    NSLayoutConstraint.activate(NSLayoutConstraint.constraints(withVisualFormat: visualString,
-                                                               options: [.alignAllCenterX],
-                                                               metrics: nil,
-                                                               views: views))
+    NSLayoutConstraint.activate(
+      NSLayoutConstraint.constraints(
+        withVisualFormat: visualString,
+        options: [.alignAllCenterX],
+        metrics: nil,
+        views: views))
 
     controllersFullWidth.compactMap { $0.textInput }.forEach { textInput in
-      NSLayoutConstraint(item: textInput,
-                         attribute: .leading,
-                         relatedBy: .equal,
-                         toItem: view,
-                         attribute: .leading,
-                         multiplier: 1.0,
-                         constant: 0).isActive = true
-      NSLayoutConstraint(item: textInput,
-                         attribute: .trailing,
-                         relatedBy: .equal,
-                         toItem: view,
-                         attribute: .trailing,
-                         multiplier: 1.0,
-                         constant: 0).isActive = true
+      NSLayoutConstraint(
+        item: textInput,
+        attribute: .leading,
+        relatedBy: .equal,
+        toItem: view,
+        attribute: .leading,
+        multiplier: 1.0,
+        constant: 0
+      ).isActive = true
+      NSLayoutConstraint(
+        item: textInput,
+        attribute: .trailing,
+        relatedBy: .equal,
+        toItem: view,
+        attribute: .trailing,
+        multiplier: 1.0,
+        constant: 0
+      ).isActive = true
 
       // This constraint is necessary for the scrollview to have a content width.
-      NSLayoutConstraint(item: textInput,
-                         attribute: .trailing,
-                         relatedBy: .equal,
-                         toItem: scrollView,
-                         attribute: .trailing,
-                         multiplier: 1.0,
-                         constant: 0).isActive = true
+      NSLayoutConstraint(
+        item: textInput,
+        attribute: .trailing,
+        relatedBy: .equal,
+        toItem: scrollView,
+        attribute: .trailing,
+        multiplier: 1.0,
+        constant: 0
+      ).isActive = true
     }
 
     // These used to be done in the visual format string but iOS 11 changed that.
     if #available(iOS 11.0, *) {
-      NSLayoutConstraint(item: singleLabel,
-                         attribute: .topMargin,
-                         relatedBy: .equal,
-                         toItem: scrollView.contentLayoutGuide,
-                         attribute: .top,
-                         multiplier: 1.0,
-                         constant: 20).isActive = true
-      NSLayoutConstraint(item: allControls.last as Any,
-                         attribute: .bottom,
-                         relatedBy: .equal,
-                         toItem: scrollView.contentLayoutGuide,
-                         attribute: .bottomMargin,
-                         multiplier: 1.0,
-                         constant: -20).isActive = true
+      NSLayoutConstraint(
+        item: singleLabel,
+        attribute: .topMargin,
+        relatedBy: .equal,
+        toItem: scrollView.contentLayoutGuide,
+        attribute: .top,
+        multiplier: 1.0,
+        constant: 20
+      ).isActive = true
+      NSLayoutConstraint(
+        item: allControls.last as Any,
+        attribute: .bottom,
+        relatedBy: .equal,
+        toItem: scrollView.contentLayoutGuide,
+        attribute: .bottomMargin,
+        multiplier: 1.0,
+        constant: -20
+      ).isActive = true
     } else {
-      NSLayoutConstraint(item: singleLabel,
-                         attribute: .topMargin,
-                         relatedBy: .equal,
-                         toItem: scrollView,
-                         attribute: .top,
-                         multiplier: 1.0,
-                         constant: 20).isActive = true
-      NSLayoutConstraint(item: allControls.last as Any,
-                         attribute: .bottom,
-                         relatedBy: .equal,
-                         toItem: scrollView,
-                         attribute: .bottomMargin,
-                         multiplier: 1.0,
-                         constant: -20).isActive = true
+      NSLayoutConstraint(
+        item: singleLabel,
+        attribute: .topMargin,
+        relatedBy: .equal,
+        toItem: scrollView,
+        attribute: .top,
+        multiplier: 1.0,
+        constant: 20
+      ).isActive = true
+      NSLayoutConstraint(
+        item: allControls.last as Any,
+        attribute: .bottom,
+        relatedBy: .equal,
+        toItem: scrollView,
+        attribute: .bottomMargin,
+        multiplier: 1.0,
+        constant: -20
+      ).isActive = true
     }
 
     registerKeyboardNotifications()
@@ -312,8 +358,9 @@ extension TextFieldKitchenSinkSwiftExample {
   }
 
   func addGestureRecognizer() {
-    let tapRecognizer = UITapGestureRecognizer(target: self,
-                                               action: #selector(tapDidTouch(sender: )))
+    let tapRecognizer = UITapGestureRecognizer(
+      target: self,
+      action: #selector(tapDidTouch(sender:)))
     self.scrollView.addGestureRecognizer(tapRecognizer)
   }
 
@@ -340,10 +387,11 @@ extension TextFieldKitchenSinkSwiftExample {
     guard let frame = notif.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
       return
     }
-    scrollView.contentInset = UIEdgeInsets(top: 0.0,
-                                           left: 0.0,
-                                           bottom: frame.height,
-                                           right: 0.0)
+    scrollView.contentInset = UIEdgeInsets(
+      top: 0.0,
+      left: 0.0,
+      bottom: frame.height,
+      right: 0.0)
   }
 
   @objc func keyboardWillHide(notif: Notification) {
@@ -388,23 +436,28 @@ extension TextFieldKitchenSinkSwiftExample {
       }
     }
 
-    let alert = UIAlertController(title: partialTitle,
-                                  message: nil,
-                                  preferredStyle: .alert)
+    let alert = UIAlertController(
+      title: partialTitle,
+      message: nil,
+      preferredStyle: .alert)
     presentAlert(alert: alert, partialTitle: partialTitle, closure: closure)
   }
 
-  func presentAlert (alert: UIAlertController,
-                     partialTitle: String,
-                     closure: @escaping (_ mode: UITextField.ViewMode, _ title: String) -> Void) -> Void {
+  func presentAlert(
+    alert: UIAlertController,
+    partialTitle: String,
+    closure: @escaping (_ mode: UITextField.ViewMode, _ title: String) -> Void
+  ) {
 
     for rawMode in 0...3 {
       let mode = UITextField.ViewMode(rawValue: rawMode)!
-      alert.addAction(UIAlertAction(title: modeName(mode: mode),
-                                    style: .default,
-                                    handler: { _ in
-                                      closure(mode, partialTitle)
-      }))
+      alert.addAction(
+        UIAlertAction(
+          title: modeName(mode: mode),
+          style: .default,
+          handler: { _ in
+            closure(mode, partialTitle)
+          }))
     }
 
     present(alert, animated: true, completion: nil)
@@ -435,22 +488,25 @@ extension TextFieldKitchenSinkSwiftExample {
         }
         input.textInsetsMode = mode
 
-      button.setTitle(title + ": " + self.textInsetsModeName(mode: mode), for: .normal)
+        button.setTitle(title + ": " + self.textInsetsModeName(mode: mode), for: .normal)
       }
     }
 
     let title = "Text Insets Mode"
-    let alert = UIAlertController(title: title,
-                                  message: nil,
-                                  preferredStyle: .alert)
+    let alert = UIAlertController(
+      title: title,
+      message: nil,
+      preferredStyle: .alert)
 
     for rawMode: UInt in 0...2 {
       let mode = MDCTextInputTextInsetsMode(rawValue: rawMode)!
-      alert.addAction(UIAlertAction(title: textInsetsModeName(mode: mode),
-                                    style: .default,
-                                    handler: { _ in
-                                      closure(mode, title)
-      }))
+      alert.addAction(
+        UIAlertAction(
+          title: textInsetsModeName(mode: mode),
+          style: .default,
+          handler: { _ in
+            closure(mode, title)
+          }))
     }
 
     present(alert, animated: true, completion: nil)

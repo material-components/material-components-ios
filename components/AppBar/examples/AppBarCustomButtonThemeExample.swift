@@ -13,9 +13,9 @@
 // limitations under the License.
 
 import Foundation
-import MaterialComponents.MaterialButtons_Theming
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialAppBar_Theming
+import MaterialComponents.MaterialAppBar_Theming 
+import MaterialComponents.MaterialButtons_Theming 
 import MaterialComponents.MaterialContainerScheme
 
 class AppBarCustomButtonThemeExample: UITableViewController {
@@ -64,10 +64,11 @@ class AppBarCustomButtonThemeExample: UITableViewController {
     button.setTitle("Right", for: .normal)
     button.sizeToFit()
     // Give the button horizontal insets so that it's not flush with the device's edge.
-    containerView.frame = CGRect(x: 0,
-                                 y: 8,
-                                 width: button.bounds.width + 16,
-                                 height: button.bounds.height)
+    containerView.frame = CGRect(
+      x: 0,
+      y: 8,
+      width: button.bounds.width + 16,
+      height: button.bounds.height)
     // Vertically center the button:
     button.autoresizingMask = [.flexibleTopMargin, .flexibleBottomMargin]
     containerView.addSubview(button)
@@ -120,13 +121,15 @@ extension AppBarCustomButtonThemeExample {
 
   override func tableView(
     _ tableView: UITableView,
-    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    
-    let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell") ??
-        UITableViewCell(style: .default, reuseIdentifier: "cell")
-      cell.layoutMargins = .zero
-      cell.textLabel?.text = "\(indexPath.row)"
-      cell.selectionStyle = .none
-      return cell
+    cellForRowAt indexPath: IndexPath
+  ) -> UITableViewCell {
+
+    let cell =
+      self.tableView.dequeueReusableCell(withIdentifier: "cell")
+      ?? UITableViewCell(style: .default, reuseIdentifier: "cell")
+    cell.layoutMargins = .zero
+    cell.textLabel?.text = "\(indexPath.row)"
+    cell.selectionStyle = .none
+    return cell
   }
 }

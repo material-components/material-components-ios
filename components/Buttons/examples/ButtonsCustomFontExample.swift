@@ -13,10 +13,9 @@
 // limitations under the License.
 
 import UIKit
-
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialButtons_Theming 
 import MaterialComponents.MaterialContainerScheme
-import MaterialComponents.MaterialButtons_Theming
 
 class ButtonsCustomFontExample: UIViewController {
 
@@ -34,7 +33,7 @@ class ButtonsCustomFontExample: UIViewController {
     super.viewDidLoad()
 
     // Define our design data
-    if let customFont = UIFont(name:"Zapfino", size:14.0) {
+    if let customFont = UIFont(name: "Zapfino", size: 14.0) {
       let typographyScheme = MDCTypographyScheme()
       typographyScheme.button = customFont
     }
@@ -60,38 +59,41 @@ class ButtonsCustomFontExample: UIViewController {
 
     let views = [
       "flatStatic": flatButtonStatic,
-      "flatDynamic": flatButtonDynamic
+      "flatDynamic": flatButtonDynamic,
     ]
 
     centerView(view: flatButtonDynamic, onView: self.view)
 
     view.addConstraints(
-      NSLayoutConstraint.constraints(withVisualFormat: "V:[flatStatic]-40-[flatDynamic]",
-                                     options: .alignAllCenterX,
-                                     metrics: nil,
-                                     views: views))
+      NSLayoutConstraint.constraints(
+        withVisualFormat: "V:[flatStatic]-40-[flatDynamic]",
+        options: .alignAllCenterX,
+        metrics: nil,
+        views: views))
   }
 
   // MARK: Private
 
   func centerView(view: UIView, onView: UIView) {
-    onView.addConstraint(NSLayoutConstraint(
-      item: view,
-      attribute: .centerX,
-      relatedBy: .equal,
-      toItem: onView,
-      attribute: .centerX,
-      multiplier: 1.0,
-      constant: 0.0))
+    onView.addConstraint(
+      NSLayoutConstraint(
+        item: view,
+        attribute: .centerX,
+        relatedBy: .equal,
+        toItem: onView,
+        attribute: .centerX,
+        multiplier: 1.0,
+        constant: 0.0))
 
-    onView.addConstraint(NSLayoutConstraint(
-      item: view,
-      attribute: .centerY,
-      relatedBy: .equal,
-      toItem: onView,
-      attribute: .centerY,
-      multiplier: 1.0,
-      constant: 0.0))
+    onView.addConstraint(
+      NSLayoutConstraint(
+        item: view,
+        attribute: .centerY,
+        relatedBy: .equal,
+        toItem: onView,
+        attribute: .centerY,
+        multiplier: 1.0,
+        constant: 0.0))
   }
 
   @objc func tap(_ sender: Any) {

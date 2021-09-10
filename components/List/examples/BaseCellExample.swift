@@ -13,12 +13,11 @@
 // limitations under the License.
 
 import Foundation
-
-import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialList
 import MaterialComponents.MaterialShadowElevations
+import MaterialComponents.MaterialContainerScheme
 
-class BaseCellExample : UIViewController {
+class BaseCellExample: UIViewController {
   private let arbitraryCellHeight: CGFloat = 75
   fileprivate let baseCellIdentifier: String = "baseCellIdentifier"
   fileprivate let numberOfCells: Int = 100
@@ -33,8 +32,9 @@ class BaseCellExample : UIViewController {
   }
 
   private var collectionViewEstimatedCellSize: CGSize {
-    return CGSize(width: collectionView.bounds.size.width - 20,
-                  height: arbitraryCellHeight)
+    return CGSize(
+      width: collectionView.bounds.size.width - 20,
+      height: arbitraryCellHeight)
   }
 
   override func viewDidLoad() {
@@ -73,7 +73,7 @@ class BaseCellExample : UIViewController {
       height -= (view.safeAreaInsets.top + view.safeAreaInsets.bottom)
     }
 
-    let frame = CGRect(x: originX, y: originY, width: width, height: height);
+    let frame = CGRect(x: originX, y: originY, width: width, height: height)
     collectionView.frame = frame
     collectionViewLayout.estimatedItemSize = collectionViewEstimatedCellSize
     collectionViewLayout.invalidateLayout()
@@ -87,8 +87,10 @@ extension BaseCellExample: UICollectionViewDelegate {
     cell.elevation = ShadowElevation(rawValue: 10)
   }
 
-  func collectionView(_ collectionView: UICollectionView,
-                      didUnhighlightItemAt indexPath: IndexPath) {
+  func collectionView(
+    _ collectionView: UICollectionView,
+    didUnhighlightItemAt indexPath: IndexPath
+  ) {
     guard let cell = collectionView.cellForItem(at: indexPath) as? MDCBaseCell else { fatalError() }
     cell.elevation = ShadowElevation(rawValue: 0)
   }
@@ -99,13 +101,15 @@ extension BaseCellExample: UICollectionViewDataSource {
     return 1
   }
 
-  func collectionView(_ collectionView: UICollectionView,
-                      numberOfItemsInSection section: Int) -> Int {
+  func collectionView(
+    _ collectionView: UICollectionView,
+    numberOfItemsInSection section: Int
+  ) -> Int {
     return numberOfCells
   }
 
   static let colorNames: [String] = [
-    "Red", "Green", "Blue", "Orange", "Yellow", "Brown", "Cyan", "Purple"
+    "Red", "Green", "Blue", "Orange", "Yellow", "Brown", "Cyan", "Purple",
   ]
   static let colorNameToColorMap: [String: UIColor] = [
     "Red": .red,
@@ -115,14 +119,18 @@ extension BaseCellExample: UICollectionViewDataSource {
     "Yellow": .yellow,
     "Brown": .brown,
     "Cyan": .cyan,
-    "Purple": .purple
+    "Purple": .purple,
   ]
 
-  func collectionView(_ collectionView: UICollectionView,
-                      cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: baseCellIdentifier,
-                                                        for: indexPath) as? MDCBaseCell
-      else { fatalError() }
+  func collectionView(
+    _ collectionView: UICollectionView,
+    cellForItemAt indexPath: IndexPath
+  ) -> UICollectionViewCell {
+    guard
+      let cell = collectionView.dequeueReusableCell(
+        withReuseIdentifier: baseCellIdentifier,
+        for: indexPath) as? MDCBaseCell
+    else { fatalError() }
 
     cell.layer.borderColor = containerScheme.colorScheme.onBackgroundColor.cgColor
     let styleIndex = indexPath.row % BaseCellExample.colorNames.count

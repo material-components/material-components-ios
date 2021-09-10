@@ -13,8 +13,8 @@
 // limitations under the License.
 
 import XCTest
-import MaterialComponents.MaterialNavigationBar
 import MaterialComponents.MaterialButtons
+import MaterialComponents.MaterialNavigationBar
 
 class NavigationBarButtonTitleCasingTests: XCTestCase {
 
@@ -22,7 +22,7 @@ class NavigationBarButtonTitleCasingTests: XCTestCase {
 
   override func setUp() {
     super.setUp()
-    
+
     navigationBar = MDCNavigationBar()
   }
 

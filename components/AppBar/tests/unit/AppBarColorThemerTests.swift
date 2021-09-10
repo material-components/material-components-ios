@@ -14,7 +14,7 @@
 
 import XCTest
 import MaterialComponents.MaterialAppBar
-import MaterialComponents.MaterialAppBar_ColorThemer
+import MaterialComponents.MaterialAppBar_ColorThemer 
 import MaterialComponents.MaterialThemes
 
 class AppBarColorThemerTests: XCTestCase {
@@ -24,8 +24,8 @@ class AppBarColorThemerTests: XCTestCase {
     let appBar = MDCAppBar()
     appBar.headerViewController.headerView.backgroundColor = .red
     appBar.navigationBar.backgroundColor = .blue
-    appBar.navigationBar.titleTextColor = .green;
-    appBar.navigationBar.tintColor = .orange;
+    appBar.navigationBar.titleTextColor = .green
+    appBar.navigationBar.tintColor = .orange
     let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
     colorScheme.primaryColor = .purple
     colorScheme.onPrimaryColor = .lightGray
@@ -34,8 +34,9 @@ class AppBarColorThemerTests: XCTestCase {
     MDCAppBarColorThemer.applySemanticColorScheme(colorScheme, to: appBar)
 
     // Then
-    XCTAssertEqual(appBar.headerViewController.headerView.backgroundColor,
-                   colorScheme.primaryColor)
+    XCTAssertEqual(
+      appBar.headerViewController.headerView.backgroundColor,
+      colorScheme.primaryColor)
     XCTAssertEqual(appBar.navigationBar.backgroundColor, colorScheme.primaryColor)
     XCTAssertEqual(appBar.navigationBar.titleTextColor, colorScheme.onPrimaryColor)
     XCTAssertEqual(appBar.navigationBar.tintColor, colorScheme.onPrimaryColor)
@@ -46,8 +47,8 @@ class AppBarColorThemerTests: XCTestCase {
     let appBar = MDCAppBar()
     appBar.headerViewController.headerView.backgroundColor = .red
     appBar.navigationBar.backgroundColor = .blue
-    appBar.navigationBar.titleTextColor = .green;
-    appBar.navigationBar.tintColor = .orange;
+    appBar.navigationBar.titleTextColor = .green
+    appBar.navigationBar.tintColor = .orange
     let colorScheme = MDCSemanticColorScheme(defaults: .material201804)
     colorScheme.surfaceColor = .purple
     colorScheme.onSurfaceColor = .lightGray
@@ -56,15 +57,19 @@ class AppBarColorThemerTests: XCTestCase {
     MDCAppBarColorThemer.applySurfaceVariant(withColorScheme: colorScheme, to: appBar)
 
     // Then
-    XCTAssertEqual(appBar.headerViewController.headerView.backgroundColor,
-                   colorScheme.surfaceColor)
+    XCTAssertEqual(
+      appBar.headerViewController.headerView.backgroundColor,
+      colorScheme.surfaceColor)
     XCTAssertEqual(appBar.navigationBar.backgroundColor, colorScheme.surfaceColor)
-    XCTAssertEqual(appBar.navigationBar.titleTextColor,
-                   colorScheme.onSurfaceColor.withAlphaComponent(0.87))
-    XCTAssertEqual(appBar.navigationBar.buttonsTitleColor(for: .normal),
-                   colorScheme.onSurfaceColor.withAlphaComponent(0.87))
-    XCTAssertEqual(appBar.navigationBar.tintColor,
-                   colorScheme.onSurfaceColor.withAlphaComponent(0.54))
+    XCTAssertEqual(
+      appBar.navigationBar.titleTextColor,
+      colorScheme.onSurfaceColor.withAlphaComponent(0.87))
+    XCTAssertEqual(
+      appBar.navigationBar.buttonsTitleColor(for: .normal),
+      colorScheme.onSurfaceColor.withAlphaComponent(0.87))
+    XCTAssertEqual(
+      appBar.navigationBar.tintColor,
+      colorScheme.onSurfaceColor.withAlphaComponent(0.54))
   }
 
   func testColorThemerAffectsSubComponents() {
@@ -76,9 +81,11 @@ class AppBarColorThemerTests: XCTestCase {
     MDCAppBarColorThemer.apply(colorScheme, to: appBar)
 
     // Then
-    XCTAssertEqual(appBar.headerViewController.headerView.backgroundColor,
-                   colorScheme.primaryColor)
-    XCTAssertEqual(appBar.navigationBar.backgroundColor,
-                   colorScheme.primaryColor)
+    XCTAssertEqual(
+      appBar.headerViewController.headerView.backgroundColor,
+      colorScheme.primaryColor)
+    XCTAssertEqual(
+      appBar.navigationBar.backgroundColor,
+      colorScheme.primaryColor)
   }
 }

@@ -13,21 +13,20 @@
 // limitations under the License.
 
 import XCTest
-
-import MaterialComponents.MaterialButtons_Theming
+import MaterialComponents.MaterialButtons_Theming 
 import MaterialComponents.MaterialDialogs
-import MaterialComponents.MaterialDialogs_Theming
+import MaterialComponents.MaterialDialogs_Theming 
+import MaterialComponents.MaterialShadowElevations
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialContainerScheme
 import MaterialComponents.MaterialTypographyScheme
-import MaterialComponents.MaterialShadowElevations
 
 class DialogsMaterialThemingTests: XCTestCase {
 
   let disabledOpacity: CGFloat = 0.38
   let disabledBackgroundOpacity: CGFloat = 0.12
   let inkOpacity: CGFloat = 0.32
-  let kCornerRadius: CGFloat = 4;
+  let kCornerRadius: CGFloat = 4
 
   func testAlertThemingWithContainerScheme() {
     let alert: MDCAlertController = MDCAlertController(title: "Title", message: "Message")
@@ -41,7 +40,7 @@ class DialogsMaterialThemingTests: XCTestCase {
     alert.addAction(action2)
     let action3: MDCAlertAction = MDCAlertAction(title: "", emphasis: .high)
     alert.addAction(action3)
-    
+
     alert.applyTheme(withScheme: scheme)
 
     // Color
@@ -49,7 +48,7 @@ class DialogsMaterialThemingTests: XCTestCase {
     XCTAssertEqual(alert.messageColor, colorScheme.onSurfaceColor.withAlphaComponent(0.60))
     XCTAssertEqual(alert.titleIconTintColor, colorScheme.primaryColor)
     XCTAssertEqual(alert.scrimColor, colorScheme.onSurfaceColor.withAlphaComponent(0.32))
-    XCTAssertEqual(alert.backgroundColor, colorScheme.surfaceColor);
+    XCTAssertEqual(alert.backgroundColor, colorScheme.surfaceColor)
 
     // Typography
     XCTAssertEqual(alert.titleFont, typographyScheme.headline6)
@@ -62,20 +61,22 @@ class DialogsMaterialThemingTests: XCTestCase {
     for action in alert.actions {
       let colorScheme = scheme.colorScheme
       guard let button = alert.button(for: action)
-        else { continue }
+      else { continue }
       switch action.emphasis {
       case .low:
         XCTAssertEqual(button.backgroundColor(for: .normal), .clear)
         XCTAssertEqual(button.borderColor(for: .normal), nil)
         XCTAssertEqual(button.inkColor, colorScheme.primaryColor.withAlphaComponent(0.16))
         XCTAssertEqual(button.titleColor(for: [.normal, .highlighted]), colorScheme.primaryColor)
-        XCTAssertEqual(button.titleColor(for: .disabled),
-                       colorScheme.onSurfaceColor.withAlphaComponent(0.38))
+        XCTAssertEqual(
+          button.titleColor(for: .disabled),
+          colorScheme.onSurfaceColor.withAlphaComponent(0.38))
         [.normal, .highlighted].forEach {
           XCTAssertEqual(button.imageTintColor(for: $0), colorScheme.primaryColor)
         }
-        XCTAssertEqual(button.imageTintColor(for: .disabled),
-                       colorScheme.onSurfaceColor.withAlphaComponent(0.38))
+        XCTAssertEqual(
+          button.imageTintColor(for: .disabled),
+          colorScheme.onSurfaceColor.withAlphaComponent(0.38))
 
         // Test typography
         XCTAssertEqual(button.titleFont(for: .normal), typographyScheme.button)
@@ -91,10 +92,12 @@ class DialogsMaterialThemingTests: XCTestCase {
       case .medium:
         XCTAssertEqual(button.backgroundColor(for: .normal), .clear)
         XCTAssertEqual(button.titleColor(for: .normal), colorScheme.primaryColor)
-        XCTAssertEqual(button.titleColor(for: .disabled), colorScheme.onSurfaceColor.withAlphaComponent(0.38))
-        XCTAssertEqual(button.disabledAlpha,1)
-        XCTAssertEqual(button.inkColor,colorScheme.primaryColor.withAlphaComponent(0.12))
-        XCTAssertEqual(button.borderColor(for: .normal), colorScheme.onSurfaceColor.withAlphaComponent(0.12))
+        XCTAssertEqual(
+          button.titleColor(for: .disabled), colorScheme.onSurfaceColor.withAlphaComponent(0.38))
+        XCTAssertEqual(button.disabledAlpha, 1)
+        XCTAssertEqual(button.inkColor, colorScheme.primaryColor.withAlphaComponent(0.12))
+        XCTAssertEqual(
+          button.borderColor(for: .normal), colorScheme.onSurfaceColor.withAlphaComponent(0.12))
         // Test shape
         XCTAssertEqual(button.layer.cornerRadius, kCornerRadius, accuracy: 0.001)
         // Test typography
@@ -119,8 +122,9 @@ class DialogsMaterialThemingTests: XCTestCase {
         XCTAssertEqual(
           button.imageTintColor(for: .disabled),
           colorScheme.onSurfaceColor.withAlphaComponent(disabledOpacity))
-        XCTAssertEqual(button.inkColor,
-                       colorScheme.onPrimaryColor.withAlphaComponent(inkOpacity))
+        XCTAssertEqual(
+          button.inkColor,
+          colorScheme.onPrimaryColor.withAlphaComponent(inkOpacity))
         // Test shape
         XCTAssertEqual(button.layer.cornerRadius, kCornerRadius, accuracy: 0.001)
         // Test typography
@@ -157,19 +161,21 @@ class DialogsMaterialThemingTests: XCTestCase {
     alert.applyTheme(withScheme: scheme)
 
     // Then
-    XCTAssertEqual(alertView.backgroundColor, colorScheme.surfaceColor);
+    XCTAssertEqual(alertView.backgroundColor, colorScheme.surfaceColor)
 
     XCTAssertEqual(alertView.titleColor, colorScheme.onSurfaceColor.withAlphaComponent(0.87))
     XCTAssertEqual(alertView.messageColor, colorScheme.onSurfaceColor.withAlphaComponent(0.60))
-    XCTAssertEqual(presentationController.scrimColor,
-                   colorScheme.onSurfaceColor.withAlphaComponent(0.32))
+    XCTAssertEqual(
+      presentationController.scrimColor,
+      colorScheme.onSurfaceColor.withAlphaComponent(0.32))
 
     XCTAssertEqual(alertView.titleIconTintColor, colorScheme.primaryColor)
     XCTAssertEqual(button.backgroundColor(for: .normal), colorScheme.primaryColor)
 
     XCTAssertEqual(button.titleColor(for: .normal), colorScheme.onPrimaryColor)
-    XCTAssertEqual(button.inkColor,
-                   colorScheme.onPrimaryColor.withAlphaComponent(inkOpacity))
+    XCTAssertEqual(
+      button.inkColor,
+      colorScheme.onPrimaryColor.withAlphaComponent(inkOpacity))
     XCTAssertEqual(button.imageTintColor(for: .normal), colorScheme.onPrimaryColor)
   }
 
@@ -188,8 +194,9 @@ class DialogsMaterialThemingTests: XCTestCase {
 
     // Then
     // Color
-    XCTAssertEqual(presentationController.scrimColor,
-                   colorScheme.onSurfaceColor.withAlphaComponent(0.32))
+    XCTAssertEqual(
+      presentationController.scrimColor,
+      colorScheme.onSurfaceColor.withAlphaComponent(0.32))
 
     // Corner Radius
     XCTAssertEqual(presentationController.dialogCornerRadius, kCornerRadius, accuracy: 0.001)
@@ -222,8 +229,9 @@ class DialogsMaterialThemingTests: XCTestCase {
     XCTAssertEqual(dialog.presentationController, presentationController)
 
     // Presentation Color
-    XCTAssertEqual(presentationController.scrimColor,
-                   colorScheme.onSurfaceColor.withAlphaComponent(0.32))
+    XCTAssertEqual(
+      presentationController.scrimColor,
+      colorScheme.onSurfaceColor.withAlphaComponent(0.32))
 
     // Presentation Corner Radius
     XCTAssertEqual(presentationController.dialogCornerRadius, kCornerRadius, accuracy: 0.001)
@@ -234,18 +242,21 @@ class DialogsMaterialThemingTests: XCTestCase {
 
   func testMDCDialogPresentationControllerThemingMatchesAlertControllerTheming() {
     // Given
-    let alertThemedAlert: MDCAlertController = MDCAlertController(title: "Title",
-                                                                  message: "Message")
+    let alertThemedAlert: MDCAlertController = MDCAlertController(
+      title: "Title",
+      message: "Message")
     guard let alertThemedController = alertThemedAlert.mdc_dialogPresentationController
-      else {
-        XCTAssert(false, "alert.mdc_dialogPresentationController should not be nil")
-        return
+    else {
+      XCTAssert(false, "alert.mdc_dialogPresentationController should not be nil")
+      return
     }
 
-    let presentationThemedAlert: MDCAlertController = MDCAlertController(title: "Title",
-                                                                         message: "Message")
-    guard let presentationThemedController = presentationThemedAlert.mdc_dialogPresentationController
-      else {
+    let presentationThemedAlert: MDCAlertController = MDCAlertController(
+      title: "Title",
+      message: "Message")
+    guard
+      let presentationThemedController = presentationThemedAlert.mdc_dialogPresentationController
+    else {
       XCTAssert(false, "alert.mdc_dialogPresentationController should not be nil")
       return
     }
@@ -260,9 +271,11 @@ class DialogsMaterialThemingTests: XCTestCase {
     XCTAssertEqual(presentationThemedController.scrimColor, alertThemedController.scrimColor)
 
     // Other properties
-    XCTAssertEqual(presentationThemedController.dialogCornerRadius,
-                   alertThemedController.dialogCornerRadius, accuracy: 0.001)
-    XCTAssertEqual(presentationThemedController.dialogElevation,
-                   alertThemedController.dialogElevation)
+    XCTAssertEqual(
+      presentationThemedController.dialogCornerRadius,
+      alertThemedController.dialogCornerRadius, accuracy: 0.001)
+    XCTAssertEqual(
+      presentationThemedController.dialogElevation,
+      alertThemedController.dialogElevation)
   }
 }

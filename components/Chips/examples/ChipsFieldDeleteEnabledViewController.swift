@@ -13,13 +13,12 @@
 // limitations under the License.
 
 import UIKit
-
 import MaterialComponents.MaterialChips
-import MaterialComponents.MaterialContainerScheme
+import MaterialComponents.MaterialChips_Theming 
 import MaterialComponents.MaterialTextFields
-import MaterialComponents.MaterialChips_Theming
+import MaterialComponents.MaterialContainerScheme
 
-class ChipsFieldDeleteEnabledViewController : UIViewController, MDCChipFieldDelegate {
+class ChipsFieldDeleteEnabledViewController: UIViewController, MDCChipFieldDelegate {
   var containerScheming: MDCContainerScheming
   var chipField = MDCChipField()
 
@@ -63,16 +62,17 @@ class ChipsFieldDeleteEnabledViewController : UIViewController, MDCChipFieldDele
     chip.applyTheme(withScheme: containerScheming)
     chip.sizeToFit()
     let chipVerticalInset = min(0, chip.bounds.height - 48 / 2)
-    chip.hitAreaInsets = UIEdgeInsets(top: chipVerticalInset, left: 0, bottom: chipVerticalInset, right: 0)
+    chip.hitAreaInsets = UIEdgeInsets(
+      top: chipVerticalInset, left: 0, bottom: chipVerticalInset, right: 0)
   }
 }
 // MARK - Catalog by Convention
 extension ChipsFieldDeleteEnabledViewController {
   @objc class func catalogMetadata() -> [String: Any] {
     return [
-      "breadcrumbs" : ["Chips", "Chips Input Delete Enabled (Swift)"],
-      "primaryDemo" : false,
-      "presentable" : false,
+      "breadcrumbs": ["Chips", "Chips Input Delete Enabled (Swift)"],
+      "primaryDemo": false,
+      "presentable": false,
     ]
   }
 }
