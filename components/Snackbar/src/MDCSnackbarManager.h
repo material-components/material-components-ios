@@ -218,8 +218,8 @@
 /**
  Enable a hidden touch affordance (button) for users to dismiss under VoiceOver.
 
- It allows users to dismiss the snackbar in an explicit way in addition to
- tapping on the message label.
+ It allows users to dismiss the snackbar in an explicit way. When it is enabled,
+ tapping on the message label won't dismiss the snackbar.
 
  Defaults to @c NO.
  */

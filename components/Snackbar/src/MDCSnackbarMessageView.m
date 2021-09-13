@@ -383,11 +383,13 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
     [_label setContentHuggingPriority:UILayoutPriorityDefaultLow
                               forAxis:UILayoutConstraintAxisHorizontal];
 
-    // For UIAccessibility purposes, the label is the primary 'button' for dismissing the Snackbar,
-    // so we'll make sure the label is treated like a button.
-    _label.accessibilityTraits = UIAccessibilityTraitButton;
     _label.accessibilityIdentifier = MDCSnackbarMessageTitleAutomationIdentifier;
-    _label.accessibilityHint = dismissalAccessibilityHint;
+    if (!_enableDismissalAccessibilityAffordance) {
+      // For UIAccessibility purposes, the label is the primary 'button' for dismissing the
+      // Snackbar, so we'll make sure the label is treated like a button.
+      _label.accessibilityTraits = UIAccessibilityTraitButton;
+      _label.accessibilityHint = dismissalAccessibilityHint;
+    }
 
     // If an accessibility label or hint was set on the message model object, use that instead of
     // the text in the label or the default hint.
@@ -492,6 +494,22 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
   _dismissalAccessibilityAffordance.hidden = !enableDismissalAccessibilityAffordance;
   _dismissalAccessibilityAffordance.accessibilityElementsHidden =
       !enableDismissalAccessibilityAffordance;
+  NSString *accessibilityHintKey =
+      kMaterialSnackbarStringTable[kStr_MaterialSnackbarMessageViewTitleA11yHint];
+  NSString *accessibilityHint = NSLocalizedStringFromTableInBundle(
+      accessibilityHintKey, kMaterialSnackbarStringsTableName, [[self class] bundle],
+      @"Dismissal accessibility hint for Snackbar");
+  if (enableDismissalAccessibilityAffordance) {
+    _label.accessibilityTraits = UIAccessibilityTraitButton;
+    if (![_label.accessibilityHint length]) {
+      _label.accessibilityHint = accessibilityHint;
+    }
+  } else {
+    _label.accessibilityTraits = UIAccessibilityTraitNone;
+    if ([_label.accessibilityHint isEqualToString:accessibilityHint]) {
+      _label.accessibilityHint = nil;
+    }
+  }
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -1018,6 +1036,14 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
 }
 
 - (void)handleBackgroundTapped:(__unused UIButton *)sender {
+  BOOL accessibilityEnabled =
+      UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning();
+  if (accessibilityEnabled && self.enableDismissalAccessibilityAffordance &&
+      self.label.accessibilityElementIsFocused) {
+    // When enableDismissalAccessibilityAffordance is YES, tapping on background of the container
+    // shouldn't dismiss snackbar.
+    return;
+  }
   [self dismissWithAction:nil userInitiated:YES];
 }
 
@@ -1031,6 +1057,15 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
   }
 
   if (!scrollViewShouldScroll) {
+    BOOL accessibilityEnabled =
+        UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning();
+    if (accessibilityEnabled && self.enableDismissalAccessibilityAffordance &&
+        self.label.accessibilityElementIsFocused) {
+      // When enableDismissalAccessibilityAffordance is YES, tapping on the content
+      // shouldn't dismiss snackbar.
+      return;
+    }
+
     [self dismissWithAction:nil userInitiated:YES];
   }
 }
