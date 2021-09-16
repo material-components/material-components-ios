@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCButton.h"
-#import "MDCFlatButton.h"
-#import "MDCFloatingButton+Animation.h"
-#import "MDCFloatingButton.h"
-#import "MDCRaisedButton.h"
+#import "MDCButton.h"  // IWYU pragma: keep
+#import "MDCFlatButton.h"  // IWYU pragma: keep
+#import "MDCFloatingButton+Animation.h"  // IWYU pragma: keep
+#import "MDCFloatingButton.h"  // IWYU pragma: keep
+#import "MDCRaisedButton.h"  // IWYU pragma: keep
