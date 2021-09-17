@@ -12,5 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCAlertController+MaterialTheming.h"
-#import "MDCDialogPresentationController+MaterialTheming.h"
+#import "MDCAlertController+MaterialTheming.h"  // IWYU pragma: keep
+#import "MDCDialogPresentationController+MaterialTheming.h"  // IWYU pragma: keep

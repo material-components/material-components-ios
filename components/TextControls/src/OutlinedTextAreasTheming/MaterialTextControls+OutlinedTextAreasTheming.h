@@ -12,4 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCOutlinedTextArea+MaterialTheming.h"
+#import "MDCOutlinedTextArea+MaterialTheming.h"  // IWYU pragma: keep

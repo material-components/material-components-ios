@@ -12,5 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCActivityIndicator.h"
-#import "MDCActivityIndicatorDelegate.h"
+#import "MDCActivityIndicator.h"  // IWYU pragma: keep
+#import "MDCActivityIndicatorDelegate.h"  // IWYU pragma: keep

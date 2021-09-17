@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCAppBarContainerViewController.h"
-#import "MDCAppBarNavigationController.h"
-#import "MDCAppBarNavigationControllerToBeDeprecatedDelegate.h"
-#import "MDCAppBarViewController.h"
-#import "MDCAppBarViewControllerAccessibilityPerformEscapeDelegate.h"
+#import "MDCAppBarContainerViewController.h"  // IWYU pragma: keep
+#import "MDCAppBarNavigationController.h"  // IWYU pragma: keep
+#import "MDCAppBarNavigationControllerToBeDeprecatedDelegate.h"  // IWYU pragma: keep
+#import "MDCAppBarViewController.h"  // IWYU pragma: keep
+#import "MDCAppBarViewControllerAccessibilityPerformEscapeDelegate.h"  // IWYU pragma: keep
 
 #pragma mark - To be deprecated
 
-#import "MDCAppBar.h"
+#import "MDCAppBar.h"  // IWYU pragma: keep

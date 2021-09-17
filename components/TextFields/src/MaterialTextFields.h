@@ -12,21 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCIntrinsicHeightTextView.h"
-#import "MDCMultilineTextField.h"
-#import "MDCMultilineTextInputDelegate.h"
-#import "MDCMultilineTextInputLayoutDelegate.h"
-#import "MDCTextField.h"
-#import "MDCTextFieldPositioningDelegate.h"
-#import "MDCTextInput.h"
-#import "MDCTextInputBorderView.h"
-#import "MDCTextInputCharacterCounter.h"
-#import "MDCTextInputController.h"
-#import "MDCTextInputControllerFilled.h"
-#import "MDCTextInputControllerFullWidth.h"
-#import "MDCTextInputControllerLegacyDefault.h"
-#import "MDCTextInputControllerLegacyFullWidth.h"
-#import "MDCTextInputControllerOutlined.h"
-#import "MDCTextInputControllerOutlinedTextArea.h"
-#import "MDCTextInputControllerUnderline.h"
-#import "MDCTextInputUnderlineView.h"
+#import "MDCIntrinsicHeightTextView.h"  // IWYU pragma: keep
+#import "MDCMultilineTextField.h"  // IWYU pragma: keep
+#import "MDCMultilineTextInputDelegate.h"  // IWYU pragma: keep
+#import "MDCMultilineTextInputLayoutDelegate.h"  // IWYU pragma: keep
+#import "MDCTextField.h"  // IWYU pragma: keep
+#import "MDCTextFieldPositioningDelegate.h"  // IWYU pragma: keep
+#import "MDCTextInput.h"  // IWYU pragma: keep
+#import "MDCTextInputBorderView.h"  // IWYU pragma: keep
+#import "MDCTextInputCharacterCounter.h"  // IWYU pragma: keep
+#import "MDCTextInputController.h"  // IWYU pragma: keep
+#import "MDCTextInputControllerFilled.h"  // IWYU pragma: keep
+#import "MDCTextInputControllerFullWidth.h"  // IWYU pragma: keep
+#import "MDCTextInputControllerLegacyDefault.h"  // IWYU pragma: keep
+#import "MDCTextInputControllerLegacyFullWidth.h"  // IWYU pragma: keep
+#import "MDCTextInputControllerOutlined.h"  // IWYU pragma: keep
+#import "MDCTextInputControllerOutlinedTextArea.h"  // IWYU pragma: keep
+#import "MDCTextInputControllerUnderline.h"  // IWYU pragma: keep
+#import "MDCTextInputUnderlineView.h"  // IWYU pragma: keep

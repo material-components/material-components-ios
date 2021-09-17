@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCAlertController.h"
-#import "MDCAlertControllerDelegate.h"
-#import "MDCAlertControllerView.h"
-#import "MDCDialogPresentationController.h"
-#import "MDCDialogPresentationControllerDelegate.h"
-#import "MDCDialogTransitionController.h"
-#import "UIViewController+MaterialDialogs.h"
+#import "MDCAlertController.h"  // IWYU pragma: keep
+#import "MDCAlertControllerDelegate.h"  // IWYU pragma: keep
+#import "MDCAlertControllerView.h"  // IWYU pragma: keep
+#import "MDCDialogPresentationController.h"  // IWYU pragma: keep
+#import "MDCDialogPresentationControllerDelegate.h"  // IWYU pragma: keep
+#import "MDCDialogTransitionController.h"  // IWYU pragma: keep
+#import "UIViewController+MaterialDialogs.h"  // IWYU pragma: keep

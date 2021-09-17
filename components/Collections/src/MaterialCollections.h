@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCCollectionViewController.h"
-#import "MDCCollectionViewEditing.h"
-#import "MDCCollectionViewEditingDelegate.h"
-#import "MDCCollectionViewFlowLayout.h"
-#import "MDCCollectionViewStyling.h"
-#import "MDCCollectionViewStylingDelegate.h"
-#import "MaterialCollectionCells.h"
+#import "MaterialCollectionCells.h"  // IWYU pragma: keep
+#import "MDCCollectionViewController.h"  // IWYU pragma: keep
+#import "MDCCollectionViewEditing.h"  // IWYU pragma: keep
+#import "MDCCollectionViewEditingDelegate.h"  // IWYU pragma: keep
+#import "MDCCollectionViewFlowLayout.h"  // IWYU pragma: keep
+#import "MDCCollectionViewStyling.h"  // IWYU pragma: keep
+#import "MDCCollectionViewStylingDelegate.h"  // IWYU pragma: keep

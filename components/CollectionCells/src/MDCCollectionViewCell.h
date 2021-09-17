@@ -14,8 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialInk.h"  // IWYU pragma: export
-#import "MaterialRipple.h"  // IWYU pragma: export
+#import "MaterialInk.h"  // IWYU pragma: keep
+#import "MaterialRipple.h"  // IWYU pragma: keep
 
 /** The available cell accessory view types. Based on UITableViewCellAccessoryType. */
 typedef NS_ENUM(NSUInteger, MDCCollectionViewCellAccessoryType) {

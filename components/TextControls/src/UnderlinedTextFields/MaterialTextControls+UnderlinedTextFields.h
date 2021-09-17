@@ -13,4 +13,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCUnderlinedTextField.h"
+#import "MDCUnderlinedTextField.h"  // IWYU pragma: keep

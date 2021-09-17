@@ -12,5 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCSlider.h"
-#import "MDCSliderDelegate.h"
+#import "MDCSlider.h"  // IWYU pragma: keep
+#import "MDCSliderDelegate.h"  // IWYU pragma: keep

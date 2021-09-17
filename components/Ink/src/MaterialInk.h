@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCInkGestureRecognizer.h"
-#import "MDCInkTouchController.h"
-#import "MDCInkTouchControllerDelegate.h"
-#import "MDCInkView.h"
-#import "MDCInkViewDelegate.h"
+#import "MDCInkGestureRecognizer.h"  // IWYU pragma: keep
+#import "MDCInkTouchController.h"  // IWYU pragma: keep
+#import "MDCInkTouchControllerDelegate.h"  // IWYU pragma: keep
+#import "MDCInkView.h"  // IWYU pragma: keep
+#import "MDCInkViewDelegate.h"  // IWYU pragma: keep

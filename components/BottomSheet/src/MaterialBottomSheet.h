@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCBottomSheetController.h"
-#import "MDCBottomSheetControllerDelegate.h"
-#import "MDCBottomSheetPresentationController.h"
-#import "MDCBottomSheetPresentationControllerDelegate.h"
-#import "MDCBottomSheetTransitionController.h"
-#import "UIViewController+MaterialBottomSheet.h"
+#import "MDCBottomSheetController.h"  // IWYU pragma: keep
+#import "MDCBottomSheetControllerDelegate.h"  // IWYU pragma: keep
+#import "MDCBottomSheetPresentationController.h"  // IWYU pragma: keep
+#import "MDCBottomSheetPresentationControllerDelegate.h"  // IWYU pragma: keep
+#import "MDCBottomSheetTransitionController.h"  // IWYU pragma: keep
+#import "UIViewController+MaterialBottomSheet.h"  // IWYU pragma: keep

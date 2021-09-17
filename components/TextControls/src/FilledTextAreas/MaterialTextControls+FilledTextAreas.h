@@ -12,4 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCFilledTextArea.h"
+#import "MDCFilledTextArea.h"  // IWYU pragma: keep

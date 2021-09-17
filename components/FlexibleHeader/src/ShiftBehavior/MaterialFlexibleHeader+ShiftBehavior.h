@@ -13,4 +13,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCFlexibleHeaderShiftBehavior.h"
+#import "MDCFlexibleHeaderShiftBehavior.h"  // IWYU pragma: keep

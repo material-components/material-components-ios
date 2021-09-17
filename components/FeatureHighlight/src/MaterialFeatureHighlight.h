@@ -12,5 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCFeatureHighlightView.h"
-#import "MDCFeatureHighlightViewController.h"
+#import "MDCFeatureHighlightView.h"  // IWYU pragma: keep
+#import "MDCFeatureHighlightViewController.h"  // IWYU pragma: keep

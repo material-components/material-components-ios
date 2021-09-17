@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCSnackbarAlignment.h"
-#import "MDCSnackbarManager.h"
-#import "MDCSnackbarManagerDelegate.h"
-#import "MDCSnackbarMessage.h"
-#import "MDCSnackbarMessageView.h"
+#import "MDCSnackbarAlignment.h"  // IWYU pragma: keep
+#import "MDCSnackbarManager.h"  // IWYU pragma: keep
+#import "MDCSnackbarManagerDelegate.h"  // IWYU pragma: keep
+#import "MDCSnackbarMessage.h"  // IWYU pragma: keep
+#import "MDCSnackbarMessageView.h"  // IWYU pragma: keep

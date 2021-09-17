@@ -12,4 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCAppBarViewController+MaterialTheming.h"
+#import "MDCAppBarViewController+MaterialTheming.h"  // IWYU pragma: keep

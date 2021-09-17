@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTextControlTextFieldSideViewAlignment.h"  // IWYU pragma: export
+#import "MDCTextControlTextFieldSideViewAlignment.h"  // IWYU pragma: keep
 
 @protocol MDCTextControlTextField <MDCTextControl>
 @property(nonatomic, assign, readonly) MDCTextControlTextFieldSideViewAlignment sideViewAlignment;

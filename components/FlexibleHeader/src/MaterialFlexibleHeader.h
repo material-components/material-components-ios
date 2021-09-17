@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCFlexibleHeaderContainerViewController.h"
-#import "MDCFlexibleHeaderSafeAreaDelegate.h"
-#import "MDCFlexibleHeaderView+ShiftBehavior.h"
-#import "MDCFlexibleHeaderView.h"
-#import "MDCFlexibleHeaderViewAnimationDelegate.h"
-#import "MDCFlexibleHeaderViewController.h"
-#import "MDCFlexibleHeaderViewDelegate.h"
-#import "MDCFlexibleHeaderViewLayoutDelegate.h"
+#import "MDCFlexibleHeaderContainerViewController.h"  // IWYU pragma: keep
+#import "MDCFlexibleHeaderSafeAreaDelegate.h"  // IWYU pragma: keep
+#import "MDCFlexibleHeaderView+ShiftBehavior.h"  // IWYU pragma: keep
+#import "MDCFlexibleHeaderView.h"  // IWYU pragma: keep
+#import "MDCFlexibleHeaderViewAnimationDelegate.h"  // IWYU pragma: keep
+#import "MDCFlexibleHeaderViewController.h"  // IWYU pragma: keep
+#import "MDCFlexibleHeaderViewDelegate.h"  // IWYU pragma: keep
+#import "MDCFlexibleHeaderViewLayoutDelegate.h"  // IWYU pragma: keep

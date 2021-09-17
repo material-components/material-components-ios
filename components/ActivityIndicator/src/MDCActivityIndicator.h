@@ -12,4 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCActivityIndicator+Interface.h"  // IWYU pragma: export
+#import "MDCActivityIndicator+Interface.h"  // IWYU pragma: keep

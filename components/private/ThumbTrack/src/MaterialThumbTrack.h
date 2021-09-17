@@ -12,5 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCThumbTrack.h"
-#import "MDCThumbView.h"
+#import "MDCThumbTrack.h"  // IWYU pragma: keep
+#import "MDCThumbView.h"  // IWYU pragma: keep

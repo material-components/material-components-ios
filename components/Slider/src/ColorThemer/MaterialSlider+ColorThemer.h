@@ -12,4 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCSliderColorThemer.h"
+#import "MDCSliderColorThemer.h"  // IWYU pragma: keep

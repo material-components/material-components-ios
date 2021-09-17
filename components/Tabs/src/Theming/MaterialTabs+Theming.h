@@ -12,4 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTabBar+MaterialTheming.h"
+#import "MDCTabBar+MaterialTheming.h"  // IWYU pragma: keep

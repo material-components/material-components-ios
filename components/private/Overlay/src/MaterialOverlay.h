@@ -15,6 +15,6 @@
 #import <Availability.h>
 #import <Foundation/Foundation.h>
 
-#import "MDCOverlayImplementor.h"
-#import "MDCOverlayObserver.h"
-#import "MDCOverlayTransitioning.h"
+#import "MDCOverlayImplementor.h"  // IWYU pragma: keep
+#import "MDCOverlayObserver.h"  // IWYU pragma: keep
+#import "MDCOverlayTransitioning.h"  // IWYU pragma: keep

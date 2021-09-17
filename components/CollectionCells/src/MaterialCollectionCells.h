@@ -12,5 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCCollectionViewCell.h"
-#import "MDCCollectionViewTextCell.h"
+#import "MDCCollectionViewCell.h"  // IWYU pragma: keep
+#import "MDCCollectionViewTextCell.h"  // IWYU pragma: keep

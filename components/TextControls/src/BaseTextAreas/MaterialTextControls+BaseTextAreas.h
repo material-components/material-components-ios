@@ -12,5 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCBaseTextArea.h"
-#import "MDCBaseTextAreaDelegate.h"
+#import "MDCBaseTextArea.h"  // IWYU pragma: keep
+#import "MDCBaseTextAreaDelegate.h"  // IWYU pragma: keep

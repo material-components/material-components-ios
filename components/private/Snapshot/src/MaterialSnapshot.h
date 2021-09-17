@@ -12,6 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "SnapshotTestCase/MDCSnapshotTestCase.h"   // IWYU pragma: export
-#import "SnapshotUtilities/UIImage+MDCSnapshot.h"  // IWYU pragma: export
-#import "SnapshotUtilities/UIView+MDCSnapshot.h"   // IWYU pragma: export
+#import "SnapshotTestCase/MDCSnapshotTestCase.h"   // IWYU pragma: keep
+#import "SnapshotUtilities/UIImage+MDCSnapshot.h"  // IWYU pragma: keep
+#import "SnapshotUtilities/UIView+MDCSnapshot.h"   // IWYU pragma: keep

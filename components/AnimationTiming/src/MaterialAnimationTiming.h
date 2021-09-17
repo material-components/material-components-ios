@@ -12,5 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "CAMediaTimingFunction+MDCAnimationTiming.h"
-#import "UIView+MDCTimingFunction.h"
+#import "CAMediaTimingFunction+MDCAnimationTiming.h"  // IWYU pragma: keep
+#import "UIView+MDCTimingFunction.h"  // IWYU pragma: keep

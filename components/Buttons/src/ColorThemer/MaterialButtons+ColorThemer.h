@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCButtonColorThemer.h"
-#import "MDCContainedButtonColorThemer.h"
-#import "MDCFloatingButtonColorThemer.h"
-#import "MDCOutlinedButtonColorThemer.h"
-#import "MDCTextButtonColorThemer.h"
+#import "MDCButtonColorThemer.h"  // IWYU pragma: keep
+#import "MDCContainedButtonColorThemer.h"  // IWYU pragma: keep
+#import "MDCFloatingButtonColorThemer.h"  // IWYU pragma: keep
+#import "MDCOutlinedButtonColorThemer.h"  // IWYU pragma: keep
+#import "MDCTextButtonColorThemer.h"  // IWYU pragma: keep

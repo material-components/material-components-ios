@@ -12,5 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCBaseCell+MaterialTheming.h"
-#import "MDCSelfSizingStereoCell+MaterialTheming.h"
+#import "MDCBaseCell+MaterialTheming.h"  // IWYU pragma: keep
+#import "MDCSelfSizingStereoCell+MaterialTheming.h"  // IWYU pragma: keep

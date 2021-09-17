@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCCornerTreatment+CornerTypeInitalizer.h"
-#import "MDCCurvedCornerTreatment.h"
-#import "MDCCurvedRectShapeGenerator.h"
-#import "MDCCutCornerTreatment.h"
-#import "MDCPillShapeGenerator.h"
-#import "MDCRoundedCornerTreatment.h"
-#import "MDCSlantedRectShapeGenerator.h"
-#import "MDCTriangleEdgeTreatment.h"
+#import "MDCCornerTreatment+CornerTypeInitalizer.h"  // IWYU pragma: keep
+#import "MDCCurvedCornerTreatment.h"  // IWYU pragma: keep
+#import "MDCCurvedRectShapeGenerator.h"  // IWYU pragma: keep
+#import "MDCCutCornerTreatment.h"  // IWYU pragma: keep
+#import "MDCPillShapeGenerator.h"  // IWYU pragma: keep
+#import "MDCRoundedCornerTreatment.h"  // IWYU pragma: keep
+#import "MDCSlantedRectShapeGenerator.h"  // IWYU pragma: keep
+#import "MDCTriangleEdgeTreatment.h"  // IWYU pragma: keep

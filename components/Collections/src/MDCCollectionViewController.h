@@ -16,7 +16,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCCollectionViewEditingDelegate.h"
-#import "MDCCollectionViewStylingDelegate.h"  // IWYU pragma: export
+#import "MDCCollectionViewStylingDelegate.h"  // IWYU pragma: keep
 
 @protocol MDCCollectionViewEditing;
 @protocol MDCCollectionViewStyling;

@@ -21,9 +21,9 @@
  expand or contract the header file space without consumer modifications.
  */
 
-#import "MDCFontTextStyle.h"
-#import "MDCTypography.h"
-#import "UIFont+MaterialScalable.h"
-#import "UIFont+MaterialSimpleEquality.h"
-#import "UIFont+MaterialTypography.h"
-#import "UIFontDescriptor+MaterialTypography.h"
+#import "MDCFontTextStyle.h"  // IWYU pragma: keep
+#import "MDCTypography.h"  // IWYU pragma: keep
+#import "UIFont+MaterialScalable.h"  // IWYU pragma: keep
+#import "UIFont+MaterialSimpleEquality.h"  // IWYU pragma: keep
+#import "UIFont+MaterialTypography.h"  // IWYU pragma: keep
+#import "UIFontDescriptor+MaterialTypography.h"  // IWYU pragma: keep

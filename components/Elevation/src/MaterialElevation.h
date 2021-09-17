@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCElevatable.h"
-#import "MDCElevationOverriding.h"
-#import "UIColor+MaterialElevation.h"
-#import "UIView+MaterialElevationResponding.h"
+#import "MDCElevatable.h"  // IWYU pragma: keep
+#import "MDCElevationOverriding.h"  // IWYU pragma: keep
+#import "UIColor+MaterialElevation.h"  // IWYU pragma: keep
+#import "UIView+MaterialElevationResponding.h"  // IWYU pragma: keep

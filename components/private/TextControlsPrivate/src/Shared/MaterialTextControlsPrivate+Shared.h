@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTextControl.h"
-#import "MDCTextControlAssistiveLabelView.h"
-#import "MDCTextControlAssistiveLabelViewLayout.h"
-#import "MDCTextControlColorViewModel.h"
-#import "MDCTextControlGradientManager.h"
-#import "MDCTextControlHorizontalPositioning.h"
-#import "MDCTextControlHorizontalPositioningReference.h"
-#import "MDCTextControlLabelAnimation.h"
-#import "MDCTextControlLabelSupport.h"
-#import "MDCTextControlPlaceholderSupport.h"
-#import "MDCTextControlSideViewSupport.h"
-#import "MDCTextControlVerticalPositioningReference.h"
+#import "MDCTextControl.h"  // IWYU pragma: keep
+#import "MDCTextControlAssistiveLabelView.h"  // IWYU pragma: keep
+#import "MDCTextControlAssistiveLabelViewLayout.h"  // IWYU pragma: keep
+#import "MDCTextControlColorViewModel.h"  // IWYU pragma: keep
+#import "MDCTextControlGradientManager.h"  // IWYU pragma: keep
+#import "MDCTextControlHorizontalPositioning.h"  // IWYU pragma: keep
+#import "MDCTextControlHorizontalPositioningReference.h"  // IWYU pragma: keep
+#import "MDCTextControlLabelAnimation.h"  // IWYU pragma: keep
+#import "MDCTextControlLabelSupport.h"  // IWYU pragma: keep
+#import "MDCTextControlPlaceholderSupport.h"  // IWYU pragma: keep
+#import "MDCTextControlSideViewSupport.h"  // IWYU pragma: keep
+#import "MDCTextControlVerticalPositioningReference.h"  // IWYU pragma: keep

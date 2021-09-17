@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCRippleTouchController.h"
-#import "MDCRippleTouchControllerDelegate.h"
-#import "MDCRippleView.h"
-#import "MDCRippleViewDelegate.h"
-#import "MDCStatefulRippleView.h"
+#import "MDCRippleTouchController.h"  // IWYU pragma: keep
+#import "MDCRippleTouchControllerDelegate.h"  // IWYU pragma: keep
+#import "MDCRippleView.h"  // IWYU pragma: keep
+#import "MDCRippleViewDelegate.h"  // IWYU pragma: keep
+#import "MDCStatefulRippleView.h"  // IWYU pragma: keep

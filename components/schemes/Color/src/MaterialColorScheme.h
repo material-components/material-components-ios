@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCLegacyColorScheme.h"
-#import "MDCLegacyTonalColorScheme.h"
-#import "MDCLegacyTonalPalette.h"
-
-#import "MDCSemanticColorScheme.h"
+#import "MDCLegacyColorScheme.h"  // IWYU pragma: keep
+#import "MDCLegacyTonalColorScheme.h"  // IWYU pragma: keep
+#import "MDCLegacyTonalPalette.h"  // IWYU pragma: keep
+#import "MDCSemanticColorScheme.h"  // IWYU pragma: keep

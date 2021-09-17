@@ -12,6 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTextInputControllerFilled+MaterialTheming.h"
-#import "MDCTextInputControllerOutlined+MaterialTheming.h"
-#import "MDCTextInputControllerUnderline+MaterialTheming.h"
+#import "MDCTextInputControllerFilled+MaterialTheming.h"  // IWYU pragma: keep
+#import "MDCTextInputControllerOutlined+MaterialTheming.h"  // IWYU pragma: keep
+#import "MDCTextInputControllerUnderline+MaterialTheming.h"  // IWYU pragma: keep

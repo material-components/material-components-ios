@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCCollectionViewStyling.h"  // IWYU pragma: export
+#import "MDCCollectionViewStyling.h"  // IWYU pragma: keep
 
 @class MDCInkTouchController;
 @class MDCInkView;

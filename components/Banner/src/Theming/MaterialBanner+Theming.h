@@ -12,4 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCBannerView+MaterialTheming.h"
+#import "MDCBannerView+MaterialTheming.h"  // IWYU pragma: keep

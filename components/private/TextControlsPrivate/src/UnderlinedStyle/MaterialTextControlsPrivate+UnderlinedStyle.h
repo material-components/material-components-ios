@@ -13,5 +13,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTextControlStyleUnderlined.h"
-#import "MDCTextControlVerticalPositioningReferenceUnderlined.h"
+#import "MDCTextControlStyleUnderlined.h"  // IWYU pragma: keep
+#import "MDCTextControlVerticalPositioningReferenceUnderlined.h"  // IWYU pragma: keep

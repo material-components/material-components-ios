@@ -12,5 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTextControlStyleBase.h"
-#import "MDCTextControlVerticalPositioningReferenceBase.h"
+#import "MDCTextControlStyleBase.h"  // IWYU pragma: keep
+#import "MDCTextControlVerticalPositioningReferenceBase.h"  // IWYU pragma: keep

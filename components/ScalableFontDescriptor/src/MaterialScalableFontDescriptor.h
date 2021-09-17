@@ -13,4 +13,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCScalableFontDescriptor.h"
+#import "MDCScalableFontDescriptor.h"  // IWYU pragma: keep

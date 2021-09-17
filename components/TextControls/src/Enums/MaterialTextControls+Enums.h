@@ -12,5 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTextControlLabelBehavior.h"
-#import "MDCTextControlState.h"
+#import "MDCTextControlLabelBehavior.h"  // IWYU pragma: keep
+#import "MDCTextControlState.h"  // IWYU pragma: keep

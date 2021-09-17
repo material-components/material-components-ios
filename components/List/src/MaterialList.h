@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCBaseCell.h"
-#import "MDCSelfSizingLayoutAttributes.h"
-#import "MDCSelfSizingStereoCell.h"
-#import "MDCSelfSizingStereoCellImageViewVerticalPosition.h"
+#import "MDCBaseCell.h"  // IWYU pragma: keep
+#import "MDCSelfSizingLayoutAttributes.h"  // IWYU pragma: keep
+#import "MDCSelfSizingStereoCell.h"  // IWYU pragma: keep
+#import "MDCSelfSizingStereoCellImageViewVerticalPosition.h"  // IWYU pragma: keep

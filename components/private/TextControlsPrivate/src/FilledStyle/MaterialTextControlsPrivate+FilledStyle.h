@@ -12,5 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTextControlStyleFilled.h"
-#import "MDCTextControlVerticalPositioningReferenceFilled.h"
+#import "MDCTextControlStyleFilled.h"  // IWYU pragma: keep
+#import "MDCTextControlVerticalPositioningReferenceFilled.h"  // IWYU pragma: keep

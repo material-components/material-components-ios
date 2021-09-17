@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCChipCollectionViewCell.h"
-#import "MDCChipCollectionViewFlowLayout.h"
-#import "MDCChipField.h"
-#import "MDCChipFieldDelegate.h"
-#import "MDCChipView.h"
-#import "MDCChipViewDeleteButton.h"
+#import "MDCChipCollectionViewCell.h"  // IWYU pragma: keep
+#import "MDCChipCollectionViewFlowLayout.h"  // IWYU pragma: keep
+#import "MDCChipField.h"  // IWYU pragma: keep
+#import "MDCChipFieldDelegate.h"  // IWYU pragma: keep
+#import "MDCChipView.h"  // IWYU pragma: keep
+#import "MDCChipViewDeleteButton.h"  // IWYU pragma: keep

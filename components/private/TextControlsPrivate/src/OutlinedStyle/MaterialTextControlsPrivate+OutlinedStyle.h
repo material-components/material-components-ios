@@ -12,5 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTextControlStyleOutlined.h"
-#import "MDCTextControlVerticalPositioningReferenceOutlined.h"
+#import "MDCTextControlStyleOutlined.h"  // IWYU pragma: keep
+#import "MDCTextControlVerticalPositioningReferenceOutlined.h"  // IWYU pragma: keep

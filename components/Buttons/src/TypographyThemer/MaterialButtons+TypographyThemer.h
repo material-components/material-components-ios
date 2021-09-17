@@ -12,4 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCButtonTypographyThemer.h"
+#import "MDCButtonTypographyThemer.h"  // IWYU pragma: keep

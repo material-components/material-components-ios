@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTabBarItem.h"
-#import "MDCTabBarItemCustomViewing.h"
-#import "MDCTabBarView.h"
-#import "MDCTabBarViewCustomViewable.h"
-#import "MDCTabBarViewDelegate.h"
-#import "MDCTabBarViewIndicatorAttributes.h"
-#import "MDCTabBarViewIndicatorContext.h"
-#import "MDCTabBarViewIndicatorTemplate.h"
-#import "MDCTabBarViewUnderlineIndicatorTemplate.h"
+#import "MDCTabBarItem.h"  // IWYU pragma: keep
+#import "MDCTabBarItemCustomViewing.h"  // IWYU pragma: keep
+#import "MDCTabBarView.h"  // IWYU pragma: keep
+#import "MDCTabBarViewCustomViewable.h"  // IWYU pragma: keep
+#import "MDCTabBarViewDelegate.h"  // IWYU pragma: keep
+#import "MDCTabBarViewIndicatorAttributes.h"  // IWYU pragma: keep
+#import "MDCTabBarViewIndicatorContext.h"  // IWYU pragma: keep
+#import "MDCTabBarViewIndicatorTemplate.h"  // IWYU pragma: keep
+#import "MDCTabBarViewUnderlineIndicatorTemplate.h"  // IWYU pragma: keep

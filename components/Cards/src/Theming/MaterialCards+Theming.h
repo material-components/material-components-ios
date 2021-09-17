@@ -12,5 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCCard+MaterialTheming.h"
-#import "MDCCardCollectionCell+MaterialTheming.h"
+#import "MDCCard+MaterialTheming.h"  // IWYU pragma: keep
+#import "MDCCardCollectionCell+MaterialTheming.h"  // IWYU pragma: keep

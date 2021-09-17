@@ -12,6 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCButtonScheme.h"
-#import "MDCContainedButtonThemer.h"
-#import "MDCTextButtonThemer.h"
+#import "MDCButtonScheme.h"  // IWYU pragma: keep
+#import "MDCContainedButtonThemer.h"  // IWYU pragma: keep
+#import "MDCTextButtonThemer.h"  // IWYU pragma: keep

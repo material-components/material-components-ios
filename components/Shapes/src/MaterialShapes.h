@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCCornerTreatment.h"
-#import "MDCEdgeTreatment.h"
-#import "MDCPathGenerator.h"
-#import "MDCRectangleShapeGenerator.h"
-#import "MDCShapeGenerating.h"
-#import "MDCShapeMediator.h"
-#import "MDCShapedShadowLayer.h"
-#import "MDCShapedView.h"
+#import "MDCCornerTreatment.h"  // IWYU pragma: keep
+#import "MDCEdgeTreatment.h"  // IWYU pragma: keep
+#import "MDCPathGenerator.h"  // IWYU pragma: keep
+#import "MDCRectangleShapeGenerator.h"  // IWYU pragma: keep
+#import "MDCShapeGenerating.h"  // IWYU pragma: keep
+#import "MDCShapeMediator.h"  // IWYU pragma: keep
+#import "MDCShapedShadowLayer.h"  // IWYU pragma: keep
+#import "MDCShapedView.h"  // IWYU pragma: keep

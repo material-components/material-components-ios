@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCBottomDrawerHeader.h"
-#import "MDCBottomDrawerPresentationController.h"
-#import "MDCBottomDrawerPresentationControllerDelegate.h"
-#import "MDCBottomDrawerTransitionController.h"
-#import "MDCBottomDrawerViewController.h"
-#import "MDCBottomDrawerViewControllerDelegate.h"
+#import "MDCBottomDrawerHeader.h"  // IWYU pragma: keep
+#import "MDCBottomDrawerPresentationController.h"  // IWYU pragma: keep
+#import "MDCBottomDrawerPresentationControllerDelegate.h"  // IWYU pragma: keep
+#import "MDCBottomDrawerTransitionController.h"  // IWYU pragma: keep
+#import "MDCBottomDrawerViewController.h"  // IWYU pragma: keep
+#import "MDCBottomDrawerViewControllerDelegate.h"  // IWYU pragma: keep

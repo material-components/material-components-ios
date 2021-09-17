@@ -12,4 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCTypographyScheming.h"
+#import "MDCTypographyScheming.h"  // IWYU pragma: keep

@@ -12,5 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCIcons+BundleLoader.h"
-#import "MDCIcons.h"
+#import "MDCIcons+BundleLoader.h"  // IWYU pragma: keep
+#import "MDCIcons.h"  // IWYU pragma: keep

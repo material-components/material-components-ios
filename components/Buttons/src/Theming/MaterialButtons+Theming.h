@@ -12,5 +12,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCButton+MaterialTheming.h"
-#import "MDCFloatingButton+MaterialTheming.h"
+#import "MDCButton+MaterialTheming.h"  // IWYU pragma: keep
+#import "MDCFloatingButton+MaterialTheming.h"  // IWYU pragma: keep
