@@ -192,7 +192,9 @@ static NSString *const kItemTitleLong2Arabic =
   // When
   MDCSnackbarMessageView *messageView = [self snackbarMessageViewWithText:kItemTitleShort1Latin
                                                               actionTitle:kItemTitleLong2Latin];
-  [messageView mdc_layoutAndApplyBestFitFrameWithWidth:kWidth];
+  // Use a wider test width to ensure that the font size doesn't shrink when there is available
+  // space.
+  [messageView mdc_layoutAndApplyBestFitFrameWithWidth:kWidth * 2];
 
   // Then
   [self generateSnapshotAndVerifyForView:messageView];
