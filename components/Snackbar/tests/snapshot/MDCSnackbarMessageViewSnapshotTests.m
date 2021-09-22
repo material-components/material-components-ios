@@ -188,6 +188,16 @@ static NSString *const kItemTitleLong2Arabic =
   [self generateSnapshotAndVerifyForView:messageView];
 }
 
+- (void)testWithShortMessageLongActionLTRLatin {
+  // When
+  MDCSnackbarMessageView *messageView = [self snackbarMessageViewWithText:kItemTitleShort1Latin
+                                                              actionTitle:kItemTitleLong2Latin];
+  [messageView mdc_layoutAndApplyBestFitFrameWithWidth:kWidth];
+
+  // Then
+  [self generateSnapshotAndVerifyForView:messageView];
+}
+
 - (void)testWithLongMessageLongActionLTRLatin {
   // When
   MDCSnackbarMessageView *messageView = [self snackbarMessageViewWithText:kItemTitleLong1Latin

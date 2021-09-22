@@ -160,6 +160,11 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
 @property(nonatomic, strong) UIControl *buttonGutterTapTarget;
 
 /**
+ * The constraint for the snackbar button's width.
+ */
+@property(nonatomic, strong) NSLayoutConstraint *buttonWidthConstraint;
+
+/**
  Holds onto the dismissal handler, called when the Snackbar should dismiss due to user interaction.
  */
 @property(nonatomic, copy) MDCSnackbarMessageDismissHandler dismissalHandler;
@@ -711,6 +716,9 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
   [constraints addObjectsFromArray:[self horizontalButtonLayoutConstraints]];
 
   [self addConstraints:constraints];
+
+  [self updateButtonWidthConstraint];
+
   self.viewConstraints = constraints;
 
   [super updateConstraints];
@@ -723,13 +731,37 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
     BOOL shouldUseHorizontalLayout = ![self shouldUseVerticalLayout];
     // Account for the action button if present and the layout is horizontal.
     if (shouldUseHorizontalLayout && self.actionButton) {
-      availableWidth = availableWidth -
-                       MIN(self.actionButton.intrinsicContentSize.width,
-                           (self.bounds.size.width * kMaxButtonRatio)) -
-                       kTitleButtonPadding;
+      availableWidth = availableWidth - [self actionButtonWidth] - kTitleButtonPadding;
     }
     self.label.preferredMaxLayoutWidth = availableWidth;
   }
+}
+
+- (void)updateButtonWidthConstraint {
+  BOOL shouldUseHorizontalLayout = ![self shouldUseVerticalLayout];
+
+  if (shouldUseHorizontalLayout && self.actionButton) {
+    self.buttonWidthConstraint.constant = [self actionButtonWidth];
+  }
+}
+
+- (CGFloat)actionButtonWidth {
+  CGFloat availableWidth = self.bounds.size.width - self.safeContentMargin.left -
+                           self.safeContentMargin.right - kTitleButtonPadding;
+
+  if (availableWidth < 0) {
+    return self.label.intrinsicContentSize.width;
+  }
+
+  CGFloat textWidth =
+      [self.label textRectForBounds:CGRectInfinite limitedToNumberOfLines:1].size.width;
+
+  // Pick a size that is either, the remainder of the available space when the label is small and
+  // fits on one line, 1/3 of the space when 1/3 of the space is larger than what is left by the
+  // label or the button size itself when it is smaller than either the available spaced or 1/3 of
+  // the width.
+  return MIN(self.actionButton.intrinsicContentSize.width,
+             MAX(kMaxButtonRatio * availableWidth, availableWidth - textWidth));
 }
 
 - (CGFloat)minimumLayoutHeight {
@@ -841,9 +873,8 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
 
           // Constrain the button container to a third of the width of its parent view to ensure
           // button and text content are always visible.
-          [self.buttonContainer.widthAnchor
-              constraintLessThanOrEqualToAnchor:self.containerView.widthAnchor
-                                     multiplier:kMaxButtonRatio],
+          self.buttonWidthConstraint = [self.buttonContainer.widthAnchor
+              constraintLessThanOrEqualToConstant:self.frame.size.width]
         ]];
       }
 
@@ -925,6 +956,7 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
   [super layoutSubviews];
 
   [self updatePreferredMaxLayoutWidth];
+  [self updateButtonWidthConstraint];
 
   if (!self.dismissalAccessibilityAffordance.hidden) {
     // Update frame of the dismissal touch affordance.
