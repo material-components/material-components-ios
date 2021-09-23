@@ -144,6 +144,30 @@ extern NSString *__nonnull const MDCSnackbarMessageBoldAttributeName;
  Default is nil. If set, only the last message of this category will be shown, any currently
  showing or pending messages in this category will be dismissed as if the user had directly tapped
  the Snackbar.
+
+ ### How categorization affects message queuing
+
+ When category is nil, this message will dismiss both any visible message and all queued messages
+ in order to enable this message to appear as quickly as possible. This means that any queued
+ messages that were dismissed will not be shown to the user. This behavior intentionally minimizes
+ excessive snackbar message queuing.
+
+ If you want messages to be queued without dismissing existing messages, then you will need to make
+ consistent use of the `category` property on `MDCSnackbarMessage`.
+
+ #### How message categories affect message queuing
+
+ If a message is currently visible that has no category, and a new message with category A is shown,
+ then the new message will be queued until the visible message is dismissed.
+
+ If a message is currently visible with category A and a new message with category A is shown, then
+ the visible message will be immediately dismissed and the new message will be shown directly after.
+
+ If a message is currently visible with category A and a new message with category B is shown, then
+ the new message will be queued and displayed once the visible message is dismissed.
+
+ Remember: in all cases, if a new message without a category is shown then both any visible message
+ *and* all queued messages will be dismissed.
  */
 @property(nonatomic, copy, nullable) NSString *category;
 
