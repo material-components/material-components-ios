@@ -750,7 +750,7 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
                            self.safeContentMargin.right - kTitleButtonPadding;
 
   if (availableWidth < 0) {
-    return self.label.intrinsicContentSize.width;
+    return self.actionButton.intrinsicContentSize.width;
   }
 
   CGFloat textWidth =
