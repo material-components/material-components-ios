@@ -14,7 +14,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialPageControl.h"
+#import "MDCPageControl.h"
 
 @interface PageControlExampleTests : XCTestCase
 
@@ -81,7 +81,10 @@
   [nativePageControl sizeToFit];
   CGRect frame = CGRectIntegral(pageControl.frame);
   XCTAssertEqual(frame.size.height, 48.0);
-  if (@available(iOS 14, *)) {
+  if (@available(iOS 15, *)) {
+    XCTAssertEqual(frame.size.width, 7);
+    XCTAssertEqual(nativePageControl.frame.size.width, 121);
+  } else if (@available(iOS 14, *)) {
     XCTAssertEqual(frame.size.width, 7);
     XCTAssertEqual(nativePageControl.frame.size.width, 85);
   } else {
@@ -95,7 +98,10 @@
   [nativePageControl sizeToFit];
   frame = CGRectIntegral(pageControl.frame);
   XCTAssertEqual(frame.size.height, 48.0);
-  if (@available(iOS 14, *)) {
+  if (@available(iOS 15, *)) {
+    XCTAssertEqual(frame.size.width, 55);
+    XCTAssertEqual(nativePageControl.frame.size.width, 175);
+  } else if (@available(iOS 14, *)) {
     XCTAssertEqual(frame.size.width, 55);
     XCTAssertEqual(nativePageControl.frame.size.width, 141);
   } else {
