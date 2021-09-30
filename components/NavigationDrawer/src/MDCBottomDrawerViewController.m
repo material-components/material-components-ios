@@ -315,6 +315,24 @@
   }
 }
 
+- (BOOL)swipeToDismissEnabled {
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    return bottomDrawerPresentationController.swipeToDismissEnabled;
+  } else {
+    return YES;
+  }
+}
+
+- (void)setSwipeToDismissEnabled:(BOOL)swipeToDismissEnabled {
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    bottomDrawerPresentationController.swipeToDismissEnabled = swipeToDismissEnabled;
+  }
+}
+
 - (void)setShouldIncludeSafeAreaInContentHeight:(BOOL)shouldIncludeSafeAreaInContentHeight {
   _shouldIncludeSafeAreaInContentHeight = shouldIncludeSafeAreaInContentHeight;
   if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {

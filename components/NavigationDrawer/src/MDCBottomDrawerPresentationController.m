@@ -383,6 +383,14 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   self.bottomDrawerContainerViewController.userDraggingEnabled = userDraggingEnabled;
 }
 
+- (BOOL)swipeToDismissEnabled {
+  return self.bottomDrawerContainerViewController.swipeToDismissEnabled;
+}
+
+- (void)setSwipeToDismissEnabled:(BOOL)swipeToDismissEnabled {
+  self.bottomDrawerContainerViewController.swipeToDismissEnabled = swipeToDismissEnabled;
+}
+
 - (void)setMaximumInitialDrawerHeight:(CGFloat)maximumInitialDrawerHeight {
   _maximumInitialDrawerHeight = maximumInitialDrawerHeight;
   self.bottomDrawerContainerViewController.maximumInitialDrawerHeight =

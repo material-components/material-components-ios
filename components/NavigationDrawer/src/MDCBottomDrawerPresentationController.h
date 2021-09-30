@@ -185,6 +185,14 @@
 @property(nonatomic) BOOL userDraggingEnabled;
 
 /**
+ * Whether the drawer allows the user to swipe down to dismiss it or not.
+ *
+ * Seting this to NO means that the drawer will just bounce back up when the user tries to
+ * swipe it down past its resistance point. Defaults to YES.
+ */
+@property(nonatomic) BOOL swipeToDismissEnabled;
+
+/**
  Sets the content offset Y of the drawer's content. If contentOffsetY is set to 0, the
  drawer will scroll to the start of its content.
 

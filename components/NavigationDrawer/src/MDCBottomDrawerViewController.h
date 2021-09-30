@@ -32,6 +32,9 @@
                         MDCElevatable,
                         MDCElevationOverriding>
 
+// NOTE: Setting several of the properties here doesn't set any internal state, instead,
+// it forwards the value to the presentation controller, assuming it's of the expected type.
+
 /**
  The main content displayed by the drawer.
  Its height is determined by the returned preferred content size.
@@ -216,6 +219,14 @@
 
 /** Whether the drawer allows the user to drag it or not. */
 @property(nonatomic) BOOL userDraggingEnabled;
+
+/**
+ * Whether the drawer allows the user to swipe down to dismiss it or not.
+ *
+ * Seting this to NO means that the drawer will just bounce back up when the user tries to
+ * swipe it down past its resistance point. Defaults to YES.
+ */
+@property(nonatomic) BOOL swipeToDismissEnabled;
 
 /**
  Sets the top corners radius for an MDCBottomDrawerState drawerState

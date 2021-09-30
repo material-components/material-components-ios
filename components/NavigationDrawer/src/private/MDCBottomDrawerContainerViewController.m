@@ -225,6 +225,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
     _shadowedView = [[MDCBottomDrawerShadowedView alloc] init];
     _shouldAdjustOnContentSizeChange = NO;
     _shouldDisplayMobileLandscapeFullscreen = YES;
+    _swipeToDismissEnabled = YES;
   }
   return self;
 }
@@ -1002,7 +1003,7 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
   self.scrollViewBeganDraggingFromFullscreen = NO;
 
   if (!scrollViewBeganDraggingFromFullscreen &&
-      velocity.y < kDragVelocityThresholdForHidingDrawer) {
+      velocity.y < kDragVelocityThresholdForHidingDrawer && self.swipeToDismissEnabled) {
     [self hideDrawer];
     return;
   }
@@ -1022,7 +1023,8 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
             ? (drawerContentHeight / kVerticalDistanceDismissalThresholdMultiplier)
             : kVerticalDistanceDismissalThreshold;
 
-    if (self.scrollView.contentOffset.y < -verticalDistanceDismissalThreshold) {
+    if (self.scrollView.contentOffset.y < -verticalDistanceDismissalThreshold &&
+        self.swipeToDismissEnabled) {
       [self hideDrawer];
     } else {
       targetContentOffset->y = 0;
