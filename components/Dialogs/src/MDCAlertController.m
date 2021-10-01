@@ -12,16 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "MDCAlertController.h"
 #import "MDCAlertController+Customize.h"
 
 #import "private/MDCAlertActionManager.h"
 #import "private/MDCAlertControllerView+Private.h"
 #import "private/MaterialDialogsStrings.h"
 #import "private/MaterialDialogsStrings_table.h"
-#import "MaterialDialogs.h"
-#import "MaterialElevation.h"
-#import "MaterialShadowElevations.h"
-#import "MaterialMath.h"
+#import "MDCAlertControllerDelegate.h"
+#import "MDCAlertControllerView.h"
+#import "MDCDialogPresentationController.h"
+#import "MDCDialogPresentationControllerDelegate.h"
+#import "MDCDialogTransitionController.h"
+#import "UIViewController+MaterialDialogs.h"
+#import "UIView+MaterialElevationResponding.h"
+#import "MDCShadowElevations.h"
+#import "MDCMath.h"
 
 // The Bundle for string resources.
 static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
@@ -181,6 +187,11 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
     super.transitioningDelegate = _transitionController;
     super.modalPresentationStyle = UIModalPresentationCustom;
+
+    [NSNotificationCenter.defaultCenter addObserver:self
+                                           selector:@selector(deviceOrientationDidChange:)
+                                               name:UIDeviceOrientationDidChangeNotification
+                                             object:nil];
   }
   return self;
 }
@@ -195,6 +206,12 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
     self.preferredContentSize = [self.alertView
         calculatePreferredContentSizeForBounds:CGRectStandardize(self.view.bounds).size];
   }
+}
+
+- (void)deviceOrientationDidChange:(NSNotification *)notification {
+  [self.alertView setNeedsLayout];
+  self.preferredContentSize =
+      [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
 }
 
 /* Disable setter. Always use internal transition controller */
@@ -537,9 +554,9 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 - (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
   _adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
-    if (self.viewLoaded) {
-      self.alertView.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
-    }
+  if (self.viewLoaded) {
+    self.alertView.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
+  }
 }
 
 - (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
