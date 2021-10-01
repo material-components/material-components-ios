@@ -20,14 +20,14 @@
 #import "supplemental/MDCBottomNavigationSnapshotTestMutableTraitCollection.h"
 #import "supplemental/MDCBottomNavigationSnapshotTestUtilities.h"
 #import "supplemental/MDCFakeBottomNavigationBar.h"
-#import "MaterialAvailability.h"
-#import "MaterialBottomNavigation.h"
+#import "MDCAvailability.h"
+#import "MDCBottomNavigationBar.h"
 #import "MDCBottomNavigationBar+MaterialTheming.h"
-#import "MaterialInk.h"
+#import "MDCInkView.h"
 #import "MaterialSnapshot.h"
-#import "MaterialColorScheme.h"
-#import "MaterialContainerScheme.h"
-#import "MaterialTypographyScheme.h"
+#import "MDCSemanticColorScheme.h"
+#import "MDCContainerScheme.h"
+#import "MDCTypographyScheme.h"
 
 static const CGFloat kWidthWide = 1600;
 static const CGFloat kWidthNarrow = 240;
@@ -497,6 +497,38 @@ static const CGFloat kHeightShort = 48;
   self.tabItem3.badgeColor = UIColor.greenColor;
   self.navigationBar.itemBadgeBackgroundColor = nil;
   self.navigationBar.itemBadgeTextColor = nil;
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testCustomBadgeTextFontSetBeforeItems {
+  // Given
+  self.tabItem1.badgeValue = @"";
+  self.tabItem2.badgeValue = @"10";
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthTypical,
+                                        MDCBottomNavigationBarTestHeightTypical);
+
+  // When
+  self.navigationBar.itemBadgeTextFont = [UIFont systemFontOfSize:10.0];
+  self.navigationBar.items =
+      @[ self.tabItem1, self.tabItem2, self.tabItem3, self.tabItem4, self.tabItem5 ];
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testCustomBadgeTextFontSetAfterItems {
+  // Given
+  self.tabItem1.badgeValue = @"";
+  self.tabItem2.badgeValue = @"10";
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthTypical,
+                                        MDCBottomNavigationBarTestHeightTypical);
+
+  // When
+  self.navigationBar.items =
+      @[ self.tabItem1, self.tabItem2, self.tabItem3, self.tabItem4, self.tabItem5 ];
+  self.navigationBar.itemBadgeTextFont = [UIFont systemFontOfSize:10.0];
 
   // Then
   [self generateAndVerifySnapshot];

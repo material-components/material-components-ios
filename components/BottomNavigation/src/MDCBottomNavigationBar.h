@@ -112,6 +112,11 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 @property(nonatomic, copy, nullable) UIColor *itemBadgeTextColor;
 
 /**
+ Text font for badges. Default is system font 8.
+ */
+@property(nonatomic, copy, nullable) UIFont *itemBadgeTextFont;
+
+/**
  Color of selected item. Applies color to items' icons and text. If set also sets
  selectedItemTitleColor. Default color is black.
  */

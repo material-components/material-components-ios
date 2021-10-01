@@ -16,20 +16,25 @@
 
 #import "MDCBottomNavigationBar.h"
 
-#import "MaterialElevation.h"
-#import "MaterialInk.h"
+#import "MDCAvailability.h"
+#import "UIView+MaterialElevationResponding.h"
+#import "MDCInkTouchController.h"
+#import "MDCInkTouchControllerDelegate.h"
+#import "MDCInkView.h"
 
 #import "private/MDCBottomNavigationBar+Private.h"
 #import "private/MDCBottomNavigationItemView.h"
-#import "MaterialAvailability.h"
 #import "MDCBottomNavigationBarDelegate.h"
-#import "MaterialPalettes.h"
-#import "MaterialRipple.h"
-#import "MaterialShadow.h"
-#import "MaterialShadowElevations.h"
-#import "MaterialShadowLayer.h"
-#import "MaterialTypography.h"
-#import "MaterialMath.h"
+#import "MDCPalettes.h"
+#import "MDCRippleTouchController.h"
+#import "MDCRippleTouchControllerDelegate.h"
+#import "MDCRippleView.h"
+#import "MDCShadowsCollection.h"
+#import "MDCShadowElevations.h"
+#import "MDCShadowLayer.h"
+#import "MDCFontTextStyle.h"
+#import "UIFont+MaterialTypography.h"
+#import "MDCMath.h"
 
 // KVO context
 static char *const kKVOContextMDCBottomNavigationBar = "kKVOContextMDCBottomNavigationBar";
@@ -42,6 +47,7 @@ static const CGFloat kDefaultItemHorizontalPadding = 0;
 static const CGFloat kBarHeightStackedTitle = 56;
 static const CGFloat kBarHeightAdjacentTitle = 40;
 static const CGFloat kItemsHorizontalMargin = 12;
+static const CGFloat kBadgeFontSize = 8;
 
 @interface MDCBottomNavigationBar () <MDCInkTouchControllerDelegate,
                                       MDCRippleTouchControllerDelegate>
@@ -111,6 +117,7 @@ static BOOL gEnablePerformantShadow = NO;
   _titlesNumberOfLines = 1;
   _mdc_overrideBaseElevation = -1;
   _itemBadgeTextColor = UIColor.whiteColor;
+  _itemBadgeTextFont = [UIFont systemFontOfSize:kBadgeFontSize];
   _itemBadgeBackgroundColor = MDCPalette.redPalette.tint700;
   _itemsHorizontalPadding = kDefaultItemHorizontalPadding;
 
@@ -594,6 +601,7 @@ static BOOL gEnablePerformantShadow = NO;
     itemView.titlePositionAdjustment = item.titlePositionAdjustment;
     itemView.badgeColor = self.itemBadgeBackgroundColor;
     itemView.badgeTextColor = self.itemBadgeTextColor;
+    itemView.badgeTextFont = self.itemBadgeTextFont;
     itemView.tag = item.tag;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -776,6 +784,13 @@ static BOOL gEnablePerformantShadow = NO;
   _itemBadgeTextColor = itemBadgeTextColor;
   for (MDCBottomNavigationItemView *itemView in self.itemViews) {
     itemView.badgeTextColor = itemBadgeTextColor;
+  }
+}
+
+- (void)setItemBadgeTextFont:(UIFont *)itemBadgeTextFont {
+  _itemBadgeTextFont = itemBadgeTextFont;
+  for (MDCBottomNavigationItemView *itemView in self.itemViews) {
+    itemView.badgeTextFont = itemBadgeTextFont;
   }
 }
 

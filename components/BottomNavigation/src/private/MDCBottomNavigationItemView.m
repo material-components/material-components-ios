@@ -15,10 +15,11 @@
 
 #import "MDCBottomNavigationItemView.h"
 
-#import "MaterialInk.h"
-#import "MaterialRipple.h"
 #import "MDCBottomNavigationBar.h"
 #import "MDCBottomNavigationItemBadge.h"
+#import "MDCInkView.h"
+#import "MDCRippleTouchController.h"
+#import "MDCRippleView.h"
 
 // A number large enough to be larger than any reasonable screen dimension but small enough that
 // CGFloat doesn't lose precision.
@@ -590,6 +591,11 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
 - (void)setBadgeTextColor:(UIColor *)badgeTextColor {
   _badgeTextColor = badgeTextColor;
   self.badge.badgeValueLabel.textColor = badgeTextColor;
+}
+
+- (void)setBadgeTextFont:(UIFont *)badgeTextFont {
+  _badgeTextFont = badgeTextFont;
+  self.badge.badgeValueLabel.font = badgeTextFont;
 }
 
 - (void)setBadgeValue:(NSString *)badgeValue {

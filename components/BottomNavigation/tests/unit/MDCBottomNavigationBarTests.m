@@ -16,11 +16,11 @@
 
 #import "../../src/private/MDCBottomNavigationBar+Private.h"
 #import "../../src/private/MDCBottomNavigationItemView.h"
-#import "MaterialAvailability.h"
-#import "MaterialBottomNavigation.h"
+#import "MDCAvailability.h"
+#import "MDCBottomNavigationBar.h"
 #import "MDCBottomNavigationBar+Private.h"
-#import "MaterialPalettes.h"
-#import "MaterialShadowElevations.h"
+#import "MDCPalettes.h"
+#import "MDCShadowElevations.h"
 
 static NSString *const kTestItemTitleText = @"Title";
 
@@ -77,6 +77,7 @@ static NSString *const kTestItemTitleText = @"Title";
   XCTAssertLessThan(self.bottomNavBar.mdc_overrideBaseElevation, 0);
   XCTAssertNil(self.bottomNavBar.mdc_elevationDidChangeBlock);
   XCTAssertEqualObjects(self.bottomNavBar.itemBadgeTextColor, UIColor.whiteColor);
+  XCTAssertEqualObjects(self.bottomNavBar.itemBadgeTextFont, [UIFont systemFontOfSize:8.0]);
   XCTAssertEqualObjects(self.bottomNavBar.itemBadgeBackgroundColor, MDCPalette.redPalette.tint700);
 }
 

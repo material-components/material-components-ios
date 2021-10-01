@@ -49,6 +49,7 @@
 
 @property(nonatomic, strong, nullable) UIColor *badgeColor UI_APPEARANCE_SELECTOR;
 @property(nonatomic, copy, nullable) UIColor *badgeTextColor;
+@property(nonatomic, copy, nullable) UIFont *badgeTextFont;
 @property(nonatomic, strong, nullable) UIColor *selectedItemTintColor UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong, nullable) UIColor *unselectedItemTintColor UI_APPEARANCE_SELECTOR;
 @property(nonatomic, strong, nullable) UIColor *selectedItemTitleColor;
