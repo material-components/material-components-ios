@@ -79,11 +79,9 @@
   }
   self.bottomNavBar.items = @[ tabBarItem1, tabBarItem2, tabBarItem3, tabBarItem4, tabBarItem5 ];
   self.bottomNavBar.selectedItem = tabBarItem2;
-  if (@available(iOS 11.0, *)) {
-    [self.bottomNavBar.barItemsBottomAnchor
-        constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor]
-        .active = YES;
-  }
+  [self.bottomNavBar.barItemsBottomAnchor
+      constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor]
+      .active = YES;
 
   self.navigationItem.rightBarButtonItem =
       [[UIBarButtonItem alloc] initWithTitle:@"+Message"
@@ -101,9 +99,7 @@
   CGSize size = [self.bottomNavBar sizeThatFits:viewBounds.size];
   UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
   // Extend the Bottom Navigation to the bottom of the screen.
-  if (@available(iOS 11.0, *)) {
-    safeAreaInsets = self.view.safeAreaInsets;
-  }
+  safeAreaInsets = self.view.safeAreaInsets;
   CGRect bottomNavBarFrame =
       CGRectMake(0, viewBounds.size.height - size.height - safeAreaInsets.bottom, size.width,
                  size.height + safeAreaInsets.bottom);
@@ -125,9 +121,7 @@
 }
 
 - (void)viewSafeAreaInsetsDidChange {
-  if (@available(iOS 11.0, *)) {
-    [super viewSafeAreaInsetsDidChange];
-  }
+  [super viewSafeAreaInsetsDidChange];
   [self layoutBottomNavBar];
 }
 

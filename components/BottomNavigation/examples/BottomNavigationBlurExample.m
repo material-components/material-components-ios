@@ -133,9 +133,7 @@
   CGSize size = [self.bottomNavBar sizeThatFits:viewBounds.size];
   UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
   // Extend the Bottom Navigation to the bottom of the screen.
-  if (@available(iOS 11.0, *)) {
-    safeAreaInsets = self.view.safeAreaInsets;
-  }
+  safeAreaInsets = self.view.safeAreaInsets;
   CGRect bottomNavBarFrame =
       CGRectMake(0, viewBounds.size.height - size.height - safeAreaInsets.bottom, size.width,
                  size.height + safeAreaInsets.bottom);
@@ -149,9 +147,7 @@
 }
 
 - (void)viewSafeAreaInsetsDidChange {
-  if (@available(iOS 11.0, *)) {
-    [super viewSafeAreaInsetsDidChange];
-  }
+  [super viewSafeAreaInsetsDidChange];
   [self layoutBottomNavBar];
 }
 

@@ -50,10 +50,8 @@ class BottomNavigationExplicitlySetColorExample: UIViewController {
       y: view.bounds.height - size.height,
       width: size.width,
       height: size.height)
-    if #available(iOS 11.0, *) {
-      bottomNavBarFrame.size.height += view.safeAreaInsets.bottom
-      bottomNavBarFrame.origin.y -= view.safeAreaInsets.bottom
-    }
+    bottomNavBarFrame.size.height += view.safeAreaInsets.bottom
+    bottomNavBarFrame.origin.y -= view.safeAreaInsets.bottom
     bottomNavBar.frame = bottomNavBarFrame
     bottomNavBar.enableRippleBehavior = true
   }

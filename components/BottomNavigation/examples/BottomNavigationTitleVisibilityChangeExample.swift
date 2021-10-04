@@ -69,10 +69,8 @@ class BottomNavigationTitleVisibilityChangeExample: UIViewController, MDCBottomN
       y: view.bounds.height - size.height,
       width: size.width,
       height: size.height)
-    if #available(iOS 11.0, *) {
-      bottomNavBarFrame.size.height += view.safeAreaInsets.bottom
-      bottomNavBarFrame.origin.y -= view.safeAreaInsets.bottom
-    }
+    bottomNavBarFrame.size.height += view.safeAreaInsets.bottom
+    bottomNavBarFrame.origin.y -= view.safeAreaInsets.bottom
     bottomNavBar.frame = bottomNavBarFrame
   }
 
@@ -89,9 +87,7 @@ class BottomNavigationTitleVisibilityChangeExample: UIViewController, MDCBottomN
     super.viewWillLayoutSubviews()
 
     var viewBounds = view.bounds
-    if #available(iOS 11.0, *) {
-      viewBounds = viewBounds.inset(by: view.safeAreaInsets)
-    }
+    viewBounds = viewBounds.inset(by: view.safeAreaInsets)
     let labelWidth = min(viewBounds.size.width - 32, 480)
     let labelSize = instructionLabel.sizeThatFits(
       CGSize(
