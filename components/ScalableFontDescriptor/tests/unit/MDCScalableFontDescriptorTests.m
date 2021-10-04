@@ -32,103 +32,89 @@
 - (void)setUp {
   [super setUp];
 
-  if (@available(iOS 11.0, *)) {
-    self.bodyFontMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
-  }
+  self.bodyFontMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
   self.largeContentSizeTraitCollection = [UITraitCollection
       traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryLarge];
 }
 
 - (void)tearDown {
   self.largeContentSizeTraitCollection = nil;
-  if (@available(iOS 11.0, *)) {
-    self.bodyFontMetrics = nil;
-  }
+  self.bodyFontMetrics = nil;
 
   [super tearDown];
 }
 
 - (void)testBaseFontReturnsSomethingForUnavailableCustomFont {
-  if (@available(iOS 11.0, *)) {
-    // Given
-    MDCScalableFontDescriptor *style = [[MDCScalableFontDescriptor alloc]
-        initWithFontDescriptor:[UIFontDescriptor fontDescriptorWithName:@"NotAFont" size:14]
-                   fontMetrics:[UIFontMetrics metricsForTextStyle:UIFontTextStyleBody]];
+  // Given
+  MDCScalableFontDescriptor *style = [[MDCScalableFontDescriptor alloc]
+      initWithFontDescriptor:[UIFontDescriptor fontDescriptorWithName:@"NotAFont" size:14]
+                 fontMetrics:[UIFontMetrics metricsForTextStyle:UIFontTextStyleBody]];
 
-    // When
-    UIFont *fallbackFont = style.baseFont;
+  // When
+  UIFont *fallbackFont = style.baseFont;
 
-    // Then
-    XCTAssertNotNil(fallbackFont);
-  }
+  // Then
+  XCTAssertNotNil(fallbackFont);
 }
 
 - (void)testPreferredFontReturnsSomethingForUnavailableCustomFont {
-  if (@available(iOS 11.0, *)) {
-    // Given
-    MDCScalableFontDescriptor *style = [[MDCScalableFontDescriptor alloc]
-        initWithFontDescriptor:[UIFontDescriptor fontDescriptorWithName:@"NotAFont" size:14]
-                   fontMetrics:[UIFontMetrics metricsForTextStyle:UIFontTextStyleBody]];
+  // Given
+  MDCScalableFontDescriptor *style = [[MDCScalableFontDescriptor alloc]
+      initWithFontDescriptor:[UIFontDescriptor fontDescriptorWithName:@"NotAFont" size:14]
+                 fontMetrics:[UIFontMetrics metricsForTextStyle:UIFontTextStyleBody]];
 
-    // When
-    UIFont *fallbackFont = [style preferredFontCompatibleWithTraitCollection:nil];
+  // When
+  UIFont *fallbackFont = [style preferredFontCompatibleWithTraitCollection:nil];
 
-    // Then
-    XCTAssertNotNil(fallbackFont);
-  }
+  // Then
+  XCTAssertNotNil(fallbackFont);
 }
 
 - (void)testBaseFontForSystemFont {
-  if (@available(iOS 11.0, *)) {
-    // Given
-    MDCScalableFontDescriptor *style = [[MDCScalableFontDescriptor alloc]
-        initWithFontDescriptor:[UIFont systemFontOfSize:14].fontDescriptor
-                   fontMetrics:[UIFontMetrics metricsForTextStyle:UIFontTextStyleBody]];
+  // Given
+  MDCScalableFontDescriptor *style = [[MDCScalableFontDescriptor alloc]
+      initWithFontDescriptor:[UIFont systemFontOfSize:14].fontDescriptor
+                 fontMetrics:[UIFontMetrics metricsForTextStyle:UIFontTextStyleBody]];
 
-    // When
-    UIFont *systemFont = style.baseFont;
+  // When
+  UIFont *systemFont = style.baseFont;
 
-    // Then
-    XCTAssertNotNil(systemFont);
-    XCTAssertEqualWithAccuracy(systemFont.pointSize, style.fontDescriptor.pointSize, 0.001);
-  }
+  // Then
+  XCTAssertNotNil(systemFont);
+  XCTAssertEqualWithAccuracy(systemFont.pointSize, style.fontDescriptor.pointSize, 0.001);
 }
 
 - (void)testPreferredFontForSystemFont {
-  if (@available(iOS 11.0, *)) {
-    // Given
-    MDCScalableFontDescriptor *style = [[MDCScalableFontDescriptor alloc]
-        initWithFontDescriptor:[UIFont systemFontOfSize:14].fontDescriptor
-                   fontMetrics:[UIFontMetrics metricsForTextStyle:UIFontTextStyleBody]];
+  // Given
+  MDCScalableFontDescriptor *style = [[MDCScalableFontDescriptor alloc]
+      initWithFontDescriptor:[UIFont systemFontOfSize:14].fontDescriptor
+                 fontMetrics:[UIFontMetrics metricsForTextStyle:UIFontTextStyleBody]];
 
-    // When
-    UIFont *systemFont =
-        [style preferredFontCompatibleWithTraitCollection:self.largeContentSizeTraitCollection];
+  // When
+  UIFont *systemFont =
+      [style preferredFontCompatibleWithTraitCollection:self.largeContentSizeTraitCollection];
 
-    // Then
-    XCTAssertNotNil(systemFont);
-    XCTAssertEqualWithAccuracy(systemFont.pointSize, style.fontDescriptor.pointSize, 0.001);
-  }
+  // Then
+  XCTAssertNotNil(systemFont);
+  XCTAssertEqualWithAccuracy(systemFont.pointSize, style.fontDescriptor.pointSize, 0.001);
 }
 
 - (void)testPreferredFontScalesWithContentSize {
-  if (@available(iOS 11.0, *)) {
-    // Given
-    MDCScalableFontDescriptor *style = [[MDCScalableFontDescriptor alloc]
-        initWithFontDescriptor:[UIFont systemFontOfSize:14].fontDescriptor
-                   fontMetrics:[UIFontMetrics metricsForTextStyle:UIFontTextStyleBody]];
-    UIFont *baseFont =
-        [style preferredFontCompatibleWithTraitCollection:self.largeContentSizeTraitCollection];
+  // Given
+  MDCScalableFontDescriptor *style = [[MDCScalableFontDescriptor alloc]
+      initWithFontDescriptor:[UIFont systemFontOfSize:14].fontDescriptor
+                 fontMetrics:[UIFontMetrics metricsForTextStyle:UIFontTextStyleBody]];
+  UIFont *baseFont =
+      [style preferredFontCompatibleWithTraitCollection:self.largeContentSizeTraitCollection];
 
-    // When
-    UIFont *aXXXLFont =
-        [style preferredFontCompatibleWithTraitCollection:
-                   [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
-                                          UIContentSizeCategoryAccessibilityExtraExtraExtraLarge]];
+  // When
+  UIFont *aXXXLFont =
+      [style preferredFontCompatibleWithTraitCollection:
+                 [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                                        UIContentSizeCategoryAccessibilityExtraExtraExtraLarge]];
 
-    // Then
-    XCTAssertGreaterThan(aXXXLFont.pointSize, baseFont.pointSize);
-  }
+  // Then
+  XCTAssertGreaterThan(aXXXLFont.pointSize, baseFont.pointSize);
 }
 
 /**
@@ -136,54 +122,51 @@
  sufficient to recreate the type scale style.
  */
 - (void)testDescriptionPrintsSufficientInformationForGeneralDebugging {
-  if (@available(iOS 11.0, *)) {
+  // Given
+  static NSArray<UIFontTextStyle> *testTextStyles;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    testTextStyles = @[
+      UIFontTextStyleLargeTitle,
+      UIFontTextStyleTitle1,
+      UIFontTextStyleTitle2,
+      // TODO(b/142536380): Re-enable testing of .title3 once Forge on Mac fixes a scaling bug.
+      // UIFontTextStyleTitle3,
+      UIFontTextStyleHeadline,
+      UIFontTextStyleSubheadline,
+      UIFontTextStyleBody,
+      UIFontTextStyleCallout,
+      UIFontTextStyleCaption1,
+      UIFontTextStyleCaption2,
+      UIFontTextStyleFootnote,
+    ];
+  });
+  UIFontDescriptor *fontDescriptor = [UIFontDescriptor fontDescriptorWithName:@"NotAFont" size:10];
+  for (UIFontTextStyle textStyle in testTextStyles) {
     // Given
-    static NSArray<UIFontTextStyle> *testTextStyles;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-      testTextStyles = @[
-        UIFontTextStyleLargeTitle,
-        UIFontTextStyleTitle1,
-        UIFontTextStyleTitle2,
-        // TODO(b/142536380): Re-enable testing of .title3 once Forge on Mac fixes a scaling bug.
-        // UIFontTextStyleTitle3,
-        UIFontTextStyleHeadline,
-        UIFontTextStyleSubheadline,
-        UIFontTextStyleBody,
-        UIFontTextStyleCallout,
-        UIFontTextStyleCaption1,
-        UIFontTextStyleCaption2,
-        UIFontTextStyleFootnote,
-      ];
-    });
-    UIFontDescriptor *fontDescriptor = [UIFontDescriptor fontDescriptorWithName:@"NotAFont"
-                                                                           size:10];
-    for (UIFontTextStyle textStyle in testTextStyles) {
-      // Given
-      UIFontMetrics *metrics = [UIFontMetrics metricsForTextStyle:textStyle];
-      MDCScalableFontDescriptor *style =
-          [[MDCScalableFontDescriptor alloc] initWithFontDescriptor:fontDescriptor
-                                                        fontMetrics:metrics];
+    UIFontMetrics *metrics = [UIFontMetrics metricsForTextStyle:textStyle];
+    MDCScalableFontDescriptor *style =
+        [[MDCScalableFontDescriptor alloc] initWithFontDescriptor:fontDescriptor
+                                                      fontMetrics:metrics];
 
-      // When
-      NSString *description = [style description];
-      NSLog(@"%@", description);
+    // When
+    NSString *description = [style description];
+    NSLog(@"%@", description);
 
-      // Then
-      NSRange textStyleRange = [description rangeOfString:[textStyle description]];
-      XCTAssertNotEqual(textStyleRange.location, NSNotFound);
-      XCTAssertEqual(textStyleRange.length, textStyle.length);
+    // Then
+    NSRange textStyleRange = [description rangeOfString:[textStyle description]];
+    XCTAssertNotEqual(textStyleRange.location, NSNotFound);
+    XCTAssertEqual(textStyleRange.length, textStyle.length);
 
-      NSRange fontPointSizeRange =
-          [description rangeOfString:[NSString stringWithFormat:@"%.0f", fontDescriptor.pointSize]];
-      XCTAssertNotEqual(fontPointSizeRange.location, NSNotFound);
-      XCTAssertGreaterThan(fontPointSizeRange.length, 0);
+    NSRange fontPointSizeRange =
+        [description rangeOfString:[NSString stringWithFormat:@"%.0f", fontDescriptor.pointSize]];
+    XCTAssertNotEqual(fontPointSizeRange.location, NSNotFound);
+    XCTAssertGreaterThan(fontPointSizeRange.length, 0);
 
-      NSString *descriptorFontName = fontDescriptor.fontAttributes[UIFontDescriptorNameAttribute];
-      NSRange fontNameRange = [description rangeOfString:descriptorFontName];
-      XCTAssertNotEqual(fontNameRange.location, NSNotFound);
-      XCTAssertEqual(fontNameRange.length, descriptorFontName.length);
-    }
+    NSString *descriptorFontName = fontDescriptor.fontAttributes[UIFontDescriptorNameAttribute];
+    NSRange fontNameRange = [description rangeOfString:descriptorFontName];
+    XCTAssertNotEqual(fontNameRange.location, NSNotFound);
+    XCTAssertEqual(fontNameRange.length, descriptorFontName.length);
   }
 }
 

@@ -126,10 +126,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   collectionView.showsHorizontalScrollIndicator = NO;
   collectionView.showsVerticalScrollIndicator = NO;
 
-  if (@available(iOS 11.0, *)) {
-    collectionView.contentInsetAdjustmentBehavior =
-        UIScrollViewContentInsetAdjustmentScrollableAxes;
-  }
+  collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentScrollableAxes;
 
   collectionView.dataSource = self;
   collectionView.delegate = self;
@@ -319,9 +316,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (void)safeAreaInsetsDidChange {
-  if (@available(iOS 11.0, *)) {
-    [super safeAreaInsetsDidChange];
-  }
+  [super safeAreaInsetsDidChange];
   [self setNeedsLayout];
 }
 
@@ -482,10 +477,8 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 #pragma mark - Private
 
 - (CGFloat)adjustedCollectionViewWidth {
-  if (@available(iOS 11.0, *)) {
-    return CGRectGetWidth(
-        UIEdgeInsetsInsetRect(_collectionView.bounds, _collectionView.adjustedContentInset));
-  }
+  return CGRectGetWidth(
+      UIEdgeInsetsInsetRect(_collectionView.bounds, _collectionView.adjustedContentInset));
   return CGRectGetWidth(_collectionView.bounds);
 }
 
@@ -778,10 +771,8 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   const BOOL isRegular = (sizeClass == UIUserInterfaceSizeClassRegular);
   CGFloat inset = isRegular ? kRegularInset : kCompactInset;
   // If the collection view has Safe Area insets, we don't want to add an extra horizontal inset.
-  if (@available(iOS 11.0, *)) {
-    if (_collectionView.safeAreaInsets.left > 0 || _collectionView.safeAreaInsets.right > 0) {
-      inset = 0;
-    }
+  if (_collectionView.safeAreaInsets.left > 0 || _collectionView.safeAreaInsets.right > 0) {
+    inset = 0;
   }
   return UIEdgeInsetsMake(0, inset, 0, inset);
 }
@@ -1117,10 +1108,8 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 }
 
 - (CGRect)adjustedCollectionViewBounds {
-  if (@available(iOS 11.0, *)) {
-    return UIEdgeInsetsInsetRect(self.collectionView.bounds,
-                                 self.collectionView.adjustedContentInset);
-  }
+  return UIEdgeInsetsInsetRect(self.collectionView.bounds,
+                               self.collectionView.adjustedContentInset);
   return self.collectionView.bounds;
 }
 

@@ -247,13 +247,8 @@
   XCTSkip("b/184189330");
 
   // Then
-  if (@available(iOS 12, *)) {
-    XCTAssertEqualWithAccuracy(MDCSnackbarManager.defaultManager.mdc_overrideBaseElevation, 99,
-                               FLT_EPSILON);
-  } else {
-    // TODO(b/184189330): Evaluate why this randomly oscillates between 99 and 0.
-    XCTAssertLessThan(MDCSnackbarManager.defaultManager.mdc_overrideBaseElevation, 0);
-  }
+  XCTAssertEqualWithAccuracy(MDCSnackbarManager.defaultManager.mdc_overrideBaseElevation, 99,
+                             FLT_EPSILON);
 }
 
 - (void)testDefaultValueForFocusedSnackbarsAccessibilityNotification {

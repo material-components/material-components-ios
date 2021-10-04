@@ -427,10 +427,8 @@ static CGFloat const kDefaultExpectationTimeout = 15;
   UIViewController *childViewController1 = [[UIViewController alloc] init];
   UIViewController *childViewController2 = [[UIViewController alloc] init];
   const UIEdgeInsets originalAdditionalSafeAreaInsets = UIEdgeInsetsMake(1, 2, 3, 4);
-  if (@available(iOS 11.0, *)) {
-    childViewController1.additionalSafeAreaInsets = originalAdditionalSafeAreaInsets;
-    childViewController2.additionalSafeAreaInsets = originalAdditionalSafeAreaInsets;
-  }
+  childViewController1.additionalSafeAreaInsets = originalAdditionalSafeAreaInsets;
+  childViewController2.additionalSafeAreaInsets = originalAdditionalSafeAreaInsets;
 
   // When
   self.bottomNavigationBarController.viewControllers =
@@ -441,18 +439,16 @@ static CGFloat const kDefaultExpectationTimeout = 15;
   const UIEdgeInsets expectedAdditionalSafeaAreaInsets = UIEdgeInsetsMake(
       0, 0, CGRectGetHeight(self.bottomNavigationBarController.navigationBar.bounds), 0);
   XCTAssertEqual(self.bottomNavigationBarController.selectedViewController, childViewController1);
-  if (@available(iOS 11.0, *)) {
-    XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(childViewController1.additionalSafeAreaInsets,
-                                                expectedAdditionalSafeaAreaInsets),
-                  @"(%@) is not equal to (%@)",
-                  NSStringFromUIEdgeInsets(childViewController1.additionalSafeAreaInsets),
-                  NSStringFromUIEdgeInsets(expectedAdditionalSafeaAreaInsets));
-    XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(childViewController2.additionalSafeAreaInsets,
-                                                originalAdditionalSafeAreaInsets),
-                  @"(%@) is not equal to (%@)",
-                  NSStringFromUIEdgeInsets(childViewController2.additionalSafeAreaInsets),
-                  NSStringFromUIEdgeInsets(originalAdditionalSafeAreaInsets));
-  }
+  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(childViewController1.additionalSafeAreaInsets,
+                                              expectedAdditionalSafeaAreaInsets),
+                @"(%@) is not equal to (%@)",
+                NSStringFromUIEdgeInsets(childViewController1.additionalSafeAreaInsets),
+                NSStringFromUIEdgeInsets(expectedAdditionalSafeaAreaInsets));
+  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(childViewController2.additionalSafeAreaInsets,
+                                              originalAdditionalSafeAreaInsets),
+                @"(%@) is not equal to (%@)",
+                NSStringFromUIEdgeInsets(childViewController2.additionalSafeAreaInsets),
+                NSStringFromUIEdgeInsets(originalAdditionalSafeAreaInsets));
 }
 
 #pragma mark - MDCBottomNavigationBarControllerDelegate Methods

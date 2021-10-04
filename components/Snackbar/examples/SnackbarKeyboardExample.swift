@@ -55,13 +55,8 @@ class SnackbarKeyboardExample: UIViewController {
     view.addSubview(contentStackView)
 
     contentStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    if #available(iOS 11.0, *) {
-      contentStackView.topAnchor
-        .constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
-    } else {
-      contentStackView.topAnchor
-        .constraint(equalTo: topLayoutGuide.bottomAnchor, constant: 20).isActive = true
-    }
+    contentStackView.topAnchor
+      .constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
   }
 
   @objc func showSnackbarButtonTapped() {

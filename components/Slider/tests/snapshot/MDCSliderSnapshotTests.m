@@ -596,77 +596,73 @@ static void MoveSliderThumbToRelativePosition(MDCSlider *slider,
 }
 
 - (void)testPreferredFontForAXXXLContentSizeCategory {
-  if (@available(iOS 11.0, *)) {
-    // Given
-    [self makeSliderDiscrete:self.slider];
-    self.slider.value =
-        self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
-    self.slider.shouldDisplayDiscreteValueLabel = YES;
-    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
-    UIFont *originalFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:12]];
-    self.slider.discreteValueLabelFont = originalFont;
-    self.slider.adjustsFontForContentSizeCategory = YES;
-    UITraitCollection *xsTraitCollection = [UITraitCollection
-        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
-    self.slider.traitCollectionOverride = xsTraitCollection;
-    // Cannot set font, nor adjustsFontForContentSizeCategory for the thumbtrack label.
+  // Given
+  [self makeSliderDiscrete:self.slider];
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+  self.slider.shouldDisplayDiscreteValueLabel = YES;
+  UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+  UIFont *originalFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:12]];
+  self.slider.discreteValueLabelFont = originalFont;
+  self.slider.adjustsFontForContentSizeCategory = YES;
+  UITraitCollection *xsTraitCollection = [UITraitCollection
+      traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+  self.slider.traitCollectionOverride = xsTraitCollection;
+  // Cannot set font, nor adjustsFontForContentSizeCategory for the thumbtrack label.
 
-    // When
-    UITraitCollection *aXXXLTraitCollection =
-        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
-                               UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
-    self.slider.traitCollectionOverride = aXXXLTraitCollection;
-    // In Thumbtrack's code, there is a check for verifying that the thumbtrack's width is larger
-    // than 1 point, otherwise it won't go into the main frame adjusting logic. This is to make sure
-    // that the scale transform of the slider's view isn't at its default of 0.001. Therefore this
-    // transform adjustment was made so it can let the logic know we are actually interacting with
-    // the thumb in the test.
-    UIView *valueLabel = [self.slider.thumbTrack valueForKey:@"_valueLabel"];
-    valueLabel.transform = CGAffineTransformIdentity;
-    [self.slider.thumbTrack setValue:@"YES" forKey:@"_isDraggingThumb"];
+  // When
+  UITraitCollection *aXXXLTraitCollection =
+      [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                             UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+  self.slider.traitCollectionOverride = aXXXLTraitCollection;
+  // In Thumbtrack's code, there is a check for verifying that the thumbtrack's width is larger
+  // than 1 point, otherwise it won't go into the main frame adjusting logic. This is to make sure
+  // that the scale transform of the slider's view isn't at its default of 0.001. Therefore this
+  // transform adjustment was made so it can let the logic know we are actually interacting with
+  // the thumb in the test.
+  UIView *valueLabel = [self.slider.thumbTrack valueForKey:@"_valueLabel"];
+  valueLabel.transform = CGAffineTransformIdentity;
+  [self.slider.thumbTrack setValue:@"YES" forKey:@"_isDraggingThumb"];
 
-    // Then
-    UIView *snapshotView =
-        [self.slider mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(100, 0, 0, 0)];
-    [self generateSnapshotAndVerifyForView:snapshotView];
-  }
+  // Then
+  UIView *snapshotView =
+      [self.slider mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(100, 0, 0, 0)];
+  [self generateSnapshotAndVerifyForView:snapshotView];
 }
 
 - (void)testPreferredFontForXSContentSizeCategory {
-  if (@available(iOS 11.0, *)) {
-    // Given
-    [self makeSliderDiscrete:self.slider];
-    self.slider.value =
-        self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
-    self.slider.shouldDisplayDiscreteValueLabel = YES;
-    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
-    UIFont *originalFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:12]];
-    self.slider.discreteValueLabelFont = originalFont;
-    self.slider.adjustsFontForContentSizeCategory = YES;
-    UITraitCollection *aXXXLTraitCollection =
-        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
-                               UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
-    self.slider.traitCollectionOverride = aXXXLTraitCollection;
-    // Cannot set font, nor adjustsFontForContentSizeCategory for the thumbtrack label.
+  // Given
+  [self makeSliderDiscrete:self.slider];
+  self.slider.value =
+      self.slider.minimumValue + (self.slider.maximumValue - self.slider.minimumValue) / 2;
+  self.slider.shouldDisplayDiscreteValueLabel = YES;
+  UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+  UIFont *originalFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:12]];
+  self.slider.discreteValueLabelFont = originalFont;
+  self.slider.adjustsFontForContentSizeCategory = YES;
+  UITraitCollection *aXXXLTraitCollection =
+      [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                             UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+  self.slider.traitCollectionOverride = aXXXLTraitCollection;
+  // Cannot set font, nor adjustsFontForContentSizeCategory for the thumbtrack label.
 
-    // When
-    UITraitCollection *xsTraitCollection = [UITraitCollection
-        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
-    self.slider.traitCollectionOverride = xsTraitCollection;
-    // In Thumbtrack's code, there is a check for verifying that the thumbtrack's width is larger
-    // than 1 point, otherwise it won't go into the main frame adjusting logic. This is to make sure
-    // that the scale transform of the slider's view isn't at its default of 0.001. Therefore this
-    // transform adjustment was made so it can let the logic know we are actually interacting with
-    // the thumb in the test.
-    UIView *valueLabel = [self.slider.thumbTrack valueForKey:@"_valueLabel"];
-    valueLabel.transform = CGAffineTransformIdentity;
-    [self.slider.thumbTrack setValue:@"YES" forKey:@"_isDraggingThumb"];
+  // When
+  UITraitCollection *xsTraitCollection = [UITraitCollection
+      traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+  self.slider.traitCollectionOverride = xsTraitCollection;
+  // In Thumbtrack's code, there is a check for verifying that the thumbtrack's width is larger
+  // than 1 point, otherwise it won't go into the main frame adjusting logic. This is to make sure
+  // that the scale transform of the slider's view isn't at its default of 0.001. Therefore this
+  // transform adjustment was made so it can let the logic know we are actually interacting with
+  // the thumb in the test.
+  UIView *valueLabel = [self.slider.thumbTrack valueForKey:@"_valueLabel"];
+  valueLabel.transform = CGAffineTransformIdentity;
+  [self.slider.thumbTrack setValue:@"YES" forKey:@"_isDraggingThumb"];
 
-    // Then
-    UIView *snapshotView =
-        [self.slider mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(30, 0, 0, 0)];
-    [self generateSnapshotAndVerifyForView:snapshotView];
-  }
+  // Then
+  UIView *snapshotView =
+      [self.slider mdc_addToBackgroundViewWithInsets:UIEdgeInsetsMake(30, 0, 0, 0)];
+  [self generateSnapshotAndVerifyForView:snapshotView];
 }
 
 - (void)testNonDiscreteSliderLargerTrackHeight {

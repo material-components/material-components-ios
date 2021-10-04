@@ -215,52 +215,48 @@ static NSString *const kSelfSizingStereoCellIdentifier = @"kSelfSizingStereoCell
 }
 
 - (void)testPreferredFontForAXXLContentSizeCategory {
-  if (@available(iOS 11.0, *)) {
-    // Given
-    MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] init];
-    cell.titleLabel.text = @"Title";
-    cell.detailLabel.text = @"Detail";
-    self.arrayOfCells = @[ cell ];
+  // Given
+  MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] init];
+  cell.titleLabel.text = @"Title";
+  cell.detailLabel.text = @"Detail";
+  self.arrayOfCells = @[ cell ];
 
-    // When
-    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
-    UIFont *font = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:12]];
-    cell.titleLabel.font = font;
-    cell.detailLabel.font = font;
-    cell.titleLabel.adjustsFontForContentSizeCategory = YES;
-    cell.detailLabel.adjustsFontForContentSizeCategory = YES;
-    self.collectionView.frame = CGRectMake(0, 0, 240, 150);
-    self.collectionViewLayout.estimatedItemSize = CGSizeMake(240, 150);
+  // When
+  UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+  UIFont *font = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:12]];
+  cell.titleLabel.font = font;
+  cell.detailLabel.font = font;
+  cell.titleLabel.adjustsFontForContentSizeCategory = YES;
+  cell.detailLabel.adjustsFontForContentSizeCategory = YES;
+  self.collectionView.frame = CGRectMake(0, 0, 240, 150);
+  self.collectionViewLayout.estimatedItemSize = CGSizeMake(240, 150);
 
-    // Then
-    [self generateSnapshotWithContentSizeCategoryAndNotificationPost:
-              UIContentSizeCategoryExtraExtraLarge
-                                                    andVerifyForView:self.collectionView];
-  }
+  // Then
+  [self generateSnapshotWithContentSizeCategoryAndNotificationPost:
+            UIContentSizeCategoryExtraExtraLarge
+                                                  andVerifyForView:self.collectionView];
 }
 
 - (void)testPreferredFontForAXSContentSizeCategory {
-  if (@available(iOS 11.0, *)) {
-    // Given
-    MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] init];
-    cell.titleLabel.text = @"Title";
-    cell.detailLabel.text = @"Detail";
-    self.arrayOfCells = @[ cell ];
+  // Given
+  MDCSelfSizingStereoCell *cell = [[MDCSelfSizingStereoCell alloc] init];
+  cell.titleLabel.text = @"Title";
+  cell.detailLabel.text = @"Detail";
+  self.arrayOfCells = @[ cell ];
 
-    // When
-    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
-    UIFont *font = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:12]];
-    cell.titleLabel.font = font;
-    cell.detailLabel.font = font;
-    cell.titleLabel.adjustsFontForContentSizeCategory = YES;
-    cell.detailLabel.adjustsFontForContentSizeCategory = YES;
-    self.collectionView.frame = CGRectMake(0, 0, 240, 150);
-    self.collectionViewLayout.estimatedItemSize = CGSizeMake(240, 150);
+  // When
+  UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+  UIFont *font = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:12]];
+  cell.titleLabel.font = font;
+  cell.detailLabel.font = font;
+  cell.titleLabel.adjustsFontForContentSizeCategory = YES;
+  cell.detailLabel.adjustsFontForContentSizeCategory = YES;
+  self.collectionView.frame = CGRectMake(0, 0, 240, 150);
+  self.collectionViewLayout.estimatedItemSize = CGSizeMake(240, 150);
 
-    // Then
-    [self generateSnapshotWithContentSizeCategoryAndNotificationPost:UIContentSizeCategoryExtraSmall
-                                                    andVerifyForView:self.collectionView];
-  }
+  // Then
+  [self generateSnapshotWithContentSizeCategoryAndNotificationPost:UIContentSizeCategoryExtraSmall
+                                                  andVerifyForView:self.collectionView];
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {

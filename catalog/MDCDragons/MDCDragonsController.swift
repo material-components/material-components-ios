@@ -132,21 +132,17 @@ class MDCDragonsController: UIViewController,
       tableView.rowHeight = UITableView.automaticDimension
       tableView.estimatedRowHeight = 44
       view.addSubview(tableView)
-      if #available(iOS 11, *) {
-        tableView.translatesAutoresizingMaskIntoConstraints = false
+      tableView.translatesAutoresizingMaskIntoConstraints = false
 
-        let guide = view.safeAreaLayoutGuide
-        NSLayoutConstraint.activate([
-          tableView.leftAnchor.constraint(equalTo: guide.leftAnchor),
-          tableView.rightAnchor.constraint(equalTo: guide.rightAnchor),
-          tableView.topAnchor.constraint(equalTo: view.topAnchor),
-          tableView.bottomAnchor.constraint(equalTo: guide.bottomAnchor),
-        ])
+      let guide = view.safeAreaLayoutGuide
+      NSLayoutConstraint.activate([
+        tableView.leftAnchor.constraint(equalTo: guide.leftAnchor),
+        tableView.rightAnchor.constraint(equalTo: guide.rightAnchor),
+        tableView.topAnchor.constraint(equalTo: view.topAnchor),
+        tableView.bottomAnchor.constraint(equalTo: guide.bottomAnchor),
+      ])
 
-        tableView.contentInsetAdjustmentBehavior = .always
-      } else {
-        preiOS11Constraints()
-      }
+      tableView.contentInsetAdjustmentBehavior = .always
     }
 
     setupHeaderView()
@@ -477,10 +473,8 @@ extension MDCDragonsController {
       let baseInset = tableViewMaxY - endKeyboardFrameOriginInWindow.y
       let scrollIndicatorInset = baseInset
       var contentInset = baseInset
-      if #available(iOS 11, *) {
-        if endKeyboardFrameOriginInWindow.y < tableViewMaxY {
-          contentInset -= view.safeAreaInsets.bottom
-        }
+      if endKeyboardFrameOriginInWindow.y < tableViewMaxY {
+        contentInset -= view.safeAreaInsets.bottom
       }
       tableView.contentInset.bottom = contentInset
       tableView.scrollIndicatorInsets.bottom = scrollIndicatorInset

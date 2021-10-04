@@ -106,10 +106,8 @@ class MDCShadowPerformanceExample:
     let width = view.bounds.width
     let height = view.bounds.height
     var safeArea: UIEdgeInsets = .zero
-    if #available(iOS 11.0, *) {
-      safeArea = view.safeAreaInsets
-      collectionView.contentInsetAdjustmentBehavior = .always
-    }
+    safeArea = view.safeAreaInsets
+    collectionView.contentInsetAdjustmentBehavior = .always
 
     collectionView.frame = CGRect(
       origin: .zero, size: CGSize(width: width, height: height - (safeArea.bottom + safeArea.top)))

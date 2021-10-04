@@ -62,16 +62,12 @@ class ToggleButtonCell: MDCCardCollectionCell {
   }
 
   func addConstrains() {
-    if #available(iOS 11, *) {
-      NSLayoutConstraint.activate([
-        contentView.leftAnchor.constraint(equalTo: imageView.leftAnchor),
-        contentView.rightAnchor.constraint(equalTo: imageView.rightAnchor),
-        contentView.topAnchor.constraint(equalTo: imageView.topAnchor),
-        contentView.bottomAnchor.constraint(equalTo: imageView.bottomAnchor),
-      ])
-    } else {
-      preiOS11Constraints()
-    }
+    NSLayoutConstraint.activate([
+      contentView.leftAnchor.constraint(equalTo: imageView.leftAnchor),
+      contentView.rightAnchor.constraint(equalTo: imageView.rightAnchor),
+      contentView.topAnchor.constraint(equalTo: imageView.topAnchor),
+      contentView.bottomAnchor.constraint(equalTo: imageView.bottomAnchor),
+    ])
   }
 
   func preiOS11Constraints() {

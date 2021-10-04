@@ -89,17 +89,10 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
   // self.recordMode = YES;
 
   self.bannerView = [[MDCBannerView alloc] initWithFrame:CGRectZero];
-  if (@available(iOS 11.0, *)) {
-    NSDirectionalEdgeInsets directionalEdgeInsets = NSDirectionalEdgeInsetsZero;
-    directionalEdgeInsets.leading = kBannerContentPadding;
-    directionalEdgeInsets.trailing = kBannerContentPadding;
-    self.bannerView.directionalLayoutMargins = directionalEdgeInsets;
-  } else {
-    UIEdgeInsets margins = UIEdgeInsetsZero;
-    margins.left = kBannerContentPadding;
-    margins.right = kBannerContentPadding;
-    self.bannerView.layoutMargins = margins;
-  }
+  NSDirectionalEdgeInsets directionalEdgeInsets = NSDirectionalEdgeInsetsZero;
+  directionalEdgeInsets.leading = kBannerContentPadding;
+  directionalEdgeInsets.trailing = kBannerContentPadding;
+  self.bannerView.directionalLayoutMargins = directionalEdgeInsets;
 }
 
 - (void)tearDown {
@@ -296,17 +289,10 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
   self.bannerView.imageView.hidden = YES;
 
   // When
-  if (@available(iOS 11.0, *)) {
-    NSDirectionalEdgeInsets directionalEdgeInsets = NSDirectionalEdgeInsetsZero;
-    directionalEdgeInsets.leading = kBannerLargeContentPadding;
-    directionalEdgeInsets.trailing = kBannerLargeContentPadding;
-    self.bannerView.directionalLayoutMargins = directionalEdgeInsets;
-  } else {
-    UIEdgeInsets margins = UIEdgeInsetsZero;
-    margins.left = kBannerLargeContentPadding;
-    margins.right = kBannerLargeContentPadding;
-    self.bannerView.layoutMargins = margins;
-  }
+  NSDirectionalEdgeInsets directionalEdgeInsets = NSDirectionalEdgeInsetsZero;
+  directionalEdgeInsets.leading = kBannerLargeContentPadding;
+  directionalEdgeInsets.trailing = kBannerLargeContentPadding;
+  self.bannerView.directionalLayoutMargins = directionalEdgeInsets;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.bannerView];
@@ -327,17 +313,10 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
   self.bannerView.imageView.hidden = YES;
 
   // When
-  if (@available(iOS 11.0, *)) {
-    NSDirectionalEdgeInsets directionalEdgeInsets = NSDirectionalEdgeInsetsZero;
-    directionalEdgeInsets.leading = kBannerLargeContentPadding;
-    directionalEdgeInsets.trailing = kBannerLargeContentPadding;
-    self.bannerView.directionalLayoutMargins = directionalEdgeInsets;
-  } else {
-    UIEdgeInsets margins = UIEdgeInsetsZero;
-    margins.left = kBannerLargeContentPadding;
-    margins.right = kBannerLargeContentPadding;
-    self.bannerView.layoutMargins = margins;
-  }
+  NSDirectionalEdgeInsets directionalEdgeInsets = NSDirectionalEdgeInsetsZero;
+  directionalEdgeInsets.leading = kBannerLargeContentPadding;
+  directionalEdgeInsets.trailing = kBannerLargeContentPadding;
+  self.bannerView.directionalLayoutMargins = directionalEdgeInsets;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.bannerView];
@@ -450,62 +429,58 @@ static const CGFloat kBannerLargeContentPadding = 30.0f;
 
 
 - (void)testPreferredFontForAXXLContentSizeCategory {
-  if (@available(iOS 11.0, *)) {
-    // Given
-    self.bannerView = [[MDCBannerView alloc] init];
-    [self.bannerView applyThemeWithScheme:[[MDCContainerScheme alloc] init]];
-    self.bannerView.textView.text = kBannerLongText;
-    MDCButton *button1 = self.bannerView.leadingButton;
-    [button1 setTitle:@"Action1" forState:UIControlStateNormal];
-    button1.enableTitleFontForState = NO;
-    MDCButton *button2 = self.bannerView.trailingButton;
-    [button2 setTitle:@"Action2" forState:UIControlStateNormal];
-    button2.enableTitleFontForState = NO;
+  // Given
+  self.bannerView = [[MDCBannerView alloc] init];
+  [self.bannerView applyThemeWithScheme:[[MDCContainerScheme alloc] init]];
+  self.bannerView.textView.text = kBannerLongText;
+  MDCButton *button1 = self.bannerView.leadingButton;
+  [button1 setTitle:@"Action1" forState:UIControlStateNormal];
+  button1.enableTitleFontForState = NO;
+  MDCButton *button2 = self.bannerView.trailingButton;
+  [button2 setTitle:@"Action2" forState:UIControlStateNormal];
+  button2.enableTitleFontForState = NO;
 
-    // When
-    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
-    UIFont *font = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:20]];
-    self.bannerView.textView.font = font;
-    self.bannerView.leadingButton.titleLabel.font = font;
-    self.bannerView.trailingButton.titleLabel.font = font;
-    self.bannerView.textView.adjustsFontForContentSizeCategory = YES;
-    self.bannerView.leadingButton.titleLabel.adjustsFontForContentSizeCategory = YES;
-    self.bannerView.trailingButton.titleLabel.adjustsFontForContentSizeCategory = YES;
+  // When
+  UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+  UIFont *font = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:20]];
+  self.bannerView.textView.font = font;
+  self.bannerView.leadingButton.titleLabel.font = font;
+  self.bannerView.trailingButton.titleLabel.font = font;
+  self.bannerView.textView.adjustsFontForContentSizeCategory = YES;
+  self.bannerView.leadingButton.titleLabel.adjustsFontForContentSizeCategory = YES;
+  self.bannerView.trailingButton.titleLabel.adjustsFontForContentSizeCategory = YES;
 
-    // Then
-    [self generateSnapshotWithContentSizeCategoryAndNotificationPost:
-              UIContentSizeCategoryExtraExtraLarge
-                                                    andVerifyForView:self.bannerView];
-  }
+  // Then
+  [self generateSnapshotWithContentSizeCategoryAndNotificationPost:
+            UIContentSizeCategoryExtraExtraLarge
+                                                  andVerifyForView:self.bannerView];
 }
 
 - (void)testPreferredFontForAXSContentSizeCategory {
-  if (@available(iOS 11.0, *)) {
-    // Given
-    self.bannerView = [[MDCBannerView alloc] init];
-    [self.bannerView applyThemeWithScheme:[[MDCContainerScheme alloc] init]];
-    self.bannerView.textView.text = kBannerLongText;
-    MDCButton *button1 = self.bannerView.leadingButton;
-    [button1 setTitle:@"Action1" forState:UIControlStateNormal];
-    button1.enableTitleFontForState = NO;
-    MDCButton *button2 = self.bannerView.trailingButton;
-    [button2 setTitle:@"Action2" forState:UIControlStateNormal];
-    button2.enableTitleFontForState = NO;
+  // Given
+  self.bannerView = [[MDCBannerView alloc] init];
+  [self.bannerView applyThemeWithScheme:[[MDCContainerScheme alloc] init]];
+  self.bannerView.textView.text = kBannerLongText;
+  MDCButton *button1 = self.bannerView.leadingButton;
+  [button1 setTitle:@"Action1" forState:UIControlStateNormal];
+  button1.enableTitleFontForState = NO;
+  MDCButton *button2 = self.bannerView.trailingButton;
+  [button2 setTitle:@"Action2" forState:UIControlStateNormal];
+  button2.enableTitleFontForState = NO;
 
-    // When
-    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
-    UIFont *font = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:20]];
-    self.bannerView.textView.font = font;
-    self.bannerView.leadingButton.titleLabel.font = font;
-    self.bannerView.trailingButton.titleLabel.font = font;
-    self.bannerView.textView.adjustsFontForContentSizeCategory = YES;
-    self.bannerView.leadingButton.titleLabel.adjustsFontForContentSizeCategory = YES;
-    self.bannerView.trailingButton.titleLabel.adjustsFontForContentSizeCategory = YES;
+  // When
+  UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+  UIFont *font = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:20]];
+  self.bannerView.textView.font = font;
+  self.bannerView.leadingButton.titleLabel.font = font;
+  self.bannerView.trailingButton.titleLabel.font = font;
+  self.bannerView.textView.adjustsFontForContentSizeCategory = YES;
+  self.bannerView.leadingButton.titleLabel.adjustsFontForContentSizeCategory = YES;
+  self.bannerView.trailingButton.titleLabel.adjustsFontForContentSizeCategory = YES;
 
-    // Then
-    [self generateSnapshotWithContentSizeCategoryAndNotificationPost:UIContentSizeCategoryExtraSmall
-                                                    andVerifyForView:self.bannerView];
-  }
+  // Then
+  [self generateSnapshotWithContentSizeCategoryAndNotificationPost:UIContentSizeCategoryExtraSmall
+                                                  andVerifyForView:self.bannerView];
 }
 
 #pragma mark - contentEdgeInsets

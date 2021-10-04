@@ -46,10 +46,8 @@ static const CGSize kSizeOfCellInScrollableChild = (CGSize){(CGFloat)48, (CGFloa
   [self.collectionView registerClass:[UICollectionViewCell class]
           forCellWithReuseIdentifier:@"cell"];
   self.collectionView.dataSource = self;
-  if (@available(iOS 11.0, *)) {
-    self.collectionView.insetsLayoutMarginsFromSafeArea = YES;
-    self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
-  }
+  self.collectionView.insetsLayoutMarginsFromSafeArea = YES;
+  self.collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAlways;
 }
 
 - (UICollectionViewFlowLayout *)flowLayout {
@@ -181,9 +179,7 @@ static const CGSize kSizeOfCellInScrollableChild = (CGSize){(CGFloat)48, (CGFloa
 
 - (void)testNonScrollingChildViewControllerWithSafeAreaInsets {
   // Given
-  if (@available(iOS 11.0, *)) {
-    self.navBarController.additionalSafeAreaInsets = UIEdgeInsetsMake(10, 15, 25, 20);
-  }
+  self.navBarController.additionalSafeAreaInsets = UIEdgeInsetsMake(10, 15, 25, 20);
 
   // When
   self.navBarController.selectedViewController = self.fixedContentChildVC;
@@ -195,9 +191,7 @@ static const CGSize kSizeOfCellInScrollableChild = (CGSize){(CGFloat)48, (CGFloa
 
 - (void)testScrollableChildViewControllerWithSafeAreaInsets {
   // Given
-  if (@available(iOS 11.0, *)) {
-    self.navBarController.additionalSafeAreaInsets = UIEdgeInsetsMake(10, 15, 25, 20);
-  }
+  self.navBarController.additionalSafeAreaInsets = UIEdgeInsetsMake(10, 15, 25, 20);
 
   // When
   self.navBarController.selectedViewController = self.scrollableChildVC;
@@ -209,9 +203,7 @@ static const CGSize kSizeOfCellInScrollableChild = (CGSize){(CGFloat)48, (CGFloa
 
 - (void)testScrollingChildViewControllerWithSafeAreaInsetsScrolledToBottom {
   // Given
-  if (@available(iOS 11.0, *)) {
-    self.navBarController.additionalSafeAreaInsets = UIEdgeInsetsMake(10, 15, 25, 20);
-  }
+  self.navBarController.additionalSafeAreaInsets = UIEdgeInsetsMake(10, 15, 25, 20);
   self.navBarController.selectedViewController = self.scrollableChildVC;
   // Forces the layout system to update the layout margins and correctly position the
   // scroll view within the content view of the Bottom Navigation bar.

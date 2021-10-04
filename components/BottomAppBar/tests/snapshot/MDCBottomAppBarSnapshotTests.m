@@ -27,9 +27,7 @@
 
 - (void)setCustomSafeAreaInsets:(UIEdgeInsets)customSafeAreaInsets {
   _customSafeAreaInsets = customSafeAreaInsets;
-  if (@available(iOS 11.0, *)) {
-    [self safeAreaInsetsDidChange];
-  }
+  [self safeAreaInsetsDidChange];
 }
 
 - (UIEdgeInsets)safeAreaInsets {

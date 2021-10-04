@@ -93,8 +93,6 @@ extension SiblingOfTrackingScrollViewViewController: UITableViewDelegate {
   }
 
   func scrollViewDidChangeAdjustedContentInset(_ scrollView: UIScrollView) {
-    if #available(iOS 11.0, *) {
-      headerView?.trackingScrollDidChangeAdjustedContentInset(scrollView)
-    }
+    headerView?.trackingScrollDidChangeAdjustedContentInset(scrollView)
   }
 }

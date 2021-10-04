@@ -132,31 +132,27 @@
 
 - (int)numberOfPointsInPath:(UIBezierPath *)bezierPath {
   __block int numberOfPoints = 0;
-  if (@available(iOS 11.0, *)) {
-    CGPathApplyWithBlock(bezierPath.CGPath, ^(const CGPathElement *_Nonnull element) {
-      switch (element->type) {
-        case kCGPathElementMoveToPoint:
-          numberOfPoints = numberOfPoints + 1;
-          break;
-        case kCGPathElementAddLineToPoint:
-          numberOfPoints = numberOfPoints + 1;
-          break;
-        case kCGPathElementAddCurveToPoint:
-          numberOfPoints = numberOfPoints + 3;
-          break;
-        case kCGPathElementAddQuadCurveToPoint:
-          numberOfPoints = numberOfPoints + 2;
-          break;
-        case kCGPathElementCloseSubpath:
-          break;
-        default:
-          break;
-      }
-    });
-    return numberOfPoints;
-  } else {
-    return numberOfPoints;
-  }
+  CGPathApplyWithBlock(bezierPath.CGPath, ^(const CGPathElement *_Nonnull element) {
+    switch (element->type) {
+      case kCGPathElementMoveToPoint:
+        numberOfPoints = numberOfPoints + 1;
+        break;
+      case kCGPathElementAddLineToPoint:
+        numberOfPoints = numberOfPoints + 1;
+        break;
+      case kCGPathElementAddCurveToPoint:
+        numberOfPoints = numberOfPoints + 3;
+        break;
+      case kCGPathElementAddQuadCurveToPoint:
+        numberOfPoints = numberOfPoints + 2;
+        break;
+      case kCGPathElementCloseSubpath:
+        break;
+      default:
+        break;
+    }
+  });
+  return numberOfPoints;
 }
 
 - (void)testTraitCollectionDidChangeBlockCalledWhenTraitCollectionChanges {

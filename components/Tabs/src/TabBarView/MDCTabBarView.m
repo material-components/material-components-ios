@@ -186,9 +186,7 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
 
   // By default, inset the content within the safe area. This is generally the desired behavior,
   // but clients can override it if they want.
-  if (@available(iOS 11.0, *)) {
-    [super setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentAlways];
-  }
+  [super setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentAlways];
 
   // Tab bars only scroll horizontally, so it can't scroll to top. Setting this property to false
   // prevents it from interfering with other scroll views on screen responding to the scroll-to-top
@@ -1256,10 +1254,8 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
 
 - (CGRect)availableBoundsForSubviewLayout {
   CGRect availableBounds = CGRectStandardize(self.bounds);
-  if (@available(iOS 11.0, *)) {
-    if (_shouldAdjustForSafeAreaInsets) {
-      availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.safeAreaInsets);
-    }
+  if (_shouldAdjustForSafeAreaInsets) {
+    availableBounds = UIEdgeInsetsInsetRect(availableBounds, self.safeAreaInsets);
   }
   return availableBounds;
 }

@@ -277,12 +277,7 @@
 - (void)testTopHeaderHeightWithNoHeader {
   // Given
   CGFloat topSafeArea;
-  if (@available(iOS 11.0, *)) {
-    topSafeArea = self.fakeBottomDrawer.view.safeAreaInsets.top;
-  } else {
-    // A safe area of 20 is used prior to iOS 11.0 to reflect the status bar height.
-    topSafeArea = 20;
-  }
+  topSafeArea = self.fakeBottomDrawer.view.safeAreaInsets.top;
 
   // When
   self.fakeBottomDrawer.headerViewController = nil;
@@ -294,12 +289,7 @@
 - (void)testTopHeaderHeightWithHeader {
   // Given
   CGFloat topSafeArea;
-  if (@available(iOS 11.0, *)) {
-    topSafeArea = self.fakeBottomDrawer.view.safeAreaInsets.top;
-  } else {
-    // A safe area of 20 is used prior to iOS 11.0 to reflect the status bar height.
-    topSafeArea = 20;
-  }
+  topSafeArea = self.fakeBottomDrawer.view.safeAreaInsets.top;
   CGSize fakePreferredContentSize = CGSizeMake(200, 300);
 
   // When
@@ -934,12 +924,7 @@
 - (void)testExpandToFullScreen {
   // Given
   CGFloat topSafeArea;
-  if (@available(iOS 11.0, *)) {
-    topSafeArea = self.fakeBottomDrawer.view.safeAreaInsets.top;
-  } else {
-    // A safe area of 20 is used prior to iOS 11.0 to reflect the status bar height.
-    topSafeArea = 20;
-  }
+  topSafeArea = self.fakeBottomDrawer.view.safeAreaInsets.top;
   MDCNavigationDrawerFakeHeaderViewController *fakeHeader =
       [[MDCNavigationDrawerFakeHeaderViewController alloc] init];
   self.fakeBottomDrawer.headerViewController = fakeHeader;

@@ -66,12 +66,10 @@ class BaseCellExample: UIViewController {
     var width = view.bounds.size.width
     var height = view.bounds.size.height
 
-    if #available(iOS 11.0, *) {
-      originX += view.safeAreaInsets.left
-      originY += view.safeAreaInsets.top
-      width -= (view.safeAreaInsets.left + view.safeAreaInsets.right)
-      height -= (view.safeAreaInsets.top + view.safeAreaInsets.bottom)
-    }
+    originX += view.safeAreaInsets.left
+    originY += view.safeAreaInsets.top
+    width -= (view.safeAreaInsets.left + view.safeAreaInsets.right)
+    height -= (view.safeAreaInsets.top + view.safeAreaInsets.bottom)
 
     let frame = CGRect(x: originX, y: originY, width: width, height: height)
     collectionView.frame = frame

@@ -122,56 +122,52 @@
 }
 
 - (void)testPreferredFontForAXXXLContentSizeCategory {
-  if (@available(iOS 11.0, *)) {
-    // Given
-    [self.chip applyThemeWithScheme:self.containerScheme];
-    UITraitCollection *xsTraitCollection = [UITraitCollection
-        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
-    UIFont *originalFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody
-                               compatibleWithTraitCollection:xsTraitCollection];
-    self.chip.traitCollectionOverride = xsTraitCollection;
-    UITraitCollection *aXXXLTraitCollection =
-        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
-                               UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
-    self.chip.titleLabel.text = @"Title";
-    self.chip.titleLabel.font = originalFont;
-    self.chip.titleLabel.adjustsFontForContentSizeCategory = YES;
+  // Given
+  [self.chip applyThemeWithScheme:self.containerScheme];
+  UITraitCollection *xsTraitCollection = [UITraitCollection
+      traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+  UIFont *originalFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody
+                             compatibleWithTraitCollection:xsTraitCollection];
+  self.chip.traitCollectionOverride = xsTraitCollection;
+  UITraitCollection *aXXXLTraitCollection =
+      [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                             UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+  self.chip.titleLabel.text = @"Title";
+  self.chip.titleLabel.font = originalFont;
+  self.chip.titleLabel.adjustsFontForContentSizeCategory = YES;
 
-    // When
-    self.chip.traitCollectionOverride = aXXXLTraitCollection;
-    // Force the Dynamic Type system to update the button's font.
-    [self.chip drawViewHierarchyInRect:self.chip.bounds afterScreenUpdates:YES];
+  // When
+  self.chip.traitCollectionOverride = aXXXLTraitCollection;
+  // Force the Dynamic Type system to update the button's font.
+  [self.chip drawViewHierarchyInRect:self.chip.bounds afterScreenUpdates:YES];
 
-    // Then
-    [self generateSnapshotAndVerifyForView:self.chip];
-  }
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
 }
 
 - (void)testPreferredFontForXSContentSizeCategory {
-  if (@available(iOS 11.0, *)) {
-    // Given
-    [self.chip applyThemeWithScheme:self.containerScheme];
-    UITraitCollection *aXXXLTraitCollection =
-        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
-                               UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
-    UIFont *originalFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody
-                               compatibleWithTraitCollection:aXXXLTraitCollection];
-    self.chip.traitCollectionOverride = aXXXLTraitCollection;
-    self.chip.titleLabel.text = @"Title";
-    self.chip.titleLabel.font = originalFont;
-    self.chip.titleLabel.adjustsFontForContentSizeCategory = YES;
+  // Given
+  [self.chip applyThemeWithScheme:self.containerScheme];
+  UITraitCollection *aXXXLTraitCollection =
+      [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                             UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+  UIFont *originalFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody
+                             compatibleWithTraitCollection:aXXXLTraitCollection];
+  self.chip.traitCollectionOverride = aXXXLTraitCollection;
+  self.chip.titleLabel.text = @"Title";
+  self.chip.titleLabel.font = originalFont;
+  self.chip.titleLabel.adjustsFontForContentSizeCategory = YES;
 
-    // When
-    UITraitCollection *xsTraitCollection = [UITraitCollection
-        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+  // When
+  UITraitCollection *xsTraitCollection = [UITraitCollection
+      traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
 
-    self.chip.traitCollectionOverride = xsTraitCollection;
-    // Force the Dynamic Type system to update the button's font.
-    [self.chip drawViewHierarchyInRect:self.chip.bounds afterScreenUpdates:YES];
+  self.chip.traitCollectionOverride = xsTraitCollection;
+  // Force the Dynamic Type system to update the button's font.
+  [self.chip drawViewHierarchyInRect:self.chip.bounds afterScreenUpdates:YES];
 
-    // Then
-    [self generateSnapshotAndVerifyForView:self.chip];
-  }
+  // Then
+  [self generateSnapshotAndVerifyForView:self.chip];
 }
 
 @end

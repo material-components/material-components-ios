@@ -61,61 +61,57 @@
 }
 
 - (void)testPreferredFontForAXXXLContentSizeCategory {
-  if (@available(iOS 11.0, *)) {
-    // Given
-    MDCButtonSnapshotTestsFakeButton *button = [[MDCButtonSnapshotTestsFakeButton alloc] init];
-    [button applyContainedThemeWithScheme:[[MDCContainerScheme alloc] init]];
-    UITraitCollection *xsTraitCollection = [UITraitCollection
-        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
-    UIFont *originalFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody
-                               compatibleWithTraitCollection:xsTraitCollection];
-    button.traitCollectionOverride = xsTraitCollection;
-    UITraitCollection *aXXXLTraitCollection =
-        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
-                               UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
-    [button setTitle:@"Title" forState:UIControlStateNormal];
-    button.titleLabel.font = originalFont;
-    button.titleLabel.adjustsFontForContentSizeCategory = YES;
+  // Given
+  MDCButtonSnapshotTestsFakeButton *button = [[MDCButtonSnapshotTestsFakeButton alloc] init];
+  [button applyContainedThemeWithScheme:[[MDCContainerScheme alloc] init]];
+  UITraitCollection *xsTraitCollection = [UITraitCollection
+      traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+  UIFont *originalFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody
+                             compatibleWithTraitCollection:xsTraitCollection];
+  button.traitCollectionOverride = xsTraitCollection;
+  UITraitCollection *aXXXLTraitCollection =
+      [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                             UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+  [button setTitle:@"Title" forState:UIControlStateNormal];
+  button.titleLabel.font = originalFont;
+  button.titleLabel.adjustsFontForContentSizeCategory = YES;
 
-    // When
-    button.enableTitleFontForState = NO;
-    button.traitCollectionOverride = aXXXLTraitCollection;
-    // Force the Dynamic Type system to update the button's font.
-    [button drawViewHierarchyInRect:button.bounds afterScreenUpdates:YES];
+  // When
+  button.enableTitleFontForState = NO;
+  button.traitCollectionOverride = aXXXLTraitCollection;
+  // Force the Dynamic Type system to update the button's font.
+  [button drawViewHierarchyInRect:button.bounds afterScreenUpdates:YES];
 
-    // Then
-    [self generateSnapshotAndVerifyForView:button];
-  }
+  // Then
+  [self generateSnapshotAndVerifyForView:button];
 }
 
 - (void)testPreferredFontForXSContentSizeCategory {
-  if (@available(iOS 11.0, *)) {
-    // Given
-    MDCButtonSnapshotTestsFakeButton *button = [[MDCButtonSnapshotTestsFakeButton alloc] init];
-    [button applyContainedThemeWithScheme:[[MDCContainerScheme alloc] init]];
-    UITraitCollection *aXXXLTraitCollection =
-        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
-                               UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
-    UIFont *originalFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody
-                               compatibleWithTraitCollection:aXXXLTraitCollection];
-    button.traitCollectionOverride = aXXXLTraitCollection;
-    [button setTitle:@"Title" forState:UIControlStateNormal];
-    button.titleLabel.font = originalFont;
-    button.titleLabel.adjustsFontForContentSizeCategory = YES;
+  // Given
+  MDCButtonSnapshotTestsFakeButton *button = [[MDCButtonSnapshotTestsFakeButton alloc] init];
+  [button applyContainedThemeWithScheme:[[MDCContainerScheme alloc] init]];
+  UITraitCollection *aXXXLTraitCollection =
+      [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                             UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+  UIFont *originalFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody
+                             compatibleWithTraitCollection:aXXXLTraitCollection];
+  button.traitCollectionOverride = aXXXLTraitCollection;
+  [button setTitle:@"Title" forState:UIControlStateNormal];
+  button.titleLabel.font = originalFont;
+  button.titleLabel.adjustsFontForContentSizeCategory = YES;
 
-    // When
+  // When
 
-    button.enableTitleFontForState = NO;
-    UITraitCollection *xsTraitCollection = [UITraitCollection
-        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+  button.enableTitleFontForState = NO;
+  UITraitCollection *xsTraitCollection = [UITraitCollection
+      traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
 
-    button.traitCollectionOverride = xsTraitCollection;
-    // Force the Dynamic Type system to update the button's font.
-    [button drawViewHierarchyInRect:button.bounds afterScreenUpdates:YES];
+  button.traitCollectionOverride = xsTraitCollection;
+  // Force the Dynamic Type system to update the button's font.
+  [button drawViewHierarchyInRect:button.bounds afterScreenUpdates:YES];
 
-    // Then
-    [self generateSnapshotAndVerifyForView:button];
-  }
+  // Then
+  [self generateSnapshotAndVerifyForView:button];
 }
 
 - (void)testButtonSupportsDynamicColorScheme {

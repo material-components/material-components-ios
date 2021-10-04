@@ -102,9 +102,7 @@ class ButtonsStoryboardExample: UIViewController {
 
   private func layoutContainer() {
     let viewLayoutGuide: Any = {
-      if #available(iOS 11.0, *) {
-        return view.safeAreaLayoutGuide
-      }
+      return view.safeAreaLayoutGuide
       return view
     }()
     NSLayoutConstraint.activate([

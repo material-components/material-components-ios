@@ -47,9 +47,7 @@ class ChipsFieldDeleteEnabledViewController: UIViewController, MDCChipFieldDeleg
     super.viewWillLayoutSubviews()
 
     var frame = view.bounds
-    if #available(iOS 11.0, *) {
-      frame = frame.inset(by: view.safeAreaInsets)
-    }
+    frame = frame.inset(by: view.safeAreaInsets)
     frame.size = chipField.sizeThatFits(frame.size)
     chipField.frame = frame
   }

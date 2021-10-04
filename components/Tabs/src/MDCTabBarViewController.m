@@ -307,9 +307,7 @@ const CGFloat MDCTabBarViewControllerAnimationDuration = (CGFloat)0.3;
   CGRect bounds = self.view.bounds;
   CGFloat tabBarHeight = [[_tabBar class] defaultHeightForBarPosition:UIBarPositionBottom
                                                        itemAppearance:_tabBar.itemAppearance];
-  if (@available(iOS 11.0, *)) {
-    tabBarHeight += self.view.safeAreaInsets.bottom;
-  }
+  tabBarHeight += self.view.safeAreaInsets.bottom;
 
   CGRect currentViewFrame = bounds;
   CGRect tabBarFrame = CGRectMake(bounds.origin.x, bounds.origin.y + bounds.size.height,
