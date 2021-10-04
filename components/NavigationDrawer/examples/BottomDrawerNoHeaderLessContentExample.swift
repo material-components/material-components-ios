@@ -64,10 +64,8 @@ class BottomDrawerNoHeaderLessContentExample: UIViewController {
       y: view.bounds.size.height - size.height,
       width: size.width,
       height: size.height)
-    if #available(iOS 11.0, *) {
-      bottomBarViewFrame.size.height += view.safeAreaInsets.bottom
-      bottomBarViewFrame.origin.y -= view.safeAreaInsets.bottom
-    }
+    bottomBarViewFrame.size.height += view.safeAreaInsets.bottom
+    bottomBarViewFrame.origin.y -= view.safeAreaInsets.bottom
     bottomAppBar.frame = bottomBarViewFrame
   }
 

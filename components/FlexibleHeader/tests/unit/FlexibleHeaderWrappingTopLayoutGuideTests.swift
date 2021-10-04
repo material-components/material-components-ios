@@ -49,11 +49,9 @@ class FlexibleHeaderWrappingTopLayoutGuideTests: XCTestCase {
     XCTAssertEqual(
       contentViewController.topLayoutGuide.length,
       container.headerViewController.headerView.frame.maxY)
-    if #available(iOS 11.0, *) {
-      XCTAssertEqual(
-        contentViewController.additionalSafeAreaInsets.top,
-        container.headerViewController.headerView.frame.maxY)
-    }
+    XCTAssertEqual(
+      contentViewController.additionalSafeAreaInsets.top,
+      container.headerViewController.headerView.frame.maxY)
   }
 
   func testEarlyViewLoadStillAffectsTopLayoutGuide() {
@@ -68,11 +66,9 @@ class FlexibleHeaderWrappingTopLayoutGuideTests: XCTestCase {
     XCTAssertEqual(
       contentViewController.topLayoutGuide.length,
       container.headerViewController.headerView.frame.maxY)
-    if #available(iOS 11.0, *) {
-      XCTAssertEqual(
-        contentViewController.additionalSafeAreaInsets.top,
-        container.headerViewController.headerView.frame.maxY)
-    }
+    XCTAssertEqual(
+      contentViewController.additionalSafeAreaInsets.top,
+      container.headerViewController.headerView.frame.maxY)
   }
 
   // MARK: Untracked table view
@@ -89,12 +85,10 @@ class FlexibleHeaderWrappingTopLayoutGuideTests: XCTestCase {
     XCTAssertEqual(
       contentViewController.topLayoutGuide.length,
       container.headerViewController.headerView.frame.maxY)
-    if #available(iOS 11.0, *) {
-      XCTAssertEqual(
-        contentViewController.additionalSafeAreaInsets.top,
-        container.headerViewController.headerView.frame.maxY)
-      XCTAssertEqual(contentViewController.tableView.adjustedContentInset.top, 0)
-    }
+    XCTAssertEqual(
+      contentViewController.additionalSafeAreaInsets.top,
+      container.headerViewController.headerView.frame.maxY)
+    XCTAssertEqual(contentViewController.tableView.adjustedContentInset.top, 0)
   }
 
   // MARK: Tracked table view
@@ -111,12 +105,10 @@ class FlexibleHeaderWrappingTopLayoutGuideTests: XCTestCase {
     XCTAssertEqual(
       contentViewController.topLayoutGuide.length,
       container.headerViewController.headerView.frame.maxY)
-    if #available(iOS 11.0, *) {
-      XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
-      XCTAssertEqual(
-        contentViewController.tableView.adjustedContentInset.top,
-        container.headerViewController.headerView.maximumHeight)
-    }
+    XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
+    XCTAssertEqual(
+      contentViewController.tableView.adjustedContentInset.top,
+      container.headerViewController.headerView.maximumHeight)
   }
 
   // MARK: Untracked collection view
@@ -134,12 +126,10 @@ class FlexibleHeaderWrappingTopLayoutGuideTests: XCTestCase {
     XCTAssertEqual(
       contentViewController.topLayoutGuide.length,
       container.headerViewController.headerView.frame.maxY)
-    if #available(iOS 11.0, *) {
-      XCTAssertEqual(
-        contentViewController.additionalSafeAreaInsets.top,
-        container.headerViewController.headerView.frame.maxY)
-      XCTAssertEqual(contentViewController.collectionView!.adjustedContentInset.top, 0)
-    }
+    XCTAssertEqual(
+      contentViewController.additionalSafeAreaInsets.top,
+      container.headerViewController.headerView.frame.maxY)
+    XCTAssertEqual(contentViewController.collectionView!.adjustedContentInset.top, 0)
   }
 
   // MARK: Tracked collection view view
@@ -160,12 +150,10 @@ class FlexibleHeaderWrappingTopLayoutGuideTests: XCTestCase {
     XCTAssertEqual(
       contentViewController.topLayoutGuide.length,
       container.headerViewController.headerView.frame.maxY)
-    if #available(iOS 11.0, *) {
-      XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
-      XCTAssertEqual(
-        contentViewController.collectionView!.adjustedContentInset.top,
-        container.headerViewController.headerView.maximumHeight)
-    }
+    XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
+    XCTAssertEqual(
+      contentViewController.collectionView!.adjustedContentInset.top,
+      container.headerViewController.headerView.maximumHeight)
   }
 
 }

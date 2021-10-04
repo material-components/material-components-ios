@@ -47,9 +47,7 @@ class FlexibleHeaderWrappingLegacyTopLayoutGuideTests: XCTestCase {
 
     // Then
     XCTAssertEqual(contentViewController.topLayoutGuide.length, 0)
-    if #available(iOS 11.0, *) {
-      XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
-    }
+    XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
   }
 
   // MARK: Untracked table view
@@ -62,10 +60,8 @@ class FlexibleHeaderWrappingLegacyTopLayoutGuideTests: XCTestCase {
 
     // Then
     XCTAssertEqual(contentViewController.topLayoutGuide.length, 0)
-    if #available(iOS 11.0, *) {
-      XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
-      XCTAssertEqual(contentViewController.tableView.adjustedContentInset.top, 0)
-    }
+    XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
+    XCTAssertEqual(contentViewController.tableView.adjustedContentInset.top, 0)
   }
 
   // MARK: Tracked table view
@@ -80,12 +76,10 @@ class FlexibleHeaderWrappingLegacyTopLayoutGuideTests: XCTestCase {
 
     // Then
     XCTAssertEqual(contentViewController.topLayoutGuide.length, 0)
-    if #available(iOS 11.0, *) {
-      XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
-      XCTAssertEqual(
-        contentViewController.tableView.adjustedContentInset.top,
-        container.headerViewController.headerView.maximumHeight)
-    }
+    XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
+    XCTAssertEqual(
+      contentViewController.tableView.adjustedContentInset.top,
+      container.headerViewController.headerView.maximumHeight)
   }
 
   // MARK: Untracked collection view
@@ -99,10 +93,8 @@ class FlexibleHeaderWrappingLegacyTopLayoutGuideTests: XCTestCase {
 
     // Then
     XCTAssertEqual(contentViewController.topLayoutGuide.length, 0)
-    if #available(iOS 11.0, *) {
-      XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
-      XCTAssertEqual(contentViewController.collectionView!.adjustedContentInset.top, 0)
-    }
+    XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
+    XCTAssertEqual(contentViewController.collectionView!.adjustedContentInset.top, 0)
   }
 
   // MARK: Tracked collection view view
@@ -119,12 +111,10 @@ class FlexibleHeaderWrappingLegacyTopLayoutGuideTests: XCTestCase {
 
     // Then
     XCTAssertEqual(contentViewController.topLayoutGuide.length, 0)
-    if #available(iOS 11.0, *) {
-      XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
-      XCTAssertEqual(
-        contentViewController.collectionView!.adjustedContentInset.top,
-        container.headerViewController.headerView.maximumHeight)
-    }
+    XCTAssertEqual(contentViewController.additionalSafeAreaInsets.top, 0)
+    XCTAssertEqual(
+      contentViewController.collectionView!.adjustedContentInset.top,
+      container.headerViewController.headerView.maximumHeight)
   }
 
 }

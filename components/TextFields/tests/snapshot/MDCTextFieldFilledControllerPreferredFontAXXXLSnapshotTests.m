@@ -47,30 +47,28 @@
   // Skip empty tests since this is only testing Dynamic Type.
   self.shouldExecuteEmptyTests = NO;
 
-  if (@available(iOS 11.0, *)) {
-    MDCTextFieldFilledControllerPreferredFontXSSnapshotTestsFake *fakeTextField =
-        [[MDCTextFieldFilledControllerPreferredFontXSSnapshotTestsFake alloc] init];
-    fakeTextField.traitCollectionOverride = [UITraitCollection
-        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
-    self.textField = fakeTextField;
-    self.textField.clearButtonMode = UITextFieldViewModeAlways;
+  MDCTextFieldFilledControllerPreferredFontXSSnapshotTestsFake *fakeTextField =
+      [[MDCTextFieldFilledControllerPreferredFontXSSnapshotTestsFake alloc] init];
+  fakeTextField.traitCollectionOverride = [UITraitCollection
+      traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+  self.textField = fakeTextField;
+  self.textField.clearButtonMode = UITextFieldViewModeAlways;
 
-    MDCTextInputControllerFilled *controller =
-        [[MDCTextInputControllerFilled alloc] initWithTextInput:self.textField];
-    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
-    controller.textInputFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino"
-                                                                              size:20]];
-    controller.inlinePlaceholderFont =
-        [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:20]];
-    controller.leadingUnderlineLabelFont =
-        [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:20]];
-    controller.trailingUnderlineLabelFont =
-        [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:20]];
-    controller.floatingEnabled = YES;
-    self.textFieldController = controller;
+  MDCTextInputControllerFilled *controller =
+      [[MDCTextInputControllerFilled alloc] initWithTextInput:self.textField];
+  UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+  controller.textInputFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino"
+                                                                            size:20]];
+  controller.inlinePlaceholderFont = [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino"
+                                                                                    size:20]];
+  controller.leadingUnderlineLabelFont =
+      [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:20]];
+  controller.trailingUnderlineLabelFont =
+      [bodyMetrics scaledFontForFont:[UIFont fontWithName:@"Zapfino" size:20]];
+  controller.floatingEnabled = YES;
+  self.textFieldController = controller;
 
-    ((id<UIContentSizeCategoryAdjusting>)self.textField).adjustsFontForContentSizeCategory = YES;
-  }
+  ((id<UIContentSizeCategoryAdjusting>)self.textField).adjustsFontForContentSizeCategory = YES;
 }
 
 - (void)willGenerateSnapshotAndVerify {

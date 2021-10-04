@@ -30,9 +30,7 @@
   XCTAssertTrue(fhv.canOverExtend);
   XCTAssertFalse(fhv.contentIsTranslucent);
   XCTAssertNil(fhv.delegate);
-  if (@available(iOS 11.0, *)) {
-    XCTAssertFalse(fhv.disableContentInsetAdjustmentWhenContentInsetAdjustmentBehaviorIsNever);
-  }
+  XCTAssertFalse(fhv.disableContentInsetAdjustmentWhenContentInsetAdjustmentBehaviorIsNever);
   XCTAssertEqualWithAccuracy(fhv.elevation, 0, 0.001);
   XCTAssertEqual(fhv.headerContentImportance, MDCFlexibleHeaderContentImportanceDefault);
   XCTAssertFalse(fhv.inFrontOfInfiniteContent);

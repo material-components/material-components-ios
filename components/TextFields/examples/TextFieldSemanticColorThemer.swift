@@ -106,45 +106,24 @@ final class TextFieldSemanticColorThemer: UIViewController {
         constant: 0)
     ]
 
-    if #available(iOS 11.0, *) {
-      constraints += [
-        NSLayoutConstraint(
-          item: textfieldStandard,
-          attribute: .top,
-          relatedBy: .equal,
-          toItem: scrollView.contentLayoutGuide,
-          attribute: .top,
-          multiplier: 1,
-          constant: 20),
-        NSLayoutConstraint(
-          item: textfieldAlternative,
-          attribute: .bottom,
-          relatedBy: .equal,
-          toItem: scrollView.contentLayoutGuide,
-          attribute: .bottomMargin,
-          multiplier: 1,
-          constant: -20),
-      ]
-    } else {
-      constraints += [
-        NSLayoutConstraint(
-          item: textfieldStandard,
-          attribute: .top,
-          relatedBy: .equal,
-          toItem: scrollView,
-          attribute: .top,
-          multiplier: 1,
-          constant: 20),
-        NSLayoutConstraint(
-          item: textfieldAlternative,
-          attribute: .bottom,
-          relatedBy: .equal,
-          toItem: scrollView,
-          attribute: .bottomMargin,
-          multiplier: 1,
-          constant: -20),
-      ]
-    }
+    constraints += [
+      NSLayoutConstraint(
+        item: textfieldStandard,
+        attribute: .top,
+        relatedBy: .equal,
+        toItem: scrollView.contentLayoutGuide,
+        attribute: .top,
+        multiplier: 1,
+        constant: 20),
+      NSLayoutConstraint(
+        item: textfieldAlternative,
+        attribute: .bottom,
+        relatedBy: .equal,
+        toItem: scrollView.contentLayoutGuide,
+        attribute: .bottomMargin,
+        multiplier: 1,
+        constant: -20),
+    ]
 
     NSLayoutConstraint.activate(constraints)
   }
