@@ -211,12 +211,8 @@ static NSString *const kPreferredLayoutMenuAccessibilityLabel = @"Change preferr
   self.tabBar.selectedItem = item4;
 
   self.tabBar.translatesAutoresizingMaskIntoConstraints = NO;
-  if (@available(iOS 11.0, *)) {
-    [self.view.layoutMarginsGuide.topAnchor constraintEqualToAnchor:self.tabBar.topAnchor].active =
-        YES;
-  } else {
-    [self.topLayoutGuide.bottomAnchor constraintEqualToAnchor:self.tabBar.topAnchor].active = YES;
-  }
+  [self.view.layoutMarginsGuide.topAnchor constraintEqualToAnchor:self.tabBar.topAnchor].active =
+      YES;
   [self.view.leftAnchor constraintEqualToAnchor:self.tabBar.leftAnchor].active = YES;
   [self.view.rightAnchor constraintEqualToAnchor:self.tabBar.rightAnchor].active = YES;
 
@@ -318,35 +314,18 @@ static NSString *const kPreferredLayoutMenuAccessibilityLabel = @"Change preferr
   [self.view addSubview:self.segmentedControl];
   self.segmentedControl.tintColor = self.containerScheme.colorScheme.primaryColor;
   self.segmentedControl.translatesAutoresizingMaskIntoConstraints = NO;
-  if (@available(iOS 11.0, *)) {
-    [self.view.layoutMarginsGuide.centerXAnchor
-        constraintEqualToAnchor:self.segmentedControl.centerXAnchor]
-        .active = YES;
-    [self.view.layoutMarginsGuide.centerYAnchor
-        constraintEqualToAnchor:self.segmentedControl.centerYAnchor]
-        .active = YES;
-    [self.view.layoutMarginsGuide.leadingAnchor
-        constraintLessThanOrEqualToAnchor:self.segmentedControl.leadingAnchor]
-        .active = YES;
-    [self.view.layoutMarginsGuide.trailingAnchor
-        constraintGreaterThanOrEqualToAnchor:self.segmentedControl.trailingAnchor]
-        .active = YES;
-  } else {
-    [self.view.centerXAnchor constraintEqualToAnchor:self.segmentedControl.centerXAnchor].active =
-        YES;
-    NSLayoutConstraint *centerYConstraint =
-        [self.view.centerYAnchor constraintEqualToAnchor:self.segmentedControl.centerYAnchor];
-    centerYConstraint.priority = UILayoutPriorityDefaultLow;
-    centerYConstraint.active = YES;
-    [self.tabBar.bottomAnchor constraintLessThanOrEqualToAnchor:self.segmentedControl.topAnchor
-                                                       constant:-16]
-        .active = YES;
-    [self.view.leadingAnchor constraintLessThanOrEqualToAnchor:self.segmentedControl.leadingAnchor]
-        .active = YES;
-    [self.view.trailingAnchor
-        constraintGreaterThanOrEqualToAnchor:self.segmentedControl.trailingAnchor]
-        .active = YES;
-  }
+  [self.view.layoutMarginsGuide.centerXAnchor
+      constraintEqualToAnchor:self.segmentedControl.centerXAnchor]
+      .active = YES;
+  [self.view.layoutMarginsGuide.centerYAnchor
+      constraintEqualToAnchor:self.segmentedControl.centerYAnchor]
+      .active = YES;
+  [self.view.layoutMarginsGuide.leadingAnchor
+      constraintLessThanOrEqualToAnchor:self.segmentedControl.leadingAnchor]
+      .active = YES;
+  [self.view.layoutMarginsGuide.trailingAnchor
+      constraintGreaterThanOrEqualToAnchor:self.segmentedControl.trailingAnchor]
+      .active = YES;
 }
 
 #pragma mark - MDCTabBarViewDelegate

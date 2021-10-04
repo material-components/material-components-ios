@@ -214,9 +214,7 @@ class MDCCatalogComponentsController: UICollectionViewController,
     headerViewController.didMove(toParent: self)
 
     collectionView?.accessibilityIdentifier = "componentList"
-    if #available(iOS 11.0, *) {
-      collectionView?.contentInsetAdjustmentBehavior = .always
-    }
+    collectionView?.contentInsetAdjustmentBehavior = .always
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -390,9 +388,7 @@ class MDCCatalogComponentsController: UICollectionViewController,
   ) -> CGSize {
     let dividerWidth: CGFloat = 1
     var safeInsets: CGFloat = 0
-    if #available(iOS 11, *) {
-      safeInsets = view.safeAreaInsets.left + view.safeAreaInsets.right
-    }
+    safeInsets = view.safeAreaInsets.left + view.safeAreaInsets.right
     var cellWidthHeight: CGFloat
 
     // iPhones have 2 columns in portrait and 3 in landscape

@@ -44,9 +44,7 @@ class MDCDebugSafeAreaInsetsView: UIView {
 
   override func layoutSubviews() {
     var safeAreaInsets = UIEdgeInsets.zero
-    if #available(iOS 11, *) {
-      safeAreaInsets = self.safeAreaInsets
-    }
+    safeAreaInsets = self.safeAreaInsets
 
     let width = frame.width
     let height = frame.height
@@ -56,21 +54,24 @@ class MDCDebugSafeAreaInsetsView: UIView {
     edgeViews[0].frame = CGRect(x: 0, y: 0, width: width, height: safeAreaInsets.top)
 
     // left
-    edgeViews[1].frame = CGRect(x: 0,
-                                y: safeAreaInsets.top,
-                                width: safeAreaInsets.left,
-                                height: insetHeight)
+    edgeViews[1].frame = CGRect(
+      x: 0,
+      y: safeAreaInsets.top,
+      width: safeAreaInsets.left,
+      height: insetHeight)
 
     // bottom
-    edgeViews[2].frame = CGRect(x: 0,
-                                y: height - safeAreaInsets.bottom,
-                                width: width,
-                                height: safeAreaInsets.bottom)
+    edgeViews[2].frame = CGRect(
+      x: 0,
+      y: height - safeAreaInsets.bottom,
+      width: width,
+      height: safeAreaInsets.bottom)
 
     // right
-    edgeViews[3].frame = CGRect(x: width - safeAreaInsets.right,
-                                y: safeAreaInsets.top,
-                                width: safeAreaInsets.right,
-                                height: insetHeight)
+    edgeViews[3].frame = CGRect(
+      x: width - safeAreaInsets.right,
+      y: safeAreaInsets.top,
+      width: safeAreaInsets.right,
+      height: insetHeight)
   }
 }

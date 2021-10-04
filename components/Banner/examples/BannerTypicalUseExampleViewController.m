@@ -169,11 +169,7 @@ static NSString *const exampleSuperLongText =
   CGSize bannerViewSize = [self.bannerView sizeThatFits:self.view.bounds.size];
   // Adjust bannerViewContainer's frame
   CGFloat yOrigin = 0.0f;
-  if (@available(iOS 11.0, *)) {
-    yOrigin = self.view.safeAreaInsets.top;
-  } else {
-    yOrigin = self.topLayoutGuide.length;
-  }
+  yOrigin = self.view.safeAreaInsets.top;
 
   self.bannerView.frame = CGRectMake(0.0f, yOrigin, bannerViewSize.width, bannerViewSize.height);
 }

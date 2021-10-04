@@ -87,42 +87,8 @@
   [content addObject:@"</body></html>"];
   [webView loadHTMLString:[content componentsJoinedByString:@"\n"] baseURL:nil];
 
-  if (@available(iOS 11.0, *)) {
-    // No need to do anything - additionalSafeAreaInsets will inset our content.
-    webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-  } else {
-    webView.translatesAutoresizingMaskIntoConstraints = NO;
-    [NSLayoutConstraint activateConstraints:@[
-      [NSLayoutConstraint constraintWithItem:webView
-                                   attribute:NSLayoutAttributeTop
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:self.topLayoutGuide
-                                   attribute:NSLayoutAttributeBottom
-                                  multiplier:1.0
-                                    constant:0],
-      [NSLayoutConstraint constraintWithItem:webView
-                                   attribute:NSLayoutAttributeBottom
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:self.view
-                                   attribute:NSLayoutAttributeBottom
-                                  multiplier:1.0
-                                    constant:0],
-      [NSLayoutConstraint constraintWithItem:webView
-                                   attribute:NSLayoutAttributeLeft
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:self.view
-                                   attribute:NSLayoutAttributeLeft
-                                  multiplier:1.0
-                                    constant:0],
-      [NSLayoutConstraint constraintWithItem:webView
-                                   attribute:NSLayoutAttributeRight
-                                   relatedBy:NSLayoutRelationEqual
-                                      toItem:self.view
-                                   attribute:NSLayoutAttributeRight
-                                  multiplier:1.0
-                                    constant:0]
-    ]];
-  }
+  // No need to do anything - additionalSafeAreaInsets will inset our content.
+  webView.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   self.appBar.headerViewController.headerView.trackingScrollView = webView.scrollView;
   [self.appBar addSubviewsToParent];
 }

@@ -37,12 +37,8 @@
          """
      )
  }
- if #available(iOS 11.0, *) {
-   label.font = UIFontMetrics(forTextStyle: .headline).scaledFont(for: customFont)
-   label.adjustsFontForContentSizeCategory = true
- } else {
-   label.font = customFont
- }
+ label.font = UIFontMetrics(forTextStyle: .headline).scaledFont(for: customFont)
+ label.adjustsFontForContentSizeCategory = true
  ```
 
  When using this type, the above snippet of code looks like this instead:
@@ -51,22 +47,14 @@
  // Create the type scale.
  let fontDescriptor = UIFontDescriptor(name: "CustomFont-Light", size: UIFont.labelFontSize)
  let scalableFontDescriptor: MDCScalableFontDescriptor
- if #available(iOS 11, *) {
-   scalableFontDescriptor = MDCScalableFontDescriptor(
-     fontDescriptor: fontDescriptor,
-     fontMetrics: UIFontMetrics(forTextStyle: .largeTitle)
-   )
- } else {
-   scalableFontDescriptor = MDCScalableFontDescriptor(fontDescriptor: fontDescriptor)
- }
+ scalableFontDescriptor = MDCScalableFontDescriptor(
+   fontDescriptor: fontDescriptor,
+   fontMetrics: UIFontMetrics(forTextStyle: .largeTitle)
+ )
 
  // Use the scalable font descriptor.
- if #available(iOS 11, *) {
-   label.font = scalableFontDescriptor.preferredFont(compatibleWith: label.traitCollection)
-   label.adjustsFontForContentSizeCategory = true
- } else {
-   label.font = scalableFontDescriptor.baseFont()
- }
+ label.font = scalableFontDescriptor.preferredFont(compatibleWith: label.traitCollection)
+ label.adjustsFontForContentSizeCategory = true
  ```
 
  @seealso https://developer.apple.com/documentation/uikit/uifont/scaling_fonts_automatically

@@ -393,21 +393,17 @@ extension MDCNodeListViewController {
       ).isActive = true
     }
     // Title Label to Section View
-    if #available(iOS 11.0, *) {
-      // Align to the safe area insets.
-      sectionTitleLabel.leadingAnchor
-        .constraint(
-          equalTo: sectionView.safeAreaLayoutGuide.leadingAnchor,
-          constant: padding
-        ).isActive = true
-      sectionTitleLabel.trailingAnchor
-        .constraint(
-          equalTo: sectionView.safeAreaLayoutGuide.trailingAnchor,
-          constant: -padding
-        ).isActive = true
-    } else {
-      preiOS11Behavior()
-    }
+    // Align to the safe area insets.
+    sectionTitleLabel.leadingAnchor
+      .constraint(
+        equalTo: sectionView.safeAreaLayoutGuide.leadingAnchor,
+        constant: padding
+      ).isActive = true
+    sectionTitleLabel.trailingAnchor
+      .constraint(
+        equalTo: sectionView.safeAreaLayoutGuide.trailingAnchor,
+        constant: -padding
+      ).isActive = true
 
     NSLayoutConstraint(
       item: sectionView,
@@ -473,21 +469,17 @@ extension MDCNodeListViewController {
         constant: self.padding
       ).isActive = true
     }
-    if #available(iOS 11.0, *) {
-      // Align to the safe area insets.
-      sectionTitleLabel.leadingAnchor
-        .constraint(
-          equalTo: sectionView.safeAreaLayoutGuide.leadingAnchor,
-          constant: padding
-        ).isActive = true
-      sectionTitleLabel.trailingAnchor
-        .constraint(
-          equalTo: sectionView.safeAreaLayoutGuide.trailingAnchor,
-          constant: -padding
-        ).isActive = true
-    } else {
-      preiOS11Behavior()
-    }
+    // Align to the safe area insets.
+    sectionTitleLabel.leadingAnchor
+      .constraint(
+        equalTo: sectionView.safeAreaLayoutGuide.leadingAnchor,
+        constant: padding
+      ).isActive = true
+    sectionTitleLabel.trailingAnchor
+      .constraint(
+        equalTo: sectionView.safeAreaLayoutGuide.trailingAnchor,
+        constant: -padding
+      ).isActive = true
 
     NSLayoutConstraint(
       item: sectionTitleLabel,

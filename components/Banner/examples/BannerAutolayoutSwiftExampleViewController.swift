@@ -50,11 +50,7 @@ class BannerAutoLayoutSwiftExampleViewController: UIViewController {
     bannerView.applyTheme(withScheme: containerScheme)
     view.addSubview(bannerView)
     bannerView.isHidden = true
-    if #available(iOS 11.0, *) {
-      bannerView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor).isActive = true
-    } else {
-      bannerView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor).isActive = true
-    }
+    bannerView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor).isActive = true
     bannerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
     bannerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
   }

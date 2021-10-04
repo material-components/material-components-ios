@@ -237,12 +237,10 @@ This button allows the user to signal that they want to toggle the layout direct
   CGFloat originY = CGRectGetMinY(self.view.bounds);
   CGFloat width = CGRectGetWidth(self.view.bounds);
   CGFloat height = CGRectGetHeight(self.view.bounds);
-  if (@available(iOS 11.0, *)) {
-    originX += self.view.safeAreaInsets.left;
-    originY += self.view.safeAreaInsets.top;
-    width -= (self.view.safeAreaInsets.left + self.view.safeAreaInsets.right);
-    height -= (self.view.safeAreaInsets.top + self.view.safeAreaInsets.bottom);
-  }
+  originX += self.view.safeAreaInsets.left;
+  originY += self.view.safeAreaInsets.top;
+  width -= (self.view.safeAreaInsets.left + self.view.safeAreaInsets.right);
+  height -= (self.view.safeAreaInsets.top + self.view.safeAreaInsets.bottom);
   CGRect frame = CGRectMake(originX, originY, width, height);
   self.scrollView.frame = frame;
 }
@@ -398,20 +396,18 @@ This button allows the user to signal that they want to toggle the layout direct
 #pragma mark IBAction handling
 
 - (void)handleToggleDarkModeButtonTapped {
-  if (@available(iOS 12.0, *)) {
-    UIUserInterfaceStyle currentUserInterfaceStyle = self.traitCollection.userInterfaceStyle;
-    UIUserInterfaceStyle newUserInterfaceStyle = UIUserInterfaceStyleUnspecified;
-    if (currentUserInterfaceStyle == UIUserInterfaceStyleLight) {
-      newUserInterfaceStyle = UIUserInterfaceStyleDark;
-    } else if (currentUserInterfaceStyle == UIUserInterfaceStyleDark) {
-      newUserInterfaceStyle = UIUserInterfaceStyleLight;
-    } else {
-      return;
-    }
-    [self.traitEnvironmentChangeDelegate
-        childViewControllerDidRequestUserInterfaceStyle:self
-                                     userInterfaceStyle:newUserInterfaceStyle];
+  UIUserInterfaceStyle currentUserInterfaceStyle = self.traitCollection.userInterfaceStyle;
+  UIUserInterfaceStyle newUserInterfaceStyle = UIUserInterfaceStyleUnspecified;
+  if (currentUserInterfaceStyle == UIUserInterfaceStyleLight) {
+    newUserInterfaceStyle = UIUserInterfaceStyleDark;
+  } else if (currentUserInterfaceStyle == UIUserInterfaceStyleDark) {
+    newUserInterfaceStyle = UIUserInterfaceStyleLight;
+  } else {
+    return;
   }
+  [self.traitEnvironmentChangeDelegate
+      childViewControllerDidRequestUserInterfaceStyle:self
+                                   userInterfaceStyle:newUserInterfaceStyle];
   [self.view setNeedsLayout];
 }
 
@@ -429,23 +425,21 @@ This button allows the user to signal that they want to toggle the layout direct
 }
 
 - (void)handleToggleLayoutDirectionButtonTapped {
-  if (@available(iOS 12.0, *)) {
-    UITraitEnvironmentLayoutDirection currentTraitEnvironmentLayoutDirection =
-        self.traitCollection.layoutDirection;
-    UITraitEnvironmentLayoutDirection newTraitEnvironmentLayoutDirection =
-        UITraitEnvironmentLayoutDirectionUnspecified;
-    if (currentTraitEnvironmentLayoutDirection == UITraitEnvironmentLayoutDirectionRightToLeft) {
-      newTraitEnvironmentLayoutDirection = UITraitEnvironmentLayoutDirectionLeftToRight;
-    } else if (currentTraitEnvironmentLayoutDirection ==
-               UITraitEnvironmentLayoutDirectionLeftToRight) {
-      newTraitEnvironmentLayoutDirection = UITraitEnvironmentLayoutDirectionRightToLeft;
-    } else {
-      return;
-    }
-    [self.traitEnvironmentChangeDelegate
-        childViewControllerDidRequestLayoutDirection:self
-                                     layoutDirection:newTraitEnvironmentLayoutDirection];
+  UITraitEnvironmentLayoutDirection currentTraitEnvironmentLayoutDirection =
+      self.traitCollection.layoutDirection;
+  UITraitEnvironmentLayoutDirection newTraitEnvironmentLayoutDirection =
+      UITraitEnvironmentLayoutDirectionUnspecified;
+  if (currentTraitEnvironmentLayoutDirection == UITraitEnvironmentLayoutDirectionRightToLeft) {
+    newTraitEnvironmentLayoutDirection = UITraitEnvironmentLayoutDirectionLeftToRight;
+  } else if (currentTraitEnvironmentLayoutDirection ==
+             UITraitEnvironmentLayoutDirectionLeftToRight) {
+    newTraitEnvironmentLayoutDirection = UITraitEnvironmentLayoutDirectionRightToLeft;
+  } else {
+    return;
   }
+  [self.traitEnvironmentChangeDelegate
+      childViewControllerDidRequestLayoutDirection:self
+                                   layoutDirection:newTraitEnvironmentLayoutDirection];
   [self.view setNeedsLayout];
 }
 

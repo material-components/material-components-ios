@@ -50,9 +50,7 @@ class CardExampleViewController: UIViewController {
     imageView.isAccessibilityElement = true
     imageView.accessibilityLabel = "Missing Dish"
     imageView.layer.cornerRadius = card.layer.cornerRadius
-    if #available(iOS 11.0, *) {
-      imageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-    }
+    imageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
   }
 }
 

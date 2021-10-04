@@ -48,75 +48,71 @@
 // NOTE: UIFontMetric detection is potentially broken on Forge on Mac due to b/142536380.
 - (NSString *)description {
   // This method is unoptimized, and assumes it's only called in testing environments.
-  if (@available(iOS 11.0, *)) {
-    static NSArray<UIFontTextStyle> *textStyles;
-    static NSArray<UIContentSizeCategory> *sizeCategories;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-      textStyles = @[
+  static NSArray<UIFontTextStyle> *textStyles;
+  static NSArray<UIContentSizeCategory> *sizeCategories;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    textStyles = @[
 #if !TARGET_OS_TV
-        UIFontTextStyleLargeTitle,
+      UIFontTextStyleLargeTitle,
 #endif
-        UIFontTextStyleTitle1,
-        UIFontTextStyleTitle2,
-        UIFontTextStyleTitle3,
-        UIFontTextStyleHeadline,
-        UIFontTextStyleSubheadline,
-        UIFontTextStyleBody,
-        UIFontTextStyleCallout,
-        UIFontTextStyleCaption1,
-        UIFontTextStyleCaption2,
-        UIFontTextStyleFootnote,
-      ];
+      UIFontTextStyleTitle1,
+      UIFontTextStyleTitle2,
+      UIFontTextStyleTitle3,
+      UIFontTextStyleHeadline,
+      UIFontTextStyleSubheadline,
+      UIFontTextStyleBody,
+      UIFontTextStyleCallout,
+      UIFontTextStyleCaption1,
+      UIFontTextStyleCaption2,
+      UIFontTextStyleFootnote,
+    ];
 
-      sizeCategories = @[
-        UIContentSizeCategoryExtraSmall,
-        UIContentSizeCategorySmall,
-        UIContentSizeCategoryMedium,
-        UIContentSizeCategoryLarge,
-        UIContentSizeCategoryExtraLarge,
-        UIContentSizeCategoryExtraExtraLarge,
-        UIContentSizeCategoryExtraExtraExtraLarge,
-        UIContentSizeCategoryAccessibilityMedium,
-        UIContentSizeCategoryAccessibilityLarge,
-        UIContentSizeCategoryAccessibilityExtraLarge,
-        UIContentSizeCategoryAccessibilityExtraExtraLarge,
-        UIContentSizeCategoryAccessibilityExtraExtraExtraLarge,
-      ];
-    });
+    sizeCategories = @[
+      UIContentSizeCategoryExtraSmall,
+      UIContentSizeCategorySmall,
+      UIContentSizeCategoryMedium,
+      UIContentSizeCategoryLarge,
+      UIContentSizeCategoryExtraLarge,
+      UIContentSizeCategoryExtraExtraLarge,
+      UIContentSizeCategoryExtraExtraExtraLarge,
+      UIContentSizeCategoryAccessibilityMedium,
+      UIContentSizeCategoryAccessibilityLarge,
+      UIContentSizeCategoryAccessibilityExtraLarge,
+      UIContentSizeCategoryAccessibilityExtraExtraLarge,
+      UIContentSizeCategoryAccessibilityExtraExtraExtraLarge,
+    ];
+  });
 
-    NSMutableString *descriptionString = [NSMutableString
-        stringWithFormat:@"%@ Descriptor: %@\n", [super description], self.fontDescriptor];
-    UIFont *testFont = [UIFont systemFontOfSize:99 weight:UIFontWeightRegular];
+  NSMutableString *descriptionString = [NSMutableString
+      stringWithFormat:@"%@ Descriptor: %@\n", [super description], self.fontDescriptor];
+  UIFont *testFont = [UIFont systemFontOfSize:99 weight:UIFontWeightRegular];
 
-    // Check all UIFontTextStyle values and search for one that scales fonts equivalently to this
-    // style's `fontMetrics`.
-    for (UIFontTextStyle textStyle in textStyles) {
-      BOOL matchedTextStyle = YES;
-      UIFontMetrics *textStyleMetrics = [UIFontMetrics metricsForTextStyle:textStyle];
-      // Compare the scaled font at all UIContentSizeCategory values to determine if the metrics are
-      // equivalent.
-      for (UIContentSizeCategory sizeCategory in sizeCategories) {
-        UITraitCollection *traitCollection =
-            [UITraitCollection traitCollectionWithPreferredContentSizeCategory:sizeCategory];
-        UIFont *selfScaledFont = [self.fontMetrics scaledFontForFont:testFont
-                                       compatibleWithTraitCollection:traitCollection];
-        UIFont *otherScaledFont = [textStyleMetrics scaledFontForFont:testFont
-                                        compatibleWithTraitCollection:traitCollection];
-        if (![selfScaledFont isEqual:otherScaledFont]) {
-          matchedTextStyle = NO;
-          break;
-        }
-      }
-      if (matchedTextStyle) {
-        [descriptionString appendFormat:@"Metrics: %@", textStyle];
+  // Check all UIFontTextStyle values and search for one that scales fonts equivalently to this
+  // style's `fontMetrics`.
+  for (UIFontTextStyle textStyle in textStyles) {
+    BOOL matchedTextStyle = YES;
+    UIFontMetrics *textStyleMetrics = [UIFontMetrics metricsForTextStyle:textStyle];
+    // Compare the scaled font at all UIContentSizeCategory values to determine if the metrics are
+    // equivalent.
+    for (UIContentSizeCategory sizeCategory in sizeCategories) {
+      UITraitCollection *traitCollection =
+          [UITraitCollection traitCollectionWithPreferredContentSizeCategory:sizeCategory];
+      UIFont *selfScaledFont = [self.fontMetrics scaledFontForFont:testFont
+                                     compatibleWithTraitCollection:traitCollection];
+      UIFont *otherScaledFont = [textStyleMetrics scaledFontForFont:testFont
+                                      compatibleWithTraitCollection:traitCollection];
+      if (![selfScaledFont isEqual:otherScaledFont]) {
+        matchedTextStyle = NO;
         break;
       }
     }
-    return [descriptionString copy];
-  } else {
-    return [super description];
+    if (matchedTextStyle) {
+      [descriptionString appendFormat:@"Metrics: %@", textStyle];
+      break;
+    }
   }
+  return [descriptionString copy];
 }
 
 #endif

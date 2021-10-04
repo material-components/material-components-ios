@@ -83,9 +83,7 @@
   [super viewDidLayoutSubviews];
   _titleLabel.center = self.view.center;
   UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
-  if (@available(iOS 11.0, *)) {
-    safeAreaInsets = self.view.safeAreaInsets;
-  }
+  safeAreaInsets = self.view.safeAreaInsets;
   CGRect buttonFrame = self.buttonFrame;
   self.button.frame = CGRectOffset(buttonFrame, safeAreaInsets.left, safeAreaInsets.top);
   [self.button sizeToFit];

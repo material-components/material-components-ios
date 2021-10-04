@@ -154,11 +154,7 @@ All the content size categories that this view controller supports.
 }
 
 - (CGFloat)preferredContentMinY {
-  if (@available(iOS 11.0, *)) {
-    return (CGFloat)(self.view.safeAreaInsets.top);
-  } else {
-    return (CGFloat)self.topLayoutGuide.length;
-  }
+  return (CGFloat)(self.view.safeAreaInsets.top);
 }
 
 - (void)setTraitCollection:(UITraitCollection *)traitCollection

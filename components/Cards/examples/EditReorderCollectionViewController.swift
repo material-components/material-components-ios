@@ -84,18 +84,14 @@ class EditReorderCollectionViewController: UIViewController,
       dataSource.append((image: images[ind].image, title: images[ind].title, selected: false))
     }
 
-    if #available(iOS 11, *) {
-      let guide = view.safeAreaLayoutGuide
-      NSLayoutConstraint.activate([
-        collectionView.leftAnchor.constraint(equalTo: guide.leftAnchor),
-        collectionView.rightAnchor.constraint(equalTo: guide.rightAnchor),
-        collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-        collectionView.bottomAnchor.constraint(equalTo: guide.bottomAnchor),
-      ])
-      collectionView.contentInsetAdjustmentBehavior = .always
-    } else {
-      preiOS11Constraints()
-    }
+    let guide = view.safeAreaLayoutGuide
+    NSLayoutConstraint.activate([
+      collectionView.leftAnchor.constraint(equalTo: guide.leftAnchor),
+      collectionView.rightAnchor.constraint(equalTo: guide.rightAnchor),
+      collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+      collectionView.bottomAnchor.constraint(equalTo: guide.bottomAnchor),
+    ])
+    collectionView.contentInsetAdjustmentBehavior = .always
 
     self.updateTitle()
   }
