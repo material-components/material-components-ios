@@ -14,9 +14,12 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialFlexibleHeader.h"
-#import "MaterialFlexibleHeader+ShiftBehaviorEnabledWithStatusBar.h"
-#import "MaterialPalettes.h"
+#import "MDCFlexibleHeaderView+ShiftBehavior.h"
+#import "MDCFlexibleHeaderView.h"
+#import "MDCFlexibleHeaderViewController.h"
+#import "MDCFlexibleHeaderViewLayoutDelegate.h"
+#import "MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar.h"
+#import "MDCPalettes.h"
 
 @interface FlexibleHeaderSafeAreaLayoutGuideExample
     : UIViewController <MDCFlexibleHeaderViewLayoutDelegate, UIScrollViewDelegate>
@@ -116,22 +119,11 @@
                                                           multiplier:1.0
                                                             constant:100];
   width.active = YES;
-  if (@available(iOS 11.0, *)) {
-    // TODO(b/138666796): This does not pin the content as expected.
-    NSLayoutConstraint *top = [self.view.safeAreaLayoutGuide.topAnchor
-                               constraintEqualToAnchor:self.constrainedView.topAnchor
-                               constant:0];
-    top.active = YES;
-  } else {
-    NSLayoutConstraint *top = [NSLayoutConstraint constraintWithItem:self.constrainedView
-                                                           attribute:NSLayoutAttributeTop
-                                                           relatedBy:NSLayoutRelationEqual
-                                                              toItem:self.topLayoutGuide
-                                                           attribute:NSLayoutAttributeBottom
-                                                          multiplier:1.0
-                                                            constant:0];
-    top.active = YES;
-  }
+  // TODO(b/138666796): This does not pin the content as expected.
+  NSLayoutConstraint *top = [self.view.safeAreaLayoutGuide.topAnchor
+      constraintEqualToAnchor:self.constrainedView.topAnchor
+                     constant:0];
+  top.active = YES;
   NSLayoutConstraint *leading = [NSLayoutConstraint constraintWithItem:self.constrainedView
                                                              attribute:NSLayoutAttributeLeading
                                                              relatedBy:NSLayoutRelationEqual
