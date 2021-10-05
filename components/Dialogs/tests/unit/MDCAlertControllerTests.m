@@ -14,15 +14,20 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialButtons.h"
-#import "MaterialDialogs.h"
+#import "MDCButton.h"
+#import "MDCAlertController.h"
+#import "MDCAlertControllerView.h"
+#import "MDCDialogPresentationController.h"
+#import "MDCDialogTransitionController.h"
+#import "UIViewController+MaterialDialogs.h"
 #import "MDCAlertActionManager.h"
-#import "MaterialShadowElevations.h"
-#import "MaterialTypography.h"
+#import "MDCShadowElevations.h"
 
 #import "../../src/private/MDCDialogShadowedView.h"
 #import "MDCAlertController+ButtonForAction.h"
 #import "MDCAlertControllerView+Private.h"
+#import "UIFont+MaterialScalable.h"
+#import "UIFont+MaterialSimpleEquality.h"
 
 static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   static NSDictionary<UIContentSizeCategory, NSNumber *> *scalingCurve;
@@ -959,38 +964,36 @@ than @c UIContentSizeCategoryLarge.
  @c prefrredContentSizeCategory of the view's @c traitCollection.
  */
 - (void)testAdjustsFontForContentSizeCategoryUpdatesFontWhenTraitCollectionChanges {
-  if (@available(iOS 11.0, *)) {
-    // Given
-    MDCAlertControllerTestsControllerFake *alert =
-        [[MDCAlertControllerTestsControllerFake alloc] init];
-    alert.title = @"Title";
-    alert.message = @"Message";
-    [alert addAction:[MDCAlertAction actionWithTitle:@"Action 1" handler:nil]];
+  // Given
+  MDCAlertControllerTestsControllerFake *alert =
+      [[MDCAlertControllerTestsControllerFake alloc] init];
+  alert.title = @"Title";
+  alert.message = @"Message";
+  [alert addAction:[MDCAlertAction actionWithTitle:@"Action 1" handler:nil]];
 
-    // Prepare the Dynamic Type environment
-    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
-    UITraitCollection *extraSmallTraits = [UITraitCollection
-        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
-    UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:20];
-    originalFont = [bodyMetrics scaledFontForFont:originalFont
-                    compatibleWithTraitCollection:extraSmallTraits];
-    alert.adjustsFontForContentSizeCategory = YES;
-    alert.titleFont = originalFont;
-    [alert loadViewIfNeeded];
-    MDCAlertControllerTestsFakeWindow *window = [[MDCAlertControllerTestsFakeWindow alloc] init];
-    window.traitCollectionOverride =
-        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
-                               UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
-    [window addSubview:alert.view];
+  // Prepare the Dynamic Type environment
+  UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+  UITraitCollection *extraSmallTraits = [UITraitCollection
+      traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+  UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:20];
+  originalFont = [bodyMetrics scaledFontForFont:originalFont
+                  compatibleWithTraitCollection:extraSmallTraits];
+  alert.adjustsFontForContentSizeCategory = YES;
+  alert.titleFont = originalFont;
+  [alert loadViewIfNeeded];
+  MDCAlertControllerTestsFakeWindow *window = [[MDCAlertControllerTestsFakeWindow alloc] init];
+  window.traitCollectionOverride =
+      [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                             UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+  [window addSubview:alert.view];
 
-    // When
-    // Triggers UIFontMetrics-based fonts to resize within UILabel.
-    [alert.view layoutIfNeeded];
+  // When
+  // Triggers UIFontMetrics-based fonts to resize within UILabel.
+  [alert.view layoutIfNeeded];
 
-    // Then
-    XCTAssertEqualObjects(alert.alertView.titleLabel.font.fontName, originalFont.fontName);
-    XCTAssertGreaterThan(alert.alertView.titleLabel.font.pointSize, originalFont.pointSize);
-  }
+  // Then
+  XCTAssertEqualObjects(alert.alertView.titleLabel.font.fontName, originalFont.fontName);
+  XCTAssertGreaterThan(alert.alertView.titleLabel.font.pointSize, originalFont.pointSize);
 }
 
 - (void)testTraitCollectionDidChangeBlockCalledWithExpectedParameters {
