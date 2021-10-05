@@ -16,10 +16,12 @@
 
 #import "private/MDCCollectionGridBackgroundView.h"
 #import "private/MDCCollectionInfoBarView.h"
-#import "MaterialCollectionLayoutAttributes.h"
+#import "MDCCollectionViewLayoutAttributes.h"
 #import "MDCCollectionViewController.h"
 #import "MDCCollectionViewEditing.h"
 #import "MDCCollectionViewEditingDelegate.h"
+#import "MDCCollectionViewStyling.h"
+#import "MDCCollectionViewStylingDelegate.h"
 
 #include <tgmath.h>
 
@@ -179,17 +181,13 @@ static const NSInteger kSupplementaryViewZIndex = 99;
       attr.size = CGSizeMake(CGRectGetWidth(currentBounds), MDCCollectionInfoBarHeaderHeight);
       // Allow header to move upwards with scroll, but prevent from moving downwards with scroll.
       CGFloat insetTop = self.collectionView.contentInset.top;
-      if (@available(iOS 11.0, *)) {
-        insetTop = self.collectionView.adjustedContentInset.top;
-      }
+      insetTop = self.collectionView.adjustedContentInset.top;
       CGFloat boundsY = currentBounds.origin.y;
       CGFloat maxOffsetY = MAX(boundsY + insetTop, 0);
       offsetY = boundsY + (attr.size.height / 2) + insetTop - maxOffsetY;
     } else if ([kind isEqualToString:MDCCollectionInfoBarKindFooter]) {
       CGFloat height = MDCCollectionInfoBarFooterHeight;
-      if (@available(iOS 11.0, *)) {
-        height += self.collectionView.safeAreaInsets.bottom;
-      }
+      height += self.collectionView.safeAreaInsets.bottom;
       attr.size = CGSizeMake(CGRectGetWidth(currentBounds), height);
       offsetY = currentBounds.origin.y + currentBounds.size.height - (attr.size.height / 2);
     }
