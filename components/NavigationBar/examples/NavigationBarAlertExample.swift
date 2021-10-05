@@ -33,20 +33,8 @@ open class NavigationBarAlertExample: UIViewController {
     MDCNavigationBarColorThemer.applySemanticColorScheme(colorScheme, to: navBar)
     navBar.translatesAutoresizingMaskIntoConstraints = false
 
-    if #available(iOS 11.0, *) {
-      self.view.safeAreaLayoutGuide.topAnchor.constraint(equalTo: self.navBar.topAnchor).isActive =
-        true
-    } else {
-      NSLayoutConstraint(
-        item: self.topLayoutGuide,
-        attribute: .bottom,
-        relatedBy: .equal,
-        toItem: self.navBar,
-        attribute: .top,
-        multiplier: 1,
-        constant: 0
-      ).isActive = true
-    }
+    self.view.safeAreaLayoutGuide.topAnchor.constraint(equalTo: self.navBar.topAnchor).isActive =
+      true
 
     let viewBindings = ["navBar": navBar]
 
