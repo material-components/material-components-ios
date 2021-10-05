@@ -19,19 +19,19 @@
 #import "private/MDCFlexibleHeaderTopSafeArea.h"
 #import "private/MDCFlexibleHeaderView+Private.h"
 #import "private/MDCStatusBarShifter.h"
-#import "MaterialElevation.h"
+#import "UIView+MaterialElevationResponding.h"
 #import "MDCFlexibleHeaderView+ShiftBehavior.h"
 #import "MDCFlexibleHeaderViewAnimationDelegate.h"
 #import "MDCFlexibleHeaderViewDelegate.h"
-#import "MaterialFlexibleHeader+ShiftBehavior.h"
-#import "MaterialFlexibleHeader+ShiftBehaviorEnabledWithStatusBar.h"
+#import "MDCFlexibleHeaderShiftBehavior.h"
+#import "MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar.h"
 #import "MDCFlexibleHeaderMinMaxHeightDelegate.h"
 #import "MDCFlexibleHeaderTopSafeAreaDelegate.h"
 #import "MDCStatusBarShifterDelegate.h"
-#import "MaterialShadowElevations.h"
-#import "MaterialApplication.h"
-#import "MaterialMath.h"
-#import "MaterialUIMetrics.h"
+#import "MDCShadowElevations.h"
+#import "UIApplication+MDCAppExtensions.h"
+#import "MDCMath.h"
+#import "MDCLayoutMetrics.h"
 
 #if TARGET_IPHONE_SIMULATOR
 float UIAnimationDragCoefficient(void);  // Private API for simulator animation speed
@@ -335,11 +335,7 @@ static char *const kKVOContextMDCFlexibleHeaderView = "kKVOContextMDCFlexibleHea
   self.minimumHeaderViewHeight = 0.0;
 
   NSString *voiceOverNotification;
-  if (@available(iOS 11.0, *)) {
-    voiceOverNotification = UIAccessibilityVoiceOverStatusDidChangeNotification;
-  } else {
-    voiceOverNotification = UIAccessibilityVoiceOverStatusChanged;
-  }
+  voiceOverNotification = UIAccessibilityVoiceOverStatusDidChangeNotification;
 
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(fhv_updateLayout)
@@ -461,11 +457,9 @@ static char *const kKVOContextMDCFlexibleHeaderView = "kKVOContextMDCFlexibleHea
 }
 
 - (void)safeAreaInsetsDidChange {
-  if (@available(iOS 11.0, *)) {
-    [super safeAreaInsetsDidChange];
+  [super safeAreaInsetsDidChange];
 
-    [_topSafeArea safeAreaInsetsDidChange];
-  }
+  [_topSafeArea safeAreaInsetsDidChange];
 }
 
 #pragma mark - Top Safe Area Inset
@@ -592,9 +586,7 @@ static char *const kKVOContextMDCFlexibleHeaderView = "kKVOContextMDCFlexibleHea
   // the scroll view's been created, but not in any further runloops.
   if (CGPointEqualToPoint(offsetPriorToInsetAdjustment, trackingScrollView.contentOffset)) {
     CGFloat scrollViewAdjustedContentInsetTop = trackingScrollView.contentInset.top;
-    if (@available(iOS 11.0, *)) {
-      scrollViewAdjustedContentInsetTop = trackingScrollView.adjustedContentInset.top;
-    }
+    scrollViewAdjustedContentInsetTop = trackingScrollView.adjustedContentInset.top;
     offsetPriorToInsetAdjustment.y =
         MAX(offsetPriorToInsetAdjustment.y, -scrollViewAdjustedContentInsetTop);
     [self fhv_setContentOffset:offsetPriorToInsetAdjustment
@@ -629,10 +621,8 @@ static char *const kKVOContextMDCFlexibleHeaderView = "kKVOContextMDCFlexibleHea
 - (CGFloat)fhv_existingContentInsetAdjustmentForScrollView:(UIScrollView *)scrollView {
   CGFloat existingContentInsetAdjustment = 0;
 
-  if (@available(iOS 11.0, *)) {
-    existingContentInsetAdjustment =
-        (scrollView.adjustedContentInset.top - scrollView.contentInset.top);
-  }
+  existingContentInsetAdjustment =
+      (scrollView.adjustedContentInset.top - scrollView.contentInset.top);
 
   return existingContentInsetAdjustment;
 }
@@ -650,13 +640,11 @@ static char *const kKVOContextMDCFlexibleHeaderView = "kKVOContextMDCFlexibleHea
       (self.useAdditionalSafeAreaInsetsForWebKitScrollViews && [self trackingScrollViewIsWebKit])) {
     return 0;
   }
-  if (@available(iOS 11.0, *)) {
-    // Don't adjust the contentInset if scrollView's behavior doesn't want it.
-    // Compatible to iOS 11 and above
-    if (self.disableContentInsetAdjustmentWhenContentInsetAdjustmentBehaviorIsNever &&
-        scrollView.contentInsetAdjustmentBehavior == UIScrollViewContentInsetAdjustmentNever) {
-      return 0;
-    }
+  // Don't adjust the contentInset if scrollView's behavior doesn't want it.
+  // Compatible to iOS 11 and above
+  if (self.disableContentInsetAdjustmentWhenContentInsetAdjustmentBehaviorIsNever &&
+      scrollView.contentInsetAdjustmentBehavior == UIScrollViewContentInsetAdjustmentNever) {
+    return 0;
   }
 
   MDCFlexibleHeaderScrollViewInfo *info = [_trackedScrollViews objectForKey:scrollView];
@@ -1344,9 +1332,7 @@ static char *const kKVOContextMDCFlexibleHeaderView = "kKVOContextMDCFlexibleHea
       // header into the center of the scrollview on focusing.
       CGPoint offset = self.trackingScrollView.contentOffset;
       CGFloat scrollViewAdjustedContentInsetTop = self.trackingScrollView.contentInset.top;
-      if (@available(iOS 11.0, *)) {
-        scrollViewAdjustedContentInsetTop = self.trackingScrollView.adjustedContentInset.top;
-      }
+      scrollViewAdjustedContentInsetTop = self.trackingScrollView.adjustedContentInset.top;
       // The offset clamp needs to be rounded to the closest integer due to the contentOffset being
       // re-adjusted by UIKit to a non-fractional number. Without rounding an infinite recurion
       // occurs, where the content offset is set to a fractional number and then UIKit re-setting
