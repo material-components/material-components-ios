@@ -18,7 +18,8 @@
 
 #import "private/MDCBottomNavigationBar+Private.h"
 #import "private/MDCBottomNavigationLargeItemDialogView.h"
-#import "MaterialBottomNavigation.h"
+#import "MDCBottomNavigationBar.h"
+#import "MDCBottomNavigationBarControllerDelegate.h"
 
 // A context for Key Value Observing
 static void *const kObservationContext = (void *)&kObservationContext;
@@ -131,9 +132,7 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
 }
 
 - (void)viewSafeAreaInsetsDidChange {
-  if (@available(iOS 11.0, *)) {
-    [super viewSafeAreaInsetsDidChange];
-  }
+  [super viewSafeAreaInsetsDidChange];
   [self updateNavigationBarInsets];
 }
 
@@ -476,41 +475,10 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
   UIEdgeInsets currentSafeAreaInsets = UIEdgeInsetsZero;
   CGFloat navigationBarHeight =
       self.isNavigationBarHidden ? 0 : CGRectGetHeight(self.navigationBar.frame);
-  if (@available(iOS 11.0, *)) {
-    currentSafeAreaInsets = self.view.safeAreaInsets;
-  }
+  currentSafeAreaInsets = self.view.safeAreaInsets;
   UIEdgeInsets additionalSafeAreaInsets =
       UIEdgeInsetsMake(0, 0, navigationBarHeight - currentSafeAreaInsets.bottom, 0);
-  if (@available(iOS 11.0, *)) {
-    self.selectedViewController.additionalSafeAreaInsets = additionalSafeAreaInsets;
-  } else {
-    self.content.layoutMargins = additionalSafeAreaInsets;
-    // Based on an article by Ryan Fox, attempt to adjust the contentInset of either the view
-    // or its first subview.
-    // https://medium.com/@wailord/the-automaticallyadjustsscrollviewinsets-rabbit-hole-b9153a769ce9
-    if (self.selectedViewController.automaticallyAdjustsScrollViewInsets) {
-      UIScrollView *scrollView;
-      if ([self.selectedViewController.view isKindOfClass:[UIScrollView class]]) {
-        scrollView = (UIScrollView *)self.selectedViewController.view;
-      } else if ([self.selectedViewController.view.subviews.firstObject
-                     isKindOfClass:[UIScrollView class]]) {
-        scrollView = (UIScrollView *)self.selectedViewController.view.subviews.firstObject;
-      }
-      // Ideally, we would probably set an associated object that tracks the insets applied
-      // as a result of the Bottom Navigation bar, then we could compute the difference between that
-      // value and this value.
-
-      // However, because Bottom Navigation is intended to be used at the application root (it is
-      // meant for app-wide navigation) we assume no other view controller is applying a content
-      // to the child. If such a situation exists, most clients should probably manage their own
-      // contentInset values. If that approach will not work, then the more complex solution
-      // proposed above may be necessary.
-      UIEdgeInsets contentInset = scrollView.contentInset;
-      contentInset.bottom = navigationBarHeight;
-      scrollView.contentInset = contentInset;
-      scrollView.scrollIndicatorInsets = contentInset;
-    }
-  }
+  self.selectedViewController.additionalSafeAreaInsets = additionalSafeAreaInsets;
 }
 
 /**
@@ -537,10 +505,8 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
   // Update the navigation bar's selected item.
   self.navigationBar.selectedItem = selectedViewController.tabBarItem;
   [self setNeedsStatusBarAppearanceUpdate];
-  if (@available(iOS 11.0, *)) {
-    [self setNeedsUpdateOfHomeIndicatorAutoHidden];
-    [self setNeedsUpdateOfScreenEdgesDeferringSystemGestures];
-  }
+  [self setNeedsUpdateOfHomeIndicatorAutoHidden];
+  [self setNeedsUpdateOfScreenEdgesDeferringSystemGestures];
 }
 
 /**
@@ -560,11 +526,9 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
       [self.navigationBar.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor];
   self.navigationBarBottomAnchorConstraint.active = YES;
 
-  if (@available(iOS 11.0, *)) {
-    self.navigationBarItemsBottomAnchorConstraint = [self.navigationBar.barItemsBottomAnchor
-        constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor];
-    self.navigationBarItemsBottomAnchorConstraint.active = YES;
-  }
+  self.navigationBarItemsBottomAnchorConstraint = [self.navigationBar.barItemsBottomAnchor
+      constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor];
+  self.navigationBarItemsBottomAnchorConstraint.active = YES;
 }
 
 - (void)loadConstraintsForContentContainerView {
@@ -671,16 +635,7 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
 - (BOOL)isContentSizeCategoryAccessibilityCategory {
   UIContentSizeCategory sizeCategory = UIContentSizeCategoryLarge;
   sizeCategory = self.traitCollection.preferredContentSizeCategory;
-
-  if (@available(iOS 11.0, *)) {
-    return UIContentSizeCategoryIsAccessibilityCategory(sizeCategory);
-  }
-
-  return [sizeCategory isEqualToString:UIContentSizeCategoryAccessibilityMedium] ||
-         [sizeCategory isEqualToString:UIContentSizeCategoryAccessibilityLarge] ||
-         [sizeCategory isEqualToString:UIContentSizeCategoryAccessibilityExtraLarge] ||
-         [sizeCategory isEqualToString:UIContentSizeCategoryAccessibilityExtraExtraLarge] ||
-         [sizeCategory isEqualToString:UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+  return UIContentSizeCategoryIsAccessibilityCategory(sizeCategory);
 }
 
 @end
