@@ -16,8 +16,10 @@
 
 #import "MDCAppBarNavigationControllerToBeDeprecatedDelegate.h"
 #import "MDCAppBarViewController.h"
-#import "MaterialFlexibleHeader.h"
-#import "MaterialHeaderStackView.h"
+#import "MDCFlexibleHeaderView+ShiftBehavior.h"
+#import "MDCFlexibleHeaderView.h"
+#import "MDCFlexibleHeaderViewController.h"
+#import "MDCHeaderStackView.h"
 
 #import <objc/runtime.h>
 
@@ -110,9 +112,7 @@
   [self injectAppBarIntoViewController:viewController];
 
   [self setNeedsStatusBarAppearanceUpdate];
-  if (@available(iOS 11.0, *)) {
-    [self setNeedsUpdateOfHomeIndicatorAutoHidden];
-  }
+  [self setNeedsUpdateOfHomeIndicatorAutoHidden];
 }
 
 - (void)setViewControllers:(NSArray<UIViewController *> *)viewControllers animated:(BOOL)animated {
@@ -123,9 +123,7 @@
   }
 
   [self setNeedsStatusBarAppearanceUpdate];
-  if (@available(iOS 11.0, *)) {
-    [self setNeedsUpdateOfHomeIndicatorAutoHidden];
-  }
+  [self setNeedsUpdateOfHomeIndicatorAutoHidden];
 }
 
 - (void)setNavigationBarHidden:(BOOL)navigationBarHidden {
@@ -239,10 +237,8 @@
   info.trackingScrollView = trackingScrollView;
   [self setInfo:info forViewController:viewController];
 
-  if (@available(iOS 11.0, *)) {
-    appBar.appBarViewController.headerView
-        .disableContentInsetAdjustmentWhenContentInsetAdjustmentBehaviorIsNever = YES;
-  }
+  appBar.appBarViewController.headerView
+      .disableContentInsetAdjustmentWhenContentInsetAdjustmentBehaviorIsNever = YES;
 
   // Ensures that the view controller's top layout guide / additional safe area insets are adjusted
   // to take into consideration the flexible header's height.
