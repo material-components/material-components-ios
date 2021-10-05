@@ -16,16 +16,16 @@
 
 #import "private/MDCFlexibleHeaderHairline.h"
 #import "private/MDCFlexibleHeaderView+Private.h"
-#import "MaterialAvailability.h"
+#import "MDCAvailability.h"
 #import "MDCFlexibleHeaderContainerViewController.h"
 #import "MDCFlexibleHeaderSafeAreaDelegate.h"
 #import "MDCFlexibleHeaderView+ShiftBehavior.h"
 #import "MDCFlexibleHeaderView.h"
 #import "MDCFlexibleHeaderViewDelegate.h"
 #import "MDCFlexibleHeaderViewLayoutDelegate.h"
-#import "MaterialFlexibleHeader+ShiftBehaviorEnabledWithStatusBar.h"
-#import "MaterialApplication.h"
-#import "MaterialUIMetrics.h"
+#import "MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar.h"
+#import "UIApplication+MDCAppExtensions.h"
+#import "MDCLayoutMetrics.h"
 #import <MDFTextAccessibility/MDFTextAccessibility.h>
 
 @interface UIView ()
@@ -157,9 +157,7 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
   // UIScrollView, so we disable automatic insetting on these devices. iOS 11 provides
   // the adjustedContentInset API which allows us to respond to changes in the safe area
   // insets, so on iOS 11 we actually expect iOS to manage the safe area insets.
-  if (@available(iOS 11.0, *)) {
-    shouldDisableAutomaticInsetting = NO;
-  }
+  shouldDisableAutomaticInsetting = NO;
   if (shouldDisableAutomaticInsetting) {
     parent.automaticallyAdjustsScrollViewInsets = NO;
   }
@@ -403,9 +401,7 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
    the top layout guide constant (and clients should be relying on additionalSafeAreaInsets anyway).
    */
   BOOL shouldObserveLayoutGuideConstant = YES;
-  if (@available(iOS 11.0, *)) {
-    shouldObserveLayoutGuideConstant = NO;
-  }
+  shouldObserveLayoutGuideConstant = NO;
 
   if (shouldObserveLayoutGuideConstant) {
     [_topLayoutGuideConstraint removeObserver:self
@@ -503,41 +499,38 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
     [self fhv_setTopLayoutGuideConstraintConstant:topInset];
   }
 
-  if (@available(iOS 11.0, *)) {
-    BOOL alwaysUseAdditionalSafeAreaInsets = NO;
-    if (self.useAdditionalSafeAreaInsetsForWebKitScrollViews &&
-        [self.headerView trackingScrollViewIsWebKit]) {
-      alwaysUseAdditionalSafeAreaInsets = YES;
-    }
+  BOOL alwaysUseAdditionalSafeAreaInsets = NO;
+  if (self.useAdditionalSafeAreaInsetsForWebKitScrollViews &&
+      [self.headerView trackingScrollViewIsWebKit]) {
+    alwaysUseAdditionalSafeAreaInsets = YES;
+  }
 
-    UIViewController *topLayoutGuideViewController =
-        [self fhv_topLayoutGuideViewControllerWithFallback];
-    // If there is a tracking scroll view then the flexible header will manage safe area insets via
-    // the tracking scroll view's contentInsets. Some day - in the long distant future when we only
-    // support iOS 11 and up - we can probably drop the content inset adjustment behavior in favor
-    // of modifying additionalSafeAreaInsets instead.
-    if (self.headerView.trackingScrollView != nil && !alwaysUseAdditionalSafeAreaInsets) {
-      // Reset the additional safe area insets if we are now tracking a scroll view.
-      if (topLayoutGuideViewController != nil) {
-        UIEdgeInsets additionalSafeAreaInsets =
-            topLayoutGuideViewController.additionalSafeAreaInsets;
-        additionalSafeAreaInsets.top = 0;
-        topLayoutGuideViewController.additionalSafeAreaInsets = additionalSafeAreaInsets;
-      }
-
-    } else if (topLayoutGuideViewController != nil) {
+  UIViewController *topLayoutGuideViewController =
+      [self fhv_topLayoutGuideViewControllerWithFallback];
+  // If there is a tracking scroll view then the flexible header will manage safe area insets via
+  // the tracking scroll view's contentInsets. Some day - in the long distant future when we only
+  // support iOS 11 and up - we can probably drop the content inset adjustment behavior in favor
+  // of modifying additionalSafeAreaInsets instead.
+  if (self.headerView.trackingScrollView != nil && !alwaysUseAdditionalSafeAreaInsets) {
+    // Reset the additional safe area insets if we are now tracking a scroll view.
+    if (topLayoutGuideViewController != nil) {
       UIEdgeInsets additionalSafeAreaInsets = topLayoutGuideViewController.additionalSafeAreaInsets;
-      // We need to avoid double-counting any top safe area amount because this will already be
-      // taken into account as part of additionalSafeAreaInsets.
-      topInset -= self.headerView.topSafeAreaGuideHeight;
-      if (self.headerView.minMaxHeightIncludesSafeArea) {
-        topInset = MIN(self.headerView.maximumHeight - MDCDeviceTopSafeAreaInset(), topInset);
-      } else {
-        topInset = MIN(self.headerView.maximumHeight, topInset);
-      }
-      additionalSafeAreaInsets.top = topInset;
+      additionalSafeAreaInsets.top = 0;
       topLayoutGuideViewController.additionalSafeAreaInsets = additionalSafeAreaInsets;
     }
+
+  } else if (topLayoutGuideViewController != nil) {
+    UIEdgeInsets additionalSafeAreaInsets = topLayoutGuideViewController.additionalSafeAreaInsets;
+    // We need to avoid double-counting any top safe area amount because this will already be
+    // taken into account as part of additionalSafeAreaInsets.
+    topInset -= self.headerView.topSafeAreaGuideHeight;
+    if (self.headerView.minMaxHeightIncludesSafeArea) {
+      topInset = MIN(self.headerView.maximumHeight - MDCDeviceTopSafeAreaInset(), topInset);
+    } else {
+      topInset = MIN(self.headerView.maximumHeight, topInset);
+    }
+    additionalSafeAreaInsets.top = topInset;
+    topLayoutGuideViewController.additionalSafeAreaInsets = additionalSafeAreaInsets;
   }
 }
 
@@ -591,15 +584,9 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 
 - (void)setPermitInferringTopSafeAreaFromTopLayoutGuideViewController:
     (BOOL)permitInferringTopSafeAreaFromTopLayoutGuideViewController {
-  if (@available(iOS 11, *)) {
-    _permitInferringTopSafeAreaFromTopLayoutGuideViewController =
-        permitInferringTopSafeAreaFromTopLayoutGuideViewController;
-    [self fhv_inferTopSafeAreaSourceViewController];
-  } else {
-    NSAssert(
-        NO,
-        @"permitInferringTopSafeAreaFromTopLayoutGuideViewController is only supported on iOS 11+");
-  }
+  _permitInferringTopSafeAreaFromTopLayoutGuideViewController =
+      permitInferringTopSafeAreaFromTopLayoutGuideViewController;
+  [self fhv_inferTopSafeAreaSourceViewController];
 }
 
 #pragma mark - Top safe area inset extraction
@@ -676,9 +663,7 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
         self.topLayoutGuideAdjustmentEnabled && ancestor == self.topLayoutGuideViewController;
 
     BOOL shouldObserveLayoutGuide = YES;
-    if (@available(iOS 11.0, *)) {
-      shouldObserveLayoutGuide = NO;
-    }
+    shouldObserveLayoutGuide = NO;
     if (shouldObserveLayoutGuide) {
       self.topSafeAreaConstraint = [self fhv_topLayoutGuideConstraintForViewController:ancestor];
     } else {
