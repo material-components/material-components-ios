@@ -12,7 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialFlexibleHeader.h"
+#import "MDCFlexibleHeaderView.h"
+#import "MDCFlexibleHeaderViewController.h"
 
 static UIColor *HexColor(uint32_t hex) {
   return [UIColor colorWithRed:(CGFloat)((uint8_t)(hex >> 16)) / (CGFloat)255
@@ -38,9 +39,7 @@ static const NSUInteger kNumberOfPages = 10;
   _pagingScrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
   _pagingScrollView.pagingEnabled = YES;
   _pagingScrollView.delegate = self;
-  if (@available(iOS 11.0, *)) {
-    _pagingScrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-  }
+  _pagingScrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
   _pagingScrollView.autoresizingMask =
       (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
   _pagingScrollView.scrollsToTop = NO;
