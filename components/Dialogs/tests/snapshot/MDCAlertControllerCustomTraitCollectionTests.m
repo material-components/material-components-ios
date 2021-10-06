@@ -12,19 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialSnapshot.h"
+#import "MDCAvailability.h"
+#import "MDCButton.h"
+#import "MDCAlertController.h"
+#import "UIFont+MaterialScalable.h"
+#import "UIColor+MaterialDynamic.h"
 
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
 #import "../../src/private/MDCDialogShadowedView.h"
-#import "MaterialAvailability.h"
-#import "MaterialButtons.h"
 #import "MDCAlertController+ButtonForAction.h"
-#import "MaterialDialogs.h"
 #import "MDCFontScaler.h"
-#import "MaterialTypography.h"
-#import "MaterialColor.h"
+#import "MDCSnapshotTestCase.h"
+#import "UIView+MDCSnapshot.h"
 
 static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   static NSDictionary<UIContentSizeCategory, NSNumber *> *scalingCurve;
@@ -272,61 +273,59 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
  size when the preferred content size category increases.
  */
 - (void)testAdjustsFontForContentSizeUpscalesUIFontMetricsFontsForSizeCategoryAXXXL {
-  if (@available(iOS 11.0, *)) {
-    // Given
-    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
-    UITraitCollection *extraSmallTraits = [UITraitCollection
-        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+  // Given
+  UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+  UITraitCollection *extraSmallTraits = [UITraitCollection
+      traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
 
-    UIFont *titleFont = [UIFont fontWithName:@"Zapfino" size:20];
-    XCTAssertNotNil(titleFont);
-    titleFont = [bodyMetrics scaledFontForFont:titleFont
+  UIFont *titleFont = [UIFont fontWithName:@"Zapfino" size:20];
+  XCTAssertNotNil(titleFont);
+  titleFont = [bodyMetrics scaledFontForFont:titleFont
+               compatibleWithTraitCollection:extraSmallTraits];
+  self.alertController.titleFont = titleFont;
+
+  UIFont *messageFont = [UIFont fontWithName:@"Zapfino" size:15];
+  messageFont = [bodyMetrics scaledFontForFont:messageFont
                  compatibleWithTraitCollection:extraSmallTraits];
-    self.alertController.titleFont = titleFont;
+  self.alertController.messageFont = messageFont;
 
-    UIFont *messageFont = [UIFont fontWithName:@"Zapfino" size:15];
-    messageFont = [bodyMetrics scaledFontForFont:messageFont
-                   compatibleWithTraitCollection:extraSmallTraits];
-    self.alertController.messageFont = messageFont;
-
-    UIFont *buttonFont = [UIFont fontWithName:@"Zapfino" size:20];
-    buttonFont = [bodyMetrics scaledFontForFont:buttonFont
-                  compatibleWithTraitCollection:extraSmallTraits];
-    for (MDCAlertAction *action in self.alertController.actions) {
-      MDCButton *button = [self.alertController buttonForAction:action];
-      button.titleLabel.font = buttonFont;
-    }
-
-    self.alertController.adjustsFontForContentSizeCategory = YES;
-    [self.alertController loadViewIfNeeded];
-
-    // The initial size is calculated without constraints, so start the view bounds there.
-    CGSize alertSize = self.alertController.preferredContentSize;
-    self.alertController.view.bounds = CGRectMake(0, 0, alertSize.width, alertSize.height);
-
-    // Create a window so the Alert's view can inherit the trait environment.
-    MDCAlertControllerCustomTraitCollectionTestsWindowFake *window =
-        [[MDCAlertControllerCustomTraitCollectionTestsWindowFake alloc] init];
-    [window makeKeyWindow];
-    window.hidden = NO;
-    [window addSubview:self.alertController.view];
-
-    // When
-    window.traitCollectionOverride =
-        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
-                               UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
-    [window traitCollectionDidChange:nil];
-    // Recalculates the preferredContentSize of the AlertController.
-    [self.alertController.view layoutIfNeeded];
-    alertSize = self.alertController.preferredContentSize;
-    window.bounds = CGRectMake(0, 0, alertSize.width, alertSize.height);
-    self.alertController.view.frame = window.bounds;
-
-    // Then
-    // Can't add a UIWindow to a UIView, so just screenshot the window directly.
-    [window layoutIfNeeded];
-    [self snapshotVerifyView:window];
+  UIFont *buttonFont = [UIFont fontWithName:@"Zapfino" size:20];
+  buttonFont = [bodyMetrics scaledFontForFont:buttonFont
+                compatibleWithTraitCollection:extraSmallTraits];
+  for (MDCAlertAction *action in self.alertController.actions) {
+    MDCButton *button = [self.alertController buttonForAction:action];
+    button.titleLabel.font = buttonFont;
   }
+
+  self.alertController.adjustsFontForContentSizeCategory = YES;
+  [self.alertController loadViewIfNeeded];
+
+  // The initial size is calculated without constraints, so start the view bounds there.
+  CGSize alertSize = self.alertController.preferredContentSize;
+  self.alertController.view.bounds = CGRectMake(0, 0, alertSize.width, alertSize.height);
+
+  // Create a window so the Alert's view can inherit the trait environment.
+  MDCAlertControllerCustomTraitCollectionTestsWindowFake *window =
+      [[MDCAlertControllerCustomTraitCollectionTestsWindowFake alloc] init];
+  [window makeKeyWindow];
+  window.hidden = NO;
+  [window addSubview:self.alertController.view];
+
+  // When
+  window.traitCollectionOverride =
+      [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                             UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+  [window traitCollectionDidChange:nil];
+  // Recalculates the preferredContentSize of the AlertController.
+  [self.alertController.view layoutIfNeeded];
+  alertSize = self.alertController.preferredContentSize;
+  window.bounds = CGRectMake(0, 0, alertSize.width, alertSize.height);
+  self.alertController.view.frame = window.bounds;
+
+  // Then
+  // Can't add a UIWindow to a UIView, so just screenshot the window directly.
+  [window layoutIfNeeded];
+  [self snapshotVerifyView:window];
 }
 
 /**
@@ -334,60 +333,57 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
  smaller size when the preferred content size category decreases.
  */
 - (void)testAdjustsFontForContentSizeDownscalesUIFontMetricsFontsForSizeCategoryXS {
-  if (@available(iOS 11.0, *)) {
-    // Given
-    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
-    UITraitCollection *aXXXLTraits =
-        [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
-                               UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
+  // Given
+  UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+  UITraitCollection *aXXXLTraits =
+      [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
+                             UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
 
-    UIFont *titleFont = [UIFont fontWithName:@"Zapfino" size:20];
-    XCTAssertNotNil(titleFont);
-    titleFont = [bodyMetrics scaledFontForFont:titleFont compatibleWithTraitCollection:aXXXLTraits];
-    self.alertController.titleFont = titleFont;
+  UIFont *titleFont = [UIFont fontWithName:@"Zapfino" size:20];
+  XCTAssertNotNil(titleFont);
+  titleFont = [bodyMetrics scaledFontForFont:titleFont compatibleWithTraitCollection:aXXXLTraits];
+  self.alertController.titleFont = titleFont;
 
-    UIFont *messageFont = [UIFont fontWithName:@"Zapfino" size:15];
-    messageFont = [bodyMetrics scaledFontForFont:messageFont
-                   compatibleWithTraitCollection:aXXXLTraits];
-    self.alertController.messageFont = messageFont;
+  UIFont *messageFont = [UIFont fontWithName:@"Zapfino" size:15];
+  messageFont = [bodyMetrics scaledFontForFont:messageFont
+                 compatibleWithTraitCollection:aXXXLTraits];
+  self.alertController.messageFont = messageFont;
 
-    UIFont *buttonFont = [UIFont fontWithName:@"Zapfino" size:20];
-    buttonFont = [bodyMetrics scaledFontForFont:buttonFont
-                  compatibleWithTraitCollection:aXXXLTraits];
-    for (MDCAlertAction *action in self.alertController.actions) {
-      MDCButton *button = [self.alertController buttonForAction:action];
-      button.titleLabel.font = buttonFont;
-    }
-
-    self.alertController.adjustsFontForContentSizeCategory = YES;
-    [self.alertController loadViewIfNeeded];
-
-    // The initial size is calculated without constraints, so start the view bounds there.
-    CGSize alertSize = self.alertController.preferredContentSize;
-    self.alertController.view.bounds = CGRectMake(0, 0, alertSize.width, alertSize.height);
-
-    // Create a window so the Alert's view can inherit the trait environment.
-    MDCAlertControllerCustomTraitCollectionTestsWindowFake *window =
-        [[MDCAlertControllerCustomTraitCollectionTestsWindowFake alloc] init];
-    [window makeKeyWindow];
-    window.hidden = NO;
-    [window addSubview:self.alertController.view];
-
-    // When
-    window.traitCollectionOverride = [UITraitCollection
-        traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
-    [window traitCollectionDidChange:nil];
-    // Recalculates the preferredContentSize of the AlertController.
-    [self.alertController.view layoutIfNeeded];
-    alertSize = self.alertController.preferredContentSize;
-    window.bounds = CGRectMake(0, 0, alertSize.width, alertSize.height);
-    self.alertController.view.frame = window.bounds;
-
-    // Then
-    // Can't add a UIWindow to a UIView, so just screenshot the window directly.
-    [window layoutIfNeeded];
-    [self snapshotVerifyView:window];
+  UIFont *buttonFont = [UIFont fontWithName:@"Zapfino" size:20];
+  buttonFont = [bodyMetrics scaledFontForFont:buttonFont compatibleWithTraitCollection:aXXXLTraits];
+  for (MDCAlertAction *action in self.alertController.actions) {
+    MDCButton *button = [self.alertController buttonForAction:action];
+    button.titleLabel.font = buttonFont;
   }
+
+  self.alertController.adjustsFontForContentSizeCategory = YES;
+  [self.alertController loadViewIfNeeded];
+
+  // The initial size is calculated without constraints, so start the view bounds there.
+  CGSize alertSize = self.alertController.preferredContentSize;
+  self.alertController.view.bounds = CGRectMake(0, 0, alertSize.width, alertSize.height);
+
+  // Create a window so the Alert's view can inherit the trait environment.
+  MDCAlertControllerCustomTraitCollectionTestsWindowFake *window =
+      [[MDCAlertControllerCustomTraitCollectionTestsWindowFake alloc] init];
+  [window makeKeyWindow];
+  window.hidden = NO;
+  [window addSubview:self.alertController.view];
+
+  // When
+  window.traitCollectionOverride = [UITraitCollection
+      traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
+  [window traitCollectionDidChange:nil];
+  // Recalculates the preferredContentSize of the AlertController.
+  [self.alertController.view layoutIfNeeded];
+  alertSize = self.alertController.preferredContentSize;
+  window.bounds = CGRectMake(0, 0, alertSize.width, alertSize.height);
+  self.alertController.view.frame = window.bounds;
+
+  // Then
+  // Can't add a UIWindow to a UIView, so just screenshot the window directly.
+  [window layoutIfNeeded];
+  [self snapshotVerifyView:window];
 }
 
 #pragma mark - Dynamic Color
