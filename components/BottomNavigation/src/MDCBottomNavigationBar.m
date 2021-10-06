@@ -188,9 +188,7 @@ static BOOL gEnablePerformantShadow = NO;
 }
 
 - (void)safeAreaInsetsDidChange {
-  if (@available(iOS 11.0, *)) {
-    [super safeAreaInsetsDidChange];
-  }
+  [super safeAreaInsetsDidChange];
   [self setNeedsLayout];
 }
 
@@ -477,12 +475,7 @@ static BOOL gEnablePerformantShadow = NO;
 }
 
 - (UIEdgeInsets)mdc_safeAreaInsets {
-  UIEdgeInsets insets = UIEdgeInsetsZero;
-  if (@available(iOS 11.0, *)) {
-    // Accommodate insets for iPhone X.
-    insets = self.safeAreaInsets;
-  }
-  return insets;
+  return self.safeAreaInsets;
 }
 
 - (UIView *)viewForItem:(UITabBarItem *)item {
