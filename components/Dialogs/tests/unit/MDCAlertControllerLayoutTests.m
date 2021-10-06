@@ -12,9 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialDialogs.h"
+#import "MDCButton.h"
+#import "MDCAlertController.h"
+#import "MDCAlertControllerView.h"
 
-#import "MaterialButtons.h"
 #import "MDCAlertController+ButtonForAction.h"
 #import "MDCAlertControllerView+Private.h"
 
@@ -43,15 +44,10 @@ static const CGFloat kFourInchLandscapeWidth = 568.0;
   NSString *urduFontName = @"NotoNastaliqUrdu";
   UIFont *dialogBodyFont;
   UIFont *dialogButtonFont;
-  if (@available(iOS 11, *)) {
-    // Noto Nastaliq Urdu was added in iOS 11, and is an extremely tall
-    // font for any given nominal point size.
-    dialogBodyFont = [UIFont fontWithName:urduFontName size:20.0];
-    dialogButtonFont = [UIFont fontWithName:urduFontName size:26.0];
-  } else {
-    dialogBodyFont = [UIFont systemFontOfSize:20.0];
-    dialogButtonFont = [UIFont systemFontOfSize:26.0];
-  }
+  // Noto Nastaliq Urdu was added in iOS 11, and is an extremely tall
+  // font for any given nominal point size.
+  dialogBodyFont = [UIFont fontWithName:urduFontName size:20.0];
+  dialogButtonFont = [UIFont fontWithName:urduFontName size:26.0];
   _alertController.messageFont = dialogBodyFont;
 
   MDCAlertAction *retryAction = [MDCAlertAction actionWithTitle:@"دوبارہ کوشش کریں" handler:nil];
