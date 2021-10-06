@@ -12,13 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialRipple.h"
-#import "MaterialSnapshot.h"
+#import "MDCRippleTouchController.h"
+#import "MDCRippleView.h"
 
 #import "../../../src/TabBarView/private/MDCTabBarViewItemView.h"
 #import "MDCTabBarItem.h"
 #import "MDCTabBarView.h"
 #import "MDCTabBarViewCustomViewable.h"
+#import "MDCSnapshotTestCase.h"
+#import "UIImage+MDCSnapshot.h"
+#import "UIView+MDCSnapshot.h"
 
 /** The typical size of an image in a Tab bar. */
 static const CGSize kTypicalImageSize = (CGSize){24, 24};
@@ -117,9 +120,7 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 
 - (void)setCustomSafeAreaInsets:(UIEdgeInsets)customSafeAreaInsets {
   _customSafeAreaInsets = customSafeAreaInsets;
-  if (@available(iOS 11.0, *)) {
-    [self safeAreaInsetsDidChange];
-  }
+  [self safeAreaInsetsDidChange];
 }
 
 - (UIEdgeInsets)safeAreaInsets {
@@ -1143,60 +1144,56 @@ static NSString *const kItemTitleLong3Arabic = @"تحت أي قدما وإقام
 }
 
 - (void)testSafeAreaShouldAdjustForSafeAreaInsets {
-  if (@available(iOS 11.0, *)) {
-    // Given
-    UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
-    UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:2];
-    MDCTabBarViewSnapshotTestsSuperview *superview =
-        [[MDCTabBarViewSnapshotTestsSuperview alloc] init];
-    [superview addSubview:self.tabBarView];
-    self.tabBarView.items = @[ item1, item2 ];
-    [self.tabBarView setSelectedItem:item2 animated:NO];
-    self.tabBarView.shouldAdjustForSafeAreaInsets = YES;
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:2];
+  MDCTabBarViewSnapshotTestsSuperview *superview =
+      [[MDCTabBarViewSnapshotTestsSuperview alloc] init];
+  [superview addSubview:self.tabBarView];
+  self.tabBarView.items = @[ item1, item2 ];
+  [self.tabBarView setSelectedItem:item2 animated:NO];
+  self.tabBarView.shouldAdjustForSafeAreaInsets = YES;
 
-    // When
-    UIEdgeInsets safeAreaInsets = UIEdgeInsetsMake(30, 45, 0, 0);
-    superview.customSafeAreaInsets = safeAreaInsets;
-    CGSize fitSize = self.tabBarView.intrinsicContentSize;
-    fitSize = CGSizeMake(fitSize.width + safeAreaInsets.left, fitSize.height + safeAreaInsets.top);
-    self.tabBarView.bounds = CGRectMake(0, 0, fitSize.width, fitSize.height);
-    superview.bounds = CGRectMake(0, 0, CGRectGetWidth(self.tabBarView.bounds),
-                                  CGRectGetHeight(self.tabBarView.bounds));
-    self.tabBarView.center =
-        CGPointMake(CGRectGetMidX(superview.bounds), CGRectGetMidY(superview.bounds));
+  // When
+  UIEdgeInsets safeAreaInsets = UIEdgeInsetsMake(30, 45, 0, 0);
+  superview.customSafeAreaInsets = safeAreaInsets;
+  CGSize fitSize = self.tabBarView.intrinsicContentSize;
+  fitSize = CGSizeMake(fitSize.width + safeAreaInsets.left, fitSize.height + safeAreaInsets.top);
+  self.tabBarView.bounds = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  superview.bounds = CGRectMake(0, 0, CGRectGetWidth(self.tabBarView.bounds),
+                                CGRectGetHeight(self.tabBarView.bounds));
+  self.tabBarView.center =
+      CGPointMake(CGRectGetMidX(superview.bounds), CGRectGetMidY(superview.bounds));
 
-    // Then
-    [self generateSnapshotAndVerifyForView:superview];
-  }
+  // Then
+  [self generateSnapshotAndVerifyForView:superview];
 }
 
 - (void)testSafeAreaShouldNotAdjustForSafeAreaInsets {
-  if (@available(iOS 11.0, *)) {
-    // Given
-    UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
-    UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:2];
-    MDCTabBarViewSnapshotTestsSuperview *superview =
-        [[MDCTabBarViewSnapshotTestsSuperview alloc] init];
-    [superview addSubview:self.tabBarView];
-    self.tabBarView.items = @[ item1, item2 ];
-    [self.tabBarView setSelectedItem:item2 animated:NO];
-    self.tabBarView.shouldAdjustForSafeAreaInsets = NO;
-    [self.tabBarView setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentNever];
+  // Given
+  UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"1" image:nil tag:0];
+  UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"2" image:nil tag:2];
+  MDCTabBarViewSnapshotTestsSuperview *superview =
+      [[MDCTabBarViewSnapshotTestsSuperview alloc] init];
+  [superview addSubview:self.tabBarView];
+  self.tabBarView.items = @[ item1, item2 ];
+  [self.tabBarView setSelectedItem:item2 animated:NO];
+  self.tabBarView.shouldAdjustForSafeAreaInsets = NO;
+  [self.tabBarView setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentNever];
 
-    // When
-    UIEdgeInsets safeAreaInsets = UIEdgeInsetsMake(30, 45, 0, 0);
-    superview.customSafeAreaInsets = safeAreaInsets;
-    CGSize fitSize = self.tabBarView.intrinsicContentSize;
-    fitSize = CGSizeMake(fitSize.width + safeAreaInsets.left, fitSize.height + safeAreaInsets.top);
-    self.tabBarView.bounds = CGRectMake(0, 0, fitSize.width, fitSize.height);
-    superview.bounds = CGRectMake(0, 0, CGRectGetWidth(self.tabBarView.bounds),
-                                  CGRectGetHeight(self.tabBarView.bounds));
-    self.tabBarView.center =
-        CGPointMake(CGRectGetMidX(superview.bounds), CGRectGetMidY(superview.bounds));
+  // When
+  UIEdgeInsets safeAreaInsets = UIEdgeInsetsMake(30, 45, 0, 0);
+  superview.customSafeAreaInsets = safeAreaInsets;
+  CGSize fitSize = self.tabBarView.intrinsicContentSize;
+  fitSize = CGSizeMake(fitSize.width + safeAreaInsets.left, fitSize.height + safeAreaInsets.top);
+  self.tabBarView.bounds = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  superview.bounds = CGRectMake(0, 0, CGRectGetWidth(self.tabBarView.bounds),
+                                CGRectGetHeight(self.tabBarView.bounds));
+  self.tabBarView.center =
+      CGPointMake(CGRectGetMidX(superview.bounds), CGRectGetMidY(superview.bounds));
 
-    // Then
-    [self generateSnapshotAndVerifyForView:superview];
-  }
+  // Then
+  [self generateSnapshotAndVerifyForView:superview];
 }
 
 #pragma mark - MDCTabBarView Properties
