@@ -16,11 +16,11 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialTextControls+BaseTextFields.h"
-#import "MaterialTextControls+Enums.h"
-#import "MaterialTextControls+FilledTextFields.h"
-#import "MaterialTextControls+OutlinedTextFields.h"
-#import "MaterialTextControls+UnderlinedTextFields.h"
+#import "MDCBaseTextField.h"
+#import "MDCTextControlState.h"
+#import "MDCFilledTextField.h"
+#import "MDCOutlinedTextField.h"
+#import "MDCUnderlinedTextField.h"
 #import "MDCTextControlSnapshotTestHelpers.h"
 
 /**
@@ -176,18 +176,16 @@
   textField.leadingAssistiveLabel.text = @"leading assistive label text";
   textField.adjustsFontForContentSizeCategory = YES;
 
-  if (@available(iOS 11.0, *)) {
-    UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
-    UIFontMetrics *caption2Metrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleCaption2];
-    textField.font = [bodyMetrics scaledFontForFont:textField.font
-                      compatibleWithTraitCollection:textField.traitCollection];
-    textField.leadingAssistiveLabel.font =
-        [caption2Metrics scaledFontForFont:textField.leadingAssistiveLabel.font
-             compatibleWithTraitCollection:textField.traitCollection];
-    textField.trailingAssistiveLabel.font =
-        [caption2Metrics scaledFontForFont:textField.trailingAssistiveLabel.font
-             compatibleWithTraitCollection:textField.traitCollection];
-  }
+  UIFontMetrics *bodyMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleBody];
+  UIFontMetrics *caption2Metrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleCaption2];
+  textField.font = [bodyMetrics scaledFontForFont:textField.font
+                    compatibleWithTraitCollection:textField.traitCollection];
+  textField.leadingAssistiveLabel.font =
+      [caption2Metrics scaledFontForFont:textField.leadingAssistiveLabel.font
+           compatibleWithTraitCollection:textField.traitCollection];
+  textField.trailingAssistiveLabel.font =
+      [caption2Metrics scaledFontForFont:textField.trailingAssistiveLabel.font
+           compatibleWithTraitCollection:textField.traitCollection];
 
   [textField becomeFirstResponder];
 }
