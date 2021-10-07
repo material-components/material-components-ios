@@ -187,11 +187,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
     super.transitioningDelegate = _transitionController;
     super.modalPresentationStyle = UIModalPresentationCustom;
-
-    [NSNotificationCenter.defaultCenter addObserver:self
-                                           selector:@selector(deviceOrientationDidChange:)
-                                               name:UIDeviceOrientationDidChangeNotification
-                                             object:nil];
   }
   return self;
 }
@@ -206,12 +201,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
     self.preferredContentSize = [self.alertView
         calculatePreferredContentSizeForBounds:CGRectStandardize(self.view.bounds).size];
   }
-}
-
-- (void)deviceOrientationDidChange:(NSNotification *)notification {
-  [self.alertView setNeedsLayout];
-  self.preferredContentSize =
-      [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
 }
 
 /* Disable setter. Always use internal transition controller */
@@ -744,8 +733,10 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   [coordinator
       animateAlongsideTransition:^(
           __unused id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
+        [self.alertView setNeedsLayout];
         // Reset preferredContentSize on viewWIllTransition to take advantage of additional width
-        self.preferredContentSize = [self.alertView calculatePreferredContentSizeForBounds:size];
+        self.preferredContentSize =
+            [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
       }
                       completion:nil];
 }
