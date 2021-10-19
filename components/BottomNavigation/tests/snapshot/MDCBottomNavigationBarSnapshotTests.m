@@ -22,12 +22,10 @@
 #import "supplemental/MDCFakeBottomNavigationBar.h"
 #import "MDCAvailability.h"
 #import "MDCBottomNavigationBar.h"
-#import "MDCBottomNavigationBar+MaterialTheming.h"
 #import "MDCInkView.h"
-#import "MaterialSnapshot.h"
-#import "MDCSemanticColorScheme.h"
-#import "MDCContainerScheme.h"
-#import "MDCTypographyScheme.h"
+#import "MDCSnapshotTestCase.h"
+#import "UIImage+MDCSnapshot.h"
+#import "UIView+MDCSnapshot.h"
 
 static const CGFloat kWidthWide = 1600;
 static const CGFloat kWidthNarrow = 240;
@@ -270,58 +268,6 @@ static const CGFloat kHeightShort = 48;
   // When
   self.tabItem1.titlePositionAdjustment = UIOffsetMake(20, -20);
   self.tabItem3.titlePositionAdjustment = UIOffsetMake(-20, 20);
-
-  // Then
-  [self generateAndVerifySnapshot];
-}
-
-#pragma mark - Theming Material baseline
-
-- (void)testMaterialBaselineTheme {
-  // Given
-  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
-
-  // When
-  [self.navigationBar applyPrimaryThemeWithScheme:containerScheme];
-  self.navigationBar.items = @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
-  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
-  self.navigationBar.selectedItem = self.tabItem2;
-  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthTypical,
-                                        MDCBottomNavigationBarTestHeightTypical);
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem2];
-
-  // Then
-  [self generateAndVerifySnapshot];
-}
-
-- (void)testCustomColorScheme {
-  // Given
-  MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
-  MDCSemanticColorScheme *colorScheme =
-      [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-  colorScheme.primaryColor = UIColor.orangeColor;
-  colorScheme.onPrimaryColor = UIColor.purpleColor;
-  colorScheme.secondaryColor = UIColor.yellowColor;
-  colorScheme.onSecondaryColor = UIColor.cyanColor;
-  colorScheme.surfaceColor = UIColor.lightGrayColor;
-  colorScheme.onSurfaceColor = UIColor.magentaColor;
-  colorScheme.backgroundColor = UIColor.blueColor;
-  colorScheme.onBackgroundColor = UIColor.brownColor;
-  colorScheme.errorColor = UIColor.greenColor;
-  colorScheme.primaryColorVariant = UIColor.whiteColor;
-  containerScheme.colorScheme = colorScheme;
-
-  containerScheme.typographyScheme =
-      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201804];
-
-  // When
-  [self.navigationBar applyPrimaryThemeWithScheme:containerScheme];
-  self.navigationBar.items = @[ self.tabItem1, self.tabItem2, self.tabItem3 ];
-  self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
-  self.navigationBar.selectedItem = self.tabItem2;
-  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthTypical,
-                                        MDCBottomNavigationBarTestHeightTypical);
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem2];
 
   // Then
   [self generateAndVerifySnapshot];

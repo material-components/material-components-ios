@@ -21,7 +21,6 @@ navigation icon takes you directly to the associated view or refreshes the curre
 
 * [Using bottom navigation](#using-bottom-navigation)
 * [Bottom navigation bar](#bottom-navigation-bar)
-* [Theming](#theming)
 
 - - -
 
@@ -262,62 +261,3 @@ The following is an anatomy diagram for the bottom navigation bar:
 ------------------------- | -------------------------------------- | ------------------------------------------------------------------- | -----------------
 **Typography**            | `itemTitleFont`                        | `-setItemTitleFont:` <br/> `-itemTitleFont`                         | Headline 6
 **Color**                 | `selectedItemTitleColor`               | `-setSelectedItemTitleColor` <br/> `-selectedItemTitleColor`         | `[UIColor blackColor]`
-
-## Theming
-
-![A bottom navigation with Shrine theming](docs/assets/bottom-nav-shrine.png)
-
-The example above is a bottom navigation bar with Shrine theming. To get started with your own theming, first add the `BottomNavigation+Theming` subspec to your `Podfile`:
-
-```bash
-pod 'MaterialComponents/BottomNavigation+Theming'
-```
-<!--{: .code-renderer.code-renderer--install }-->
-
-Then run the installer:
-
-```bash
-pod install
-```
-
-Then, import the relevant file or target and call the appropriate theming method. 
-
-<!--<div class="material-code-render" markdown="1">-->
-
-#### Swift
-
-```swift
-// Import the BottomNavigation Theming Extensions module
-import MaterialComponents.MaterialBottomNavigation_Theming
-
-...
-
-// Apply your app's Container Scheme to the App Bar controller
-let containerScheme = MDCContainerScheme()
-
-// Either Primary Theme
-bottomNavigation.applyPrimaryTheme(withScheme: containerScheme)
-
-// Or Surface Theme
-bottomNavigation.applySurfaceTheme(withScheme: containerScheme)
-```
-
-#### Objective-C
-
-```objc
-// Import the BottomNavigation Theming Extensions header
-#import "MaterialBottomNavigation+Theming.h"
-
-...
-
-// Apply your app's Container Scheme to the App Bar controller
-MDCContainerScheme *containerScheme = [[MDCContainerScheme alloc] init];
-
-// Either Primary Theme
-[self.bottomNavigation applyPrimaryThemeWithScheme:containerScheme];
-
-// Or Surface Theme
-[self.bottomNavigation applySurfaceThemeWithScheme:containerScheme];
-```
-
-<!--</div>-->
