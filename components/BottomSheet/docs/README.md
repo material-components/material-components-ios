@@ -120,7 +120,3 @@ bottomSheet.dismissOnDraggingDownSheet = NO;
 [self presentViewController:bottomSheet animated:true completion:nil];
 ```
 <!--</div>-->
-
-## Extensions
-
-- [Shape Theming](shape-theming.md)

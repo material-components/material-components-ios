@@ -20,7 +20,6 @@ api_doc_root: true
 * [Standard bottom sheet](#standard-bottom-sheet)
 * [Modal bottom sheet](#modal-bottom-sheet)
 * [Expanding bottom sheet](#expanding-bottom-sheet)
-* [Theming](#theming)
 
 - - -
 
@@ -215,51 +214,5 @@ bottomSheet.trackingScrollView = scrollView
 #### Objective-C
 ```objc
 bottomSheet.trackingScrollView = self.scrollView;
-```
-<!--</div>-->
-
-## Theming
-
-Unlike most Material components on iOS, bottom sheets do not offer theming with a container scheme. However, `MDCBottomSheetController` does have a shape themer. In order to use the shape themer, first add the following to your `Podfile`:
-
-```bash
-pod 'MaterialComponents/BottomSheet+ShapeThemer'
-```
-
-<!--{: .code-renderer.code-renderer--install }-->
-
-Then run the installer:
-
-```bash
-pod install
-```
-
-Next, import the relevant taret or file and call the correct theming method.
-
-<!--<div class="material-code-render" markdown="1">-->
-#### Swift
-```swift
-// Step 1: Import the ShapeThemer extension
-import MaterialComponents.MaterialBottomSheet_ShapeThemer
-
-// Step 2: Create or get a shape scheme
-let shapeScheme = MDCShapeScheme()
-
-// Step 3: Apply the shape scheme to your component
-MDCBottomSheetControllerShapeThemer.applyShapeScheme(shapeScheme, to: component)
-```
-
-#### Objective-C
-
-```objc
-// Step 1: Import the ShapeThemer extension
-#import "MaterialBottomSheet+ShapeThemer.h"
-
-// Step 2: Create or get a shape scheme
-id<MDCShapeScheming> shapeScheme = [[MDCShapeScheme alloc] init];
-
-// Step 3: Apply the shape scheme to your component
-[MDCBottomSheetControllerShapeThemer applyShapeScheme:shapeScheme
-     toBottomSheetController:component];
 ```
 <!--</div>-->
