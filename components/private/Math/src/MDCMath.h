@@ -77,6 +77,23 @@ static inline BOOL MDCCGFloatEqual(CGFloat a, CGFloat b) {
   return (fabs(a - b) < constantK * epsilon * fabs(a + b) || fabs(a - b) < min);
 }
 
+/**
+ Checks whether the provided floating point number is approximately zero based on a small epsilon.
+
+ Note that ULP-based comparisons are not used because ULP-space is significantly distorted around
+ zero.
+
+ Reference:
+ https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/
+ */
+static inline BOOL MDCFloatIsApproximatelyZero(CGFloat value) {
+#if CGFLOAT_IS_DOUBLE
+  return (fabs(value) < DBL_EPSILON);
+#else
+  return (fabsf(value) < FLT_EPSILON);
+#endif
+}
+
 __deprecated_msg("Use floor instead.") static inline CGFloat MDCFloor(CGFloat value) {
 #if CGFLOAT_IS_DOUBLE
   return floor(value);
