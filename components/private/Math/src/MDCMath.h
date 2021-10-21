@@ -17,46 +17,6 @@
 #import <UIKit/UIKit.h>
 #import <math.h>
 
-__deprecated_msg("Use sin instead.") static inline CGFloat MDCSin(CGFloat value) {
-#if CGFLOAT_IS_DOUBLE
-  return sin(value);
-#else
-  return sinf(value);
-#endif
-}
-
-__deprecated_msg("Use cos instead.") static inline CGFloat MDCCos(CGFloat value) {
-#if CGFLOAT_IS_DOUBLE
-  return cos(value);
-#else
-  return cosf(value);
-#endif
-}
-
-__deprecated_msg("Use atan2 instead.") static inline CGFloat MDCAtan2(CGFloat y, CGFloat x) {
-#if CGFLOAT_IS_DOUBLE
-  return atan2(y, x);
-#else
-  return atan2f(y, x);
-#endif
-}
-
-__deprecated_msg("Use ceil instead.") static inline CGFloat MDCCeil(CGFloat value) {
-#if CGFLOAT_IS_DOUBLE
-  return ceil(value);
-#else
-  return ceilf(value);
-#endif
-}
-
-__deprecated_msg("Use fabs instead.") static inline CGFloat MDCFabs(CGFloat value) {
-#if CGFLOAT_IS_DOUBLE
-  return fabs(value);
-#else
-  return fabsf(value);
-#endif
-}
-
 static inline CGFloat MDCDegreesToRadians(CGFloat degrees) {
 #if CGFLOAT_IS_DOUBLE
   return degrees * (CGFloat)M_PI / 180.0;
@@ -94,57 +54,9 @@ static inline BOOL MDCFloatIsApproximatelyZero(CGFloat value) {
 #endif
 }
 
-__deprecated_msg("Use floor instead.") static inline CGFloat MDCFloor(CGFloat value) {
-#if CGFLOAT_IS_DOUBLE
-  return floor(value);
-#else
-  return floorf(value);
-#endif
-}
-
-__deprecated_msg("Use hypot instead.") static inline CGFloat MDCHypot(CGFloat x, CGFloat y) {
-#if CGFLOAT_IS_DOUBLE
-  return hypot(x, y);
-#else
-  return hypotf(x, y);
-#endif
-}
-
 // Checks whether the provided floating point number is exactly zero.
 static inline BOOL MDCCGFloatIsExactlyZero(CGFloat value) {
   return (value == 0);
-}
-
-__deprecated_msg("Use pow instead.") static inline CGFloat MDCPow(CGFloat value, CGFloat power) {
-#if CGFLOAT_IS_DOUBLE
-  return pow(value, power);
-#else
-  return powf(value, power);
-#endif
-}
-
-__deprecated_msg("Use rint instead.") static inline CGFloat MDCRint(CGFloat value) {
-#if CGFLOAT_IS_DOUBLE
-  return rint(value);
-#else
-  return rintf(value);
-#endif
-}
-
-__deprecated_msg("Use round instead.") static inline CGFloat MDCRound(CGFloat value) {
-#if CGFLOAT_IS_DOUBLE
-  return round(value);
-#else
-  return roundf(value);
-#endif
-}
-
-__deprecated_msg("Use sqrt instead.") static inline CGFloat MDCSqrt(CGFloat value) {
-#if CGFLOAT_IS_DOUBLE
-  return sqrt(value);
-#else
-  return sqrtf(value);
-#endif
 }
 
 /**

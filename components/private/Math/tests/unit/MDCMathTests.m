@@ -262,16 +262,16 @@
 
   // Then
   CGPoint outputScale1Center = MDCRoundCenterWithBoundsAndScale(misalignedCenter, bounds, 1);
-  XCTAssertLessThan(MDCFabs(alignedScale1Center.x - outputScale1Center.x), acceptableRoundingError);
-  XCTAssertLessThan(MDCFabs(alignedScale1Center.y - outputScale1Center.y), acceptableRoundingError);
+  XCTAssertLessThan(fabs(alignedScale1Center.x - outputScale1Center.x), acceptableRoundingError);
+  XCTAssertLessThan(fabs(alignedScale1Center.y - outputScale1Center.y), acceptableRoundingError);
 
   CGPoint outputScale2Center = MDCRoundCenterWithBoundsAndScale(misalignedCenter, bounds, 2);
-  XCTAssertLessThan(MDCFabs(alignedScale2Center.x - outputScale2Center.x), acceptableRoundingError);
-  XCTAssertLessThan(MDCFabs(alignedScale2Center.y - outputScale2Center.y), acceptableRoundingError);
+  XCTAssertLessThan(fabs(alignedScale2Center.x - outputScale2Center.x), acceptableRoundingError);
+  XCTAssertLessThan(fabs(alignedScale2Center.y - outputScale2Center.y), acceptableRoundingError);
 
   CGPoint outputScale3Center = MDCRoundCenterWithBoundsAndScale(misalignedCenter, bounds, 3);
-  XCTAssertLessThan(MDCFabs(alignedScale3Center.x - outputScale3Center.x), acceptableRoundingError);
-  XCTAssertLessThan(MDCFabs(alignedScale3Center.y - outputScale3Center.y), acceptableRoundingError);
+  XCTAssertLessThan(fabs(alignedScale3Center.x - outputScale3Center.x), acceptableRoundingError);
+  XCTAssertLessThan(fabs(alignedScale3Center.y - outputScale3Center.y), acceptableRoundingError);
 }
 
 - (void)testMDCRoundCenterWithBoundsAndScaleZero {
