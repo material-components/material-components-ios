@@ -12,16 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "MDCButton.h"
+#import "MDCAlertController.h"
+#import "MDCAlertControllerView.h"
 #import "MDCAlertActionManager.h"
 #import "MDCAlertControllerView+Private.h"
 
-#import "MaterialShadowElevations.h"
+#import "MDCShadowElevations.h"
+#import "MDCFontTextStyle.h"
+#import "MDCTypography.h"
+#import "UIFont+MaterialTypography.h"
+#import "MDCMath.h"
 #import <MDFInternationalization/MDFInternationalization.h>
-
-#import "MaterialButtons.h"
-#import "MaterialDialogs.h"
-#import "MaterialTypography.h"
-#import "MaterialMath.h"
 
 // https://material.io/go/design-dialogs#dialogs-specs
 static const MDCFontTextStyle kTitleTextStyle = MDCFontTextStyleTitle;
@@ -951,15 +953,14 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
                                   self.actionsScrollView.contentSize.height;
   // Check the layout: do both content and actions fit on the screen at once?
   if (requestedHeight > CGRectGetHeight(self.bounds)) {
-    // Complex layout case : Split the space between the two scrollviews.
+    // Actions take up max 1/2 Dialog height
     CGFloat maxActionsHeight = CGRectGetHeight(self.bounds) / 2.0f;
-    if (CGRectGetHeight(contentScrollViewRect) < maxActionsHeight) {
-      maxActionsHeight =
-          MIN(maxActionsHeight, CGRectGetHeight(self.bounds) - contentScrollViewRect.size.height);
-    }
-    actionsScrollViewRect.size.height = MIN(maxActionsHeight, actionsScrollViewRect.size.height);
+    CGFloat actionsHeight = MIN(maxActionsHeight, actionsScrollViewRect.size.height);
+    actionsScrollViewRect.size.height = actionsHeight;
+    actionsScrollViewRect.origin.y = CGRectGetHeight(self.bounds) - actionsHeight;
     contentScrollViewRect.size.height =
-        MAX(0.f, actionsScrollViewRect.origin.y - contentScrollViewRect.origin.y);
+        MAX(0.f, CGRectGetHeight(self.bounds) - actionsScrollViewRect.size.height -
+                     contentScrollViewRect.origin.y);
 
     self.messageTextView.accessibilityFrame = UIAccessibilityConvertFrameToScreenCoordinates(
         CGRectMake(messageFrame.origin.x, contentScrollViewRect.origin.y, messageFrame.size.width,
