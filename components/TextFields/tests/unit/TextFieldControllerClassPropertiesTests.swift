@@ -150,8 +150,6 @@ class TextFieldControllerClassPropertiesTests: XCTestCase {
       UIColor(white: 0, alpha: CGFloat(0.54)))
     XCTAssertEqual(Float(MDCTextInputControllerFilled.floatingPlaceholderScaleDefault), 0.75)
     XCTAssertEqual(MDCTextInputControllerFilled.isFloatingEnabledDefault, true)
-    // TODO(b/184185897): Evaluate why this is flaky.
-    XCTAssertEqual(MDCTextInputControllerFilled.roundedCornersDefault, [])
 
     XCTAssertNil(MDCTextInputControllerFilled.textInputClearButtonTintColorDefault)
 
