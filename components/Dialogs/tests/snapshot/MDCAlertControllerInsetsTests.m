@@ -12,15 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialSnapshot.h"
+#import "MDCAlertController.h"
+#import "MDCAlertControllerView.h"
+#import "MDCAlertController+MaterialTheming.h"
 
-#import "MaterialDialogs.h"
 #import "MDCAlertController+Testing.h"
-#import "MaterialDialogs+Theming.h"
 #import "MDCAlertControllerView+Private.h"
-#import "MaterialColorScheme.h"
-#import "MaterialContainerScheme.h"
-#import "MaterialTypographyScheme.h"
+#import "MDCSnapshotTestCase.h"
+#import "UIImage+MDCSnapshot.h"
+#import "UIView+MDCSnapshot.h"
+#import "MDCSemanticColorScheme.h"
+#import "MDCContainerScheme.h"
+#import "MDCTypographyScheme.h"
 
 static NSString *const kTitleShortLatin = @"Short Title";
 static NSString *const kTitleLongLatin = @"Lorem ipsum dolor sit amet";
@@ -420,11 +423,23 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
   [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
 }
 
+- (void)testTitleDoesNotPinToTop {
+  // Given
+  [self addActionWithTitle:kFirstLongAction];
+  self.alertController.actionsHorizontalAlignmentInVerticalLayout =
+      MDCContentHorizontalAlignmentJustified;
+
+  // When
+  self.alertController.titlePinsToTop = NO;
+
+  // Then
+  [self generateSizedSnapshotAndVerifyForAlert:self.alertController];
+}
+
 #pragma mark - Helpers
 
 - (void)setElementsBackgroundColors {
-  self.alertView.titleScrollView.backgroundColor =
-      [UIColor.purpleColor colorWithAlphaComponent:.2f];
+  self.alertView.titleView.backgroundColor = [UIColor.purpleColor colorWithAlphaComponent:.2f];
   self.alertView.titleLabel.backgroundColor = [UIColor.purpleColor colorWithAlphaComponent:.1f];
   self.alertView.contentScrollView.backgroundColor =
       [UIColor.orangeColor colorWithAlphaComponent:.2f];

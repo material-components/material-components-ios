@@ -13,7 +13,8 @@
 // limitations under the License.
 
 #import "MDCAlertController+Customize.h"
-#import "MaterialDialogs.h"
+#import "MDCAlertController.h"
+#import "MDCAlertControllerView.h"
 #import "MDCAlertController+Testing.h"
 #import "MDCAlertControllerView+Private.h"
 
@@ -47,7 +48,7 @@
 
 - (void)highlightAlertPanels {
   MDCAlertControllerView *alertView = (MDCAlertControllerView *)self.view;
-  alertView.titleScrollView.backgroundColor = [[UIColor purpleColor] colorWithAlphaComponent:.2f];
+  alertView.titleView.backgroundColor = [[UIColor purpleColor] colorWithAlphaComponent:.2f];
   alertView.titleLabel.backgroundColor = [[UIColor purpleColor] colorWithAlphaComponent:.2f];
   alertView.contentScrollView.backgroundColor = [[UIColor orangeColor] colorWithAlphaComponent:.1f];
   alertView.messageTextView.backgroundColor = [[UIColor orangeColor] colorWithAlphaComponent:.2f];

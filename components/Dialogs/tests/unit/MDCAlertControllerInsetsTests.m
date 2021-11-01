@@ -12,8 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialButtons.h"
-#import "MaterialDialogs.h"
+#import "MDCButton.h"
+#import "MDCAlertController.h"
+#import "MDCAlertControllerView.h"
 
 #import "MDCAlertController+ButtonForAction.h"
 #import "MDCAlertController+Testing.h"
@@ -71,7 +72,7 @@ static NSString *const kMessageLatin = @"Lorem ipsum dolor sit amet, consul doce
 
   // Then
   XCTAssertEqual(self.alertView.titleInsets.bottom, 20.f);
-  CGFloat titleViewHeight = CGRectGetHeight(self.alertView.titleScrollView.bounds);
+  CGFloat titleViewHeight = CGRectGetHeight(self.alertView.titleView.bounds);
   CGFloat titleBottom = CGRectGetMaxY(self.alertView.titleLabel.frame);
   XCTAssertEqual(titleViewHeight - titleBottom, self.alertView.titleInsets.bottom);
 }
@@ -83,7 +84,7 @@ static NSString *const kMessageLatin = @"Lorem ipsum dolor sit amet, consul doce
 
   // Then
   XCTAssertEqual(self.alertView.titleInsets.bottom, 14.f);
-  CGFloat titleViewHeight = CGRectGetHeight(self.alertView.titleScrollView.bounds);
+  CGFloat titleViewHeight = CGRectGetHeight(self.alertView.titleView.bounds);
   CGFloat titleBottom = CGRectGetMaxY(self.alertView.titleLabel.frame);
   XCTAssertEqual(titleViewHeight - titleBottom, self.alertView.titleInsets.bottom);
 }
@@ -110,7 +111,7 @@ static NSString *const kMessageLatin = @"Lorem ipsum dolor sit amet, consul doce
   [self.alert sizeToFitContentInBounds:CGSizeMake(300.0f, 300.0f)];
 
   // Then
-  CGRect titleRect = self.alertView.titleScrollView.frame;
+  CGRect titleRect = self.alertView.titleView.frame;
 
   XCTAssertTrue(CGRectEqualToRect(
       self.alertView.titleLabel.frame,

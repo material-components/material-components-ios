@@ -82,8 +82,8 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
 @property(nonatomic, strong, nullable) UIColor *buttonInkColor UI_APPEARANCE_SELECTOR;
 @property(nonatomic, assign) BOOL enableRippleBehavior;
 
-/** The most recent VoiceOver-assigned contentOffset for the contentScrollView whose x and y values
- * were positive. */
+/** The most recent VoiceOver-assigned contentOffset for the contentScrollView whose x and
+ * y values were positive. */
 @property(nonatomic, assign) CGPoint contentScrollViewLastValidVoiceOverContentOffset;
 
 @end
@@ -100,6 +100,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
     self.autoresizesSubviews = NO;
     self.clipsToBounds = YES;
     self.shouldGroupAccessibilityChildren = YES;
+    self.titlePinsToTop = YES;
 
     self.orderVerticalActionsByEmphasis = NO;
     self.actionsHorizontalAlignment = MDCContentHorizontalAlignmentTrailing;
@@ -114,10 +115,15 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
     self.accessoryViewVerticalInset = 20.0f;
     self.accessoryViewHorizontalInset = 0.0f;
 
-    self.titleScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
-    [self addSubview:self.titleScrollView];
-
     self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+    self.titleView = [[UIView alloc] initWithFrame:CGRectZero];
+    // If the title pins to the bounds, it is a fixed view placed outside of any scroll views.
+    // Otherwise, it gets added to the content scroll view.
+    if (self.titlePinsToTop) {
+      [self addSubview:self.titleView];
+    } else {
+      [self.contentScrollView addSubview:self.titleView];
+    }
     [self addSubview:self.contentScrollView];
     self.contentScrollViewLastValidVoiceOverContentOffset = CGPointZero;
     [self.contentScrollView addObserver:self
@@ -141,7 +147,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
     }
     self.titleLabel.adjustsFontForContentSizeCategory = self.adjustsFontForContentSizeCategory;
     self.titleLabel.accessibilityTraits |= UIAccessibilityTraitHeader;
-    [self.titleScrollView addSubview:self.titleLabel];
+    [self.titleView addSubview:self.titleLabel];
 
     self.messageTextView = [[MDCNonselectableTextView alloc] initWithFrame:CGRectZero];
     self.messageTextView.textAlignment = NSTextAlignmentNatural;
@@ -182,7 +188,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
   super.backgroundColor = backgroundColor;
-  self.titleScrollView.backgroundColor = backgroundColor;
+  self.titleView.backgroundColor = backgroundColor;
   self.contentScrollView.backgroundColor = backgroundColor;
   self.actionsScrollView.backgroundColor = backgroundColor;
 }
@@ -278,7 +284,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   if (self.titleIconImageView == nil) {
     self.titleIconImageView = [[UIImageView alloc] initWithImage:titleIcon];
     self.titleIconImageView.contentMode = UIViewContentModeScaleAspectFit;
-    [self.titleScrollView addSubview:self.titleIconImageView];
+    [self.titleView addSubview:self.titleIconImageView];
   } else {
     self.titleIconImageView.image = titleIcon;
   }
@@ -312,7 +318,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
     }
     _titleIconView = titleIconView;
     if (_titleIconView != nil) {
-      [self.titleScrollView addSubview:_titleIconView];
+      [self.titleView addSubview:_titleIconView];
     }
     [self setNeedsLayout];
   }
@@ -447,6 +453,20 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   }
 }
 
+- (void)setTitlePinsToTop:(BOOL)titlePinsToTop {
+  if (titlePinsToTop == _titlePinsToTop) {
+    return;
+  }
+  _titlePinsToTop = titlePinsToTop;
+  [self.titleView removeFromSuperview];
+  if (_titlePinsToTop) {
+    [self addSubview:self.titleView];
+  } else {
+    [self.contentScrollView addSubview:self.titleView];
+  }
+  [self setNeedsLayout];
+}
+
 #pragma mark - Internal
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -456,11 +476,11 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   if (context == kKVOContextMDCAlertControllerViewPrivate) {
     if (UIAccessibilityIsVoiceOverRunning() && (object == self.contentScrollView)) {
       // For some reason, VoiceOver sets a contentOffset with negative x and y values on
-      // self.contentScrollView when the user navigates through the text in self.messageTextView
-      // word by word in landscape. This results in the text VoiceOver is focusing on to not be
-      // visible. This code remembers the contentOffsets with positive x and y values that VoiceOver
-      // sets, and re-applies them when it finds that VoiceOver has set ones with negative x and y
-      // values. (b/181607796)
+      // self.contentScrollView when the user navigates through the text in
+      // self.messageTextView word by word in landscape. This results in the text VoiceOver is
+      // focusing on to not be visible. This code remembers the contentOffsets with positive x and y
+      // values that VoiceOver sets, and re-applies them when it finds that VoiceOver has set ones
+      // with negative x and y values. (b/181607796)
       CGPoint contentOffset = self.contentScrollView.contentOffset;
       BOOL isValidContentOffset = (contentOffset.x >= 0 && contentOffset.y >= 0);
       if (isValidContentOffset) {
@@ -679,8 +699,14 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   return CGRectMake(leftInset, titleTop, titleSize.width, titleSize.height);
 }
 
-- (CGRect)messageFrameWithSize:(CGSize)messageSize {
-  CGFloat top = [self contentInsetTop];
+- (CGFloat)messageTopInsetWithTitleFrame:(CGRect)titleFrame {
+  return CGRectGetMaxY(titleFrame) + [self titleInsetBottom];
+}
+
+- (CGRect)messageFrameWithMessageSize:(CGSize)messageSize titleFrame:(CGRect)titleFrame {
+  CGFloat top = self.titlePinsToTop
+                    ? [self contentInsetTop]
+                    : [self messageTopInsetWithTitleFrame:titleFrame] + [self contentInsetTop];
   return CGRectMake(self.contentInsets.left, top, messageSize.width, messageSize.height);
 }
 
@@ -857,15 +883,14 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   CGSize boundsSize = CGRectInfinite.size;
   boundsSize.width = CGRectGetWidth(self.bounds);
 
-  // Title view
+  // Calculate content and title sizes
   CGSize titleViewSize = [self calculateTitleViewSizeThatFitsWidth:boundsSize.width];
 
   CGRect titleViewRect = CGRectZero;
   titleViewRect.size.width = CGRectGetWidth(self.bounds);
   titleViewRect.size.height = titleViewSize.height;
 
-  self.titleScrollView.contentSize = titleViewRect.size;
-  self.titleScrollView.frame = titleViewRect;
+  self.titleView.frame = titleViewRect;
 
   // Content
   CGSize contentSize = [self calculateContentSizeThatFitsWidth:boundsSize.width];
@@ -873,10 +898,13 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   CGRect contentRect = CGRectZero;
   contentRect.size.width = CGRectGetWidth(self.bounds);
   contentRect.size.height = contentSize.height;
+  if (!self.titlePinsToTop) {
+    contentRect.size.height += titleViewSize.height;
+  }
 
   self.contentScrollView.contentSize = contentRect.size;
 
-  // Place Content in titleScrollView
+  // Place content in contentScrollView
   CGSize titleBoundsSize = boundsSize;
   titleBoundsSize.width = boundsSize.width - (self.titleInsets.left + self.titleInsets.right);
   CGSize titleSize = [self.titleLabel sizeThatFits:titleBoundsSize];
@@ -904,7 +932,8 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
 
   // Calculate the title frame after the title icon size has been determined.
   CGRect titleFrame = [self titleFrameWithTitleSize:titleSize];
-  CGRect messageFrame = [self messageFrameWithSize:messageSize];
+
+  CGRect messageFrame = [self messageFrameWithMessageSize:messageSize titleFrame:titleFrame];
   CGRect accessoryViewFrame = CGRectMake(
       self.contentInsets.left + self.accessoryViewHorizontalInset,
       CGRectGetMaxY(messageFrame) + [self accessoryVerticalInset],
@@ -942,7 +971,8 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   // Place scrollviews
   CGRect contentScrollViewRect = CGRectZero;
   contentScrollViewRect.size = self.contentScrollView.contentSize;
-  contentScrollViewRect.origin.y = CGRectGetMaxY(titleFrame) + [self titleInsetBottom];
+  contentScrollViewRect.origin.y =
+      self.titlePinsToTop ? [self messageTopInsetWithTitleFrame:titleFrame] : 0.0f;
 
   CGRect actionsScrollViewRect = CGRectZero;
   actionsScrollViewRect.size = self.actionsScrollView.contentSize;

@@ -302,6 +302,16 @@ typedef BOOL (^MDCAttributedMessageActionHandler)(NSURL *_Nonnull URL, NSRange r
 /** @c MDCAlertController.modalPresentationStyle is always @c UIModalPresentationCustom. */
 - (void)setModalPresentationStyle:(UIModalPresentationStyle)modalPresentationStyle NS_UNAVAILABLE;
 
+/**
+ Whether or not title should scroll with the content.
+
+ If the title does not pin to the top of the content, it will scroll with the message when the
+ message scrolls.
+
+ Defaults to @c YES.
+ */
+@property(nonatomic, assign) BOOL titlePinsToTop;
+
 #pragma mark - Alert Actions
 
 /**

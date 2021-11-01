@@ -14,8 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCAlertActionManager.h"
 #import "MaterialButtons.h"
+#import "MDCAlertControllerView.h"
+#import "MDCAlertActionManager.h"
 
 @interface MDCAlertControllerView ()
 
@@ -30,10 +31,15 @@
 
 @property(nonatomic, nullable, weak) MDCAlertActionManager *actionManager;
 
-/** The scroll view that holds the @c titleLabel. */
-@property(nonatomic, nonnull, strong) UIScrollView *titleScrollView;
+/** Whether or not title should pin to the top of the content. If the title does not pin to the top
+ * of the content, it will scroll with the message when the message scrolls. */
+@property(nonatomic, assign) BOOL titlePinsToTop;
 
-/** The scroll view that holds the @c messageTextView and @c accessoryView. */
+/** The view that holds the @c titleLabel. */
+@property(nonatomic, nonnull, strong) UIView *titleView;
+
+/** The scroll view that holds the @c messageTextView, the @c accessoryView, and, when
+ * scrollTitleWithContent is @c YES, the @c titleView . */
 @property(nonatomic, nonnull, strong) UIScrollView *contentScrollView;
 
 /** The scroll view that holds all of the buttons created for each action. */

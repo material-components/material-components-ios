@@ -184,6 +184,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
     _preferredInterfaceOrientationForPresentationOverride =
         super.preferredInterfaceOrientationForPresentation;
     _modalTransitionStyleOverride = super.modalTransitionStyle;
+    _titlePinsToTop = YES;
 
     super.transitioningDelegate = _transitionController;
     super.modalPresentationStyle = UIModalPresentationCustom;
@@ -227,6 +228,13 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 - (NSString *)title {
   return _alertTitle;
+}
+
+- (void)setTitlePinsToTop:(BOOL)titlePinsToTop {
+  _titlePinsToTop = titlePinsToTop;
+  if (self.alertView) {
+    self.alertView.titlePinsToTop = titlePinsToTop;
+  }
 }
 
 - (void)setTitleAccessibilityLabel:(NSString *)titleAccessibilityLabel {
@@ -662,7 +670,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   if ([self.delegate respondsToSelector:@selector(alertController:didAppear:)]) {
     [self.delegate alertController:self didAppear:animated];
   }
-  [self.alertView.titleScrollView flashScrollIndicators];
   [self.alertView.contentScrollView flashScrollIndicators];
   [self.alertView.actionsScrollView flashScrollIndicators];
 }
@@ -841,6 +848,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   self.alertView.actionsHorizontalAlignment = self.actionsHorizontalAlignment;
   self.alertView.actionsHorizontalAlignmentInVerticalLayout =
       self.actionsHorizontalAlignmentInVerticalLayout;
+  self.alertView.titlePinsToTop = self.titlePinsToTop;
 
   // Create buttons for the actions (if not already created) and apply default styling
   for (MDCAlertAction *action in self.actions) {

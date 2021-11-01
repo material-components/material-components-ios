@@ -131,6 +131,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   XCTAssertEqual(self.alert.actionsHorizontalAlignment, MDCContentHorizontalAlignmentTrailing);
   XCTAssertEqual(self.alert.actionsHorizontalAlignmentInVerticalLayout,
                  MDCContentHorizontalAlignmentCenter);
+  XCTAssertEqual(self.alert.titlePinsToTop, YES);
 }
 
 - (void)testAlertViewCanBecomeFirstResponder {
@@ -165,6 +166,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
                  MDCContentHorizontalAlignmentJustified);
   XCTAssertEqual(alertView.actionsHorizontalAlignmentInVerticalLayout,
                  MDCContentHorizontalAlignmentJustified);
+  XCTAssertEqual(self.alert.titlePinsToTop, YES);
 }
 
 /**

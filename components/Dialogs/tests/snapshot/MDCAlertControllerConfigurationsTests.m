@@ -12,15 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialSnapshot.h"
-
 #import "MDCAlertController+Customize.h"
-#import "MaterialDialogs.h"
+#import "MDCAlertController.h"
+#import "MDCAlertControllerView.h"
 #import "MDCAlertController+Testing.h"
-#import "MaterialDialogs+Theming.h"
-#import "MaterialColorScheme.h"
-#import "MaterialContainerScheme.h"
-#import "MaterialTypographyScheme.h"
+#import "MDCAlertController+MaterialTheming.h"
+#import "MDCAlertControllerView+Private.h"
+#import "MDCSnapshotTestCase.h"
+#import "UIImage+MDCSnapshot.h"
+#import "UIView+MDCSnapshot.h"
+#import "MDCSemanticColorScheme.h"
+#import "MDCContainerScheme.h"
+#import "MDCTypographyScheme.h"
 
 static NSString *const kTitleShortLatin = @"Title";
 static NSString *const kTitleLongLatin =
@@ -961,6 +964,60 @@ static NSString *const kMessageVeryLongLatin =
 
   // Then
   [self.alertController sizeToFitContentInBounds:CGSizeMake(1000.0f, 1000.0f)];
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+// Test scrolling when title does not scroll with message
+- (void)testScrollingWhenTitlePinsToTop {
+  // Given
+  [self addOutlinedActionWithTitle:@"Cancel"];
+  self.alertController.title = kTitleLongLatin;
+  self.alertController.message = kMessageVeryLongLatin;
+
+  // When
+  self.alertController.titlePinsToTop = YES;
+  MDCAlertControllerView *alertView = (MDCAlertControllerView *)self.alertController.view;
+  CGPoint bottomOffset = CGPointMake(0, 50);
+  [alertView.contentScrollView setContentOffset:bottomOffset];
+
+  // Then
+  self.alertController.view.bounds = CGRectMake(0.f, 0.f, 300.f, 300.f);
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+// Test scrolling when message and title scroll together
+- (void)testScrollingWhenTitleScrolls {
+  // Given
+  [self addOutlinedActionWithTitle:@"Cancel"];
+  self.alertController.title = kTitleLongLatin;
+  self.alertController.message = kMessageVeryLongLatin;
+
+  // When
+  self.alertController.titlePinsToTop = NO;
+  MDCAlertControllerView *alertView = (MDCAlertControllerView *)self.alertController.view;
+  CGPoint bottomOffset = CGPointMake(0, 50);
+  [alertView.contentScrollView setContentOffset:bottomOffset];
+
+  // Then
+  self.alertController.view.bounds = CGRectMake(0.f, 0.f, 300.f, 300.f);
+  [self generateSnapshotAndVerifyForView:self.alertController.view];
+}
+
+// Test scrolling when message and title scroll together with icon
+- (void)testScrollingWhenTitleScrollsWithIcon {
+  // Given
+  self.alertController.titleIcon = self.titleIcon;
+  self.alertController.title = kTitleLongLatin;
+  self.alertController.message = kMessageVeryLongLatin;
+
+  // When
+  self.alertController.titlePinsToTop = NO;
+  MDCAlertControllerView *alertView = (MDCAlertControllerView *)self.alertController.view;
+  CGPoint bottomOffset = CGPointMake(0, 50);
+  [alertView.contentScrollView setContentOffset:bottomOffset];
+
+  // Then
+  self.alertController.view.bounds = CGRectMake(0.f, 0.f, 300.f, 300.f);
   [self generateSnapshotAndVerifyForView:self.alertController.view];
 }
 
