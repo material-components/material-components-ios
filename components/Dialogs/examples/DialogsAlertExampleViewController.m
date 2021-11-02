@@ -14,11 +14,12 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialCollections.h"
-#import "MaterialDialogs.h"
-#import "MaterialDialogs+Theming.h"
-#import "MaterialColorScheme.h"
-#import "MaterialContainerScheme.h"
+#import "MDCCollectionViewTextCell.h"
+#import "MDCCollectionViewController.h"
+#import "MDCAlertController+ButtonForAction.h"
+#import "MDCAlertController.h"
+#import "MDCSemanticColorScheme.h"
+#import "MDCContainerScheme.h"
 
 static NSString *const kReusableIdentifierItem = @"cell";
 
@@ -69,7 +70,28 @@ static NSString *const kReusableIdentifierItem = @"cell";
 }
 
 - (void)themeAlertController:(MDCAlertController *)alertController {
-  [alertController applyThemeWithScheme:self.containerScheme];
+  alertController.titleFont = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+  alertController.messageFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+  for (MDCAlertAction *action in alertController.actions) {
+    MDCButton *button = [alertController buttonForAction:action];
+    button.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+  }
+
+  if (@available(iOS 13, *)) {
+    alertController.titleColor = UIColor.labelColor;
+    alertController.messageColor = UIColor.secondaryLabelColor;
+    for (MDCAlertAction *action in alertController.actions) {
+      MDCButton *button = [alertController buttonForAction:action];
+      button.titleLabel.textColor = UIColor.labelColor;
+    }
+  } else {
+    alertController.titleColor = UIColor.blackColor;
+    alertController.messageColor = UIColor.grayColor;
+    for (MDCAlertAction *action in alertController.actions) {
+      MDCButton *button = [alertController buttonForAction:action];
+      button.titleLabel.textColor = UIColor.blackColor;
+    }
+  }
 }
 
 - (IBAction)didTapShowLongAlert {
@@ -137,7 +159,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
   MDCAlertController *materialAlertController =
       [MDCAlertController alertControllerWithTitle:titleString message:messageString];
   [self themeAlertController:materialAlertController];
-  materialAlertController.mdc_adjustsFontForContentSizeCategory = YES;
+  materialAlertController.adjustsFontForContentSizeCategory = YES;
 
   MDCAlertAction *agreeAction = [MDCAlertAction actionWithTitle:@"AGREE"
                                                         handler:^(MDCAlertAction *action) {
@@ -204,7 +226,7 @@ static NSString *const kReusableIdentifierItem = @"cell";
   MDCAlertController *materialAlertController =
       [MDCAlertController alertControllerWithTitle:titleString message:messageString];
   [self themeAlertController:materialAlertController];
-  materialAlertController.mdc_adjustsFontForContentSizeCategory = YES;
+  materialAlertController.adjustsFontForContentSizeCategory = YES;
 
   MDCAlertAction *okAction = [MDCAlertAction actionWithTitle:@"OK"
                                                      handler:^(MDCAlertAction *action) {

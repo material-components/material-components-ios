@@ -173,12 +173,10 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
 - (void)testSystemFontScaledWhenScaledFontUnavailableForContentSizeExtraSmall {
   // Given
 
-  // Although the font is initialized with point size 1, the MDCTypography behavior will select a
-  // fixed point size for the font at the current UIContentSizeCategory (of the host app), which
-  // is not 1.
-  UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:1];
-  self.alertController.messageFont = originalFont;
-  self.alertController.titleFont = originalFont;
+  UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:20];
+  UIFontMetrics *fontMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleHeadline];
+  self.alertController.messageFont = [fontMetrics scaledFontForFont:originalFont];
+  self.alertController.titleFont = [fontMetrics scaledFontForFont:originalFont];
   for (MDCAlertAction *action in self.alertController.actions) {
     [[self.alertController buttonForAction:action] setTitleFont:originalFont
                                                        forState:UIControlStateNormal];
@@ -187,7 +185,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
 
   // When
   [self.alertController loadViewIfNeeded];
-  self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
+  self.alertController.adjustsFontForContentSizeCategory = YES;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.alertController.view];
@@ -205,9 +203,10 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
   // Although the font is initialized with point size 1, the MDCTypography behavior will select
   // a fixed point size for the font at the current UIContentSizeCategory (of the host app),
   // which is not 1.
-  UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:1];
-  self.alertController.messageFont = originalFont;
-  self.alertController.titleFont = originalFont;
+  UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:20];
+  UIFontMetrics *fontMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleHeadline];
+  self.alertController.messageFont = [fontMetrics scaledFontForFont:originalFont];
+  self.alertController.titleFont = [fontMetrics scaledFontForFont:originalFont];
   for (MDCAlertAction *action in self.alertController.actions) {
     [[self.alertController buttonForAction:action] setTitleFont:originalFont
                                                        forState:UIControlStateNormal];
@@ -217,7 +216,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
 
   // When
   [self.alertController loadViewIfNeeded];
-  self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
+  self.alertController.adjustsFontForContentSizeCategory = YES;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.alertController.view];
@@ -226,11 +225,10 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
 /** Tests behavior when a font generated from a FontScaler is provided. */
 - (void)testFontScalerFontScaledForContentSizeExtraSmall {
   // Given
-  UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:1];
-  // Simulates a font scaler by providing scaling curve dictionary.
-  originalFont.mdc_scalingCurve = CustomScalingCurve();
-  self.alertController.messageFont = originalFont;
-  self.alertController.titleFont = originalFont;
+  UIFont *originalFont = [UIFont fontWithName:@"Zapfino" size:20];
+  UIFontMetrics *fontMetrics = [UIFontMetrics metricsForTextStyle:UIFontTextStyleHeadline];
+  self.alertController.messageFont = [fontMetrics scaledFontForFont:originalFont];
+  self.alertController.titleFont = [fontMetrics scaledFontForFont:originalFont];
   for (MDCAlertAction *action in self.alertController.actions) {
     [[self.alertController buttonForAction:action] setTitleFont:originalFont
                                                        forState:UIControlStateNormal];
@@ -239,7 +237,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
 
   // When
   [self.alertController loadViewIfNeeded];
-  self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
+  self.alertController.adjustsFontForContentSizeCategory = YES;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.alertController.view];
@@ -262,7 +260,7 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
 
   // When
   [self.alertController loadViewIfNeeded];
-  self.alertController.mdc_adjustsFontForContentSizeCategory = YES;
+  self.alertController.adjustsFontForContentSizeCategory = YES;
 
   // Then
   [self generateSnapshotAndVerifyForView:self.alertController.view];
