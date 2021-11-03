@@ -1821,28 +1821,17 @@ static BOOL isRunningiOS10_3OrAbove() {
 }
 
 - (void)interfaceOrientationWillChange {
-  NSAssert(!_interfaceOrientationIsChanging, @"Call to %@::%@ not matched by a call to %@.",
-           NSStringFromClass([self class]), NSStringFromSelector(_cmd),
-           NSStringFromSelector(@selector(interfaceOrientationDidChange)));
-
   _interfaceOrientationIsChanging = YES;
 
   [_statusBarShifter interfaceOrientationWillChange];
 }
 
 - (void)interfaceOrientationIsChanging {
-  NSAssert(_interfaceOrientationIsChanging, @"Call to %@::%@ not matched by a call to %@.",
-           NSStringFromClass([self class]), NSStringFromSelector(_cmd),
-           NSStringFromSelector(@selector(interfaceOrientationWillChange)));
   [_topSafeArea safeAreaInsetsDidChange];
   [self fhv_updateLayout];
 }
 
 - (void)interfaceOrientationDidChange {
-  NSAssert(_interfaceOrientationIsChanging, @"Call to %@::%@ not matched by a call to %@.",
-           NSStringFromClass([self class]), NSStringFromSelector(_cmd),
-           NSStringFromSelector(@selector(interfaceOrientationWillChange)));
-
   _interfaceOrientationIsChanging = NO;
 
   // Ignore any content offset delta that occured as a result of any orientation change.
