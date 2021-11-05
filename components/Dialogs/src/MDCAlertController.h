@@ -273,7 +273,9 @@ typedef BOOL (^MDCAttributedMessageActionHandler)(NSURL *_Nonnull URL, NSRange r
  Defaults to @c NO.
  */
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
-    BOOL mdc_adjustsFontForContentSizeCategory;
+    BOOL mdc_adjustsFontForContentSizeCategory __deprecated_msg(
+        "Use adjustsFontForContentSizeCategory with UIKit scalable fonts instead. See "
+        "go/mdc_adjustsFontForContentSizeCategory for more details.");
 
 /**
  By setting this property to @c YES, the Ripple component will be used instead of Ink
