@@ -640,7 +640,7 @@ static NSString *const kInkLayerBackgroundOpacityAnim = @"backgroundOpacityAnim"
 }
 
 - (void)animationDidStop:(__unused CAAnimation *)anim
-              shapeLayer:(MDCLegacyInkLayerRipple *)layerRipple
+              shapeLayer:(nullable CAShapeLayer *)layerRipple
                 finished:(__unused BOOL)finished {
   // Even when the ripple is "exited" without animation, we need to remove it from compositeRipple
   [layerRipple removeFromSuperlayer];
