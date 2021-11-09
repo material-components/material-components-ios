@@ -136,6 +136,13 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
 @property(nonatomic) UIEdgeInsets hitAreaInsets;
 @property(nonatomic, assign) UIEdgeInsets currentVisibleAreaInsets;
 @property(nonatomic, assign) CGSize lastRecordedIntrinsicContentSize;
+
+// Used only when layoutTitleWithConstraints is enabled.
+@property(nonatomic, strong) NSLayoutConstraint *titleTopConstraint;
+@property(nonatomic, strong) NSLayoutConstraint *titleBottomConstraint;
+@property(nonatomic, strong) NSLayoutConstraint *titleLeadingConstraint;
+@property(nonatomic, strong) NSLayoutConstraint *titleTrailingConstraint;
+
 @end
 
 @implementation MDCButton
@@ -1324,7 +1331,14 @@ static BOOL gEnablePerformantShadow = NO;
 
   UIEdgeInsets visibleAreaInsets = UIEdgeInsetsZero;
   if (self.centerVisibleArea) {
-    CGSize visibleAreaSize = [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+    CGSize visibleAreaSize;
+    if (self.layoutTitleWithConstraints) {
+      visibleAreaSize =
+          [self systemLayoutSizeFittingSize:CGSizeMake(self.bounds.size.width,
+                                                       UILayoutFittingCompressedSize.height)];
+    } else {
+      visibleAreaSize = [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+    }
     CGFloat additionalRequiredHeight =
         MAX(0, CGRectGetHeight(self.bounds) - visibleAreaSize.height);
     CGFloat additionalRequiredWidth = MAX(0, CGRectGetWidth(self.bounds) - visibleAreaSize.width);
@@ -1442,6 +1456,71 @@ static BOOL gEnablePerformantShadow = NO;
   if (!CGSizeEqualToSize(sizeExpandedFromVisibleAreaInsets,
                          self.lastRecordedIntrinsicContentSize)) {
     [self invalidateIntrinsicContentSize];
+  }
+}
+
+#pragma mark - Enabling multi-line layout
+
+- (void)setLayoutTitleWithConstraints:(BOOL)layoutTitleWithConstraints {
+  if (_layoutTitleWithConstraints == layoutTitleWithConstraints) {
+    return;
+  }
+
+  _layoutTitleWithConstraints = layoutTitleWithConstraints;
+
+  if (_layoutTitleWithConstraints) {
+    self.titleTopConstraint = [self.titleLabel.topAnchor constraintEqualToAnchor:self.topAnchor];
+    self.titleBottomConstraint =
+        [self.titleLabel.bottomAnchor constraintEqualToAnchor:self.bottomAnchor];
+    self.titleLeadingConstraint =
+        [self.titleLabel.leadingAnchor constraintEqualToAnchor:self.leadingAnchor];
+    self.titleTrailingConstraint =
+        [self.titleLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor];
+    self.titleTopConstraint.active = YES;
+    self.titleBottomConstraint.active = YES;
+    self.titleLeadingConstraint.active = YES;
+    self.titleTrailingConstraint.active = YES;
+
+    [self.titleLabel setContentHuggingPriority:UILayoutPriorityRequired
+                                       forAxis:UILayoutConstraintAxisHorizontal];
+    [self.titleLabel setContentHuggingPriority:UILayoutPriorityRequired
+                                       forAxis:UILayoutConstraintAxisVertical];
+
+    [self updateTitleLabelConstraint];
+  } else {
+    self.titleTopConstraint.active = NO;
+    self.titleBottomConstraint.active = NO;
+    self.titleLeadingConstraint.active = NO;
+    self.titleTrailingConstraint.active = NO;
+    self.titleTopConstraint = nil;
+    self.titleBottomConstraint = nil;
+    self.titleLeadingConstraint = nil;
+    self.titleTrailingConstraint = nil;
+  }
+}
+
+- (void)updateTitleLabelConstraint {
+  self.titleTopConstraint.constant = self.contentEdgeInsets.top + self.titleEdgeInsets.top;
+  self.titleBottomConstraint.constant =
+      -(self.contentEdgeInsets.bottom + self.titleEdgeInsets.bottom);
+  self.titleLeadingConstraint.constant = self.contentEdgeInsets.left + self.titleEdgeInsets.left;
+  self.titleTrailingConstraint.constant =
+      -(self.contentEdgeInsets.right + self.titleEdgeInsets.right);
+}
+
+- (void)setContentEdgeInsets:(UIEdgeInsets)contentEdgeInsets {
+  [super setContentEdgeInsets:contentEdgeInsets];
+
+  if (self.layoutTitleWithConstraints) {
+    [self updateTitleLabelConstraint];
+  }
+}
+
+- (void)setTitleEdgeInsets:(UIEdgeInsets)titleEdgeInsets {
+  [super setTitleEdgeInsets:titleEdgeInsets];
+
+  if (self.layoutTitleWithConstraints) {
+    [self updateTitleLabelConstraint];
   }
 }
 

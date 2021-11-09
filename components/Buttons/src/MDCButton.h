@@ -327,6 +327,18 @@
  */
 - (nullable UIColor *)shadowColorForState:(UIControlState)state;
 
+#pragma mark - Enabling multi-line layout
+
+/**
+ When enabled, makes use of constraints to enable the title label to wrap to multiple lines.
+
+ Note: this property does not currently support buttons with images. Enabling this property when an
+ image is present will result in undefined behavior.
+
+ Default value is NO.
+ */
+@property(nonatomic, assign) BOOL layoutTitleWithConstraints;
+
 #pragma mark - UIButton changes
 
 /**
