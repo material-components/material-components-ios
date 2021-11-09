@@ -1500,24 +1500,14 @@ static BOOL gEnablePerformantShadow = NO;
 }
 
 - (void)updateTitleLabelConstraint {
-  self.titleTopConstraint.constant = self.contentEdgeInsets.top + self.titleEdgeInsets.top;
-  self.titleBottomConstraint.constant =
-      -(self.contentEdgeInsets.bottom + self.titleEdgeInsets.bottom);
-  self.titleLeadingConstraint.constant = self.contentEdgeInsets.left + self.titleEdgeInsets.left;
-  self.titleTrailingConstraint.constant =
-      -(self.contentEdgeInsets.right + self.titleEdgeInsets.right);
+  self.titleTopConstraint.constant = self.contentEdgeInsets.top;
+  self.titleBottomConstraint.constant = -self.contentEdgeInsets.bottom;
+  self.titleLeadingConstraint.constant = self.contentEdgeInsets.left;
+  self.titleTrailingConstraint.constant = -self.contentEdgeInsets.right;
 }
 
 - (void)setContentEdgeInsets:(UIEdgeInsets)contentEdgeInsets {
   [super setContentEdgeInsets:contentEdgeInsets];
-
-  if (self.layoutTitleWithConstraints) {
-    [self updateTitleLabelConstraint];
-  }
-}
-
-- (void)setTitleEdgeInsets:(UIEdgeInsets)titleEdgeInsets {
-  [super setTitleEdgeInsets:titleEdgeInsets];
 
   if (self.layoutTitleWithConstraints) {
     [self updateTitleLabelConstraint];
