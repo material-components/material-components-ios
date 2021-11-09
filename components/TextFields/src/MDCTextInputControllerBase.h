@@ -113,4 +113,7 @@ __deprecated_msg(
  */
 @property(nonatomic, assign) NSUInteger minimumLines;
 
+//PERSONALIZACAO AGORA
+@property(nonatomic, assign) BOOL agoraSearchBar;
+
 @end
