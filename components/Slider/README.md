@@ -261,7 +261,7 @@ let slider = MDCSlider()
 slider.minimumValue = 0
 slider.maximumValue = 100
 slider.value = 70
-slider.discrete = true
+slider.isDiscrete = true
 slider.numberOfDiscreteValues = 10
 slider.shouldDisplayDiscreteValueLabel = false
 ```
@@ -272,7 +272,7 @@ MDCSlider *slider = [[MDCSlider alloc] init];
 slider.minimumValue = 0.0f;
 slider.maximumValue = 100.0f;
 slider.value = 70.0f;
-slider.discrete = YES;
+slider.isDiscrete = YES;
 slider.numberOfDiscreteValues = 10;
 slider.shouldDisplayDiscreteValueLabel = NO;
 ```
