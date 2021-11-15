@@ -142,6 +142,7 @@ static NSAttributedString *UppercaseAttributedString(NSAttributedString *string)
 @property(nonatomic, strong) NSLayoutConstraint *titleBottomConstraint;
 @property(nonatomic, strong) NSLayoutConstraint *titleLeadingConstraint;
 @property(nonatomic, strong) NSLayoutConstraint *titleTrailingConstraint;
+@property(nonatomic, strong) NSLayoutConstraint *titleCenterXConstraint;
 
 @end
 
@@ -1472,14 +1473,8 @@ static BOOL gEnablePerformantShadow = NO;
     self.titleTopConstraint = [self.titleLabel.topAnchor constraintEqualToAnchor:self.topAnchor];
     self.titleBottomConstraint =
         [self.titleLabel.bottomAnchor constraintEqualToAnchor:self.bottomAnchor];
-    self.titleLeadingConstraint =
-        [self.titleLabel.leadingAnchor constraintEqualToAnchor:self.leadingAnchor];
-    self.titleTrailingConstraint =
-        [self.titleLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor];
     self.titleTopConstraint.active = YES;
     self.titleBottomConstraint.active = YES;
-    self.titleLeadingConstraint.active = YES;
-    self.titleTrailingConstraint.active = YES;
 
     [self.titleLabel setContentHuggingPriority:UILayoutPriorityRequired
                                        forAxis:UILayoutConstraintAxisHorizontal];
@@ -1492,18 +1487,98 @@ static BOOL gEnablePerformantShadow = NO;
     self.titleBottomConstraint.active = NO;
     self.titleLeadingConstraint.active = NO;
     self.titleTrailingConstraint.active = NO;
+    self.titleCenterXConstraint.active = NO;
     self.titleTopConstraint = nil;
     self.titleBottomConstraint = nil;
     self.titleLeadingConstraint = nil;
     self.titleTrailingConstraint = nil;
+    self.titleCenterXConstraint = nil;
   }
 }
 
 - (void)updateTitleLabelConstraint {
+  if (!self.layoutTitleWithConstraints) {
+    return;
+  }
+
+  self.titleLeadingConstraint.active = NO;
+  self.titleTrailingConstraint.active = NO;
+  self.titleCenterXConstraint.active = NO;
+  self.titleLeadingConstraint = nil;
+  self.titleTrailingConstraint = nil;
+  self.titleCenterXConstraint = nil;
+
+  switch (self.contentHorizontalAlignment) {
+    case UIControlContentHorizontalAlignmentFill:
+      self.titleLeadingConstraint =
+          [self.titleLabel.leadingAnchor constraintEqualToAnchor:self.leadingAnchor];
+      self.titleTrailingConstraint =
+          [self.titleLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor];
+      break;
+
+    case UIControlContentHorizontalAlignmentLeading:
+      self.titleLeadingConstraint =
+          [self.titleLabel.leadingAnchor constraintEqualToAnchor:self.leadingAnchor];
+      self.titleTrailingConstraint =
+          [self.titleLabel.trailingAnchor constraintLessThanOrEqualToAnchor:self.trailingAnchor];
+      break;
+
+    case UIControlContentHorizontalAlignmentTrailing:
+      self.titleLeadingConstraint =
+          [self.titleLabel.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.leadingAnchor];
+      self.titleTrailingConstraint =
+          [self.titleLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor];
+      break;
+
+    case UIControlContentHorizontalAlignmentCenter:
+      self.titleLeadingConstraint =
+          [self.titleLabel.leadingAnchor constraintGreaterThanOrEqualToAnchor:self.leadingAnchor];
+      self.titleTrailingConstraint =
+          [self.titleLabel.trailingAnchor constraintLessThanOrEqualToAnchor:self.trailingAnchor];
+      self.titleCenterXConstraint =
+          [self.titleLabel.centerXAnchor constraintEqualToAnchor:self.centerXAnchor];
+      break;
+
+    case UIControlContentHorizontalAlignmentLeft:
+      self.titleLeadingConstraint =
+          [self.titleLabel.leftAnchor constraintEqualToAnchor:self.leftAnchor];
+      self.titleTrailingConstraint =
+          [self.titleLabel.rightAnchor constraintLessThanOrEqualToAnchor:self.rightAnchor];
+      break;
+
+    case UIControlContentHorizontalAlignmentRight:
+      self.titleLeadingConstraint =
+          [self.titleLabel.leftAnchor constraintGreaterThanOrEqualToAnchor:self.leftAnchor];
+      self.titleTrailingConstraint =
+          [self.titleLabel.rightAnchor constraintEqualToAnchor:self.rightAnchor];
+      break;
+    default:
+      break;
+  }
+
+  self.titleLeadingConstraint.active = YES;
+  self.titleTrailingConstraint.active = YES;
+  self.titleCenterXConstraint.active = YES;
+
+  BOOL isLTRLayout =
+      [UIView
+          userInterfaceLayoutDirectionForSemanticContentAttribute:self.semanticContentAttribute] ==
+      UIUserInterfaceLayoutDirectionLeftToRight;
+
+  CGFloat leadingEdgeInset =
+      isLTRLayout ? self.contentEdgeInsets.left : self.contentEdgeInsets.right;
+  CGFloat trailingEdgeInset =
+      isLTRLayout ? self.contentEdgeInsets.right : self.contentEdgeInsets.left;
   self.titleTopConstraint.constant = self.contentEdgeInsets.top;
   self.titleBottomConstraint.constant = -self.contentEdgeInsets.bottom;
-  self.titleLeadingConstraint.constant = self.contentEdgeInsets.left;
-  self.titleTrailingConstraint.constant = -self.contentEdgeInsets.right;
+  self.titleLeadingConstraint.constant = leadingEdgeInset;
+  self.titleTrailingConstraint.constant = -trailingEdgeInset;
+}
+
+- (void)setContentHorizontalAlignment:
+    (UIControlContentHorizontalAlignment)contentHorizontalAlignment {
+  [super setContentHorizontalAlignment:contentHorizontalAlignment];
+  [self updateTitleLabelConstraint];
 }
 
 - (void)setContentEdgeInsets:(UIEdgeInsets)contentEdgeInsets {
