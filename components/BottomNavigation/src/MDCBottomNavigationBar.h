@@ -77,7 +77,7 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 
 /**
  Configures item space distribution and title orientation in landscape mode.
- Default is MDCBottomNavigationBarDistributionEqual.
+ Default is MDCBottomNavigationBarAlignmentJustified.
  */
 @property(nonatomic, assign) MDCBottomNavigationBarAlignment alignment UI_APPEARANCE_SELECTOR;
 
