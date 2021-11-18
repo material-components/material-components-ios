@@ -13,3 +13,4 @@
 // limitations under the License.
 
 #import "MDCAppBarViewController.h"
+#import "MDCMinimumOS.h"  // IWYU pragma: keep

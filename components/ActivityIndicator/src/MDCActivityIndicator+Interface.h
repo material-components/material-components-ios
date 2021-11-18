@@ -14,6 +14,8 @@
 
 // IWYU pragma: private
 
+#import "MDCMinimumOS.h"  // IWYU pragma: keep
+
 #import <UIKit/UIKit.h>
 
 @class MDCActivityIndicatorTransition;

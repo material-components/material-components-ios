@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "MDCMinimumOS.h"  // IWYU pragma: keep
+
 #import <UIKit/UIKit.h>
 
 // TODO(b/151929968): Delete import of MDCAppBarNavigationControllerToBeDeprecatedDelegate.h when
