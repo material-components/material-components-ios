@@ -290,31 +290,6 @@ static BOOL gEnablePerformantShadow = NO;
   if (_uppercaseTitle) {
     [self updateTitleCase];
   }
-
-#ifdef __IPHONE_13_4
-#if !TARGET_OS_TV
-  if (@available(iOS 13.4, *)) {
-    if ([self respondsToSelector:@selector(pointerStyleProvider)]) {
-      __weak __typeof__(self) weakSelf = self;
-      UIButtonPointerStyleProvider buttonPointerStyleProvider = ^UIPointerStyle *(
-          UIButton *buttonToStyle, UIPointerEffect *proposedEffect, UIPointerShape *proposedShape) {
-        __typeof__(weakSelf) strongSelf = weakSelf;
-        if (!strongSelf) {
-          return [UIPointerStyle styleWithEffect:proposedEffect shape:proposedShape];
-        }
-        CGPathRef boundingCGPath = [strongSelf boundingPath].CGPath;
-        UIBezierPath *boundingBezierPath = [UIBezierPath bezierPathWithCGPath:boundingCGPath];
-        UIPointerShape *shape = [UIPointerShape shapeWithPath:boundingBezierPath];
-        return [UIPointerStyle styleWithEffect:proposedEffect shape:shape];
-      };
-      self.pointerStyleProvider = buttonPointerStyleProvider;
-      // Setting the pointerStyleProvider to a non-nil value flips pointerInteractionEnabled to YES.
-      // To maintain parity with UIButton's default behavior, we want it to default to NO.
-      self.pointerInteractionEnabled = NO;
-    }
-  }
-#endif  // !TARGET_OS_TV
-#endif  // __IPHONE_13_4
 }
 
 - (void)dealloc {

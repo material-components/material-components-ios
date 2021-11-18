@@ -21,18 +21,6 @@
 
 @implementation MDCButtonPointerInteractionTests
 
-- (void)testButtonHasPointerStyleProvider {
-#ifdef __IPHONE_13_4
-  if (@available(iOS 13.4, *)) {
-    // Given
-    MDCButton *button = [[MDCButton alloc] init];
-
-    // Then
-    XCTAssertNotNil(button.pointerStyleProvider);
-  }
-#endif
-}
-
 - (void)testPointerInteractionIsDisabledByDefault {
 #ifdef __IPHONE_13_4
   if (@available(iOS 13.4, *)) {
