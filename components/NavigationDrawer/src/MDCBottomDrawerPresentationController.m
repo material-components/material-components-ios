@@ -111,6 +111,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   bottomDrawerContainerViewController.shouldIncludeSafeAreaInInitialDrawerHeight =
       self.shouldIncludeSafeAreaInInitialDrawerHeight;
   bottomDrawerContainerViewController.shouldUseStickyStatusBar = self.shouldUseStickyStatusBar;
+  bottomDrawerContainerViewController.disableFullScreenVoiceOver = self.disableFullScreenVoiceOver;
   bottomDrawerContainerViewController.shouldAdjustOnContentSizeChange =
       self.shouldAdjustOnContentSizeChange;
   bottomDrawerContainerViewController.shouldAlwaysExpandHeader = self.shouldAlwaysExpandHeader;

@@ -134,6 +134,13 @@
 @property(nonatomic, assign) BOOL shouldUseStickyStatusBar;
 
 /**
+ This flag allows clients to have the drawer not go full screen when VoiceOver is enabled.
+
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL disableFullScreenVoiceOver;
+
+/**
  Determines the behavior of the drawer when the content size changes.
  If enabled, the drawer will automatically adjust the visible height as needed, otherwise the
  visible height will not be changed to reflect the updated content height.

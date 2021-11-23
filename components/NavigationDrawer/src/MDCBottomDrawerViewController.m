@@ -170,6 +170,9 @@
 }
 
 - (BOOL)isAccessibilityMode {
+  if (self.disableFullScreenVoiceOver) {
+    return NO;
+  }
   return UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning();
 }
 - (BOOL)isMobileLandscape {
@@ -365,6 +368,15 @@
     MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
         (MDCBottomDrawerPresentationController *)self.presentationController;
     bottomDrawerPresentationController.shouldUseStickyStatusBar = shouldUseStickyStatusBar;
+  }
+}
+
+- (void)setDisableFullScreenVoiceOver:(BOOL)disableFullScreenVoiceOver {
+  _disableFullScreenVoiceOver = disableFullScreenVoiceOver;
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    bottomDrawerPresentationController.disableFullScreenVoiceOver = disableFullScreenVoiceOver;
   }
 }
 

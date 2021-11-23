@@ -381,6 +381,9 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 }
 
 - (BOOL)isAccessibilityMode {
+  if (self.disableFullScreenVoiceOver) {
+    return NO;
+  }
   return UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning();
 }
 

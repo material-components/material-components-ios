@@ -157,6 +157,13 @@
 @property(nonatomic, assign) BOOL shouldUseStickyStatusBar;
 
 /**
+ This flag allows clients to have the drawer not go full screen when VoiceOver is enabled.
+
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL disableFullScreenVoiceOver;
+
+/**
  Determines if the header should always expand as it approaches the top of the screen.
  If the content height is smaller than the screen height then the header will not expand unless this
  flag is enabled.

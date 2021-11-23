@@ -170,6 +170,13 @@
 @property(nonatomic, assign) BOOL shouldUseStickyStatusBar;
 
 /**
+ This flag allows clients to have the drawer not go full screen when VoiceOver is enabled.
+
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL disableFullScreenVoiceOver;
+
+/**
  The drawer's top shadow color. Defaults to black with 20% opacity.
  */
 @property(nonatomic, strong, nonnull) UIColor *drawerShadowColor;
