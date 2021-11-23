@@ -15,10 +15,15 @@
 #import "MDCBottomDrawerViewController.h"
 
 #import "private/MDCBottomDrawerHeaderMask.h"
+#import "UIView+MaterialElevationResponding.h"
+#import "MDCBottomDrawerPresentationController.h"
+#import "MDCBottomDrawerPresentationControllerDelegate.h"
+#import "MDCBottomDrawerState.h"
 #import "MDCBottomDrawerTransitionController.h"
 #import "MDCBottomDrawerViewControllerDelegate.h"
-#import "MaterialMath.h"
-#import "MaterialUIMetrics.h"
+#import "MDCShadowElevations.h"
+#import "MDCMath.h"
+#import "MDCLayoutMetrics.h"
 
 @interface MDCBottomDrawerViewController () <MDCBottomDrawerPresentationControllerDelegate>
 

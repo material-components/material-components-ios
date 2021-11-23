@@ -18,11 +18,11 @@
 #import "MDCBottomDrawerState.h"
 #import "MDCBottomDrawerContainerViewControllerDelegate.h"
 #import "MDCBottomDrawerShadowedView.h"
-#import "MaterialShadowElevations.h"
-#import "MaterialShadowLayer.h"
-#import "MaterialApplication.h"
-#import "MaterialMath.h"
-#import "MaterialUIMetrics.h"
+#import "MDCShadowElevations.h"
+#import "MDCShadowLayer.h"
+#import "UIApplication+MDCAppExtensions.h"
+#import "MDCMath.h"
+#import "MDCLayoutMetrics.h"
 
 static const CGFloat kVerticalShadowAnimationDistance = 10;
 // This value is the vertical offset that the drawer must be scrolled downward to cause it to be
