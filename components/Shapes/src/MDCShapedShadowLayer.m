@@ -42,15 +42,8 @@ static const CGFloat kDimensionalEpsilon = 0.001;
   self = [super initWithLayer:layer];
   if (self && [self isKindOfClass:[MDCShapedShadowLayer class]]) {
     MDCShapedShadowLayer *otherLayer = (MDCShapedShadowLayer *)layer;
-
     _shapeGenerator = [otherLayer.shapeGenerator copyWithZone:NULL];
-    // We don't need to copy fillColor because that gets copied by [super initWithLayer:].
-
-    // [CALayer initWithLayer:] copies all sublayers, so we have to manually fetch our CAShapeLayer.
-    CALayer *sublayer = [[self sublayers] firstObject];
-    if ([sublayer isKindOfClass:[CAShapeLayer class]]) {
-      _colorLayer = (CAShapeLayer *)sublayer;
-    }
+    _colorLayer = (CAShapeLayer *)layer;
   }
   return self;
 }
