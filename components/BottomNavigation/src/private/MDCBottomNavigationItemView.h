@@ -46,6 +46,7 @@
 @property(nonatomic, strong, nonnull) UIButton *button;
 @property(nonatomic, strong, nullable) UIImage *image;
 @property(nonatomic, strong, nullable) UIImage *selectedImage;
+@property(nonatomic, strong) UIImageView *iconImageView;
 
 @property(nonatomic, strong, nullable) UIColor *badgeColor UI_APPEARANCE_SELECTOR;
 @property(nonatomic, copy, nullable) UIColor *badgeTextColor;

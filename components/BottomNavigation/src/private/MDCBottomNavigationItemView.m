@@ -53,7 +53,6 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
 @interface MDCBottomNavigationItemView ()
 
 @property(nonatomic, strong) MDCBottomNavigationItemBadge *badge;
-@property(nonatomic, strong) UIImageView *iconImageView;
 @property(nonatomic, strong) UILabel *label;
 - (CGPoint)badgeCenterFromIconFrame:(CGRect)iconFrame isRTL:(BOOL)isRTL;
 
