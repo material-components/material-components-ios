@@ -15,6 +15,9 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialButtons.h"
+#import "MDCMinimumOS.h"  // IWYU pragma: keep
+
+@class MDCFloatingButton;
 
 /** The elevation of the floating action button. */
 typedef NS_ENUM(NSInteger, MDCBottomAppBarFloatingButtonElevation) {

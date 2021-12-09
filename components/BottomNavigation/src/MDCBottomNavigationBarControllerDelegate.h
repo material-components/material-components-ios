@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCMinimumOS.h"  // IWYU pragma: keep
+
 @class MDCBottomNavigationBarController;
 
 /**
