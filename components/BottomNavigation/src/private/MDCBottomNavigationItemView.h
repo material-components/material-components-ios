@@ -18,6 +18,7 @@
 #import "MaterialInk.h"
 #import "MaterialRipple.h"
 
+__attribute__((objc_subclassing_restricted))
 @interface MDCBottomNavigationItemView : UIView
 
 @property(nonatomic, assign) BOOL titleBelowIcon;

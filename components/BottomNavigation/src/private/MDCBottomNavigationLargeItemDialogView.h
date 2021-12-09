@@ -19,6 +19,7 @@
 /**
  * The transient dialog view that displays a @c UITabBarItem with a larger icon and title font size.
  */
+__attribute__((objc_subclassing_restricted))
 @interface MDCBottomNavigationLargeItemDialogView : MDCBottomNavigationSystemDialogView
 
 /**

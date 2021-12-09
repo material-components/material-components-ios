@@ -14,6 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
+__attribute__((objc_subclassing_restricted))
 @interface MDCBottomNavigationItemBadge : UIView
 
 @property(nonatomic, copy) NSString *badgeValue;
