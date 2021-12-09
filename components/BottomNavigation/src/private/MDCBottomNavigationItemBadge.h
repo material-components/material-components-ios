@@ -18,7 +18,7 @@ __attribute__((objc_subclassing_restricted))
 @interface MDCBottomNavigationItemBadge : UIView
 
 @property(nonatomic, copy) NSString *badgeValue;
-@property(nonatomic, strong) UIColor *badgeColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong) UIColor *badgeColor;
 @property(nonatomic, strong, readonly) UILabel *badgeValueLabel;
 
 @end
