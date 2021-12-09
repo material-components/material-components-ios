@@ -19,7 +19,7 @@
 #import "MDCBottomNavigationBar.h"
 #import "MDCBottomNavigationItemView+Testing.h"
 
-#import "MaterialInk.h"
+#import "MDCInkView.h"
 
 static NSString *const kTestTitleText = @"title";
 static NSString *const kTestBadgeValue = @"100";
@@ -118,7 +118,7 @@ static UIImage *fakeImage(void) {
   itemView.badgeTextColor = UIColor.purpleColor;
 
   // Then
-  XCTAssertEqualObjects(itemView.badge.badgeValueLabel.textColor, UIColor.purpleColor);
+  XCTAssertEqualObjects(itemView.badge.textColor, UIColor.purpleColor);
 }
 
 - (void)testSetTitleVisibilityUpdatesLayout {

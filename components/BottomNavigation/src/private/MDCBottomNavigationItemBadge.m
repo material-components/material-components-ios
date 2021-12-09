@@ -25,21 +25,21 @@ static const CGFloat kBadgeYPadding = 2;
 // For an empty badge, ensure that the size is close to the guidelines article.
 static const CGFloat kMinDiameter = 9;
 
-@implementation MDCBottomNavigationItemBadge
+@implementation MDCBottomNavigationItemBadge {
+  UILabel *_Nonnull _label;
+}
 
 - (nonnull instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    _badgeColor = MDCPalette.redPalette.tint700;
-    self.layer.backgroundColor = _badgeColor.CGColor;
+    self.backgroundColor = MDCPalette.redPalette.tint700;
 
-    _badgeValueLabel = [[UILabel alloc] initWithFrame:self.bounds];
-    _badgeValueLabel.textColor = [UIColor whiteColor];
-    _badgeValueLabel.font = [UIFont systemFontOfSize:kBadgeFontSize];
-    _badgeValueLabel.textAlignment = NSTextAlignmentCenter;
-    _badgeValueLabel.isAccessibilityElement = NO;
-    _badgeValueLabel.text = _badgeValue;
-    [self addSubview:_badgeValueLabel];
+    _label = [[UILabel alloc] initWithFrame:self.bounds];
+    _label.textColor = [UIColor whiteColor];
+    _label.font = [UIFont systemFontOfSize:kBadgeFontSize];
+    _label.textAlignment = NSTextAlignmentCenter;
+    _label.isAccessibilityElement = NO;
+    [self addSubview:_label];
   }
   return self;
 }
@@ -59,21 +59,20 @@ static const CGFloat kMinDiameter = 9;
   CGFloat badgeRadius = CGRectGetHeight(self.bounds) / 2;
   CGRect availableContentRect = CGRectStandardize(
       CGRectInset(self.bounds, [self badgeXPaddingForRadius:badgeRadius], kBadgeYPadding));
-  CGSize labelFitSize = [self.badgeValueLabel sizeThatFits:availableContentRect.size];
-  self.badgeValueLabel.bounds = CGRectMake(0, 0, labelFitSize.width, labelFitSize.height);
-  self.badgeValueLabel.center =
+  CGSize labelFitSize = [_label sizeThatFits:availableContentRect.size];
+  _label.bounds = CGRectMake(0, 0, labelFitSize.width, labelFitSize.height);
+  _label.center =
       CGPointMake(CGRectGetMidX(availableContentRect), CGRectGetMidY(availableContentRect));
   self.layer.cornerRadius = badgeRadius;
-  self.layer.backgroundColor = self.badgeColor.CGColor;
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  if (self.badgeValue == nil) {
+  if (self.text == nil) {
     return CGSizeZero;
   }
 
   // Calculate the badge and label heights
-  CGSize labelSize = [self.badgeValueLabel sizeThatFits:size];
+  CGSize labelSize = [_label sizeThatFits:size];
   CGFloat badgeHeight = labelSize.height + kBadgeYPadding;
   CGFloat contentXPadding = [self badgeXPaddingForRadius:badgeHeight / 2];
   CGFloat badgeWidth = labelSize.width + contentXPadding;
@@ -85,15 +84,32 @@ static const CGFloat kMinDiameter = 9;
   return CGSizeMake(badgeWidth, badgeHeight);
 }
 
-- (void)setBadgeValue:(nullable NSString *)badgeValue {
-  _badgeValue = [badgeValue copy];
-  self.badgeValueLabel.text = badgeValue;
+#pragma mark - Public APIs
+
+- (void)setText:(nullable NSString *)text {
+  _label.text = text;
   [self setNeedsLayout];
 }
 
-- (void)setBadgeColor:(nonnull UIColor *)badgeColor {
-  _badgeColor = badgeColor;
-  self.layer.backgroundColor = _badgeColor.CGColor;
+- (nullable NSString *)text {
+  return _label.text;
+}
+
+- (void)setTextColor:(nullable UIColor *)textColor {
+  _label.textColor = textColor;
+}
+
+- (nonnull UIColor *)textColor {
+  return _label.textColor;
+}
+
+- (void)setFont:(nullable UIFont *)font {
+  _label.font = font;
+  [self setNeedsLayout];
+}
+
+- (nonnull UIFont *)font {
+  return _label.font;
 }
 
 @end

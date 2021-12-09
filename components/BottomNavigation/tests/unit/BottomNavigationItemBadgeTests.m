@@ -37,7 +37,7 @@
 
 - (void)testSizeThatFitsWontResize {
   // Given
-  self.badge.badgeValue = @"1234";
+  self.badge.text = @"1234";
   CGRect originalFrame = CGRectMake(0, 0, 1, 1);
   self.badge.frame = originalFrame;
 
@@ -55,7 +55,7 @@
   CGSize fitSizeWithoutLabel = [self.badge sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
 
   // When
-  self.badge.badgeValue = @"1234567890";
+  self.badge.text = @"1234567890";
 
   // Then
   CGSize fitsSizeWithLabel = [self.badge sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
@@ -68,7 +68,7 @@
 
 - (void)testSizeToFitNilLabel {
   // Given
-  self.badge.badgeValue = nil;
+  self.badge.text = nil;
 
   // When
   [self.badge sizeToFit];
@@ -81,7 +81,7 @@
 
 - (void)testSizeToFitEmptyLabel {
   // Given
-  self.badge.badgeValue = @"";
+  self.badge.text = @"";
 
   // When
   [self.badge sizeToFit];
@@ -93,28 +93,9 @@
   XCTAssertEqualWithAccuracy(badgeBounds.size.width, badgeBounds.size.height, 0.001);
 }
 
-- (void)testSizeToFitNonEmptyLabel {
-  // Given
-  self.badge.badgeValue = @"1234";
-
-  // When
-  [self.badge sizeToFit];
-  [self.badge layoutIfNeeded];
-
-  // Then
-  CGRect badgeLabelBounds = CGRectStandardize(self.badge.badgeValueLabel.bounds);
-  CGRect badgeBounds = CGRectStandardize(self.badge.bounds);
-  XCTAssertTrue(CGRectContainsRect(badgeBounds, badgeLabelBounds),
-                @"(%@) should be smaller than (%@)", NSStringFromCGRect(badgeLabelBounds),
-                NSStringFromCGRect(badgeBounds));
-  XCTAssertFalse(CGRectContainsRect(badgeLabelBounds, badgeBounds),
-                 @"(%@) should be greater than (%@)", NSStringFromCGRect(badgeLabelBounds),
-                 NSStringFromCGRect(badgeBounds));
-}
-
 - (void)testLayoutSubviewsWontAdjustFrame {
   // Given
-  self.badge.badgeValue = @"1234";
+  self.badge.text = @"1234";
   CGRect originalFrame = CGRectMake(0, 0, 10, 10);
   self.badge.frame = originalFrame;
 

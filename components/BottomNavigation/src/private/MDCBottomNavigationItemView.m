@@ -140,7 +140,7 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
     [self addSubview:_badge];
   }
 
-  if (!_badge.badgeValue) {
+  if (!_badge.text) {
     _badge.hidden = YES;
   }
 
@@ -476,7 +476,7 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
 }
 
 - (NSString *)badgeValue {
-  return self.badge.badgeValue;
+  return self.badge.text;
 }
 
 - (CGRect)pointerEffectHighlightRect {
@@ -584,17 +584,17 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
 
 - (void)setBadgeColor:(UIColor *)badgeColor {
   _badgeColor = badgeColor;
-  self.badge.badgeColor = badgeColor;
+  self.badge.backgroundColor = badgeColor;
 }
 
 - (void)setBadgeTextColor:(UIColor *)badgeTextColor {
   _badgeTextColor = badgeTextColor;
-  self.badge.badgeValueLabel.textColor = badgeTextColor;
+  self.badge.textColor = badgeTextColor;
 }
 
 - (void)setBadgeTextFont:(UIFont *)badgeTextFont {
   _badgeTextFont = badgeTextFont;
-  self.badge.badgeValueLabel.font = badgeTextFont;
+  self.badge.font = badgeTextFont;
 }
 
 - (void)setBadgeValue:(NSString *)badgeValue {
@@ -602,7 +602,7 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
   if ([badgeValue isKindOfClass:[NSNull class]]) {
     badgeValue = nil;
   }
-  self.badge.badgeValue = badgeValue;
+  self.badge.text = badgeValue;
   if ([super accessibilityValue] == nil || [self accessibilityValue].length == 0) {
     self.button.accessibilityValue = badgeValue;
   }

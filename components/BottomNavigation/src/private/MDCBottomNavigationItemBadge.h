@@ -19,20 +19,29 @@
 
  Common uses include showing the number of unread emails in an inbox or the number of unread
  messages in a chat room.
+
+ The background color of the badge can be changed through the backgroundColor property like a
+ typical UIView.
+
+ To add a border, customize the view's `.layer.border*` properties.
  */
 __attribute__((objc_subclassing_restricted))
 @interface MDCBottomNavigationItemBadge : UIView
 
+#pragma mark - Displaying a value in the badge
+
 /** The human-readable value, typically numerical, that will be shown for this badge. */
-@property(nonatomic, copy, nullable) NSString *badgeValue;
+@property(nonatomic, copy, nullable) NSString *text;
 
-/** The background color of the badge. */
-// TODO(featherless): Delete this in favor of just setting the background color.
-@property(nonatomic, strong, nonnull) UIColor *badgeColor;
+#pragma mark - Configuring the badge's visual appearance
 
-/** The label that shows the badge value. */
-// TODO(featherless): Delete this and expose needed APIs instead.
-@property(nonatomic, strong, nonnull, readonly) UILabel *badgeValueLabel;
+/** The color of the text representing the value. */
+@property(nonatomic, strong, null_resettable) UIColor *textColor;
+
+/** The font that will be used to display the value. */
+@property(nonatomic, strong, null_resettable) UIFont *font;
+
+#pragma mark - Unsupported APIs
 
 // Interface builder is not supported.
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
