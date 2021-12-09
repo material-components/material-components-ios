@@ -31,15 +31,15 @@ __attribute__((objc_subclassing_restricted))
 #pragma mark - Displaying a value in the badge
 
 /** The human-readable value, typically numerical, that will be shown for this badge. */
-@property(nonatomic, copy, nullable) NSString *text;
+@property(nonatomic, copy, nullable, direct) NSString *text;
 
 #pragma mark - Configuring the badge's visual appearance
 
 /** The color of the text representing the value. */
-@property(nonatomic, strong, null_resettable) UIColor *textColor;
+@property(nonatomic, strong, null_resettable, direct) UIColor *textColor;
 
 /** The font that will be used to display the value. */
-@property(nonatomic, strong, null_resettable) UIFont *font;
+@property(nonatomic, strong, null_resettable, direct) UIFont *font;
 
 #pragma mark - Unsupported APIs
 
