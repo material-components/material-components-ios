@@ -87,4 +87,9 @@ __attribute__((objc_subclassing_restricted))
  */
 @property(nonatomic, nullable) UIImage *largeContentImage NS_AVAILABLE_IOS(13_0);
 
+#pragma mark - Unsupported APIs
+
+// Interface builder is not supported.
+- (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
+
 @end

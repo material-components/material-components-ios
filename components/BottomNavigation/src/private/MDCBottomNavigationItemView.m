@@ -64,66 +64,16 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
   self = [super initWithFrame:frame];
   if (self) {
     _titleBelowIcon = YES;
-    [self commonMDCBottomNavigationItemViewInit];
-  }
-  return self;
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  self = [super initWithCoder:aDecoder];
-  if (self) {
-    _titleBelowIcon = YES;
-
-    NSUInteger totalViewsProcessed = 0;
-    for (UIView *view in self.subviews) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-      if ([view isKindOfClass:[MDCInkView class]]) {
-        _inkView = (MDCInkView *)view;
-#pragma clang diagnostic pop
-        ++totalViewsProcessed;
-      } else if ([view isKindOfClass:[UIImageView class]]) {
-        _iconImageView = (UIImageView *)view;
-        _image = _iconImageView.image;
-        ++totalViewsProcessed;
-      } else if ([view isKindOfClass:[UILabel class]]) {
-        _label = (UILabel *)view;
-        ++totalViewsProcessed;
-      } else if ([view isKindOfClass:[MDCBottomNavigationItemBadge class]]) {
-        _badge = (MDCBottomNavigationItemBadge *)view;
-        ++totalViewsProcessed;
-      } else if ([view isKindOfClass:[UIButton class]]) {
-        _button = (UIButton *)view;
-        ++totalViewsProcessed;
-      }
-    }
-    NSAssert(totalViewsProcessed == self.subviews.count,
-             @"Unexpected number of subviews. Expected %lu but restored %lu. Unarchiving may fail.",
-             (unsigned long)self.subviews.count, (unsigned long)totalViewsProcessed);
-
-    [self commonMDCBottomNavigationItemViewInit];
-  }
-  return self;
-}
-
-- (void)commonMDCBottomNavigationItemViewInit {
-  _truncatesTitle = YES;
-  _titleNumberOfLines = kDefaultTitleNumberOfLines;
-  if (!_selectedItemTintColor) {
+    _truncatesTitle = YES;
+    _titleNumberOfLines = kDefaultTitleNumberOfLines;
     _selectedItemTintColor = [UIColor blackColor];
-  }
-  if (!_unselectedItemTintColor) {
     _unselectedItemTintColor = [UIColor grayColor];
-  }
-  _selectedItemTitleColor = _selectedItemTintColor;
+    _selectedItemTitleColor = _selectedItemTintColor;
 
-  if (!_iconImageView) {
     _iconImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
     _iconImageView.isAccessibilityElement = NO;
     [self addSubview:_iconImageView];
-  }
 
-  if (!_label) {
     _label = [[UILabel alloc] initWithFrame:CGRectZero];
     _label.text = _title;
     _label.font = [UIFont systemFontOfSize:MDCBottomNavigationItemViewTitleFontSize];
@@ -131,20 +81,13 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
     _label.textColor = _selectedItemTitleColor;
     _label.isAccessibilityElement = NO;
     [self addSubview:_label];
-  }
-  _label.numberOfLines = kDefaultTitleNumberOfLines;
+    _label.numberOfLines = kDefaultTitleNumberOfLines;
 
-  if (!_badge) {
     _badge = [[MDCBottomNavigationItemBadge alloc] initWithFrame:CGRectZero];
     _badge.isAccessibilityElement = NO;
     [self addSubview:_badge];
-  }
-
-  if (!_badge.text) {
     _badge.hidden = YES;
-  }
 
-  if (!_inkView) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
     _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
@@ -154,14 +97,10 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
     _inkView.usesLegacyInkRipple = NO;
     _inkView.clipsToBounds = NO;
     [self addSubview:_inkView];
-  }
 
-  if (!_rippleTouchController) {
     _rippleTouchController = [[MDCRippleTouchController alloc] initWithView:self];
     _rippleTouchController.rippleView.rippleStyle = MDCRippleStyleUnbounded;
-  }
 
-  if (!_button) {
     _button = [[UIButton alloc] initWithFrame:self.bounds];
     _button.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     _button.accessibilityLabel = [self accessibilityLabelWithTitle:_title];
@@ -172,6 +111,7 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
     }
     [self addSubview:_button];
   }
+  return self;
 }
 
 - (CGSize)sizeThatFits:(__unused CGSize)size {
