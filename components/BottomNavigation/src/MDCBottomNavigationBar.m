@@ -459,7 +459,7 @@ static BOOL gEnablePerformantShadow = NO;
     } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(accessibilityValue))]) {
       itemView.accessibilityValue = newValue;
     } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(badgeValue))]) {
-      itemView.badgeValue = newValue;
+      itemView.badgeText = newValue;
     } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(image))]) {
       itemView.image = newValue;
     } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(selectedImage))]) {
@@ -617,7 +617,7 @@ static BOOL gEnablePerformantShadow = NO;
     itemView.titlePositionAdjustment = item.titlePositionAdjustment;
     itemView.badgeColor = self.itemBadgeBackgroundColor;
     itemView.badgeTextColor = self.itemBadgeTextColor;
-    itemView.badgeTextFont = self.itemBadgeTextFont;
+    itemView.badgeFont = self.itemBadgeTextFont;
     itemView.tag = item.tag;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -634,7 +634,7 @@ static BOOL gEnablePerformantShadow = NO;
       itemView.selectedImage = item.selectedImage;
     }
     if (item.badgeValue) {
-      itemView.badgeValue = item.badgeValue;
+      itemView.badgeText = item.badgeValue;
     }
     if (item.badgeColor) {
       itemView.badgeColor = item.badgeColor;
@@ -807,7 +807,7 @@ static BOOL gEnablePerformantShadow = NO;
 - (void)setItemBadgeTextFont:(UIFont *)itemBadgeTextFont {
   _itemBadgeTextFont = itemBadgeTextFont;
   for (MDCBottomNavigationItemView *itemView in self.itemViews) {
-    itemView.badgeTextFont = itemBadgeTextFont;
+    itemView.badgeFont = itemBadgeTextFont;
   }
 }
 

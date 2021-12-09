@@ -27,7 +27,7 @@
   MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
 
   // When
-  itemView.badgeValue = @"777 apples";
+  itemView.badgeText = @"777 apples";
 
   // Then
   XCTAssertEqualObjects(itemView.accessibilityValue, @"777 apples");
@@ -38,8 +38,8 @@
   MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
 
   // When
-  itemView.badgeValue = @"777 apples";
-  itemView.badgeValue = @"65 blueberries";
+  itemView.badgeText = @"777 apples";
+  itemView.badgeText = @"65 blueberries";
 
   // Then
   XCTAssertEqualObjects(itemView.accessibilityValue, @"65 blueberries");
@@ -50,7 +50,7 @@
   MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
 
   // When
-  itemView.badgeValue = @"777 apples";
+  itemView.badgeText = @"777 apples";
   itemView.accessibilityValue = @"65 blueberries";
 
   // Then
@@ -62,9 +62,9 @@
   MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
 
   // When
-  itemView.badgeValue = @"777 apples";
+  itemView.badgeText = @"777 apples";
   itemView.accessibilityValue = @"65 blueberries";
-  itemView.badgeValue = @"91 currants";
+  itemView.badgeText = @"91 currants";
 
   // Then
   XCTAssertEqualObjects(itemView.accessibilityValue, @"65 blueberries");

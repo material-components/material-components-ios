@@ -11,6 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 #import <CoreGraphics/CoreGraphics.h>
 
 #import "MDCBottomNavigationItemView.h"
@@ -407,17 +408,13 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
   CGFloat badgeCenterY = CGRectGetMinY(iconFrame) + (badgeSize.height / 2);
 
   CGFloat badgeCenterXOffset = kBadgeXOffsetFromIconEdgeWithTextLTR + badgeSize.width / 2;
-  if (self.badgeValue.length == 0) {
+  if (self.badgeText.length == 0) {
     badgeCenterXOffset = kBadgeXOffsetFromIconEdgeEmptyLTR;
   }
   CGFloat badgeCenterX = isRTL ? CGRectGetMinX(iconFrame) - badgeCenterXOffset
                                : CGRectGetMaxX(iconFrame) + badgeCenterXOffset;
 
   return CGPointMake(badgeCenterX, badgeCenterY);
-}
-
-- (NSString *)badgeValue {
-  return _badge.text;
 }
 
 - (CGRect)pointerEffectHighlightRect {
@@ -523,38 +520,6 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
   }
 }
 
-- (void)setBadgeColor:(nullable UIColor *)badgeColor {
-  _badgeColor = badgeColor;
-  _badge.backgroundColor = badgeColor;
-}
-
-- (void)setBadgeTextColor:(UIColor *)badgeTextColor {
-  _badgeTextColor = badgeTextColor;
-  _badge.textColor = badgeTextColor;
-}
-
-- (void)setBadgeTextFont:(UIFont *)badgeTextFont {
-  _badgeTextFont = badgeTextFont;
-  _badge.font = badgeTextFont;
-}
-
-- (void)setBadgeValue:(NSString *)badgeValue {
-  // Due to KVO, badgeValue may be of type NSNull.
-  if ([badgeValue isKindOfClass:[NSNull class]]) {
-    badgeValue = nil;
-  }
-  _badge.text = badgeValue;
-  if ([super accessibilityValue] == nil || [self accessibilityValue].length == 0) {
-    self.button.accessibilityValue = badgeValue;
-  }
-  if (badgeValue == nil) {
-    _badge.hidden = YES;
-  } else {
-    _badge.hidden = NO;
-  }
-  [self setNeedsLayout];
-}
-
 - (void)setImage:(UIImage *)image {
   _image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
@@ -642,6 +607,55 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
 - (void)setTitleBelowIcon:(BOOL)titleBelowIcon {
   _titleBelowIcon = titleBelowIcon;
   self.label.numberOfLines = [self renderedTitleNumberOfLines];
+}
+
+#pragma mark - Displaying a value in the badge
+
+- (void)setBadgeText:(NSString *)badgeText {
+  // Due to KVO, badgeValue may be of type NSNull.
+  if ([badgeText isKindOfClass:[NSNull class]]) {
+    badgeText = nil;
+  }
+  _badge.text = badgeText;
+  if ([super accessibilityValue] == nil || [self accessibilityValue].length == 0) {
+    self.button.accessibilityValue = badgeText;
+  }
+  if (badgeText == nil) {
+    _badge.hidden = YES;
+  } else {
+    _badge.hidden = NO;
+  }
+  [self setNeedsLayout];
+}
+
+- (NSString *)badgeText {
+  return _badge.text;
+}
+
+#pragma mark - Configuring the badge's visual appearance
+
+- (void)setBadgeColor:(nullable UIColor *)badgeColor {
+  _badge.backgroundColor = badgeColor;
+}
+
+- (nullable UIColor *)badgeColor {
+  return _badge.backgroundColor;
+}
+
+- (void)setBadgeTextColor:(nullable UIColor *)badgeTextColor {
+  _badge.textColor = badgeTextColor;
+}
+
+- (nonnull UIColor *)badgeTextColor {
+  return _badge.textColor;
+}
+
+- (void)setBadgeFont:(nullable UIFont *)badgeFont {
+  _badge.font = badgeFont;
+}
+
+- (nonnull UIFont *)badgeFont {
+  return _badge.font;
 }
 
 #pragma mark - UILargeContentViewerItem

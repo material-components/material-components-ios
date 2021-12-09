@@ -480,7 +480,7 @@ static UIImage *fakeImage(void) {
   itemView.frame = CGRectMake(0, 0, 100, 100);
   itemView.title = kTestTitleText;
   itemView.image = fakeImage();
-  itemView.badgeValue = kTestBadgeValue;
+  itemView.badgeText = kTestBadgeValue;
   [itemView layoutIfNeeded];
 
   // Then
@@ -500,7 +500,7 @@ static UIImage *fakeImage(void) {
   itemView.frame = CGRectMake(0, 0, 10, 10);
   itemView.title = kTestTitleText;
   itemView.image = fakeImage();
-  itemView.badgeValue = kTestBadgeValue;
+  itemView.badgeText = kTestBadgeValue;
   [itemView layoutIfNeeded];
 
   // Then

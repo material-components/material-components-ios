@@ -125,7 +125,7 @@ static UIImage *fakeImage() {
 
   // Then
   MDCBottomNavigationItemView *itemView = self.bottomNavigationBar.itemViews.firstObject;
-  XCTAssertEqualObjects(itemView.badgeValue, self.barItem.badgeValue);
+  XCTAssertEqualObjects(itemView.badgeText, self.barItem.badgeValue);
 }
 
 - (void)testChangeBadgeValueToEmptyString {
@@ -134,7 +134,7 @@ static UIImage *fakeImage() {
 
   // Then
   MDCBottomNavigationItemView *itemView = self.bottomNavigationBar.itemViews.firstObject;
-  XCTAssertEqualObjects(itemView.badgeValue, self.barItem.badgeValue);
+  XCTAssertEqualObjects(itemView.badgeText, self.barItem.badgeValue);
 }
 
 - (void)testChangeBadgeValueToNil {
@@ -143,7 +143,7 @@ static UIImage *fakeImage() {
 
   // Then
   MDCBottomNavigationItemView *itemView = self.bottomNavigationBar.itemViews.firstObject;
-  XCTAssertNil(itemView.badgeValue);
+  XCTAssertNil(itemView.badgeText);
 }
 
 - (void)testChangeBadgeColorToNewColor {
