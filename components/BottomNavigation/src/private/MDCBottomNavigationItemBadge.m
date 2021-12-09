@@ -27,7 +27,7 @@ static const CGFloat kMinDiameter = 9;
 
 @implementation MDCBottomNavigationItemBadge
 
-- (instancetype)initWithFrame:(CGRect)frame {
+- (nonnull instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
     _badgeColor = MDCPalette.redPalette.tint700;
@@ -85,13 +85,13 @@ static const CGFloat kMinDiameter = 9;
   return CGSizeMake(badgeWidth, badgeHeight);
 }
 
-- (void)setBadgeValue:(NSString *)badgeValue {
-  _badgeValue = badgeValue;
+- (void)setBadgeValue:(nullable NSString *)badgeValue {
+  _badgeValue = [badgeValue copy];
   self.badgeValueLabel.text = badgeValue;
   [self setNeedsLayout];
 }
 
-- (void)setBadgeColor:(UIColor *)badgeColor {
+- (void)setBadgeColor:(nonnull UIColor *)badgeColor {
   _badgeColor = badgeColor;
   self.layer.backgroundColor = _badgeColor.CGColor;
 }

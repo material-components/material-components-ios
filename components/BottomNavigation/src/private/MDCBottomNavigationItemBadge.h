@@ -14,12 +14,25 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ An indication of the actions that might be required in a given context.
+
+ Common uses include showing the number of unread emails in an inbox or the number of unread
+ messages in a chat room.
+ */
 __attribute__((objc_subclassing_restricted))
 @interface MDCBottomNavigationItemBadge : UIView
 
-@property(nonatomic, copy) NSString *badgeValue;
-@property(nonatomic, strong) UIColor *badgeColor;
-@property(nonatomic, strong, readonly) UILabel *badgeValueLabel;
+/** The human-readable value, typically numerical, that will be shown for this badge. */
+@property(nonatomic, copy, nullable) NSString *badgeValue;
+
+/** The background color of the badge. */
+// TODO(featherless): Delete this in favor of just setting the background color.
+@property(nonatomic, strong, nonnull) UIColor *badgeColor;
+
+/** The label that shows the badge value. */
+// TODO(featherless): Delete this and expose needed APIs instead.
+@property(nonatomic, strong, nonnull, readonly) UILabel *badgeValueLabel;
 
 // Interface builder is not supported.
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
