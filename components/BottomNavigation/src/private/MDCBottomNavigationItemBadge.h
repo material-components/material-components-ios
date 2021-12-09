@@ -21,4 +21,7 @@ __attribute__((objc_subclassing_restricted))
 @property(nonatomic, strong) UIColor *badgeColor;
 @property(nonatomic, strong, readonly) UILabel *badgeValueLabel;
 
+// Interface builder is not supported.
+- (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
+
 @end

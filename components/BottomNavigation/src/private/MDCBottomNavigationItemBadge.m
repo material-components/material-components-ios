@@ -11,11 +11,12 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 #import "MDCBottomNavigationItemBadge.h"
 
 #import <CoreGraphics/CoreGraphics.h>
 
-#import "MaterialPalettes.h"
+#import "MDCPalettes.h"
 
 // This is very close to the material.io guidelines article considering the fonts differ.
 static const CGFloat kBadgeFontSize = 8;
@@ -29,26 +30,9 @@ static const CGFloat kMinDiameter = 9;
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
-    [self commonMDCBottomNavigationItemBadgeInit];
-  }
-  return self;
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  self = [super initWithCoder:aDecoder];
-  if (self) {
-    [self commonMDCBottomNavigationItemBadgeInit];
-  }
-  return self;
-}
-
-- (void)commonMDCBottomNavigationItemBadgeInit {
-  if (!_badgeColor) {
     _badgeColor = MDCPalette.redPalette.tint700;
-  }
-  self.layer.backgroundColor = _badgeColor.CGColor;
+    self.layer.backgroundColor = _badgeColor.CGColor;
 
-  if (self.subviews.count == 0) {
     _badgeValueLabel = [[UILabel alloc] initWithFrame:self.bounds];
     _badgeValueLabel.textColor = [UIColor whiteColor];
     _badgeValueLabel.font = [UIFont systemFontOfSize:kBadgeFontSize];
@@ -56,10 +40,8 @@ static const CGFloat kMinDiameter = 9;
     _badgeValueLabel.isAccessibilityElement = NO;
     _badgeValueLabel.text = _badgeValue;
     [self addSubview:_badgeValueLabel];
-  } else {
-    // Badge label was restored during -initWithCoder:
-    _badgeValueLabel = self.subviews.firstObject;
   }
+  return self;
 }
 
 - (CGFloat)badgeXPaddingForRadius:(CGFloat)radius {
