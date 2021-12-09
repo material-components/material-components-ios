@@ -52,13 +52,14 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
 
 @interface MDCBottomNavigationItemView ()
 
-@property(nonatomic, strong) MDCBottomNavigationItemBadge *badge;
 @property(nonatomic, strong) UILabel *label;
 - (CGPoint)badgeCenterFromIconFrame:(CGRect)iconFrame isRTL:(BOOL)isRTL;
 
 @end
 
-@implementation MDCBottomNavigationItemView
+@implementation MDCBottomNavigationItemView {
+  MDCBottomNavigationItemBadge *_Nonnull _badge;
+}
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -131,7 +132,7 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
   CGSize maxSize = CGSizeMake(kMaxSizeDimension, kMaxSizeDimension);
   CGSize iconSize = [self.iconImageView sizeThatFits:maxSize];
   CGRect iconFrame = CGRectMake(0, 0, iconSize.width, iconSize.height);
-  CGSize badgeSize = [self.badge sizeThatFits:maxSize];
+  CGSize badgeSize = [_badge sizeThatFits:maxSize];
   CGPoint badgeCenter = [self badgeCenterFromIconFrame:iconFrame isRTL:NO];
   CGRect badgeFrame =
       CGRectMake(floor(badgeCenter.x - badgeSize.width / 2),
@@ -150,7 +151,7 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
   CGSize maxSize = CGSizeMake(kMaxSizeDimension, kMaxSizeDimension);
   CGSize iconSize = [self.iconImageView sizeThatFits:maxSize];
   CGRect iconFrame = CGRectMake(0, 0, iconSize.width, iconSize.height);
-  CGSize badgeSize = [self.badge sizeThatFits:maxSize];
+  CGSize badgeSize = [_badge sizeThatFits:maxSize];
   CGPoint badgeCenter = [self badgeCenterFromIconFrame:iconFrame isRTL:NO];
   CGRect badgeFrame =
       CGRectMake(floor(badgeCenter.x - badgeSize.width / 2),
@@ -166,7 +167,7 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
   [super layoutSubviews];
 
   [self.label sizeToFit];
-  [self.badge sizeToFit];
+  [_badge sizeToFit];
   self.inkView.maxRippleRadius =
       (CGFloat)(hypot(CGRectGetHeight(self.bounds), CGRectGetWidth(self.bounds)) / 2);
   [self centerLayoutAnimated:NO];
@@ -309,14 +310,14 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
       [UIView animateWithDuration:kMDCBottomNavigationItemViewSelectionAnimationDuration
                        animations:^(void) {
                          self.iconImageView.center = iconImageViewCenter;
-                         self.badge.center =
+                         _badge.center =
                              [self badgeCenterFromIconFrame:CGRectStandardize(iconImageViewFrame)
                                                       isRTL:isRTL];
                        }];
     } else {
       self.iconImageView.center = iconImageViewCenter;
-      self.badge.center = [self badgeCenterFromIconFrame:CGRectStandardize(iconImageViewFrame)
-                                                   isRTL:isRTL];
+      _badge.center = [self badgeCenterFromIconFrame:CGRectStandardize(iconImageViewFrame)
+                                               isRTL:isRTL];
     }
     self.label.textAlignment = NSTextAlignmentCenter;
   } else {
@@ -326,8 +327,8 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
       self.label.textAlignment = NSTextAlignmentRight;
     }
     self.iconImageView.center = iconImageViewCenter;
-    self.badge.center = [self badgeCenterFromIconFrame:CGRectStandardize(iconImageViewFrame)
-                                                 isRTL:isRTL];
+    _badge.center = [self badgeCenterFromIconFrame:CGRectStandardize(iconImageViewFrame)
+                                             isRTL:isRTL];
   }
 }
 
@@ -395,7 +396,7 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
 }
 
 - (CGPoint)badgeCenterFromIconFrame:(CGRect)iconFrame isRTL:(BOOL)isRTL {
-  CGSize badgeSize = [self.badge sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+  CGSize badgeSize = [_badge sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
 
   // There are no specifications for badge layout, so this is based on the Material Guidelines
   // article for Bottom Navigation which includes an image showing badge positions.
@@ -416,7 +417,7 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
 }
 
 - (NSString *)badgeValue {
-  return self.badge.text;
+  return _badge.text;
 }
 
 - (CGRect)pointerEffectHighlightRect {
@@ -427,8 +428,8 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
   if (!self.label.hidden) {
     [visibleViews addObject:self.label];
   }
-  if (!self.badge.hidden) {
-    [visibleViews addObject:self.badge];
+  if (!_badge.hidden) {
+    [visibleViews addObject:_badge];
   }
 
   // If we don't have any visible views, there is no content to frame
@@ -522,19 +523,19 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
   }
 }
 
-- (void)setBadgeColor:(UIColor *)badgeColor {
+- (void)setBadgeColor:(nullable UIColor *)badgeColor {
   _badgeColor = badgeColor;
-  self.badge.backgroundColor = badgeColor;
+  _badge.backgroundColor = badgeColor;
 }
 
 - (void)setBadgeTextColor:(UIColor *)badgeTextColor {
   _badgeTextColor = badgeTextColor;
-  self.badge.textColor = badgeTextColor;
+  _badge.textColor = badgeTextColor;
 }
 
 - (void)setBadgeTextFont:(UIFont *)badgeTextFont {
   _badgeTextFont = badgeTextFont;
-  self.badge.font = badgeTextFont;
+  _badge.font = badgeTextFont;
 }
 
 - (void)setBadgeValue:(NSString *)badgeValue {
@@ -542,14 +543,14 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
   if ([badgeValue isKindOfClass:[NSNull class]]) {
     badgeValue = nil;
   }
-  self.badge.text = badgeValue;
+  _badge.text = badgeValue;
   if ([super accessibilityValue] == nil || [self accessibilityValue].length == 0) {
     self.button.accessibilityValue = badgeValue;
   }
   if (badgeValue == nil) {
-    self.badge.hidden = YES;
+    _badge.hidden = YES;
   } else {
-    self.badge.hidden = NO;
+    _badge.hidden = NO;
   }
   [self setNeedsLayout];
 }

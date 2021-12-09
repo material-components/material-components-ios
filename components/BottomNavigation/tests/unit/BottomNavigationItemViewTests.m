@@ -14,7 +14,6 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCBottomNavigationItemBadge.h"
 #import "../../src/private/MDCBottomNavigationItemView.h"
 #import "MDCBottomNavigationBar.h"
 #import "MDCBottomNavigationItemView+Testing.h"
@@ -37,7 +36,6 @@ static UIImage *fakeImage(void) {
 @interface MDCBottomNavigationItemView (Testing)
 @property(nonatomic, strong) UIImageView *iconImageView;
 @property(nonatomic, strong) UILabel *label;
-@property(nonatomic, strong) MDCBottomNavigationItemBadge *badge;
 - (CGPoint)badgeCenterFromIconFrame:(CGRect)iconFrame isRTL:(BOOL)isRTL;
 @end
 
@@ -107,18 +105,6 @@ static UIImage *fakeImage(void) {
   XCTAssertNotEqualObjects(item1.inkView.inkColor, item1DefaultInkColor);
   XCTAssertNotEqualObjects(item2.inkView.inkColor, item2DefaultInkColor);
   XCTAssertEqualObjects(item1.inkView.inkColor, item2.inkView.inkColor);
-}
-
-- (void)testBadgeTextColorSetsBadgeLabelTextColor {
-  // Given
-  MDCBottomNavigationItemView *itemView = [[MDCBottomNavigationItemView alloc] init];
-  itemView.badgeValue = @"123";
-
-  // When
-  itemView.badgeTextColor = UIColor.purpleColor;
-
-  // Then
-  XCTAssertEqualObjects(itemView.badge.textColor, UIColor.purpleColor);
 }
 
 - (void)testSetTitleVisibilityUpdatesLayout {
@@ -498,11 +484,7 @@ static UIImage *fakeImage(void) {
   [itemView layoutIfNeeded];
 
   // Then
-  CGRect contentViewsRect = CGRectUnion(
-      itemView.label.frame, CGRectUnion(itemView.iconImageView.frame, itemView.badge.frame));
-  CGRect expectedRect = CGRectInset(
-      contentViewsRect, MDCButtonNavigationItemViewPointerEffectHighlightRectInset.width,
-      MDCButtonNavigationItemViewPointerEffectHighlightRectInset.height);
+  CGRect expectedRect = CGRectMake(14, 26, 84, 55);
   XCTAssert(CGRectEqualToRect([itemView pointerEffectHighlightRect], expectedRect), @"%@",
             [self errorStringForExpectedPointerRect:expectedRect
                              doesNotMatchActualRect:[itemView pointerEffectHighlightRect]]);
