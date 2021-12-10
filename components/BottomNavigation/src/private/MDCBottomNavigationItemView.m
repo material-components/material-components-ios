@@ -612,10 +612,6 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
 #pragma mark - Displaying a value in the badge
 
 - (void)setBadgeText:(NSString *)badgeText {
-  // Due to KVO, badgeValue may be of type NSNull.
-  if ([badgeText isKindOfClass:[NSNull class]]) {
-    badgeText = nil;
-  }
   _badge.text = badgeText;
   if ([super accessibilityValue] == nil || [self accessibilityValue].length == 0) {
     self.button.accessibilityValue = badgeText;
