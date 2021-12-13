@@ -40,6 +40,8 @@ API_AVAILABLE(ios(13.0))
   singleDigitBadge.backgroundColor = [UIColor systemRedColor];
   singleDigitBadge.textColor = [UIColor whiteColor];
   singleDigitBadge.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
+  singleDigitBadge.borderWidth = 2;
+  singleDigitBadge.borderColor = [UIColor whiteColor];
   [singleDigitBadge sizeToFit];
   [self.view addSubview:singleDigitBadge];
 
@@ -48,17 +50,28 @@ API_AVAILABLE(ios(13.0))
   multiDigitBadge.backgroundColor = [UIColor systemRedColor];
   multiDigitBadge.textColor = [UIColor whiteColor];
   multiDigitBadge.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
+  multiDigitBadge.borderWidth = 2;
+  multiDigitBadge.borderColor = [UIColor whiteColor];
   [multiDigitBadge sizeToFit];
   [self.view addSubview:multiDigitBadge];
 
   singleDigitBadge.translatesAutoresizingMaskIntoConstraints = NO;
   multiDigitBadge.translatesAutoresizingMaskIntoConstraints = NO;
   [NSLayoutConstraint activateConstraints:@[
-    [self.view.centerXAnchor constraintEqualToAnchor:singleDigitBadge.centerXAnchor],
-    [self.view.centerXAnchor constraintEqualToAnchor:multiDigitBadge.centerXAnchor],
+    [singleDigitBadge.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+    [multiDigitBadge.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
 
-    [self.view.centerYAnchor constraintEqualToAnchor:singleDigitBadge.topAnchor],
-    [multiDigitBadge.topAnchor constraintEqualToAnchor:singleDigitBadge.bottomAnchor constant:16],
+    // Why the y offset by .borderWidth?
+    // Adding a border causes the badge's content to appear to be offset on its x and y axis by
+    // borderWidth units, so we compensate for that in order to keep the badge in the same position
+    // it otherwise would have been in without a border.
+    // Note that we don't need this for the x position because we're centering the badge around the
+    // Y axis and the x position is, as a result, unaffected by borderWidth.
+    [singleDigitBadge.topAnchor constraintEqualToAnchor:self.view.centerYAnchor
+                                               constant:-singleDigitBadge.borderWidth],
+    [multiDigitBadge.topAnchor
+        constraintEqualToAnchor:singleDigitBadge.bottomAnchor
+                       constant:16 - multiDigitBadge.borderWidth - singleDigitBadge.borderWidth],
   ]];
 }
 

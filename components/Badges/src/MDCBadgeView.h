@@ -25,7 +25,25 @@
  The background color of the badge can be changed through the backgroundColor property like a
  typical UIView.
 
- To add a border, customize the view's `.layer.border*` properties.
+ ## Outer borders vs inner borders
+
+ CALayer's borderColor and borderWidth properties will create an inner border, meaning the border
+ will be drawn within the bounds of the view. This will, in effect, cause the content of the badge
+ to be constrained by the border; this is rarely what is intended when it comes to badges.
+
+ Instead, we want the border to be drawn on the outer edge of the badge. To do so, we "fake" an
+ outer border by expanding the fitted size of the badge by the border width. We then use the same
+ standard CALayer borderColor and borderWidth properties under the hood, but due to the expansion of
+ the badge's size it gives the impression of being drawn on the outside of the border.
+
+ To add an outer border, use borderColor and borderWidth instead of self.layer's equivalent
+ properties. Using borderColor enables the color to react to trait collections, and modifying
+ borderWidth invalidates layout and size considerations.
+
+ Note that adding an outer border will cause the badge's origin to effectively shift on both the x
+ and y axis by `borderWidth` units. While technically accurate, it can be conceptually unexpected
+ because the border is supposed to be on the outer edge of the view. To compensate for this, be sure
+ to adjust your badge's x/y values by -borderWidth.
  */
 __attribute__((objc_subclassing_restricted))
 @interface MDCBadgeView : UIView
@@ -42,6 +60,22 @@ __attribute__((objc_subclassing_restricted))
 
 /** The font that will be used to display the value. */
 @property(nonatomic, strong, null_resettable, direct) UIFont *font;
+
+/**
+ The color of the border surrounding the badge.
+
+ Use this property instead of self.layer.borderColor. This property allows the badge to support
+ a border color that responds to trait collection changes.
+ */
+@property(nonatomic, strong, nullable, direct) UIColor *borderColor;
+
+/**
+ The width of the border surrounding the badge.
+
+ Use this property instead of self.layer.borderWidth. Setting this property will cause the badge's
+ intrinsic size and layout to be invalidated.
+ */
+@property(nonatomic, direct) CGFloat borderWidth;
 
 #pragma mark - Unsupported APIs
 

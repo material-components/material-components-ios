@@ -19,14 +19,12 @@
 // TODO(featherless): Remove the dependency on MDCPalette.
 #import "MDCPalettes.h"
 
-// This is very close to the material.io guidelines article considering the fonts differ.
 static const CGFloat kBadgeFontSize = 8;
-// These padding values get pretty close to the material.io guidelines article.
 static const CGFloat kBadgeYPadding = 2;
-// For an empty badge, ensure that the size is close to the guidelines article.
 static const CGFloat kMinDiameter = 9;
 
 @implementation MDCBadgeView {
+  UIColor *_Nullable _borderColor;
   UILabel *_Nonnull _label;
 }
 
@@ -75,6 +73,7 @@ static const CGFloat kMinDiameter = 9;
 
   // Calculate the badge and label heights
   CGSize labelSize = [_label sizeThatFits:size];
+
   CGFloat badgeHeight = labelSize.height + kBadgeYPadding;
   CGFloat contentXPadding = [self badgeXPaddingForRadius:badgeHeight / 2];
   CGFloat badgeWidth = labelSize.width + contentXPadding;
@@ -83,11 +82,25 @@ static const CGFloat kMinDiameter = 9;
   if (badgeWidth < badgeHeight) {
     badgeWidth = badgeHeight;
   }
-  return CGSizeMake(badgeWidth, badgeHeight);
+
+  // CALayer borders are inset. To make them outset, we need to expand the size of our label to
+  // account for the content covered by the border.
+  const CGFloat borderWidth = self.layer.borderWidth;
+  return CGSizeMake(badgeWidth + borderWidth * 2, badgeHeight + borderWidth * 2);
 }
 
 - (CGSize)intrinsicContentSize {
   return [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+}
+
+- (void)traitCollectionDidChange:(nullable UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  [self updateBorderColor];
+}
+
+- (void)updateBorderColor {
+  self.layer.borderColor = _borderColor.CGColor;
 }
 
 #pragma mark - Public APIs
@@ -118,6 +131,31 @@ static const CGFloat kMinDiameter = 9;
 
 - (nonnull UIFont *)font {
   return _label.font;
+}
+
+- (void)setBorderWidth:(CGFloat)borderWidth {
+  self.layer.borderWidth = borderWidth;
+
+  // When a CALayer has both a background color and a border, we need to clip the bounds otherwise
+  // the layer's background color will bleed through on the outer edges of the border.
+  self.clipsToBounds = borderWidth > 0;
+
+  [self setNeedsLayout];
+  [self invalidateIntrinsicContentSize];
+}
+
+- (CGFloat)borderWidth {
+  return self.layer.borderWidth;
+}
+
+- (void)setBorderColor:(nullable UIColor *)borderColor {
+  _borderColor = borderColor;
+
+  [self updateBorderColor];
+}
+
+- (nullable UIColor *)borderColor {
+  return _borderColor;
 }
 
 @end
