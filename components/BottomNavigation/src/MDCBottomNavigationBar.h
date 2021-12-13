@@ -102,22 +102,6 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 @property(nonatomic, strong, nonnull) UIFont *itemTitleFont UI_APPEARANCE_SELECTOR;
 
 /**
- Background color for badges. Default is a red color. Only applies if the @c UITabBarItem
- @c badgeColor is `nil`.
- */
-@property(nonatomic, copy, nullable) UIColor *itemBadgeBackgroundColor;
-
-/**
- Text color for badges. Default is white.
- */
-@property(nonatomic, copy, nullable) UIColor *itemBadgeTextColor;
-
-/**
- Text font for badges. Default is system font 8.
- */
-@property(nonatomic, copy, nullable) UIFont *itemBadgeTextFont;
-
-/**
  Color of selected item. Applies color to items' icons and text. If set also sets
  selectedItemTitleColor. Default color is black.
  */
@@ -247,6 +231,32 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
  @param item A UITabBarItem
  */
 - (nullable UIView *)viewForItem:(nonnull UITabBarItem *)item;
+
+#pragma mark - Configuring the default visual appearance for all badges
+
+/**
+ Default background color for badges.
+
+ If a given UITabBarItem's `badgeColor` is non-nil, then the item's `badgeColor` is used instead of
+ this value.
+
+ Default is a red color.
+ */
+@property(nonatomic, copy, nullable) UIColor *itemBadgeBackgroundColor;
+
+/**
+ Text color for badges.
+
+ Default is white.
+ */
+@property(nonatomic, copy, nullable) UIColor *itemBadgeTextColor;
+
+/**
+ Text font for badges.
+
+ Default is a small system font.
+ */
+@property(nonatomic, copy, nullable) UIFont *itemBadgeTextFont;
 
 @end
 

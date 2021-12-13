@@ -797,32 +797,6 @@ static BOOL gEnablePerformantShadow = NO;
   return self.barView.backgroundColor;
 }
 
-- (void)setItemBadgeTextColor:(UIColor *)itemBadgeTextColor {
-  _itemBadgeTextColor = itemBadgeTextColor;
-  for (MDCBottomNavigationItemView *itemView in self.itemViews) {
-    itemView.badgeTextColor = itemBadgeTextColor;
-  }
-}
-
-- (void)setItemBadgeTextFont:(UIFont *)itemBadgeTextFont {
-  _itemBadgeTextFont = itemBadgeTextFont;
-  for (MDCBottomNavigationItemView *itemView in self.itemViews) {
-    itemView.badgeFont = itemBadgeTextFont;
-  }
-}
-
-- (void)setItemBadgeBackgroundColor:(UIColor *)itemBadgeBackgroundColor {
-  _itemBadgeBackgroundColor = itemBadgeBackgroundColor;
-  for (NSUInteger i = 0; i < self.items.count; ++i) {
-    UITabBarItem *item = self.items[i];
-    if (item.badgeColor) {
-      continue;
-    }
-    MDCBottomNavigationItemView *itemView = self.itemViews[i];
-    itemView.badgeColor = itemBadgeBackgroundColor;
-  }
-}
-
 - (void)setBackgroundBlurEffectStyle:(UIBlurEffectStyle)backgroundBlurEffectStyle {
   if (_backgroundBlurEffectStyle == backgroundBlurEffectStyle) {
     return;
@@ -1111,6 +1085,37 @@ static BOOL gEnablePerformantShadow = NO;
 
 + (BOOL)enablePerformantShadow {
   return gEnablePerformantShadow;
+}
+
+#pragma mark - Configuring the visual appearance for all badges
+
+- (void)setItemBadgeBackgroundColor:(UIColor *)itemBadgeBackgroundColor {
+  _itemBadgeBackgroundColor = itemBadgeBackgroundColor;
+
+  for (NSUInteger i = 0; i < self.items.count; ++i) {
+    UITabBarItem *item = self.items[i];
+    if (item.badgeColor) {
+      continue;
+    }
+    MDCBottomNavigationItemView *itemView = self.itemViews[i];
+    itemView.badgeColor = itemBadgeBackgroundColor;
+  }
+}
+
+- (void)setItemBadgeTextColor:(UIColor *)itemBadgeTextColor {
+  _itemBadgeTextColor = itemBadgeTextColor;
+
+  for (MDCBottomNavigationItemView *itemView in self.itemViews) {
+    itemView.badgeTextColor = itemBadgeTextColor;
+  }
+}
+
+- (void)setItemBadgeTextFont:(UIFont *)itemBadgeTextFont {
+  _itemBadgeTextFont = itemBadgeTextFont;
+
+  for (MDCBottomNavigationItemView *itemView in self.itemViews) {
+    itemView.badgeFont = itemBadgeTextFont;
+  }
 }
 
 @end
