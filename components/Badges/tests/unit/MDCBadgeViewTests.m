@@ -15,18 +15,18 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCBottomNavigationItemBadge.h"
+#import "MDCBadgeView.h"
 
-@interface BottomNavigationItemBadgeTests : XCTestCase
-@property(nonatomic, strong) MDCBottomNavigationItemBadge *badge;
+@interface MDCBadgeViewTests : XCTestCase
+@property(nonatomic, strong) MDCBadgeView *badge;
 @end
 
-@implementation BottomNavigationItemBadgeTests
+@implementation MDCBadgeViewTests
 
 - (void)setUp {
   [super setUp];
 
-  self.badge = [[MDCBottomNavigationItemBadge alloc] init];
+  self.badge = [[MDCBadgeView alloc] init];
 }
 
 - (void)tearDown {

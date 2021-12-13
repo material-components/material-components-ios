@@ -16,8 +16,8 @@
 
 #import "MDCBottomNavigationItemView.h"
 
+#import "MDCBadgeView.h"
 #import "MDCBottomNavigationBar.h"
-#import "MDCBottomNavigationItemBadge.h"
 #import "MDCInkView.h"
 #import "MDCRippleTouchController.h"
 #import "MDCRippleView.h"
@@ -59,7 +59,7 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
 @end
 
 @implementation MDCBottomNavigationItemView {
-  MDCBottomNavigationItemBadge *_Nonnull _badge;
+  MDCBadgeView *_Nonnull _badge;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -85,7 +85,7 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
     [self addSubview:_label];
     _label.numberOfLines = kDefaultTitleNumberOfLines;
 
-    _badge = [[MDCBottomNavigationItemBadge alloc] initWithFrame:CGRectZero];
+    _badge = [[MDCBadgeView alloc] initWithFrame:CGRectZero];
     _badge.isAccessibilityElement = NO;
     [self addSubview:_badge];
     _badge.hidden = YES;

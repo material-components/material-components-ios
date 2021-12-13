@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCMinimumOS.h"  // IWYU pragma: keep
+
 /**
  An indication of the actions that might be required in a given context.
 
@@ -26,7 +28,7 @@
  To add a border, customize the view's `.layer.border*` properties.
  */
 __attribute__((objc_subclassing_restricted))
-@interface MDCBottomNavigationItemBadge : UIView
+@interface MDCBadgeView : UIView
 
 #pragma mark - Displaying a value in the badge
 

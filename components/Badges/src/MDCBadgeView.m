@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCBottomNavigationItemBadge.h"
+#import "MDCBadgeView.h"
 
 #import <CoreGraphics/CoreGraphics.h>
 
+// TODO(featherless): Remove the dependency on MDCPalette.
 #import "MDCPalettes.h"
 
 // This is very close to the material.io guidelines article considering the fonts differ.
@@ -25,13 +26,14 @@ static const CGFloat kBadgeYPadding = 2;
 // For an empty badge, ensure that the size is close to the guidelines article.
 static const CGFloat kMinDiameter = 9;
 
-@implementation MDCBottomNavigationItemBadge {
+@implementation MDCBadgeView {
   UILabel *_Nonnull _label;
 }
 
 - (nonnull instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
+    // TODO(featherless): Remove the dependency on MDCPalette.
     self.backgroundColor = MDCPalette.redPalette.tint700;
 
     _label = [[UILabel alloc] initWithFrame:self.bounds];
@@ -84,11 +86,16 @@ static const CGFloat kMinDiameter = 9;
   return CGSizeMake(badgeWidth, badgeHeight);
 }
 
+- (CGSize)intrinsicContentSize {
+  return [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+}
+
 #pragma mark - Public APIs
 
 - (void)setText:(nullable NSString *)text {
   _label.text = text;
   [self setNeedsLayout];
+  [self invalidateIntrinsicContentSize];
 }
 
 - (nullable NSString *)text {
@@ -106,6 +113,7 @@ static const CGFloat kMinDiameter = 9;
 - (void)setFont:(nullable UIFont *)font {
   _label.font = font;
   [self setNeedsLayout];
+  [self invalidateIntrinsicContentSize];
 }
 
 - (nonnull UIFont *)font {
