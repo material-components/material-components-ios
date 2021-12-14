@@ -15,6 +15,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCBadgeView.h"
+#import "MDCDotBadgeView.h"
 
 API_AVAILABLE(ios(13.0))
 @interface BadgeViewTypicalUseExample : UIViewController
@@ -34,6 +35,14 @@ API_AVAILABLE(ios(13.0))
   [super viewDidLoad];
 
   self.view.backgroundColor = [UIColor systemGrayColor];
+
+  MDCDotBadgeView *dotBadge = [[MDCDotBadgeView alloc] init];
+  dotBadge.innerRadius = 4;
+  dotBadge.backgroundColor = [UIColor systemRedColor];
+  dotBadge.borderWidth = 2;
+  dotBadge.borderColor = [UIColor whiteColor];
+  [dotBadge sizeToFit];
+  [self.view addSubview:dotBadge];
 
   MDCBadgeView *singleDigitBadge = [[MDCBadgeView alloc] init];
   singleDigitBadge.text = @"1";
@@ -55,9 +64,11 @@ API_AVAILABLE(ios(13.0))
   [multiDigitBadge sizeToFit];
   [self.view addSubview:multiDigitBadge];
 
+  dotBadge.translatesAutoresizingMaskIntoConstraints = NO;
   singleDigitBadge.translatesAutoresizingMaskIntoConstraints = NO;
   multiDigitBadge.translatesAutoresizingMaskIntoConstraints = NO;
   [NSLayoutConstraint activateConstraints:@[
+    [dotBadge.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
     [singleDigitBadge.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
     [multiDigitBadge.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
 
@@ -67,6 +78,9 @@ API_AVAILABLE(ios(13.0))
     // it otherwise would have been in without a border.
     // Note that we don't need this for the x position because we're centering the badge around the
     // Y axis and the x position is, as a result, unaffected by borderWidth.
+    [singleDigitBadge.topAnchor
+        constraintEqualToAnchor:dotBadge.bottomAnchor
+                       constant:16 - dotBadge.borderWidth - singleDigitBadge.borderWidth],
     [singleDigitBadge.topAnchor constraintEqualToAnchor:self.view.centerYAnchor
                                                constant:-singleDigitBadge.borderWidth],
     [multiDigitBadge.topAnchor
