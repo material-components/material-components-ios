@@ -14,6 +14,8 @@
 
 #import "MDCButton.h"
 
+#import <UIKit/UIKit.h>
+
 #import "private/MDCButton+Subclassing.h"
 #import "UIView+MaterialElevationResponding.h"
 #import "MDCInkView.h"
@@ -801,6 +803,15 @@ static BOOL gEnablePerformantShadow = NO;
 }
 
 #pragma mark - Image Tint Color
+
+- (void)setTintColor:(UIColor *)tintColor {
+  // Use of both tintColor and imageTintColor:forState: results in confusing results. We are using a
+  // last call wins stratgy to allow for both to still be used.
+  [_imageTintColors removeAllObjects];
+  [self updateImageTintColor];
+  _imageTintStatefulAPIEnabled = NO;
+  [super setTintColor:tintColor];
+}
 
 - (nullable UIColor *)imageTintColorForState:(UIControlState)state {
   return _imageTintColors[@(state)] ?: _imageTintColors[@(UIControlStateNormal)];

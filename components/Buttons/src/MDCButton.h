@@ -258,6 +258,8 @@
  If no image tint color has been set for a given state, the returned value will fall back to the
  value set for UIControlStateNormal.
 
+ setting @c tintColor will clear these values.
+
  @param state The state.
  @return The tint color.
  */
