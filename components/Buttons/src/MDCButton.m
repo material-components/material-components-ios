@@ -36,10 +36,8 @@
 // TODO(ajsecord): Animate title color when animating between enabled/disabled states.
 // Non-trivial: http://corecocoa.wordpress.com/2011/10/04/animatable-text-color-of-uilabel/
 
-// Specified in Material Guidelines
-// https://material.io/guidelines/layout/metrics-keylines.html#metrics-keylines-touch-target-size
-static const CGFloat MDCButtonMinimumTouchTargetHeight = 48;
-static const CGFloat MDCButtonMinimumTouchTargetWidth = 48;
+static const CGFloat MDCButtonMinimumTouchTargetHeight = 44;
+static const CGFloat MDCButtonMinimumTouchTargetWidth = 44;
 static const CGFloat MDCButtonDefaultCornerRadius = 2.0;
 static const CGFloat kDefaultRippleAlpha = (CGFloat)0.12;
 
