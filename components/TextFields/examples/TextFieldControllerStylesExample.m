@@ -51,12 +51,12 @@
 }
 
 - (void)setupImages {
-  self.leadingImage = [UIImage imageNamed:@"ic_search"
+  self.leadingImage = [UIImage imageNamed:@"system_icons/search"
                                  inBundle:[NSBundle bundleForClass:[TextFieldControllerStylesExample
                                                                        class]]
             compatibleWithTraitCollection:nil];
   self.trailingImage =
-      [UIImage imageNamed:@"ic_done"
+      [UIImage imageNamed:@"system_icons/done"
                                inBundle:[NSBundle
                                             bundleForClass:[TextFieldControllerStylesExample class]]
           compatibleWithTraitCollection:nil];

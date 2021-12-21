@@ -25,7 +25,7 @@
     return;
   }
   NSBundle *imageBundle = [NSBundle bundleForClass:[MDCAbstractTextFieldSnapshotTests class]];
-  UIImage *leadingImage = [UIImage imageNamed:@"ic_search"
+  UIImage *leadingImage = [UIImage imageNamed:@"system_icons/search"
                                      inBundle:imageBundle
                 compatibleWithTraitCollection:nil];
   leadingImage = [leadingImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];

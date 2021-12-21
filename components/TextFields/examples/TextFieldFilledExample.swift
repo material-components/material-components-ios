@@ -74,14 +74,14 @@ final class TextFieldFilledSwiftExample: UIViewController {
 
   let leadingImage: UIImage = {
     return UIImage.init(
-      named: "ic_search",
+      named: "system_icons/search",
       in: Bundle(for: TextFieldFilledSwiftExample.self),
       compatibleWith: nil) ?? UIImage()
   }()
 
   let trailingImage: UIImage = {
     return UIImage.init(
-      named: "ic_done",
+      named: "system_icons/done",
       in: Bundle(for: TextFieldFilledSwiftExample.self),
       compatibleWith: nil) ?? UIImage()
   }()

@@ -17,7 +17,7 @@
 @implementation ChipsExampleAssets
 
 + (UIImage *)doneImage {
-  return [UIImage imageNamed:@"ic_done"
+  return [UIImage imageNamed:@"system_icons/done"
                            inBundle:[NSBundle bundleForClass:[ChipsExampleAssets class]]
       compatibleWithTraitCollection:nil];
 }

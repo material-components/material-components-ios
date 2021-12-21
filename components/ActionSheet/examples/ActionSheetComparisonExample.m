@@ -85,19 +85,19 @@
                                                        message:@"Action Sheet Message"];
   MDCActionSheetAction *homeAction =
       [MDCActionSheetAction actionWithTitle:@"Home"
-                                      image:[UIImage imageNamed:@"ic_home"]
+                                      image:[UIImage imageNamed:@"system_icons/home"]
                                     handler:^(MDCActionSheetAction *action) {
                                       NSLog(@"Home Action");
                                     }];
   MDCActionSheetAction *favoriteAction =
       [MDCActionSheetAction actionWithTitle:@"Favorite"
-                                      image:[UIImage imageNamed:@"ic_favorite"]
+                                      image:[UIImage imageNamed:@"system_icons/favorite"]
                                     handler:^(MDCActionSheetAction *action) {
                                       NSLog(@"Favorite Action");
                                     }];
   MDCActionSheetAction *emailAction =
       [MDCActionSheetAction actionWithTitle:@"Email"
-                                      image:[UIImage imageNamed:@"ic_email"]
+                                      image:[UIImage imageNamed:@"system_icons/email"]
                                     handler:^(MDCActionSheetAction *action) {
                                       NSLog(@"Email Action");
                                     }];

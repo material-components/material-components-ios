@@ -30,8 +30,8 @@ class FloatingButtonTypicalUseSwiftExample: UIViewController {
 
     view.backgroundColor = UIColor(white: 0.9, alpha: 1)
 
-    let plusImage = UIImage(named: "ic_add")
-    let plusImage36 = UIImage(named: "ic_add_36pt")
+    let plusImage = UIImage(named: "system_icons/add")
+    let plusImage36 = UIImage(named: "system_icons/add_36pt")
 
     miniFloatingButton.sizeToFit()
     miniFloatingButton.translatesAutoresizingMaskIntoConstraints = false

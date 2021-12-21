@@ -31,7 +31,7 @@ class BottomDrawerInfiniteScrollingExample: UIViewController {
     contentViewController.colorScheme = containerScheme.colorScheme as? MDCSemanticColorScheme
     bottomAppBar.isFloatingButtonHidden = true
     let barButtonLeadingItem = UIBarButtonItem()
-    let menuImage = UIImage(named: "ic_menu")?.withRenderingMode(
+    let menuImage = UIImage(named: "system_icons/menu")?.withRenderingMode(
       .alwaysTemplate)
     barButtonLeadingItem.image = menuImage
     barButtonLeadingItem.target = self

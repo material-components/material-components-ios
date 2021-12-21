@@ -48,9 +48,9 @@ static NSString *const kMiniButtonLabel = @"Add";
 
   self.view.backgroundColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:1];
 
-  UIImage *plusImage =
-      [[UIImage imageNamed:@"ic_add"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  UIImage *plusImage36 = [[UIImage imageNamed:@"ic_add_36pt"]
+  UIImage *plusImage = [[UIImage imageNamed:@"system_icons/add"]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  UIImage *plusImage36 = [[UIImage imageNamed:@"system_icons/add_36pt"]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
   self.iPadLabel = [[UILabel alloc] init];

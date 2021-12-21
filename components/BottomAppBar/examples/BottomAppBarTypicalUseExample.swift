@@ -65,7 +65,7 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
       for: .touchUpInside)
 
     // Set the image on the floating button.
-    let addImage = UIImage(named: "ic_add")?.withRenderingMode(.alwaysTemplate)
+    let addImage = UIImage(named: "system_icons/add")?.withRenderingMode(.alwaysTemplate)
     bottomBarView.floatingButton.setImage(addImage, for: .normal)
     bottomBarView.floatingButton.setTitle("Add new item", for: .normal)
     bottomBarView.floatingButton.mode = .expanded
@@ -78,11 +78,11 @@ class BottomAppBarTypicalUseSwiftExample: UIViewController {
 
     // Configure the navigation buttons to be shown on the bottom app bar.
     let barButtonLeadingItem = UIBarButtonItem()
-    let menuImage = UIImage(named: "ic_menu")?.withRenderingMode(.alwaysTemplate)
+    let menuImage = UIImage(named: "system_icons/menu")?.withRenderingMode(.alwaysTemplate)
     barButtonLeadingItem.image = menuImage
 
     let barButtonTrailingItem = UIBarButtonItem()
-    let searchImage = UIImage(named: "ic_search")?.withRenderingMode(.alwaysTemplate)
+    let searchImage = UIImage(named: "system_icons/search")?.withRenderingMode(.alwaysTemplate)
     barButtonTrailingItem.image = searchImage
 
     bottomBarView.leadingBarButtonItems = [barButtonLeadingItem]

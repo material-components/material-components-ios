@@ -32,7 +32,7 @@ class BottomDrawerSwappingScrollViewsExample: UIViewController {
 
     bottomAppBar.isFloatingButtonHidden = true
     let barButtonLeadingItem = UIBarButtonItem()
-    let menuImage = UIImage(named: "ic_menu")?.withRenderingMode(.alwaysTemplate)
+    let menuImage = UIImage(named: "system_icons/menu")?.withRenderingMode(.alwaysTemplate)
     barButtonLeadingItem.image = menuImage
     barButtonLeadingItem.target = self
     barButtonLeadingItem.action = #selector(presentNavigationDrawer)

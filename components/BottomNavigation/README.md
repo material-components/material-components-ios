@@ -158,16 +158,16 @@ bottomNavBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles
 
 let homeItem = UITabBarItem(
     title: "Home",
-    image: UIImage(named: "ic_home"),
+    image: UIImage(named: "system_icons/home"),
     tag: 0)
 let messagesItem = UITabBarItem(
     title: "Messages",
-    image: UIImage(named: "ic_email"),
+    image: UIImage(named: "system_icons/email"),
     tag: 0)
 messagesItem.badgeValue = "8"
 let favoritesItem = UITabBarItem(
     title: "Favorites",
-    image: UIImage(named: "ic_favorite"),
+    image: UIImage(named: "system_icons/favorite"),
     tag: 0)
 favoritesItem.badgeValue = ""
 let readerItem = UITabBarItem(
@@ -178,7 +178,7 @@ readerItem.badgeValue = "88"
 
 let birthdayItem = UITabBarItem(
     title: "ic_birthday",
-    image: UIImage(named: "ic_cake"),
+    image: UIImage(named: "system_icons/cake"),
     tag: 0)
 birthdayItem.badgeValue = "888+"
 bottomNavBar.items = [homeItem, messagesItem, favoritesItem, readerItem, birthdayItem]
@@ -194,15 +194,15 @@ self.bottomNavBar.titleVisibility = MDCBottomNavigationBarTitleVisibilitySelecte
 self.bottomNavBar.alignment = MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles;
 
 UITabBarItem *homeItem = [[UITabBarItem alloc] initWithTitle:@"Home"
-                                                          image:[UIImage imageNamed:@"ic_home"]
+                                                          image:[UIImage imageNamed:@"system_icons/home"]
                                                             tag:0];
 UITabBarItem *messagesItem = [[UITabBarItem alloc] initWithTitle:@"Messages"
-                                                          image:[UIImage imageNamed:@"ic_email"]
+                                                          image:[UIImage imageNamed:@"system_icons/email"]
                                                             tag:0];
 messagesItem.badgeValue = @"8";
 UITabBarItem *favoritesItem =
     [[UITabBarItem alloc] initWithTitle:@"Favorites"
-                                  image:[UIImage imageNamed:@"ic_favorite"]
+                                  image:[UIImage imageNamed:@"system_icons/favorite"]
                                     tag:0];
 favoritesItem.badgeValue = @"";
 UITabBarItem *readerItem = [[UITabBarItem alloc] initWithTitle:@"Reader"
@@ -210,7 +210,7 @@ UITabBarItem *readerItem = [[UITabBarItem alloc] initWithTitle:@"Reader"
                                                            tag:0];
 readerItem.badgeValue = @"88";
 UITabBarItem *birthdayItem = [[UITabBarItem alloc] initWithTitle:@"ic_birthday"
-                                                          image:[UIImage imageNamed:@"ic_cake"]
+                                                          image:[UIImage imageNamed:@"system_icons/cake"]
                                                             tag:0];
 birthdayItem.badgeValue = @"888+";
 self.bottomNavBar.items = @[ homeItem, messagesItem, favoritesItem, readerItem, birthdayItem ];

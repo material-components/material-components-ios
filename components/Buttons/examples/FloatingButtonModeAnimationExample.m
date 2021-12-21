@@ -40,8 +40,8 @@ static NSString *const kButtonLabel = @"Create";
 
   self.view.backgroundColor = [UIColor colorWithWhite:0.9f alpha:1];
 
-  UIImage *plusImage =
-      [[UIImage imageNamed:@"ic_add"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  UIImage *plusImage = [[UIImage imageNamed:@"system_icons/add"]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
   self.floatingButton = [[MDCFloatingButton alloc] init];
   [self.floatingButton setImage:plusImage forState:UIControlStateNormal];

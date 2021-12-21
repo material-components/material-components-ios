@@ -39,7 +39,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YCS-6P-hwz" customClass="MDCFloatingButton">
                                 <rect key="frame" x="161" y="175" width="52" height="52"/>
                                 <inset key="contentEdgeInsets" minX="16" minY="16" maxX="0.0" maxY="0.0"/>
-                                <state key="normal" image="ic_add_36pt">
+                                <state key="normal" image="system_icons/add_36pt">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
@@ -96,7 +96,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ic_add_36pt" width="36" height="36"/>
+        <image name="system_icons/add_36pt" width="36" height="36"/>
     </resources>
     <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

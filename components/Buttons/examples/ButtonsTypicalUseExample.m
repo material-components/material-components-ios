@@ -153,8 +153,8 @@ static const CGSize kMinimumAccessibleButtonSize = {64.0, 48.0};
                           action:@selector(didTap:)
                 forControlEvents:UIControlEventTouchUpInside];
 
-  UIImage *plusImage =
-      [[UIImage imageNamed:@"ic_add"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  UIImage *plusImage = [[UIImage imageNamed:@"system_icons/add"]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   [self.floatingButton setImage:plusImage forState:UIControlStateNormal];
   [self.floatingButton applySecondaryThemeWithScheme:[self containerScheme]];
   self.floatingButton.accessibilityLabel = @"Create";

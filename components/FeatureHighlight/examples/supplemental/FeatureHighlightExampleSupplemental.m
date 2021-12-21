@@ -218,7 +218,7 @@ static NSString *const reuseIdentifier = @"Cell";
   buttonScheme.typographyScheme = self.typographyScheme;
 
   MDCFloatingButton *fab = [[MDCFloatingButton alloc] init];
-  [fab setImage:[UIImage imageNamed:@"ic_add"] forState:UIControlStateNormal];
+  [fab setImage:[UIImage imageNamed:@"system_icons/add"] forState:UIControlStateNormal];
   [fab sizeToFit];
   self.button = fab;
   [self.view addSubview:self.button];

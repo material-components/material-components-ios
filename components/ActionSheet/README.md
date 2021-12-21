@@ -123,11 +123,11 @@ MDCActionSheetController *actionSheet =
                                                      message:@"Secondary line text"];
 MDCActionSheetAction *homeAction = 
     [MDCActionSheetAction actionWithTitle:@"Home"
-                                    image:[UIImage imageNamed:@"ic_home"]
+                                    image:[UIImage imageNamed:@"system_icons/home"]
                                   handler:nil];
 MDCActionSheetAction *favoriteAction =
     [MDCActionSheetAction actionWithTitle:@"Favorite"
-                                    image:[UIImage imageNamed:@"ic_favorite"]
+                                    image:[UIImage imageNamed:@"system_icons/favorite"]
                                   handler:nil];
 [actionSheet addAction:homeAction];
 [actionSheet addAction:favoriteAction];

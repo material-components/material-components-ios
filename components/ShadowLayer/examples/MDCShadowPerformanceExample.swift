@@ -83,7 +83,7 @@ class MDCShadowPerformanceExample:
     appBar.headerView.trackingScrollView = collectionView
 
     createButton.sizeToFit()
-    let plusImage = UIImage(named: "ic_add")
+    let plusImage = UIImage(named: "system_icons/add")
     createButton.setImage(plusImage, for: .normal)
     createButton.accessibilityLabel = "Create"
     createButton.applySecondaryTheme(withScheme: containerScheme)
@@ -93,9 +93,10 @@ class MDCShadowPerformanceExample:
     bottomNavBar.titleVisibility = .always
     bottomNavBar.alignment = .centered
     bottomNavBar.enableRippleBehavior = true
-    let tabBarItem1 = UITabBarItem(title: "Home", image: UIImage(named: "ic_home"), tag: 0)
+    let tabBarItem1 = UITabBarItem(
+      title: "Home", image: UIImage(named: "system_icons/home"), tag: 0)
     let tabBarItem2 =
-      UITabBarItem(title: "Messages", image: UIImage(named: "ic_email"), tag: 1)
+      UITabBarItem(title: "Messages", image: UIImage(named: "system_icons/email"), tag: 1)
     bottomNavBar.items = [tabBarItem1, tabBarItem2]
     bottomNavBar.selectedItem = tabBarItem2
   }

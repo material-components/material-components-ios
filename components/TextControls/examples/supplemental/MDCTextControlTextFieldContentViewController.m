@@ -107,8 +107,8 @@
 - (void)addLeadingViewToTextField:(MDCBaseTextField *)textField {
   UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
   imageView.tintColor = self.containerScheme.colorScheme.primaryColor;
-  UIImage *image =
-      [[UIImage imageNamed:@"ic_cake"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  UIImage *image = [[UIImage imageNamed:@"system_icons/cake"]
+      imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   imageView.image = image;
   textField.leadingView = imageView;
   textField.leadingViewMode = UITextFieldViewModeAlways;

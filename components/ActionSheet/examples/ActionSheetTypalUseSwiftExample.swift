@@ -75,7 +75,8 @@ class ActionSheetTypicalUseSwiftExample: UIViewController {
       actionSheet = ActionSheetTypicalUseSwiftExample.dynamic()
     case .delayed:
       actionSheet = ActionSheetTypicalUseSwiftExample.titleAndMessage()
-      let action = MDCActionSheetAction(title: "Home", image: UIImage(named: "ic_home")) { _ in
+      let action = MDCActionSheetAction(title: "Home", image: UIImage(named: "system_icons/home")) {
+        _ in
         print("Second home action")
       }
       DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
@@ -128,7 +129,7 @@ extension ActionSheetTypicalUseSwiftExample: UITableViewDataSource {
 
 extension ActionSheetTypicalUseSwiftExample {
   static var actionOne: MDCActionSheetAction {
-    let image = UIImage(named: "ic_home") ?? UIImage()
+    let image = UIImage(named: "system_icons/home") ?? UIImage()
     return MDCActionSheetAction(
       title: "Home",
       image: image
@@ -138,7 +139,7 @@ extension ActionSheetTypicalUseSwiftExample {
   }
 
   static var actionTwo: MDCActionSheetAction {
-    let image = UIImage(named: "ic_favorite") ?? UIImage()
+    let image = UIImage(named: "system_icons/favorite") ?? UIImage()
     return MDCActionSheetAction(
       title: "Favorite",
       image: image
@@ -148,7 +149,7 @@ extension ActionSheetTypicalUseSwiftExample {
   }
 
   static var actionThree: MDCActionSheetAction {
-    let image = UIImage(named: "ic_email") ?? UIImage()
+    let image = UIImage(named: "system_icons/email") ?? UIImage()
     return MDCActionSheetAction(
       title: "Email",
       image: image
@@ -226,7 +227,7 @@ extension ActionSheetTypicalUseSwiftExample {
   static func dynamic() -> MDCActionSheetController {
     let actionSheet = MDCActionSheetController(title: "Action sheet", message: messageString)
     actionSheet.adjustsFontForContentSizeCategory = true
-    let image = UIImage(named: "ic_email") ?? UIImage()
+    let image = UIImage(named: "system_icons/email") ?? UIImage()
     let actionThree = MDCActionSheetAction(
       title: "Email",
       image: image,
@@ -243,7 +244,7 @@ extension ActionSheetTypicalUseSwiftExample {
     for i in 1...30 {
       let action = MDCActionSheetAction(
         title: "Action \(i)",
-        image: UIImage(named: "ic_home"),
+        image: UIImage(named: "system_icons/home"),
         handler: nil)
       actionSheet.addAction(action)
     }

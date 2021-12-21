@@ -67,7 +67,7 @@
   textFieldName.backgroundColor = [UIColor whiteColor];
 
   UIImage *leadingImage = [UIImage
-                         imageNamed:@"ic_search"
+                         imageNamed:@"system_icons/search"
                            inBundle:[NSBundle
                                         bundleForClass:[TextFieldOutlinedObjectiveCExample class]]
       compatibleWithTraitCollection:nil];
@@ -75,7 +75,7 @@
   textFieldName.leadingViewMode = UITextFieldViewModeAlways;
 
   UIImage *trailingImage = [UIImage
-                         imageNamed:@"ic_done"
+                         imageNamed:@"system_icons/done"
                            inBundle:[NSBundle
                                         bundleForClass:[TextFieldOutlinedObjectiveCExample class]]
       compatibleWithTraitCollection:nil];
