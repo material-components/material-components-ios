@@ -16,6 +16,7 @@
 
 #import "MDCBottomNavigationItemView.h"
 
+#import "MDCBadgeAppearance.h"
 #import "MDCBadgeView.h"
 #import "MDCBottomNavigationBar.h"
 #import "MDCInkView.h"
@@ -631,27 +632,40 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
 #pragma mark - Configuring the badge's visual appearance
 
 - (void)setBadgeColor:(nullable UIColor *)badgeColor {
-  _badge.backgroundColor = badgeColor;
+  MDCBadgeAppearance *appearance = _badge.appearance;
+  if (badgeColor == nil) {
+    // Bottom navigation historically treated nil as clear color for badges. The new
+    // MDCBadgeAppearance API treats nil as equivalent to tintColor now, in alignment with UIKit,
+    // so to maintain backward-compatibility with expected behavior, we force-cast nil to a
+    // clearColor instance.
+    badgeColor = [UIColor clearColor];
+  }
+  appearance.backgroundColor = badgeColor;
+  _badge.appearance = appearance;
 }
 
 - (nullable UIColor *)badgeColor {
-  return _badge.backgroundColor;
+  return _badge.appearance.backgroundColor;
 }
 
 - (void)setBadgeTextColor:(nullable UIColor *)badgeTextColor {
-  _badge.textColor = badgeTextColor;
+  MDCBadgeAppearance *appearance = _badge.appearance;
+  appearance.textColor = badgeTextColor;
+  _badge.appearance = appearance;
 }
 
 - (nonnull UIColor *)badgeTextColor {
-  return _badge.textColor;
+  return _badge.appearance.textColor;
 }
 
 - (void)setBadgeFont:(nullable UIFont *)badgeFont {
-  _badge.font = badgeFont;
+  MDCBadgeAppearance *appearance = _badge.appearance;
+  appearance.font = badgeFont;
+  _badge.appearance = appearance;
 }
 
 - (nonnull UIFont *)badgeFont {
-  return _badge.font;
+  return _badge.appearance.font;
 }
 
 #pragma mark - UILargeContentViewerItem

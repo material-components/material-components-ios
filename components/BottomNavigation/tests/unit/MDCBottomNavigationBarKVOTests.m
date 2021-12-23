@@ -161,7 +161,7 @@ static UIImage *fakeImage() {
 
   // Then
   MDCBottomNavigationItemView *itemView = self.bottomNavigationBar.itemViews.firstObject;
-  XCTAssertNil(itemView.badgeColor);
+  XCTAssertEqualObjects(itemView.badgeColor, [UIColor clearColor]);
 }
 
 - (void)testChangeTitlePositionAdjustmentToNonZeroOffsetDoesNotRaiseException {

@@ -484,7 +484,7 @@ static UIImage *fakeImage(void) {
   [itemView layoutIfNeeded];
 
   // Then
-  CGRect expectedRect = CGRectMake(14, 26, 84, 55);
+  CGRect expectedRect = CGRectMake(0, 26, 100, 55);
   XCTAssert(CGRectEqualToRect([itemView pointerEffectHighlightRect], expectedRect), @"%@",
             [self errorStringForExpectedPointerRect:expectedRect
                              doesNotMatchActualRect:[itemView pointerEffectHighlightRect]]);

@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MDCBadgeAppearance.h"
+#import "MDCDotBadgeAppearance.h"
 #import "MDCBadgeView.h"
 #import "MDCDotBadgeView.h"
 
@@ -31,46 +33,64 @@ API_AVAILABLE(ios(13.0))
   return self;
 }
 
+- (MDCDotBadgeAppearance *)defaultDotBadgeAppearance {
+  MDCDotBadgeAppearance *config = [[MDCDotBadgeAppearance alloc] init];
+  config.innerRadius = 4;
+  config.backgroundColor = [UIColor systemRedColor];
+  config.borderWidth = 2;
+  config.borderColor = [UIColor whiteColor];
+  return config;
+}
+
+- (MDCBadgeAppearance *)defaultBadgeAppearance {
+  MDCBadgeAppearance *config = [[MDCBadgeAppearance alloc] init];
+  config.backgroundColor = [UIColor systemRedColor];
+  config.textColor = [UIColor whiteColor];
+  config.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
+  config.borderWidth = 2;
+  config.borderColor = [UIColor whiteColor];
+  return config;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
 
   self.view.backgroundColor = [UIColor systemGrayColor];
 
   MDCDotBadgeView *dotBadge = [[MDCDotBadgeView alloc] init];
-  dotBadge.innerRadius = 4;
-  dotBadge.backgroundColor = [UIColor systemRedColor];
-  dotBadge.borderWidth = 2;
-  dotBadge.borderColor = [UIColor whiteColor];
+  dotBadge.appearance = [self defaultDotBadgeAppearance];
   [dotBadge sizeToFit];
   [self.view addSubview:dotBadge];
 
   MDCBadgeView *singleDigitBadge = [[MDCBadgeView alloc] init];
   singleDigitBadge.text = @"1";
-  singleDigitBadge.backgroundColor = [UIColor systemRedColor];
-  singleDigitBadge.textColor = [UIColor whiteColor];
-  singleDigitBadge.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
-  singleDigitBadge.borderWidth = 2;
-  singleDigitBadge.borderColor = [UIColor whiteColor];
+  singleDigitBadge.appearance = [self defaultBadgeAppearance];
   [singleDigitBadge sizeToFit];
   [self.view addSubview:singleDigitBadge];
 
   MDCBadgeView *multiDigitBadge = [[MDCBadgeView alloc] init];
   multiDigitBadge.text = @"99+";
-  multiDigitBadge.backgroundColor = [UIColor systemRedColor];
-  multiDigitBadge.textColor = [UIColor whiteColor];
-  multiDigitBadge.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
-  multiDigitBadge.borderWidth = 2;
-  multiDigitBadge.borderColor = [UIColor whiteColor];
+  multiDigitBadge.appearance = [self defaultBadgeAppearance];
   [multiDigitBadge sizeToFit];
   [self.view addSubview:multiDigitBadge];
+
+  MDCBadgeView *systemTintedBadge = [[MDCBadgeView alloc] init];
+  systemTintedBadge.text = @"system tint";
+  MDCBadgeAppearance *systemTintAppearance = [self defaultBadgeAppearance];
+  systemTintAppearance.backgroundColor = nil;  // nil is treated as tintColor
+  systemTintedBadge.appearance = systemTintAppearance;
+  [systemTintedBadge sizeToFit];
+  [self.view addSubview:systemTintedBadge];
 
   dotBadge.translatesAutoresizingMaskIntoConstraints = NO;
   singleDigitBadge.translatesAutoresizingMaskIntoConstraints = NO;
   multiDigitBadge.translatesAutoresizingMaskIntoConstraints = NO;
+  systemTintedBadge.translatesAutoresizingMaskIntoConstraints = NO;
   [NSLayoutConstraint activateConstraints:@[
     [dotBadge.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
     [singleDigitBadge.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
     [multiDigitBadge.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+    [systemTintedBadge.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
 
     // Why the y offset by .borderWidth?
     // Adding a border causes the badge's content to appear to be offset on its x and y axis by
@@ -78,14 +98,18 @@ API_AVAILABLE(ios(13.0))
     // it otherwise would have been in without a border.
     // Note that we don't need this for the x position because we're centering the badge around the
     // Y axis and the x position is, as a result, unaffected by borderWidth.
-    [singleDigitBadge.topAnchor
-        constraintEqualToAnchor:dotBadge.bottomAnchor
-                       constant:16 - dotBadge.borderWidth - singleDigitBadge.borderWidth],
+    [singleDigitBadge.topAnchor constraintEqualToAnchor:dotBadge.bottomAnchor
+                                               constant:16 - dotBadge.appearance.borderWidth -
+                                                        singleDigitBadge.appearance.borderWidth],
     [singleDigitBadge.topAnchor constraintEqualToAnchor:self.view.centerYAnchor
-                                               constant:-singleDigitBadge.borderWidth],
-    [multiDigitBadge.topAnchor
-        constraintEqualToAnchor:singleDigitBadge.bottomAnchor
-                       constant:16 - multiDigitBadge.borderWidth - singleDigitBadge.borderWidth],
+                                               constant:-singleDigitBadge.appearance.borderWidth],
+    [multiDigitBadge.topAnchor constraintEqualToAnchor:singleDigitBadge.bottomAnchor
+                                              constant:16 - multiDigitBadge.appearance.borderWidth -
+                                                       singleDigitBadge.appearance.borderWidth],
+    [systemTintedBadge.topAnchor
+        constraintEqualToAnchor:multiDigitBadge.bottomAnchor
+                       constant:16 - systemTintedBadge.appearance.borderWidth -
+                                multiDigitBadge.appearance.borderWidth],
   ]];
 }
 
