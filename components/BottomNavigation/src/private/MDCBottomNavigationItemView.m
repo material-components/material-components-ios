@@ -63,6 +63,8 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
   MDCBadgeView *_Nonnull _badge;
 }
 
+@synthesize badgeAppearance = _badgeAppearance;
+
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
@@ -85,6 +87,10 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
     _label.isAccessibilityElement = NO;
     [self addSubview:_label];
     _label.numberOfLines = kDefaultTitleNumberOfLines;
+
+    // We store a local copy of the badge appearance so that we can consistently override with the
+    // UITabBarItem badgeColor property.
+    _badgeAppearance = [[MDCBadgeAppearance alloc] init];
 
     _badge = [[MDCBadgeView alloc] initWithFrame:CGRectZero];
     _badge.isAccessibilityElement = NO;
@@ -415,6 +421,10 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
   CGFloat badgeCenterX = isRTL ? CGRectGetMinX(iconFrame) - badgeCenterXOffset
                                : CGRectGetMaxX(iconFrame) + badgeCenterXOffset;
 
+  // Account for the badge's outer border width.
+  badgeCenterX -= _badge.appearance.borderWidth / 2;
+  badgeCenterY -= _badge.appearance.borderWidth / 2;
+
   return CGPointMake(badgeCenterX, badgeCenterY);
 }
 
@@ -631,8 +641,25 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
 
 #pragma mark - Configuring the badge's visual appearance
 
+- (void)commitBadgeAppearance {
+  MDCBadgeAppearance *appearance = [_badgeAppearance copy];
+  if (_badgeColor) {
+    appearance.backgroundColor = _badgeColor;
+  }
+  _badge.appearance = appearance;
+}
+
+- (void)setBadgeAppearance:(MDCBadgeAppearance *)badgeAppearance {
+  if (badgeAppearance) {
+    _badgeAppearance = [badgeAppearance copy];
+  } else {
+    _badgeAppearance = [[MDCBadgeAppearance alloc] init];
+  }
+
+  [self commitBadgeAppearance];
+}
+
 - (void)setBadgeColor:(nullable UIColor *)badgeColor {
-  MDCBadgeAppearance *appearance = _badge.appearance;
   if (badgeColor == nil) {
     // Bottom navigation historically treated nil as clear color for badges. The new
     // MDCBadgeAppearance API treats nil as equivalent to tintColor now, in alignment with UIKit,
@@ -640,32 +667,29 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
     // clearColor instance.
     badgeColor = [UIColor clearColor];
   }
-  appearance.backgroundColor = badgeColor;
-  _badge.appearance = appearance;
-}
+  _badgeColor = badgeColor;
 
-- (nullable UIColor *)badgeColor {
-  return _badge.appearance.backgroundColor;
+  [self commitBadgeAppearance];
 }
 
 - (void)setBadgeTextColor:(nullable UIColor *)badgeTextColor {
-  MDCBadgeAppearance *appearance = _badge.appearance;
-  appearance.textColor = badgeTextColor;
-  _badge.appearance = appearance;
+  _badgeAppearance.textColor = badgeTextColor;
+
+  [self commitBadgeAppearance];
 }
 
 - (nonnull UIColor *)badgeTextColor {
-  return _badge.appearance.textColor;
+  return _badgeAppearance.textColor;
 }
 
 - (void)setBadgeFont:(nullable UIFont *)badgeFont {
-  MDCBadgeAppearance *appearance = _badge.appearance;
-  appearance.font = badgeFont;
-  _badge.appearance = appearance;
+  _badgeAppearance.font = badgeFont;
+
+  [self commitBadgeAppearance];
 }
 
 - (nonnull UIFont *)badgeFont {
-  return _badge.appearance.font;
+  return _badgeAppearance.font;
 }
 
 #pragma mark - UILargeContentViewerItem

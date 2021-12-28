@@ -57,6 +57,8 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
   MDCBottomNavigationBarAlignmentCentered = 2
 };
 
+@class MDCBadgeAppearance;
+
 /**
  A bottom navigation bar.
 
@@ -235,28 +237,52 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
 #pragma mark - Configuring the default visual appearance for all badges
 
 /**
+ The default appearance to be used for all item badges.
+
+ If a given UITabBarItem has set a non-nil badgeColor, then that value will be used for that item
+ view's badge instead of the backgroundColor associated with this appearance object.
+
+ Note that the individual itemBadge* properties will be deprecated and already act as proxies for
+ modifying the itemBadgeAppearance of each badge directly.
+
+ Defaults to nil.
+ */
+@property(nonatomic, copy, null_resettable) MDCBadgeAppearance *itemBadgeAppearance;
+
+/**
  Default background color for badges.
 
  If a given UITabBarItem's `badgeColor` is non-nil, then the item's `badgeColor` is used instead of
  this value.
 
+ This property is a proxy for itemBadgeAppearance.backgroundColor, with the exception that assigning
+ nil will be treated as [UIColor clearColor].
+
  Default is a red color.
  */
-@property(nonatomic, copy, nullable) UIColor *itemBadgeBackgroundColor;
+@property(nonatomic, copy, nullable)
+    UIColor *itemBadgeBackgroundColor API_DEPRECATED_WITH_REPLACEMENT(
+        "itemBadgeAppearance", ios(12, API_TO_BE_DEPRECATED));
 
 /**
  Text color for badges.
 
+ This property is a proxy for itemBadgeAppearance.textColor.
+
  Default is white.
  */
-@property(nonatomic, copy, nullable) UIColor *itemBadgeTextColor;
+@property(nonatomic, copy, nullable) UIColor *itemBadgeTextColor API_DEPRECATED_WITH_REPLACEMENT(
+    "itemBadgeAppearance", ios(12, API_TO_BE_DEPRECATED));
 
 /**
  Text font for badges.
 
+ This property is a proxy for itemBadgeAppearance.font.
+
  Default is a small system font.
  */
-@property(nonatomic, copy, nullable) UIFont *itemBadgeTextFont;
+@property(nonatomic, copy, nullable) UIFont *itemBadgeTextFont API_DEPRECATED_WITH_REPLACEMENT(
+    "itemBadgeAppearance", ios(12, API_TO_BE_DEPRECATED));
 
 @end
 

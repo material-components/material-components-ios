@@ -24,6 +24,7 @@
 
 #import "private/MDCBottomNavigationBar+Private.h"
 #import "private/MDCBottomNavigationItemView.h"
+#import "MDCBadgeAppearance.h"
 #import "MDCBottomNavigationBarDelegate.h"
 #import "MDCPalettes.h"
 #import "MDCRippleTouchController.h"
@@ -126,9 +127,14 @@ static BOOL gEnablePerformantShadow = NO;
   _truncatesLongTitles = YES;
   _titlesNumberOfLines = 1;
   _mdc_overrideBaseElevation = -1;
+
+  _itemBadgeAppearance = [[MDCBadgeAppearance alloc] init];
+
+  // TODO(featherless): Delete once everyone has migrated to itemBadgeAppearance.
   _itemBadgeTextColor = UIColor.whiteColor;
   _itemBadgeTextFont = [UIFont systemFontOfSize:kBadgeFontSize];
   _itemBadgeBackgroundColor = MDCPalette.redPalette.tint700;
+
   _itemsHorizontalPadding = kDefaultItemHorizontalPadding;
   _useActiveIndicator = NO;
   _activeIndicatorColor = [UIColor colorWithRed:195.f / 255.f
@@ -615,9 +621,14 @@ static BOOL gEnablePerformantShadow = NO;
     itemView.contentHorizontalMargin = self.itemsContentHorizontalMargin;
     itemView.truncatesTitle = self.truncatesLongTitles;
     itemView.titlePositionAdjustment = item.titlePositionAdjustment;
+
+    itemView.badgeAppearance = self.itemBadgeAppearance;
+
+    // TODO(featherless): Delete once everyone has migrated to itemBadgeAppearance.
     itemView.badgeColor = self.itemBadgeBackgroundColor;
     itemView.badgeTextColor = self.itemBadgeTextColor;
     itemView.badgeFont = self.itemBadgeTextFont;
+
     itemView.tag = item.tag;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -1089,6 +1100,20 @@ static BOOL gEnablePerformantShadow = NO;
 
 #pragma mark - Configuring the visual appearance for all badges
 
+- (void)setItemBadgeAppearance:(MDCBadgeAppearance *)itemBadgeAppearance {
+  if (itemBadgeAppearance) {
+    _itemBadgeAppearance = [itemBadgeAppearance copy];
+  } else {
+    _itemBadgeAppearance = [[MDCBadgeAppearance alloc] init];
+  }
+
+  for (NSUInteger i = 0; i < self.items.count; ++i) {
+    MDCBottomNavigationItemView *itemView = self.itemViews[i];
+    itemView.badgeAppearance = _itemBadgeAppearance;
+  }
+}
+
+// TODO(featherless): Delete once everyone has migrated to itemBadgeAppearance.
 - (void)setItemBadgeBackgroundColor:(UIColor *)itemBadgeBackgroundColor {
   _itemBadgeBackgroundColor = itemBadgeBackgroundColor;
 
@@ -1102,6 +1127,7 @@ static BOOL gEnablePerformantShadow = NO;
   }
 }
 
+// TODO(featherless): Delete once everyone has migrated to itemBadgeAppearance.
 - (void)setItemBadgeTextColor:(UIColor *)itemBadgeTextColor {
   _itemBadgeTextColor = itemBadgeTextColor;
 
@@ -1110,6 +1136,7 @@ static BOOL gEnablePerformantShadow = NO;
   }
 }
 
+// TODO(featherless): Delete once everyone has migrated to itemBadgeAppearance.
 - (void)setItemBadgeTextFont:(UIFont *)itemBadgeTextFont {
   _itemBadgeTextFont = itemBadgeTextFont;
 

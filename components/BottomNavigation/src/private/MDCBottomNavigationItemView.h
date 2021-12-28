@@ -81,14 +81,41 @@ __attribute__((objc_subclassing_restricted))
 
 #pragma mark - Configuring a badge's visual appearance
 
-/** The background color of this item's badge. */
+/**
+ The default appearance to be used for this item's badge.
+
+ If this item's associated UITabBarItem has set a non-nil badgeColor, then that value will be used
+ for the badge instead of the backgroundColor associated with this appearance object.
+
+ Defaults to nil.
+ */
+@property(nonatomic, copy, null_resettable) MDCBadgeAppearance *badgeAppearance;
+
+/**
+ The background color of this item's badge.
+
+ If not nil, this value will override badgeAppearance.backgroundColor. If nil, then
+ badgeAppearance.backgroundColor will be used instead.
+ */
 @property(nonatomic, strong, nullable, direct) UIColor *badgeColor;
 
-/** The color of the text representing this item's badge value. */
-@property(nonatomic, copy, null_resettable, direct) UIColor *badgeTextColor;
+/**
+ The color of the text representing this item's badge value.
 
-/** The font that will be used to display the value of this item's badge. */
-@property(nonatomic, copy, null_resettable, direct) UIFont *badgeFont;
+ This property is a proxy for badgeAppearance.textColor.
+ */
+@property(nonatomic, copy, null_resettable, direct)
+    UIColor *badgeTextColor API_DEPRECATED_WITH_REPLACEMENT("badgeAppearance",
+                                                            ios(12, API_TO_BE_DEPRECATED));
+
+/**
+ The font that will be used to display the value of this item's badge.
+
+ This property is a proxy for badgeAppearance.font.
+ */
+@property(nonatomic, copy, null_resettable, direct)
+    UIFont *badgeFont API_DEPRECATED_WITH_REPLACEMENT("badgeAppearance",
+                                                      ios(12, API_TO_BE_DEPRECATED));
 
 #pragma mark - UILargeContentViewerItem
 
