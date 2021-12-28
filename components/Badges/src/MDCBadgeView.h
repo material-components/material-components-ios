@@ -34,12 +34,8 @@ __attribute__((objc_subclassing_restricted))
 
 #pragma mark - Configuring the badge's visual appearance
 
-/**
- The appearance attributes for this badge.
-
- Assigning to nil will reset the appearance to reasonable, yet undefined defaults.
- */
-@property(nonatomic, copy, null_resettable, direct) MDCBadgeAppearance *appearance;
+/** The appearance attributes for this badge. */
+@property(nonatomic, copy, nonnull, direct) MDCBadgeAppearance *appearance;
 
 #pragma mark - Unsupported APIs
 

@@ -197,15 +197,11 @@ static const CGFloat kMinDiameter = 9;
 
 #pragma mark - Configuring the badge's visual appearance
 
-- (void)setAppearance:(nullable MDCBadgeAppearance *)appearance {
+- (void)setAppearance:(nonnull MDCBadgeAppearance *)appearance {
   if (appearance == _appearance) {
     return;
   }
-  if (appearance) {
-    _appearance = [appearance copy];
-  } else {
-    _appearance = [[MDCBadgeAppearance alloc] init];
-  }
+  _appearance = [appearance copy];
 
   [self applyAppearance];
 }

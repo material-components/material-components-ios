@@ -650,11 +650,7 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
 }
 
 - (void)setBadgeAppearance:(MDCBadgeAppearance *)badgeAppearance {
-  if (badgeAppearance) {
-    _badgeAppearance = [badgeAppearance copy];
-  } else {
-    _badgeAppearance = [[MDCBadgeAppearance alloc] init];
-  }
+  _badgeAppearance = [badgeAppearance copy];
 
   [self commitBadgeAppearance];
 }

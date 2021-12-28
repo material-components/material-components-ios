@@ -86,10 +86,8 @@ __attribute__((objc_subclassing_restricted))
 
  If this item's associated UITabBarItem has set a non-nil badgeColor, then that value will be used
  for the badge instead of the backgroundColor associated with this appearance object.
-
- Defaults to nil.
  */
-@property(nonatomic, copy, null_resettable) MDCBadgeAppearance *badgeAppearance;
+@property(nonatomic, copy, nonnull) MDCBadgeAppearance *badgeAppearance;
 
 /**
  The background color of this item's badge.

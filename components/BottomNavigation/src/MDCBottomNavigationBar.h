@@ -244,10 +244,8 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
 
  Note that the individual itemBadge* properties will be deprecated and already act as proxies for
  modifying the itemBadgeAppearance of each badge directly.
-
- Defaults to nil.
  */
-@property(nonatomic, copy, null_resettable) MDCBadgeAppearance *itemBadgeAppearance;
+@property(nonatomic, copy, nonnull) MDCBadgeAppearance *itemBadgeAppearance;
 
 /**
  Default background color for badges.

@@ -1101,11 +1101,7 @@ static BOOL gEnablePerformantShadow = NO;
 #pragma mark - Configuring the visual appearance for all badges
 
 - (void)setItemBadgeAppearance:(MDCBadgeAppearance *)itemBadgeAppearance {
-  if (itemBadgeAppearance) {
-    _itemBadgeAppearance = [itemBadgeAppearance copy];
-  } else {
-    _itemBadgeAppearance = [[MDCBadgeAppearance alloc] init];
-  }
+  _itemBadgeAppearance = [itemBadgeAppearance copy];
 
   for (NSUInteger i = 0; i < self.items.count; ++i) {
     MDCBottomNavigationItemView *itemView = self.itemViews[i];
