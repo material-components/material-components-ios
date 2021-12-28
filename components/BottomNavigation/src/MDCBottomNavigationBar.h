@@ -262,7 +262,7 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
  */
 @property(nonatomic, copy, nullable)
     UIColor *itemBadgeBackgroundColor API_DEPRECATED_WITH_REPLACEMENT(
-        "itemBadgeAppearance", ios(12, API_TO_BE_DEPRECATED));
+        "itemBadgeAppearance.backgroundColor", ios(12, API_TO_BE_DEPRECATED));
 
 /**
  Text color for badges.
@@ -272,7 +272,7 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
  Default is white.
  */
 @property(nonatomic, copy, nullable) UIColor *itemBadgeTextColor API_DEPRECATED_WITH_REPLACEMENT(
-    "itemBadgeAppearance", ios(12, API_TO_BE_DEPRECATED));
+    "itemBadgeAppearance.textColor", ios(12, API_TO_BE_DEPRECATED));
 
 /**
  Text font for badges.
@@ -282,7 +282,7 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
  Default is a small system font.
  */
 @property(nonatomic, copy, nullable) UIFont *itemBadgeTextFont API_DEPRECATED_WITH_REPLACEMENT(
-    "itemBadgeAppearance", ios(12, API_TO_BE_DEPRECATED));
+    "itemBadgeAppearance.font", ios(12, API_TO_BE_DEPRECATED));
 
 @end
 

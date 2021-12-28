@@ -105,7 +105,7 @@ __attribute__((objc_subclassing_restricted))
  This property is a proxy for badgeAppearance.textColor.
  */
 @property(nonatomic, copy, null_resettable, direct)
-    UIColor *badgeTextColor API_DEPRECATED_WITH_REPLACEMENT("badgeAppearance",
+    UIColor *badgeTextColor API_DEPRECATED_WITH_REPLACEMENT("badgeAppearance.textColor",
                                                             ios(12, API_TO_BE_DEPRECATED));
 
 /**
@@ -114,7 +114,7 @@ __attribute__((objc_subclassing_restricted))
  This property is a proxy for badgeAppearance.font.
  */
 @property(nonatomic, copy, null_resettable, direct)
-    UIFont *badgeFont API_DEPRECATED_WITH_REPLACEMENT("badgeAppearance",
+    UIFont *badgeFont API_DEPRECATED_WITH_REPLACEMENT("badgeAppearance.font",
                                                       ios(12, API_TO_BE_DEPRECATED));
 
 #pragma mark - UILargeContentViewerItem
