@@ -32,7 +32,7 @@ __attribute__((objc_subclassing_restricted))
 @property(nonatomic, assign) UIOffset titlePositionAdjustment;
 
 @property(nonatomic, copy, nullable) NSString *title;
-@property(nonatomic, strong, nullable) UIFont *itemTitleFont UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong, nullable) UIFont *itemTitleFont;
 
 /**
  The number of lines available for rendering the title of this item.  Defaults to 1.
@@ -48,8 +48,8 @@ __attribute__((objc_subclassing_restricted))
 @property(nonatomic, strong, nullable) UIImage *selectedImage;
 @property(nonatomic, strong) UIImageView *iconImageView;
 
-@property(nonatomic, strong, nullable) UIColor *selectedItemTintColor UI_APPEARANCE_SELECTOR;
-@property(nonatomic, strong, nullable) UIColor *unselectedItemTintColor UI_APPEARANCE_SELECTOR;
+@property(nonatomic, strong, nullable) UIColor *selectedItemTintColor;
+@property(nonatomic, strong, nullable) UIColor *unselectedItemTintColor;
 @property(nonatomic, strong, nullable) UIColor *selectedItemTitleColor;
 
 @property(nonatomic, assign) CGFloat contentVerticalMargin;
