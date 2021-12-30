@@ -50,8 +50,6 @@ static const CGFloat kBarHeightAdjacentTitle = 40;
 static const CGFloat kItemsHorizontalMargin = 12;
 static const CGFloat kBadgeFontSize = 8;
 // Active indicator
-static const CGFloat kActiveIndicatorEnterAnimationDuration = .5;
-static const CGFloat kActiveIndicatorExitAnimationDuration = .1;
 static const CGFloat kDefaultActiveIndicatorHeight = 30;
 static const CGFloat kDefaultActiveIndicatorWidth = 60;
 
@@ -70,11 +68,11 @@ static const CGFloat kDefaultActiveIndicatorWidth = 60;
 @property(nonatomic, strong) NSMutableArray *inkControllers;
 @property(nonatomic, strong) UILayoutGuide *barItemsLayoutGuide NS_AVAILABLE_IOS(9_0);
 @property(nonatomic, assign) BOOL enableRippleBehavior;
-@property(nonatomic, strong) UIView *activeIndicator;
-@property(nonatomic, assign) BOOL useActiveIndicator;
-@property(nonatomic, assign) CGFloat activeIndicatorHeight;
-@property(nonatomic, assign) CGFloat activeIndicatorWidth;
-@property(nonatomic, strong, nonnull) UIColor *activeIndicatorColor;
+
+// Selection indicator
+@property(nonatomic, assign) BOOL showsSelectionIndicator;
+@property(nonatomic, assign) CGSize selectionIndicatorSize;
+@property(nonatomic, strong, nonnull) UIColor *selectionIndicatorColor;
 
 #if MDC_AVAILABLE_SDK_IOS(13_0)
 /**
@@ -136,13 +134,12 @@ static BOOL gEnablePerformantShadow = NO;
   _itemBadgeBackgroundColor = MDCPalette.redPalette.tint700;
 
   _itemsHorizontalPadding = kDefaultItemHorizontalPadding;
-  _useActiveIndicator = NO;
-  _activeIndicatorColor = [UIColor colorWithRed:195.f / 255.f
-                                          green:217.f / 255.f
-                                           blue:242.f / 255.f
-                                          alpha:1];
-  _activeIndicatorWidth = kDefaultActiveIndicatorWidth;
-  _activeIndicatorHeight = kDefaultActiveIndicatorHeight;
+  _showsSelectionIndicator = NO;
+  _selectionIndicatorColor = [UIColor colorWithRed:195.f / 255.f
+                                             green:217.f / 255.f
+                                              blue:242.f / 255.f
+                                             alpha:1];
+  _selectionIndicatorSize = CGSizeMake(kDefaultActiveIndicatorWidth, kDefaultActiveIndicatorHeight);
 
   // Remove any unarchived subviews and reconfigure the view hierarchy
   if (self.subviews.count) {
@@ -207,12 +204,6 @@ static BOOL gEnablePerformantShadow = NO;
 
   if (gEnablePerformantShadow) {
     [self updateShadow];
-  }
-
-  if (self.useActiveIndicator) {
-    MDCBottomNavigationItemView *selectedItemView =
-        (MDCBottomNavigationItemView *)[self viewForItem:self.selectedItem];
-    [self animateActiveIndicatorToItemView:selectedItemView];
   }
 }
 
@@ -627,6 +618,10 @@ static BOOL gEnablePerformantShadow = NO;
     itemView.contentHorizontalMargin = self.itemsContentHorizontalMargin;
     itemView.truncatesTitle = self.truncatesLongTitles;
     itemView.titlePositionAdjustment = item.titlePositionAdjustment;
+
+    itemView.selectionIndicatorColor = self.selectionIndicatorColor;
+    itemView.selectionIndicatorSize = self.selectionIndicatorSize;
+
     itemView.badgeAppearance = self.itemBadgeAppearance;
 
     // TODO(featherless): Delete once everyone has migrated to itemBadgeAppearance.
@@ -702,7 +697,6 @@ static BOOL gEnablePerformantShadow = NO;
     MDCBottomNavigationItemView *itemView = self.itemViews[i];
     if (selectedItem == item) {
       [itemView setSelected:YES animated:animated];
-      [self moveActiveIndicatorToItemView:itemView];
     } else {
       [itemView setSelected:NO animated:animated];
     }
@@ -854,93 +848,29 @@ static BOOL gEnablePerformantShadow = NO;
   [self setNeedsLayout];
 }
 
-- (void)setUseActiveIndicator:(BOOL)useActiveIndicator {
-  if (useActiveIndicator == _useActiveIndicator) {
+- (void)setShowsSelectionIndicator:(BOOL)showsSelectionIndicator {
+  if (showsSelectionIndicator == _showsSelectionIndicator) {
     return;
   }
-  _useActiveIndicator = useActiveIndicator;
-  if (_useActiveIndicator) {
-    self.activeIndicator = [[UIView alloc] init];
-    self.activeIndicator.backgroundColor = self.activeIndicatorColor;
-    self.activeIndicator.layer.cornerRadius = self.activeIndicatorHeight / 2;
-    [self.itemsLayoutView addSubview:self.activeIndicator];
-    [self.itemsLayoutView sendSubviewToBack:self.activeIndicator];
-    MDCBottomNavigationItemView *selectedItemView =
-        (MDCBottomNavigationItemView *)[self viewForItem:self.selectedItem];
-    [self animateActiveIndicatorToItemView:selectedItemView];
-  } else {
-    [self.activeIndicator removeFromSuperview];
-    self.activeIndicator = nil;
+  _showsSelectionIndicator = showsSelectionIndicator;
+  for (MDCBottomNavigationItemView *itemView in self.itemViews) {
+    itemView.showsSelectionIndicator = _showsSelectionIndicator;
   }
 }
 
-- (void)animateActiveIndicatorToItemView:(MDCBottomNavigationItemView *)itemView {
-  if (self.useActiveIndicator) {
-    CAMediaTimingFunction *timingFunction =
-        [[CAMediaTimingFunction alloc] initWithControlPoints:0.2f:0.0f:0.0f:1.0f];
-    [CATransaction begin];
-    [CATransaction setAnimationTimingFunction:timingFunction];
-    // Set height of active indicator
-    self.activeIndicator.frame = CGRectMake(0, 0, 0, self.activeIndicatorHeight);
-    // Add the active indicator with the correct height
-    self.activeIndicator.center = CGPointMake(
-        itemView.iconImageView.center.x + itemView.frame.origin.x, itemView.iconImageView.center.y);
-    // Animate active indicator out from the center along the horizontal axis
-    [UIView animateWithDuration:kActiveIndicatorEnterAnimationDuration
-                     animations:^{
-                       self.activeIndicator.frame = CGRectMake(
-                           self.activeIndicator.frame.origin.x - self.activeIndicatorWidth / 2,
-                           self.activeIndicator.frame.origin.y, self.activeIndicatorWidth,
-                           self.activeIndicatorHeight);
-                     }];
-    [CATransaction commit];
+- (void)setSelectionIndicatorColor:(UIColor *)selectionIndicatorColor {
+  _selectionIndicatorColor = selectionIndicatorColor;
+
+  for (MDCBottomNavigationItemView *itemView in self.itemViews) {
+    itemView.selectionIndicatorColor = _selectionIndicatorColor;
   }
 }
 
-- (void)moveActiveIndicatorToItemView:(MDCBottomNavigationItemView *)itemView {
-  if (self.useActiveIndicator) {
-    CAMediaTimingFunction *timingFunction =
-        [[CAMediaTimingFunction alloc] initWithControlPoints:0.0f:0.0f:1.0f:1.0f];
-    [CATransaction begin];
-    [CATransaction setAnimationTimingFunction:timingFunction];
-    [UIView animateWithDuration:kActiveIndicatorExitAnimationDuration
-        animations:^{
-          // Animate active indicator towards the center along the horizontal axis
-          self.activeIndicator.frame =
-              CGRectMake(self.activeIndicator.center.x, self.activeIndicator.frame.origin.y, 0,
-                         self.activeIndicator.frame.size.height);
-        }
-        completion:^(BOOL finished) {
-          [self animateActiveIndicatorToItemView:itemView];
-        }];
-    [CATransaction commit];
-  }
-}
+- (void)setActiveIndicatorSize:(CGSize)selectionIndicatorSize {
+  _selectionIndicatorSize = selectionIndicatorSize;
 
-- (void)setActiveIndicatorColor:(UIColor *)activeIndicatorColor {
-  _activeIndicatorColor = activeIndicatorColor;
-  if (self.useActiveIndicator) {
-    self.activeIndicator.backgroundColor = _activeIndicatorColor;
-  }
-}
-
-- (void)setActiveIndicatorWidth:(CGFloat)activeIndicatorWidth {
-  _activeIndicatorWidth = MAX(0, activeIndicatorWidth);
-  if (self.useActiveIndicator) {
-    self.activeIndicator.frame = CGRectMake(
-        self.activeIndicator.center.x - _activeIndicatorWidth / 2,
-        self.activeIndicator.frame.origin.y, self.activeIndicatorWidth, self.activeIndicatorHeight);
-  }
-}
-
-- (void)setActiveIndicatorHeight:(CGFloat)activeIndicatorHeight {
-  _activeIndicatorHeight = MAX(0, activeIndicatorHeight);
-  if (self.useActiveIndicator) {
-    self.activeIndicator.frame =
-        CGRectMake(self.activeIndicator.frame.origin.x,
-                   self.activeIndicator.center.y - _activeIndicatorHeight / 2,
-                   self.activeIndicatorWidth, self.activeIndicatorHeight);
-    self.activeIndicator.layer.cornerRadius = _activeIndicatorHeight / 2;
+  for (MDCBottomNavigationItemView *itemView in self.itemViews) {
+    itemView.selectionIndicatorSize = _selectionIndicatorSize;
   }
 }
 

@@ -29,6 +29,11 @@ static const CGFloat kMaxSizeDimension = 1000000;
 static const CGFloat MDCBottomNavigationItemViewInkOpacity = (CGFloat)0.150;
 static const CGFloat MDCBottomNavigationItemViewTitleFontSize = 12;
 
+// Selection indicator animation details.
+static const CGFloat kSelectionIndicatorTransformAnimationDuration = 0.25;
+static const CGFloat kSelectionIndicatorImageAnimationDuration = 0.15;
+static const CGFloat kSelectionIndicatorUnselectedScale = 0.8;
+
 /** The default value for @c numberOfLines for the title label. */
 static const NSInteger kDefaultTitleNumberOfLines = 1;
 
@@ -52,6 +57,30 @@ static const NSTimeInterval kMDCBottomNavigationItemViewLabelFadeOutAnimationDur
 // These values were chosen to achieve visual parity with UITabBar's highlight effect.
 const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, -12};
 
+#if TARGET_IPHONE_SIMULATOR
+UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coefficient.
+#endif
+
+static CGFloat SimulatorAnimationDragCoefficient(void) {
+#if TARGET_IPHONE_SIMULATOR
+  return UIAnimationDragCoefficient();
+#else
+  return 1.0;
+#endif
+}
+
+// We need this because the current layout logic deals so much with .center, which can result in
+// layouts getting sub-pixel misaligned. Using FloorScaled ensures that the origin values we're
+// computing from .center are properly pixel-aligned, reducing unnecessary aliasing.
+// Ideally, we would be doing layout based off of frames instead of .center, which would remove the
+// need for this function.
+static CGFloat FloorScaled(CGFloat value, CGFloat scale) {
+  if (scale == 0) {
+    return value;
+  }
+  return floor(value * scale) / scale;
+}
+
 @interface MDCBottomNavigationItemView ()
 
 @property(nonatomic, strong) UILabel *label;
@@ -61,6 +90,7 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
 
 @implementation MDCBottomNavigationItemView {
   MDCBadgeView *_Nonnull _badge;
+  UIView *_Nullable _selectionIndicator;
 }
 
 @synthesize badgeAppearance = _badgeAppearance;
@@ -180,6 +210,16 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
       (CGFloat)(hypot(CGRectGetHeight(self.bounds), CGRectGetWidth(self.bounds)) / 2);
   [self centerLayoutAnimated:NO];
   [self invalidatePointerInteractions];
+
+  if (_showsSelectionIndicator) {
+    CGPoint imageCenter = _iconImageView.center;
+    CGFloat screenScale = self.window.screen.scale;
+    _selectionIndicator.frame =
+        CGRectMake(FloorScaled(imageCenter.x - _selectionIndicatorSize.width / 2, screenScale),
+                   FloorScaled(imageCenter.y - _selectionIndicatorSize.height / 2, screenScale),
+                   _selectionIndicatorSize.width, _selectionIndicatorSize.height);
+    _selectionIndicator.layer.cornerRadius = _selectionIndicator.bounds.size.height / 2;
+  }
 }
 
 - (void)calculateVerticalLayoutInBounds:(CGRect)contentBounds
@@ -487,20 +527,55 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
   _selected = selected;
+
+  _selectionIndicator.hidden = !selected;
+
   if (selected) {
     self.label.textColor = self.selectedItemTitleColor;
-    self.iconImageView.tintColor = self.selectedItemTintColor;
     self.button.accessibilityTraits |= UIAccessibilityTraitSelected;
-    self.iconImageView.image = (self.selectedImage) ? self.selectedImage : self.image;
     [self updateLabelVisibility:animated];
   } else {
     self.label.textColor = self.unselectedItemTintColor;
-    self.iconImageView.tintColor = self.unselectedItemTintColor;
     self.button.accessibilityTraits &= ~UIAccessibilityTraitSelected;
-    self.iconImageView.image = self.image;
     [self updateLabelVisibility:animated];
   }
-  [self centerLayoutAnimated:animated];
+
+  void (^selectionIndicatorAnimations)(void) = ^{
+    [self commitSelectionIndicatorState];
+    [self centerLayoutAnimated:animated];
+  };
+  void (^imageAnimations)(void) = ^{
+    if (selected) {
+      self.iconImageView.tintColor = self.selectedItemTintColor;
+      self.iconImageView.image = (self.selectedImage) ? self.selectedImage : self.image;
+    } else {
+      self.iconImageView.tintColor = self.unselectedItemTintColor;
+      self.iconImageView.image = self.image;
+    }
+  };
+
+  // We only animate items that are newly selected so as to avoid creating unnecessary motion
+  // noise on the unselected item.
+  if (selected && animated && _showsSelectionIndicator) {
+    [UIView animateWithDuration:kSelectionIndicatorTransformAnimationDuration
+                     animations:selectionIndicatorAnimations];
+    [UIView animateWithDuration:kSelectionIndicatorImageAnimationDuration
+                          delay:0
+                        options:UIViewAnimationOptionCurveLinear
+                     animations:imageAnimations
+                     completion:nil];
+
+    CATransition *transition = [CATransition animation];
+    transition.duration =
+        kSelectionIndicatorImageAnimationDuration * SimulatorAnimationDragCoefficient();
+    transition.timingFunction =
+        [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    transition.type = kCATransitionFade;
+    [self.iconImageView.layer addAnimation:transition forKey:nil];
+  } else {
+    selectionIndicatorAnimations();
+    imageAnimations();
+  }
 }
 
 - (void)setSelectedItemTintColor:(UIColor *)selectedItemTintColor {
@@ -623,6 +698,54 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
 - (void)setTitleBelowIcon:(BOOL)titleBelowIcon {
   _titleBelowIcon = titleBelowIcon;
   self.label.numberOfLines = [self renderedTitleNumberOfLines];
+}
+
+#pragma mark - Configuring the selection appearance
+
+- (void)commitSelectionIndicatorState {
+  if (_selected) {
+    _selectionIndicator.transform = CGAffineTransformIdentity;
+    _selectionIndicator.alpha = 1.0;
+  } else {
+    _selectionIndicator.transform = CGAffineTransformMakeScale(kSelectionIndicatorUnselectedScale,
+                                                               kSelectionIndicatorUnselectedScale);
+    _selectionIndicator.alpha = 0;
+  }
+}
+
+- (void)setShowsSelectionIndicator:(BOOL)showsSelectionIndicator {
+  if (_showsSelectionIndicator == showsSelectionIndicator) {
+    return;
+  }
+  _showsSelectionIndicator = showsSelectionIndicator;
+
+  if (_showsSelectionIndicator) {
+    _selectionIndicator = [[UIView alloc] init];
+    _selectionIndicator.backgroundColor = _selectionIndicatorColor;
+    _selectionIndicator.hidden = !_selected;
+    [self commitSelectionIndicatorState];
+    [self insertSubview:_selectionIndicator belowSubview:_iconImageView];
+  } else {
+    [_selectionIndicator removeFromSuperview];
+    _selectionIndicator = nil;
+  }
+  [self setNeedsLayout];
+}
+
+- (void)setSelectionIndicatorSize:(CGSize)selectionIndicatorSize {
+  if (CGSizeEqualToSize(selectionIndicatorSize, _selectionIndicatorSize)) {
+    return;
+  }
+  _selectionIndicatorSize = selectionIndicatorSize;
+  if (_showsSelectionIndicator) {
+    [self setNeedsLayout];
+  }
+}
+
+- (void)setSelectionIndicatorColor:(UIColor *)selectionIndicatorColor {
+  _selectionIndicatorColor = selectionIndicatorColor;
+
+  _selectionIndicator.backgroundColor = selectionIndicatorColor;
 }
 
 #pragma mark - Configuring the ripple appearance

@@ -57,8 +57,6 @@ __attribute__((objc_subclassing_restricted))
 /** The @c accessibilityIdentifier of the accessibility element for this view. */
 @property(nonatomic, copy, nullable) NSString *accessibilityElementIdentifier;
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated;
-
 /**
  Returns a rect that is the union of all visible content views, inset by
  kMDCButtonNavigationItemViewPointerEffectHoverRectInset. This rect will never be larger than the
@@ -68,6 +66,28 @@ __attribute__((objc_subclassing_restricted))
  for a @c UIPointerStyle.
  */
 - (CGRect)pointerEffectHighlightRect;
+
+#pragma mark - Configuring the selection appearance
+
+/**
+ Changes the selection state, optionally with animation.
+
+ If @c showsSelectionIndicator is enabled, then the selection indicator will also be animated.
+ */
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated;
+
+/**
+ Configures whether an indicator is shown when @c selected is true.
+
+ If NO, then a selection indicator will never been shown regardless of @c selected state.
+ */
+@property(nonatomic) BOOL showsSelectionIndicator;
+
+/** The size of the selection indicator's bounds. */
+@property(nonatomic) CGSize selectionIndicatorSize;
+
+/** The background color of the selection indicator. */
+@property(nonatomic) UIColor *selectionIndicatorColor;
 
 #pragma mark - Configuring the ripple appearance
 
