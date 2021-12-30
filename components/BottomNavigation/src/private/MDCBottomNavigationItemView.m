@@ -510,10 +510,15 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
     self.iconImageView.tintColor = self.selectedItemTintColor;
     self.label.textColor = self.selectedItemTitleColor;
   }
-  UIColor *rippleColor =
-      [self.selectedItemTintColor colorWithAlphaComponent:MDCBottomNavigationItemViewInkOpacity];
-  self.inkView.inkColor = rippleColor;
-  self.rippleTouchController.rippleView.rippleColor = rippleColor;
+  if (!_rippleColor) {
+    UIColor *rippleColor =
+        [self.selectedItemTintColor colorWithAlphaComponent:MDCBottomNavigationItemViewInkOpacity];
+    if (!rippleColor) {
+      rippleColor = [UIColor clearColor];
+    }
+    self.inkView.inkColor = rippleColor;
+    self.rippleTouchController.rippleView.rippleColor = rippleColor;
+  }
 }
 
 - (void)setUnselectedItemTintColor:(UIColor *)unselectedItemTintColor {
@@ -618,6 +623,18 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
 - (void)setTitleBelowIcon:(BOOL)titleBelowIcon {
   _titleBelowIcon = titleBelowIcon;
   self.label.numberOfLines = [self renderedTitleNumberOfLines];
+}
+
+#pragma mark - Configuring the ripple appearance
+
+- (void)setRippleColor:(UIColor *)rippleColor {
+  _rippleColor = rippleColor;
+
+  if (!rippleColor) {
+    rippleColor = [UIColor clearColor];
+  }
+  self.inkView.inkColor = rippleColor;
+  self.rippleTouchController.rippleView.rippleColor = rippleColor;
 }
 
 #pragma mark - Displaying a value in the badge

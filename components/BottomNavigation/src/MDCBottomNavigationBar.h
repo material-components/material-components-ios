@@ -106,7 +106,14 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 /**
  Color of selected item. Applies color to items' icons and text. If set also sets
  selectedItemTitleColor. Default color is black.
- */
+
+ By default, setting this property will also configure the ripple and ink color of all item views.
+ If @c rippleColor has been set to a non-nil value, however, then this property will no longer
+ affect the color of ripple or ink behavior.
+
+ Use @c rippleColor to configure ripple color instead instead of relying on the side effect behavior
+ of this property. The side effect behavior of this property may be removed in the future.
+*/
 @property(nonatomic, strong, readwrite, nonnull)
     UIColor *selectedItemTintColor UI_APPEARANCE_SELECTOR;
 
@@ -233,6 +240,16 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
  @param item A UITabBarItem
  */
 - (nullable UIView *)viewForItem:(nonnull UITabBarItem *)item;
+
+#pragma mark - Configuring the ripple appearance
+
+/**
+ The color of the ripple effect shown when the user taps on an item.
+
+ When this property is nil, the ripple's color will be inferred from @c selectedItemTintColor. If
+ you want a clear ripple, you must set @c rippleColor to UIColor.clearColor.
+*/
+@property(nonatomic, strong, nullable) UIColor *rippleColor;
 
 #pragma mark - Configuring the default visual appearance for all badges
 

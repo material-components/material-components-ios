@@ -607,9 +607,15 @@ static BOOL gEnablePerformantShadow = NO;
     itemView.title = item.title;
     itemView.titleNumberOfLines = self.titlesNumberOfLines;
     itemView.itemTitleFont = self.itemTitleFont;
+
+    // rippleColor must be set before selectedItemTintColor because selectedItemTintColor's behavior
+    // depends on the value of rippleColor.
+    itemView.rippleColor = self.rippleColor;
     itemView.selectedItemTintColor = self.selectedItemTintColor;
+
     itemView.selectedItemTitleColor = self.selectedItemTitleColor;
     itemView.unselectedItemTintColor = self.unselectedItemTintColor;
+
     itemView.titleVisibility = self.titleVisibility;
     itemView.titleBelowIcon = self.isTitleBelowIcon;
     itemView.accessibilityValue = item.accessibilityValue;
@@ -621,7 +627,6 @@ static BOOL gEnablePerformantShadow = NO;
     itemView.contentHorizontalMargin = self.itemsContentHorizontalMargin;
     itemView.truncatesTitle = self.truncatesLongTitles;
     itemView.titlePositionAdjustment = item.titlePositionAdjustment;
-
     itemView.badgeAppearance = self.itemBadgeAppearance;
 
     // TODO(featherless): Delete once everyone has migrated to itemBadgeAppearance.
@@ -953,7 +958,7 @@ static BOOL gEnablePerformantShadow = NO;
 
 - (BOOL)inkTouchController:(MDCInkTouchController *)inkTouchController
     shouldProcessInkTouchesAtTouchLocation:(CGPoint)location {
-  if (self.enableRippleBehavior || self.useActiveIndicator) {
+  if (self.enableRippleBehavior) {
     return NO;
   }
   return YES;
@@ -964,7 +969,7 @@ static BOOL gEnablePerformantShadow = NO;
 
 - (BOOL)rippleTouchController:(MDCRippleTouchController *)rippleTouchController
     shouldProcessRippleTouchesAtTouchLocation:(CGPoint)location {
-  if (self.enableRippleBehavior && !self.useActiveIndicator) {
+  if (self.enableRippleBehavior) {
     return YES;
   }
   return NO;
@@ -1096,6 +1101,17 @@ static BOOL gEnablePerformantShadow = NO;
 
 + (BOOL)enablePerformantShadow {
   return gEnablePerformantShadow;
+}
+
+#pragma mark - Configuring the ripple appearance
+
+- (void)setRippleColor:(UIColor *)rippleColor {
+  _rippleColor = rippleColor;
+
+  for (NSUInteger i = 0; i < self.items.count; ++i) {
+    MDCBottomNavigationItemView *itemView = self.itemViews[i];
+    itemView.rippleColor = _rippleColor;
+  }
 }
 
 #pragma mark - Configuring the visual appearance for all badges

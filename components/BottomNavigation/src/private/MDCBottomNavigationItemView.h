@@ -69,6 +69,11 @@ __attribute__((objc_subclassing_restricted))
  */
 - (CGRect)pointerEffectHighlightRect;
 
+#pragma mark - Configuring the ripple appearance
+
+/** The color of the ripple effect shown when the user taps on an item. */
+@property(nonatomic, strong, nullable) UIColor *rippleColor;
+
 #pragma mark - Displaying a value in the badge
 
 /**
