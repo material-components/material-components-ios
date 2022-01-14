@@ -422,6 +422,15 @@ static inline CGPoint CGPointAddedToPoint(CGPoint a, CGPoint b) {
 }
 
 - (void)didTapView:(UITapGestureRecognizer *)tapGestureRecognizer {
+  BOOL hasVoiceOverFocusOnDismissView =
+      UIAccessibilityIsVoiceOverRunning() && [_accessibilityView accessibilityElementIsFocused];
+  if (self.interactionBlock && hasVoiceOverFocusOnDismissView) {
+    // Early return when the tap happens on the _accessibilityView as its accessibilityFrame
+    // (full-screen) should not be used for the position based calculation below.
+    self.interactionBlock(NO);
+    return;
+  }
+
   CGPoint pos = [tapGestureRecognizer locationInView:self];
   CGFloat pointDist = CGPointDistanceToPoint(_highlightPoint, pos);
   CGFloat centerDist = CGPointDistanceToPoint(_highlightCenter, pos);
