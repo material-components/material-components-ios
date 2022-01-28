@@ -392,14 +392,17 @@ class MDCCatalogComponentsController: UICollectionViewController,
     var cellWidthHeight: CGFloat
 
     // iPhones have 2 columns in portrait and 3 in landscape
-    if UI_USER_INTERFACE_IDIOM() == .phone {
+    if UIDevice.current.userInterfaceIdiom == .phone {
       cellWidthHeight = (view.frame.size.width - 3 * dividerWidth - safeInsets) / 2
       if view.frame.size.width > view.frame.size.height {
         cellWidthHeight = (view.frame.size.width - 4 * dividerWidth - safeInsets) / 3
       }
     } else {
-      // iPads have 4 columns
+      // iPads have 4 columns in portrait, and 5 in landscape
       cellWidthHeight = (view.frame.size.width - 5 * dividerWidth - safeInsets) / 4
+      if view.frame.size.width > view.frame.size.height {
+        cellWidthHeight = (view.frame.size.width - 6 * dividerWidth - safeInsets) / 5
+      }
     }
     return CGSize(width: cellWidthHeight, height: cellWidthHeight)
   }
