@@ -13,7 +13,6 @@
 // limitations under the License.
 
 import UIKit
-
 import MaterialComponents.MaterialTypography
 
 class MDCCatalogCollectionViewCell: UICollectionViewCell {
@@ -27,9 +26,10 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
   private lazy var tile = MDCCatalogTileView(frame: CGRect.zero)
 
   deinit {
-    NotificationCenter.default.removeObserver(self,
-                                              name: AppTheme.didChangeGlobalThemeNotificationName,
-                                              object: nil)
+    NotificationCenter.default.removeObserver(
+      self,
+      name: AppTheme.didChangeGlobalThemeNotificationName,
+      object: nil)
   }
 
   override init(frame: CGRect) {
@@ -70,12 +70,15 @@ class MDCCatalogCollectionViewCell: UICollectionViewCell {
       width: frame.width - Constants.padding * 2,
       height: label.frame.height
     )
-    tile.bounds = CGRect(x: 0,
-                         y: 0,
-                         width: Constants.imageWidthHeight,
-                         height: Constants.imageWidthHeight)
-    tile.center = CGPoint(x: contentView.bounds.width / 2,
-                          y: label.frame.minY / 2 )
+    label.textAlignment = .center
+    tile.bounds = CGRect(
+      x: 0,
+      y: 0,
+      width: Constants.imageWidthHeight,
+      height: Constants.imageWidthHeight)
+    tile.center = CGPoint(
+      x: contentView.bounds.width / 2,
+      y: label.frame.minY / 2)
   }
 
   override func prepareForReuse() {
