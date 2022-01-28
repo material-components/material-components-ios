@@ -39,8 +39,20 @@ class MDCCatalogDebugAlert: UICollectionViewController {
     return settings.count
   }
 
+  enum AlertConstants {
+    static let itemHeight: CGFloat = 44
+    static let contentSpacing: CGFloat = 3
+    static let contentInset: CGFloat = 10
+    static let cornerRadius: CGFloat = 10
+  }
+
   override var preferredContentSize: CGSize {
-    get { return CGSize(width: 400, height: numberOfRows * 44) }
+    get {
+      return CGSize(
+        width: 400,
+        height: numberOfRows * Int(AlertConstants.itemHeight) + 3
+          * Int(AlertConstants.contentSpacing) + 2 * Int(AlertConstants.contentInset))
+    }
     set { super.preferredContentSize = newValue }
   }
 
@@ -52,8 +64,13 @@ class MDCCatalogDebugAlert: UICollectionViewController {
   init(settings: [MDCCatalogDebugSetting]) {
     self.settings = settings
 
-    layout.minimumLineSpacing = 0
-    layout.minimumInteritemSpacing = 0
+    layout.minimumLineSpacing = AlertConstants.contentSpacing
+    layout.minimumInteritemSpacing = AlertConstants.contentSpacing
+    layout.sectionInset = UIEdgeInsets(
+      top: AlertConstants.contentInset,
+      left: AlertConstants.contentInset,
+      bottom: AlertConstants.contentInset,
+      right: AlertConstants.contentInset)
 
     super.init(collectionViewLayout: layout)
 
@@ -71,13 +88,14 @@ class MDCCatalogDebugAlert: UICollectionViewController {
     collectionView?.register(
       MDCCatalogDebugDismissCell.self,
       forCellWithReuseIdentifier: "dismiss")
+    collectionView?.layer.cornerRadius = AlertConstants.cornerRadius
   }
 
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
 
     if layout.itemSize.width != view.frame.width {
-      layout.itemSize = CGSize(width: view.frame.width, height: 44)
+      layout.itemSize = CGSize(width: view.frame.width, height: AlertConstants.itemHeight)
       layout.invalidateLayout()
     }
   }
@@ -131,6 +149,8 @@ private class MDCCatalogDebugToggleCell: UICollectionViewCell {
   let label = UILabel()
   let toggleSwitch = UISwitch()
 
+  let contentPadding: CGFloat = 10
+
   @available(*, unavailable)
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
@@ -152,7 +172,7 @@ private class MDCCatalogDebugToggleCell: UICollectionViewCell {
 
     let switchSize = toggleSwitch.sizeThatFits(contentView.bounds.size)
     var toggleSwitchFrame = CGRect(
-      x: width - switchSize.width - 10,
+      x: width - switchSize.width - contentPadding,
       y: (height - switchSize.height) / 2.0,
       width: switchSize.width,
       height: switchSize.height)
@@ -161,11 +181,12 @@ private class MDCCatalogDebugToggleCell: UICollectionViewCell {
     }
     toggleSwitch.frame = toggleSwitchFrame
 
-    label.frame = contentView.bounds.insetBy(dx: 10, dy: 10)
+    label.frame = contentView.bounds.insetBy(dx: contentPadding, dy: contentPadding)
   }
 
   override func sizeThatFits(_ size: CGSize) -> CGSize {
-    let paddedSize = CGSize(width: size.width - 10 * 2, height: size.height - 10 * 2)
+    let paddedSize = CGSize(
+      width: size.width - contentPadding * 2, height: size.height - contentPadding * 2)
     return label.sizeThatFits(paddedSize)
   }
 
@@ -178,6 +199,8 @@ private class MDCCatalogDebugToggleCell: UICollectionViewCell {
 
 class MDCCatalogDebugDismissCell: UICollectionViewCell {
   let label = UILabel()
+
+  let contentPadding: CGFloat = 10
 
   override var isHighlighted: Bool {
     get {
@@ -214,7 +237,8 @@ class MDCCatalogDebugDismissCell: UICollectionViewCell {
   }
 
   override func sizeThatFits(_ size: CGSize) -> CGSize {
-    let paddedSize = CGSize(width: size.width - 10 * 2, height: size.height - 10 * 2)
+    let paddedSize = CGSize(
+      width: size.width - contentPadding * 2, height: size.height - contentPadding * 2)
     return label.sizeThatFits(paddedSize)
   }
 }
