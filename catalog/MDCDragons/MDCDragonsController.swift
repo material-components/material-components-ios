@@ -300,14 +300,13 @@ class MDCDragonsController: UIViewController,
         headerView.trackingScrollView = scrollView
       }
       vc = container
-
       if let splitViewController = self.splitViewController {
         vc.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
         vc.navigationItem.leftItemsSupplementBackButton = true
         vc.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
       }
     } else {
-      self.navigationController?.setNavigationBarHidden(true, animated: true)
+      navigationController?.setNavigationBarHidden(true, animated: true)
     }
     /**
      The view should be pushed to the navigation controller for iPhones, and to the split view controller
@@ -316,8 +315,7 @@ class MDCDragonsController: UIViewController,
     if UIDevice.current.userInterfaceIdiom == .phone {
       self.navigationController?.pushViewController(vc, animated: true)
     } else {
-      let navigationController = UINavigationController(rootViewController: vc)
-      self.showDetailViewController(navigationController, sender: self)
+      self.showDetailViewController(vc, sender: self)
       self.splitViewController?.toggleSideBarView()
     }
   }
