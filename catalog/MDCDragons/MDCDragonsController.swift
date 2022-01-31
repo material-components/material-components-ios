@@ -275,12 +275,12 @@ class MDCDragonsController: UIViewController,
 
   func setupTransition(nodeData: DragonCell) {
     var vc = nodeData.node.createExampleViewController()
+    vc.title = nodeData.node.title
 
     let containerSchemeSel = NSSelectorFromString("setContainerScheme:")
     if vc.responds(to: containerSchemeSel) {
       vc.perform(containerSchemeSel, with: containerScheme)
     }
-
     if !vc.responds(to: NSSelectorFromString("catalogShouldHideNavigation")) {
       let container = MDCAppBarContainerViewController(contentViewController: vc)
       container.appBar.headerViewController.headerView.backgroundColor =
@@ -292,7 +292,6 @@ class MDCDragonsController: UIViewController,
           .font: UIFont.systemFont(ofSize: 16),
         ]
       container.isTopLayoutGuideAdjustmentEnabled = true
-      vc.title = nodeData.node.title
 
       let headerView = container.appBar.headerViewController.headerView
       if let collectionVC = vc as? UICollectionViewController {
@@ -301,10 +300,27 @@ class MDCDragonsController: UIViewController,
         headerView.trackingScrollView = scrollView
       }
       vc = container
-    }
-    self.navigationController?.pushViewController(vc, animated: true)
-  }
 
+      if let splitViewController = self.splitViewController {
+        vc.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
+        vc.navigationItem.leftItemsSupplementBackButton = true
+        vc.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
+      }
+    } else {
+      self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    /**
+     The view should be pushed to the navigation controller for iPhones, and to the split view controller
+     for larger devices.
+     */
+    if UIDevice.current.userInterfaceIdiom == .phone {
+      self.navigationController?.pushViewController(vc, animated: true)
+    } else {
+      let navigationController = UINavigationController(rootViewController: vc)
+      self.showDetailViewController(navigationController, sender: self)
+      self.splitViewController?.toggleSideBarView()
+    }
+  }
 }
 
 // UIScrollViewDelegate
