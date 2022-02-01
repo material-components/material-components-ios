@@ -41,9 +41,7 @@
   NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
                                  UIControlStateHighlighted | UIControlStateDisabled;
   for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
-    if ([button titleFontForState:state] != nil) {
-      XCTAssertEqual([button titleFontForState:state], typographyScheme.button);
-    }
+    XCTAssertEqual([button titleFontForState:state], typographyScheme.button);
   }
 }
 

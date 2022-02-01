@@ -944,7 +944,7 @@ static BOOL gEnablePerformantShadow = NO;
 
 #pragma mark - Title Font
 
-- (nullable UIFont *)titleFontForState:(UIControlState)state {
+- (nonnull UIFont *)titleFontForState:(UIControlState)state {
   // If the `.highlighted` flag is set, turn off the `.disabled` flag
   if ((state & UIControlStateHighlighted) == UIControlStateHighlighted) {
     state = state & ~UIControlStateDisabled;

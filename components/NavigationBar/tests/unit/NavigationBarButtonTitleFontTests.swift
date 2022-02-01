@@ -53,11 +53,8 @@ class NavigationBarButtonTitleFontTests: XCTestCase {
     // Then
     for view in recursiveSubviews(of: navigationBar) {
       if let button = view as? MDCButton {
-        if let font = button.titleFont(for: .normal) {
-          XCTAssertTrue(font.mdc_isSimplyEqual(MDCTypography.buttonFont()))
-        } else {
-          XCTAssertTrue(false, "The button's titleFont for .normal should not be nil.")
-        }
+        let font = button.titleFont(for: .normal)
+        XCTAssertTrue(font.mdc_isSimplyEqual(MDCTypography.buttonFont()))
       }
     }
   }

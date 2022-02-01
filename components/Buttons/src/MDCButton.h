@@ -400,7 +400,7 @@
 
  @note This API will eventually be deprecated and removed.
  */
-- (nullable UIFont *)titleFontForState:(UIControlState)state;
+- (nonnull UIFont *)titleFontForState:(UIControlState)state;
 
 /**
  If @c true, @c accessiblityTraits will always include @c UIAccessibilityTraitButton.
