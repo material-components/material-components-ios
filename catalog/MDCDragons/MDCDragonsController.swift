@@ -515,7 +515,7 @@ extension MDCDragonsController {
           CBCNode
         > { (cell, indexPath, menuItem) in
           // Populate the cell with our item description.
-          var contentConfiguration = cell.defaultContentConfiguration()
+          var contentConfiguration = UIListContentConfiguration.sidebarCell()
           contentConfiguration.text = menuItem.title
           contentConfiguration.textProperties.color =
             self.containerScheme.colorScheme.onBackgroundColor
@@ -523,7 +523,7 @@ extension MDCDragonsController {
 
           let disclosureOptions = UICellAccessory.OutlineDisclosureOptions(style: .header)
           cell.accessories = [.outlineDisclosure(options: disclosureOptions)]
-          cell.backgroundConfiguration = UIBackgroundConfiguration.clear()
+          cell.backgroundConfiguration = UIBackgroundConfiguration.listSidebarCell()
         }
 
       let cellRegistration =
@@ -532,12 +532,12 @@ extension MDCDragonsController {
           CBCNode
         > { cell, indexPath, menuItem in
           // Populate the cell with our item description.
-          var contentConfiguration = cell.defaultContentConfiguration()
+          var contentConfiguration = UIListContentConfiguration.sidebarCell()
           contentConfiguration.text = menuItem.title
           contentConfiguration.textProperties.color =
             self.containerScheme.colorScheme.onBackgroundColor
           cell.contentConfiguration = contentConfiguration
-          cell.backgroundConfiguration = UIBackgroundConfiguration.clear()
+          cell.backgroundConfiguration = UIBackgroundConfiguration.listSidebarCell()
         }
 
       dataSource =
@@ -566,7 +566,7 @@ extension MDCDragonsController {
 
     @available(iOS 14.0, *)
     func generateLayout() -> UICollectionViewLayout {
-      let listConfiguration = UICollectionLayoutListConfiguration(appearance: .plain)
+      let listConfiguration = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
       let layout = UICollectionViewCompositionalLayout.list(using: listConfiguration)
       return layout
     }
