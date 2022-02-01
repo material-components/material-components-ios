@@ -30,8 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     UIApplication.shared.statusBarStyle = .lightContent
 
     let componentsRoot = CBCCreateNavigationTree()
-    var rootNodeViewController: UIViewController
-
+    let rootNodeViewController: UIViewController
     /**
      To have your example show up as the initial view controller, you need it to implement
      the method `@objc class func catalogIsDebug() -> Bool` and have it return true.
@@ -67,6 +66,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     -> UISplitViewController
   {
     let splitViewController = UISplitViewController()
+    splitViewController.minimumPrimaryColumnWidth = 250
+    splitViewController.maximumPrimaryColumnWidth = 250
 
     let initialDetailVC = InitialSecondaryViewController()
     initialDetailVC.navigationItem.setLeftBarButton(
