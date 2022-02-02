@@ -276,6 +276,9 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
   // necessary to restrict chip creation based on input text generated in the user interface.
   // Clients calling |addChip| directly programmatically are expected to handle such restrictions
   // themselves rather than using |chipField:shouldAddChip| to prevent chips from being added.
+  if (self.showChipsDeleteButton) {
+    [self addClearButtonToChip:chip];
+  }
   [_chips addObject:chip];
   [self addChipSubview:chip];
   if ([self.delegate respondsToSelector:@selector(chipField:didAddChip:)]) {
@@ -359,9 +362,6 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
   if (strippedTitle.length > 0) {
     MDCChipView *chip = [[MDCChipView alloc] init];
     chip.titleLabel.text = strippedTitle;
-    if (self.showChipsDeleteButton) {
-      [self addClearButtonToChip:chip];
-    }
     BOOL shouldAddChip = YES;
     if ([self.delegate respondsToSelector:@selector(chipField:shouldAddChip:)]) {
       shouldAddChip = [self.delegate chipField:self shouldAddChip:chip];
