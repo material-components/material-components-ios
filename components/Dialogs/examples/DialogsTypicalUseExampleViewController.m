@@ -13,13 +13,13 @@
 // limitations under the License.
 #import <UIKit/UIKit.h>
 
-#import "MaterialButtons.h"
-#import "MaterialButtons+Theming.h"
-#import "MaterialDialogs.h"
-#import "MaterialDialogs+Theming.h"
-#import "MaterialColorScheme.h"
-#import "MaterialContainerScheme.h"
-#import "MaterialTypographyScheme.h"
+#import "MDCButton.h"
+#import "MDCButton+MaterialTheming.h"
+#import "MDCAlertController.h"
+#import "MDCAlertController+MaterialTheming.h"
+#import "MDCSemanticColorScheme.h"
+#import "MDCContainerScheme.h"
+#import "MDCTypographyScheme.h"
 
 static NSString *const kTitleString = @"Reset Settings?";
 static NSString *const kMessageString =
@@ -81,7 +81,6 @@ static NSString *const kMessageString =
 - (void)showMaterialAlert:(UIButton *)button {
   MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:kTitleString
                                                                    message:kMessageString];
-  alert.mdc_adjustsFontForContentSizeCategory = YES;
   alert.enableRippleBehavior = YES;
   MDCActionHandler handler = ^(MDCAlertAction *action) {
     NSLog(@"action pressed: %@", action.title);
@@ -89,15 +88,14 @@ static NSString *const kMessageString =
 
   [alert addAction:[MDCAlertAction actionWithTitle:@"Accept" handler:handler]];
   [alert addAction:[MDCAlertAction actionWithTitle:@"Cancel" handler:handler]];
-
   [alert applyThemeWithScheme:self.containerScheme];
+  alert.adjustsFontForContentSizeCategory = YES;
   [self presentViewController:alert animated:YES completion:NULL];
 }
 
 - (void)showStyledActionsAlert:(UIButton *)button {
   MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:kTitleString
                                                                    message:kMessageString];
-  alert.mdc_adjustsFontForContentSizeCategory = YES;
   alert.enableRippleBehavior = YES;
   MDCActionHandler handler = ^(MDCAlertAction *action) {
     NSLog(@"action pressed: %@", action.title);
@@ -111,6 +109,7 @@ static NSString *const kMessageString =
                                            handler:handler]];
 
   [alert applyThemeWithScheme:self.containerScheme];
+  alert.adjustsFontForContentSizeCategory = YES;
   [self presentViewController:alert animated:YES completion:NULL];
 }
 
