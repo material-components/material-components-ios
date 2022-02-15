@@ -71,6 +71,18 @@
 @property(nonatomic, strong, nullable) UIColor *scrimColor;
 
 /**
+ If @c YES, then the dimmed scrim view will act as an accessibility element for dismissing the
+ bottom drawer.
+ Default is NO.
+ */
+@property(nonatomic, assign) BOOL isScrimAccessibilityElement;
+
+/**
+ The @c accessibilityLabel value of the dimmed scrim view.
+ */
+@property(nullable, nonatomic, copy) NSString *scrimAccessibilityLabel;
+
+/**
  A Boolean value that determines whether the top handle of the drawer is hidden.
  Default is YES.
  */

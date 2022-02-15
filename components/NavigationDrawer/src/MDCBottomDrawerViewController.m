@@ -169,6 +169,40 @@
   }
 }
 
+- (void)setIsScrimAccessibilityElement:(BOOL)isScrimAccessibilityElement {
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    bottomDrawerPresentationController.isScrimAccessibilityElement = isScrimAccessibilityElement;
+  }
+}
+
+- (BOOL)isScrimAccessibilityElement {
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    return bottomDrawerPresentationController.isScrimAccessibilityElement;
+  }
+  return NO;
+}
+
+- (void)setScrimAccessibilityLabel:(NSString *)scrimAccessibilityLabel {
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    bottomDrawerPresentationController.scrimAccessibilityLabel = scrimAccessibilityLabel;
+  }
+}
+
+- (NSString *)scrimAccessibilityLabel {
+  if ([self.presentationController isKindOfClass:[MDCBottomDrawerPresentationController class]]) {
+    MDCBottomDrawerPresentationController *bottomDrawerPresentationController =
+        (MDCBottomDrawerPresentationController *)self.presentationController;
+    return bottomDrawerPresentationController.scrimAccessibilityLabel;
+  }
+  return nil;
+}
+
 - (BOOL)isAccessibilityMode {
   if (self.disableFullScreenVoiceOver) {
     return NO;

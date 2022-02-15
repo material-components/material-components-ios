@@ -25,10 +25,21 @@ static CGFloat kTopHandleHeight = (CGFloat)2.0;
 static CGFloat kTopHandleWidth = (CGFloat)24.0;
 static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 
+@protocol MDCBottomDrawerScrimViewDelegate
+
+/** Called when the scrim view is activated via accessibility controls. */
+- (void)didTapScrimViaAccessibilityActivation;
+
+@end
+
 /** View that allows touches that aren't handled from within the view to be propagated up the
  responder chain. This is used to allow forwarding of tap events from the scrim view through to
  the delegate if that has been enabled on the VC. */
 @interface MDCBottomDrawerScrimView : UIView
+
+/** Delegate informed when an accessibility activation occurs on the scrim view. */
+@property(nonatomic, weak) id<MDCBottomDrawerScrimViewDelegate> delegate;
+
 @end
 
 @implementation MDCBottomDrawerScrimView
@@ -40,15 +51,21 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   return view == self ? nil : view;
 }
 
+- (BOOL)accessibilityActivate {
+  [self.delegate didTapScrimViaAccessibilityActivation];
+  return YES;
+}
+
 @end
 
 @interface MDCBottomDrawerPresentationController () <UIGestureRecognizerDelegate,
-                                                     MDCBottomDrawerContainerViewControllerDelegate>
+                                                     MDCBottomDrawerContainerViewControllerDelegate,
+                                                     MDCBottomDrawerScrimViewDelegate>
 
 /**
  A semi-transparent scrim view that darkens the visible main view when the drawer is displayed.
  */
-@property(nonatomic) UIView *scrimView;
+@property(nonatomic) MDCBottomDrawerScrimView *scrimView;
 
 /**
  The top handle view at the top of the drawer to provide a visual affordance for scrollability.
@@ -64,6 +81,8 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 
 @implementation MDCBottomDrawerPresentationController {
   UIColor *_scrimColor;
+  BOOL _isScrimAccessibilityElement;
+  NSString *_scrimAccessibilityLabel;
 }
 
 @synthesize delegate;
@@ -141,12 +160,14 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   self.bottomDrawerContainerViewController.delegate = self;
 
   self.scrimView = [[MDCBottomDrawerScrimView alloc] initWithFrame:self.containerView.bounds];
+  self.scrimView.delegate = self;
   self.scrimView.backgroundColor = self.scrimColor;
   self.scrimView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   self.scrimView.accessibilityIdentifier = @"Close drawer";
   self.scrimView.accessibilityTraits |= UIAccessibilityTraitButton;
-
+  self.scrimView.isAccessibilityElement = _isScrimAccessibilityElement;
+  self.scrimView.accessibilityLabel = _scrimAccessibilityLabel ?: @"Dismiss";
   [self.containerView addSubview:self.scrimView];
 
   self.topHandle =
@@ -342,6 +363,24 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   return _scrimColor ?: [UIColor colorWithWhite:0 alpha:(CGFloat)0.32];
 }
 
+- (void)setIsScrimAccessibilityElement:(BOOL)isScrimAccessibilityElement {
+  _isScrimAccessibilityElement = isScrimAccessibilityElement;
+  self.scrimView.isAccessibilityElement = isScrimAccessibilityElement;
+}
+
+- (BOOL)isScrimAccessibilityElement {
+  return _isScrimAccessibilityElement;
+}
+
+- (void)setScrimAccessibilityLabel:(NSString *)scrimAccessibilityLabel {
+  _scrimAccessibilityLabel = scrimAccessibilityLabel;
+  self.scrimView.accessibilityLabel = scrimAccessibilityLabel;
+}
+
+- (NSString *)scrimAccessibilityLabel {
+  return _scrimAccessibilityLabel;
+}
+
 - (void)setTopHandleHidden:(BOOL)topHandleHidden {
   _topHandleHidden = topHandleHidden;
   self.topHandle.hidden = topHandleHidden;
@@ -422,6 +461,12 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   if (self.dismissOnBackgroundTap) {
     [self hideDrawer];
   }
+}
+
+#pragma mark - MDCBottomDrawerScrimViewDelegate
+
+- (void)didTapScrimViaAccessibilityActivation {
+  [self scrimTapped];
 }
 
 #pragma mark UIGestureRecognizerDelegate

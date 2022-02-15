@@ -42,6 +42,17 @@
 @property(nonatomic, strong, nullable) UIColor *scrimColor;
 
 /**
+ If @c YES, then the dimmed scrim view will act as an accessibility element for dismissing the
+ bottom drawer.
+ */
+@property(nonatomic, assign) BOOL isScrimAccessibilityElement;
+
+/**
+ The @c accessibilityLabel value of the dimmed scrim view.
+ */
+@property(nullable, nonatomic, copy) NSString *scrimAccessibilityLabel;
+
+/**
  Delegate to tell the presenter when the drawer will change state.
  */
 @property(nonatomic, weak, nullable) id<MDCBottomDrawerPresentationControllerDelegate> delegate;
