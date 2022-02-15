@@ -21,3 +21,17 @@
 - (BOOL)willChangeSizeWithSelectedValue:(BOOL)selected;
 
 @end
+
+@interface MDCChipView ()
+
+/**
+ A collection of MDCShadow instances each assigned an elevation (in dp).
+
+ To create your own MDCShadowsCollection, please use the provided MDCShadowsCollectionBuilder and
+ populate it with MDCShadow instances using the provided MDCShadowBuilder.
+
+ Defaults to MDCShadowsCollectionDefault().
+ */
+@property(nonatomic, strong, null_resettable) MDCShadowsCollection *shadowsCollection;
+
+@end

@@ -16,6 +16,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialElevation.h"
+#import "MaterialShadow.h"
 #import "MaterialShadowElevations.h"
 #import "MaterialShapes.h"
 
