@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import UIKit
+import MaterialComponents.MaterialBadges
 
 @available(iOS 13.0, *)
 @objc(MDCNavigationRailItemView)
@@ -57,12 +58,9 @@ public class NavigationRailItemView: UIControl {
     return label
   }()
 
-  //TODO: Look into migrating to MDCBadgeView to be consistent with the BottomNavigation implementation.
-  let badge: UILabel = {
-    let badge = UILabel()
+  let badge: MDCBadgeView = {
+    let badge = MDCBadgeView()
     badge.translatesAutoresizingMaskIntoConstraints = false
-    badge.textAlignment = .center
-    badge.clipsToBounds = true
     return badge
   }()
 

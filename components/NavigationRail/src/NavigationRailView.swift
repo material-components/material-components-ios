@@ -14,6 +14,7 @@
 
 import Combine
 import UIKit
+import MaterialComponents.MaterialBadges_Appearance 
 import MaterialComponents.MaterialRipple
 
 @available(iOS 13.0, *)
@@ -440,9 +441,11 @@ public class NavigationRailView: UIView {
         itemView.setImageTintColor(itemProperties.tintColor, for: .normal)
         itemView.setImageTintColor(itemProperties.selectedTintColor, for: .selected)
         itemView.hideLabel = itemProperties.isTitleHidden
-        itemView.badge.backgroundColor = itemProperties.badgeColor
-        itemView.badge.textColor = itemProperties.badgeTextColor
-        itemView.badge.font = itemProperties.badgeTextFont
+        var badgeAppearance = MDCBadgeAppearance()
+        badgeAppearance.backgroundColor = itemProperties.badgeColor
+        badgeAppearance.textColor = itemProperties.badgeTextColor
+        badgeAppearance.font = itemProperties.badgeTextFont
+        itemView.badge.appearance = badgeAppearance
         itemView.activeIndicator.backgroundColor = itemProperties.activeIndicatorColor
       }
     }

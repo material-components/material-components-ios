@@ -23,13 +23,17 @@ class NavigationRailViewTypicalUse: UIViewController, NavigationRailViewDelegate
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .systemBackground
-    navigationRail.items = [
+    let items = [
       UITabBarItem(title: "Item 1", image: UIImage(systemName: "heart"), tag: 100),
       UITabBarItem(title: "Item 2", image: UIImage(systemName: "heart"), tag: 100),
       UITabBarItem(title: "Item 3", image: UIImage(systemName: "heart"), tag: 100),
       UITabBarItem(title: "Item 4", image: UIImage(systemName: "heart"), tag: 100),
     ]
+    items[0].badgeValue = "1"
+    items[1].badgeValue = "1"
+    navigationRail.items = items
     view.addSubview(navigationRail)
+    navigationRail.selectedItem = items[0]
     navigationRail.translatesAutoresizingMaskIntoConstraints = false
     navigationRail.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
     navigationRail.topAnchor.constraint(equalTo: view.topAnchor).isActive = true

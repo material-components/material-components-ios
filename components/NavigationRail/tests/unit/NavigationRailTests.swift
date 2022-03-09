@@ -192,7 +192,6 @@ class NavigationRailTests: XCTestCase {
 
       // When
       navigationRail.items = items
-      navigationRail.layoutIfNeeded()
 
       // Then
       XCTAssertEqual(navigationRail.itemsStackView.arrangedSubviews.count, items.count)
@@ -351,9 +350,10 @@ class NavigationRailTests: XCTestCase {
       XCTAssertEqual(firstItem?.imageTintColor(for: .normal), .label)
       XCTAssertEqual(firstItem?.imageTintColor(for: .selected), .systemIndigo)
       XCTAssertFalse(firstItem!.hideLabel)
-      XCTAssertEqual(firstItem?.badge.backgroundColor?.cgColor, UIColor.systemRed.cgColor)
-      XCTAssertEqual(firstItem?.badge.textColor, .white)
-      XCTAssertEqual(firstItem?.badge.font, .systemFont(ofSize: 11))
+      XCTAssertEqual(firstItem?.badge.appearance.textColor, .white)
+      XCTAssertEqual(firstItem?.badge.appearance.font, .systemFont(ofSize: 11))
+      XCTAssertEqual(
+        firstItem?.badge.appearance.backgroundColor?.cgColor, UIColor.systemRed.cgColor)
     }
   }
 
@@ -406,9 +406,9 @@ class NavigationRailTests: XCTestCase {
       XCTAssertEqual(firstItem?.imageTintColor(for: .normal), .green)
       XCTAssertEqual(firstItem?.imageTintColor(for: .selected), .white)
       XCTAssertTrue(firstItem!.hideLabel)
-      XCTAssertEqual(firstItem?.badge.backgroundColor, .blue)
-      XCTAssertEqual(firstItem?.badge.textColor, .red)
-      XCTAssertEqual(firstItem?.badge.font, .systemFont(ofSize: 34))
+      XCTAssertEqual(firstItem?.badge.appearance.backgroundColor, .blue)
+      XCTAssertEqual(firstItem?.badge.appearance.textColor, .red)
+      XCTAssertEqual(firstItem?.badge.appearance.font, .systemFont(ofSize: 34))
     }
   }
 }
