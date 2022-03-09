@@ -17,7 +17,6 @@ import UIKit
 @available(iOS 13.0, *)
 @objc(MDCNavigationRailItemView)
 public class NavigationRailItemView: UIControl {
-  //TODO: Add UILargeContentViewerInteraction support to NavigationRailItemView.
 
   weak var item: UITabBarItem?
 
@@ -120,6 +119,7 @@ public class NavigationRailItemView: UIControl {
     didSet {
       guard let labelText = labelText else { return }
       label.text = labelText
+      largeContentTitle = labelText
     }
   }
 
@@ -148,6 +148,10 @@ public class NavigationRailItemView: UIControl {
     self.init(frame: .zero)
 
     self.item = item
+    largeContentImage = item.largeContentSizeImage ?? item.image
+    largeContentTitle = item.title
+    scalesLargeContentImage = largeContentImage != nil ? true : false
+    showsLargeContentViewer = true
     isSelected = false
   }
 

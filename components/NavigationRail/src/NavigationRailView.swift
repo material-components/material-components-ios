@@ -288,6 +288,8 @@ public class NavigationRailView: UIView {
     }
   }
 
+  private var lastLargeContentViewerItem: UILargeContentViewerItem? = nil
+
   private var cancellables = [AnyCancellable]()
 
   var isTextHidden = false {
@@ -406,6 +408,7 @@ public class NavigationRailView: UIView {
     super.init(frame: frame)
 
     self.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    addInteraction(UILargeContentViewerInteraction(delegate: self))
   }
 
   required init?(coder: NSCoder) {
@@ -487,3 +490,33 @@ public class NavigationRailView: UIView {
     self.delegate?.navigationRail?(self, didTapFloatingActionButton: sender)
   }
 }
+
+#if !os(tvOS)
+  @available(iOS 13.0, *)
+  extension NavigationRailView: UILargeContentViewerInteractionDelegate {
+    public func largeContentViewerInteraction(
+      _ interaction: UILargeContentViewerInteraction, didEndOn item: UILargeContentViewerItem?,
+      at point: CGPoint
+    ) {
+      lastLargeContentViewerItem = nil
+    }
+
+    public func largeContentViewerInteraction(
+      _ interaction: UILargeContentViewerInteraction, itemAt point: CGPoint
+    ) -> UILargeContentViewerItem? {
+
+      if !self.bounds.contains(point) {
+        lastLargeContentViewerItem = nil
+        return nil
+      }
+
+      for subview in itemsStackView.subviews {
+        let bounds = subview.convert(subview.bounds, to: self.coordinateSpace)
+        if bounds.contains(point) {
+          lastLargeContentViewerItem = subview
+        }
+      }
+      return lastLargeContentViewerItem
+    }
+  }
+#endif
