@@ -16,7 +16,6 @@ import UIKit
 import MaterialComponents.MaterialLibraryInfo
 import MaterialComponents.MaterialIcons
 import MaterialComponents.MaterialIcons_ic_color_lens
-import MaterialComponents.MaterialIcons_ic_feedback
 import MaterialComponents.MaterialIcons_ic_help_outline
 import MaterialComponents.MaterialIcons_ic_settings
 
@@ -38,13 +37,6 @@ class MDCMenuViewController: UITableViewController {
     }
   }
 
-  private let feedback: MDCFeedback? = {
-    // Using "as? MDCFeedback" (as opposed to "as MDCFeedback?") to avoid a build time error that
-    // occurs when MDCCatalogWindow does not conform to MDCFeedback.
-    return (UIApplication.shared.delegate as? AppDelegate)?.window as? MDCCatalogWindow
-      as? MDCFeedback
-  }()
-
   private lazy var tableData: [MDCMenuItem] = {
     var data = [
       MDCMenuItem(
@@ -58,12 +50,6 @@ class MDCMenuViewController: UITableViewController {
         MDCIcons.imageFor_ic_help_outline()?.withRenderingMode(.alwaysTemplate),
         "Version \(MDCLibraryInfo.versionString)", "Closes this menu."),
     ]
-    if feedback != nil {
-      data.insert(
-        MDCMenuItem(
-          "Leave feedback", MDCIcons.imageFor_ic_feedback()?.withRenderingMode(.alwaysTemplate),
-          nil, "Opens debugging menu."), at: 0)
-    }
     return data
   }()
 
@@ -104,17 +90,8 @@ class MDCMenuViewController: UITableViewController {
     guard let navController = self.presentingViewController as? UINavigationController else {
       return
     }
-    let action = feedback == nil ? indexPath.item + 1 : indexPath.item
-    switch action {
+    switch indexPath.item {
     case 0:
-      self.dismiss(
-        animated: true,
-        completion: {
-          if let feedback = self.feedback {
-            feedback.showFeedbackDialog()
-          }
-        })
-    case 1:
       self.dismiss(
         animated: true,
         completion: {
@@ -124,7 +101,7 @@ class MDCMenuViewController: UITableViewController {
             window.showDebugSettings()
           }
         })
-    case 2:
+    case 1:
       self.dismiss(
         animated: true,
         completion: {

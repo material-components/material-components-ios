@@ -135,7 +135,3 @@ class MDCTouchView: UIView {
     isUserInteractionEnabled = false
   }
 }
-
-protocol MDCFeedback {
-  func showFeedbackDialog()
-}

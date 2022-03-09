@@ -19,14 +19,14 @@ import CatalogByConvention
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-  var window: MDCCatalogWindow?
+  var window: UIWindow?
   var splitViewController: UISplitViewController?
 
   func application(
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
-    self.window = MDCCatalogWindow(frame: UIScreen.main.bounds)
+    self.window = UIWindow(frame: UIScreen.main.bounds)
     UIApplication.shared.statusBarStyle = .lightContent
 
     let componentsRoot = CBCCreateNavigationTree()
