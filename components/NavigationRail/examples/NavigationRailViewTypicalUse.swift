@@ -35,7 +35,7 @@ class NavigationRailViewTypicalUse: UIViewController, NavigationRailViewDelegate
     view.addSubview(navigationRail)
     navigationRail.selectedItem = items[0]
     navigationRail.translatesAutoresizingMaskIntoConstraints = false
-    navigationRail.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+    navigationRail.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
     navigationRail.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
     navigationRail.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     navigationRail.widthAnchor.constraint(equalToConstant: 80).isActive = true
