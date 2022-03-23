@@ -124,7 +124,7 @@ class DialogsAccessoryExampleViewController: MDCCollectionViewController {
     namefield.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
 
     alert.accessoryView = view
-    alert.mdc_adjustsFontForContentSizeCategory = true  // Enable dynamic type.
+    alert.adjustsFontForContentSizeCategory = true  // Enable dynamic type.
     alert.applyTheme(withScheme: self.containerScheme)
     return alert
   }
