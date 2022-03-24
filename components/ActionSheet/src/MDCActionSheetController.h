@@ -45,7 +45,11 @@
  in a sheet from the bottom.
 
  */
-__attribute__((objc_subclassing_restricted)) @interface MDCActionSheetController
+API_DEPRECATED("Use a UIMenu instead. Use UIAlertController in action sheet style for destructive "
+               "confirmations. See go/material-ios-menus for guidance.",
+               ios(12, API_TO_BE_DEPRECATED))
+__attribute__((objc_subclassing_restricted))
+@interface MDCActionSheetController
     : UIViewController<MDCElevatable, MDCElevationOverriding, UIContentSizeCategoryAdjusting,
                        MDCBottomSheetTransitionControllerDelegate>
 

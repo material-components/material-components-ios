@@ -22,12 +22,18 @@
  MDCActionSheetActionHandler is a block that will be invoked when the action is
  selected.
  */
+API_DEPRECATED("Use a UIMenu instead. Use UIAlertController in action sheet style for destructive "
+               "confirmations. See go/material-ios-menus for guidance.",
+               ios(12, API_TO_BE_DEPRECATED))
 typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
 
 /**
  An instance of MDCActionSheetAction is passed to MDCActionSheetController to
  add an action to the action sheet.
  */
+API_DEPRECATED("Use a UIMenu instead. Use UIAlertController in action sheet style for destructive "
+               "confirmations. See go/material-ios-menus for guidance.",
+               ios(12, API_TO_BE_DEPRECATED))
 @interface MDCActionSheetAction : NSObject <NSCopying, UIAccessibilityIdentification>
 
 /**

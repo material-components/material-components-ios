@@ -23,6 +23,10 @@
  @param scheme A container scheme instance containing any desired customizations to the theming
  system.
  */
-- (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
+- (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme
+    API_DEPRECATED(
+        "Use a UIMenu instead. Use UIAlertController in action sheet style for destructive "
+        "confirmations. See go/material-ios-menus for guidance.",
+        ios(12, API_TO_BE_DEPRECATED));
 
 @end
