@@ -22,6 +22,7 @@
 
  Use these easing curves to create smooth and consistent motion that conforms to Material Design.
  */
+API_DEPRECATED("Use UIViewAnimationCurve instead.", ios(12, API_TO_BE_DEPRECATED))
 typedef NS_ENUM(NSUInteger, MDCAnimationTimingFunction) {
   /**
    This is the most frequently used interpolation curve for Material Design animations. This curve
@@ -79,6 +80,7 @@ typedef NS_ENUM(NSUInteger, MDCAnimationTimingFunction) {
 
  @param type A Material Design media timing function.
  */
-+ (nullable CAMediaTimingFunction *)mdc_functionWithType:(MDCAnimationTimingFunction)type;
++ (nullable CAMediaTimingFunction *)mdc_functionWithType:(MDCAnimationTimingFunction)type
+    API_DEPRECATED("Use UIViewAnimationCurve instead.", ios(12, API_TO_BE_DEPRECATED));
 
 @end

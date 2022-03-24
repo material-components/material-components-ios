@@ -34,6 +34,7 @@
                                 delay:(NSTimeInterval)delay
                               options:(UIViewAnimationOptions)options
                            animations:(void (^__nonnull)(void))animations
-                           completion:(void (^__nullable)(BOOL finished))completion;
+                           completion:(void (^__nullable)(BOOL finished))completion
+    API_DEPRECATED("Use UIView's animation APIs instead.", ios(12, API_TO_BE_DEPRECATED));
 
 @end
