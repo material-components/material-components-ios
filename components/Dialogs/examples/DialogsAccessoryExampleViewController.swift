@@ -135,7 +135,7 @@ class DialogsAccessoryExampleViewController: MDCCollectionViewController {
     textField.placeholder = "This is a text field"
     alert.accessoryView = textField
     alert.addAction(MDCAlertAction(title: "Dismiss", emphasis: .medium, handler: handler))
-    alert.mdc_adjustsFontForContentSizeCategory = true  // Enable dynamic type.
+    alert.adjustsFontForContentSizeCategory = true  // Enable dynamic type.
     alert.applyTheme(withScheme: self.containerScheme)
     return alert
   }
@@ -157,7 +157,7 @@ class DialogsAccessoryExampleViewController: MDCCollectionViewController {
       alertView.accessoryViewHorizontalInset = -alertView.contentInsets.left
     }
 
-    alert.mdc_adjustsFontForContentSizeCategory = true  // Enable dynamic type.
+    alert.adjustsFontForContentSizeCategory = true  // Enable dynamic type.
     alert.applyTheme(withScheme: self.containerScheme)
     return alert
   }
@@ -191,7 +191,7 @@ class DialogsAccessoryExampleViewController: MDCCollectionViewController {
     button.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
 
     alert.accessoryView = view
-    alert.mdc_adjustsFontForContentSizeCategory = true  // Enable dynamic type.
+    alert.adjustsFontForContentSizeCategory = true  // Enable dynamic type.
     alert.applyTheme(withScheme: self.containerScheme)
 
     return alert

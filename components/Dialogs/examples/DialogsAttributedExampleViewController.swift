@@ -98,7 +98,7 @@ class DialogsAttributedExampleViewController: UIViewController {
     }
 
     // Enable dynamic type.
-    alert.mdc_adjustsFontForContentSizeCategory = true
+    alert.adjustsFontForContentSizeCategory = true
 
     // Respond to a link-tap event:
     alert.attributedMessageAction = { url, range, interaction in
