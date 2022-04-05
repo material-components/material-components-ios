@@ -188,7 +188,7 @@ class DialogsTitleImageExampleViewController: MDCCollectionViewController {
     alert.addAction(MDCAlertAction(title: "Cancel", handler: handler))
 
     // Enable dynamic type.
-    alert.mdc_adjustsFontForContentSizeCategory = true
+    alert.adjustsFontForContentSizeCategory = true
 
     return alert
   }
