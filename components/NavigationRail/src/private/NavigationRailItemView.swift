@@ -109,6 +109,7 @@ public class NavigationRailItemView: UIControl {
     let view = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: indicatorHeight))
     view.layer.cornerRadius = indicatorHeight / 2
     view.center = imageView.center
+    view.isUserInteractionEnabled = false
     insertSubview(view, at: 0)
     return view
   }()

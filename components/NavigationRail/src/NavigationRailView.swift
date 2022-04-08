@@ -261,6 +261,15 @@ public class NavigationRailView: UIView {
     itemsStackView.arrangedSubviews.forEach { $0.setNeedsLayout() }
   }
 
+  ///  Returns the navigation rail view associated with the specific item.
+  /// - Parameter item: The UITabBarItem associated to the generated item view.
+  /// - Returns: The item's view.
+  @objc(viewForItem:) public func view(for item: UITabBarItem) -> UIView? {
+    itemsStackView.arrangedSubviews.first {
+      ($0 as? NavigationRailItemView) != nil && ($0 as! NavigationRailItemView).item == item
+    }
+  }
+
   private func applyDefaultConfiguration(configuration: NavigationRailConfiguration?) {
     let configuration = configuration ?? NavigationRailConfiguration.railConfiguration()
     isMenuButtonVisible = configuration.isMenuButtonVisible
@@ -280,7 +289,7 @@ public class NavigationRailView: UIView {
         itemView.setImageTintColor(itemProperties.tintColor, for: .normal)
         itemView.setImageTintColor(itemProperties.selectedTintColor, for: .selected)
         itemView.hideLabel = itemProperties.isTitleHidden
-        var badgeAppearance = MDCBadgeAppearance()
+        let badgeAppearance = MDCBadgeAppearance()
         badgeAppearance.backgroundColor = itemProperties.badgeColor
         badgeAppearance.textColor = itemProperties.badgeTextColor
         badgeAppearance.font = itemProperties.badgeTextFont
