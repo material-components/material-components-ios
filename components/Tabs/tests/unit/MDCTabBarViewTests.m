@@ -15,15 +15,15 @@
 #import <XCTest/XCTest.h>
 
 #import "../../src/TabBarView/private/MDCTabBarViewItemView.h"
-#import "MaterialAvailability.h"
-#import "MaterialRipple.h"
+#import "CAMediaTimingFunction+MDCAnimationTiming.h"
+#import "MDCAvailability.h"
+#import "MDCRippleTouchController.h"
 #import "MDCTabBarItem.h"
 #import "MDCTabBarView.h"
 #import "MDCTabBarViewCustomViewable.h"
 #import "MDCTabBarViewDelegate.h"
-#import "MaterialTypography.h"
 
-#import "MaterialAnimationTiming.h"
+#import "UIFont+MaterialSimpleEquality.h"
 
 // Minimum height of the MDCTabBar view.
 static const CGFloat kMinHeight = 48;
@@ -267,6 +267,24 @@ static UIImage *fakeImage(CGSize size) {
 
   // Then should preserve the selection of A.
   XCTAssertEqual(self.tabBarView.selectedItem, self.itemA);
+}
+
+/// Tab bars should maintain the style of selected tabs when changing items.
+- (void)testPreservesSelectedItemTextColor {
+  // Given items {A, B} which selected item A and selected text color `.systemBlueColor`.
+  UIColor *selectedItemColor = UIColor.systemBlueColor;
+  [self.tabBarView setTitleColor:selectedItemColor forState:UIControlStateSelected];
+  self.tabBarView.items = @[ self.itemA, self.itemB ];
+  self.tabBarView.selectedItem = self.itemA;
+  MDCTabBarViewItemView *itemView = (MDCTabBarViewItemView *)self.tabBarView.itemViews[0];
+  XCTAssert([selectedItemColor isEqual:itemView.titleLabel.textColor]);
+
+  // When
+  self.tabBarView.items = @[ self.itemC, self.itemA ];
+
+  // Then should preserve the selected styling for A.
+  itemView = (MDCTabBarViewItemView *)self.tabBarView.itemViews[1];
+  XCTAssert([selectedItemColor isEqual:itemView.titleLabel.textColor]);
 }
 
 /// Tab bars should select nil if the old selection is no longer present.

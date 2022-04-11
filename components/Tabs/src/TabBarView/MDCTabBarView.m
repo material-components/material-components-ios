@@ -18,7 +18,10 @@
 #import "private/MDCTabBarViewItemView.h"
 #import "private/MDCTabBarViewItemViewDelegate.h"
 #import "private/MDCTabBarViewPrivateIndicatorContext.h"
-#import "MaterialRipple.h"
+#import "CAMediaTimingFunction+MDCAnimationTiming.h"
+#import "MDCAvailability.h"
+#import "MDCRippleTouchController.h"
+#import "MDCRippleView.h"
 #import "MDCTabBarItemCustomViewing.h"
 #import "MDCTabBarViewCustomViewable.h"
 #import "MDCTabBarViewDelegate.h"
@@ -27,7 +30,6 @@
 
 #import <CoreGraphics/CoreGraphics.h>
 #import <QuartzCore/QuartzCore.h>
-#import "MaterialAnimationTiming.h"  // ComponentImport
 
 // KVO contexts
 static char *const kKVOContextMDCTabBarView = "kKVOContextMDCTabBarView";
@@ -335,6 +337,9 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
 
   _needsScrollToSelectedItem = YES;
 
+  // Nil out the selected item or styling code won't run in `setSelectedItem` if it is the same as
+  // the previous selected item (see b/228275516).
+  _selectedItem = nil;
   [self setSelectedItem:newSelectedItem animated:NO];
   [self addObserversToTabBarItems];
   [self updateTitleFontForAllViews];
