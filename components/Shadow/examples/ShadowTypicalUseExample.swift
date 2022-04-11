@@ -17,7 +17,7 @@ import MaterialComponents.MaterialShadow
 import MaterialComponents.MaterialContainerScheme
 
 /// Typical use-case for a view with Material Shadows at a fixed elevation.
-final class ShadowedView: UIView {
+private final class ShadowedView: UIView {
   override init(frame: CGRect) {
     super.init(frame: frame)
     layer.cornerRadius = 4
