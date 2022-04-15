@@ -18,8 +18,6 @@
 #import "MDCBottomNavigationBar.h"
 #import "MDCBottomNavigationItemView+Testing.h"
 
-#import "MDCInkView.h"
-
 static NSString *const kTestTitleText = @"title";
 static NSString *const kTestBadgeValue = @"100";
 
@@ -87,24 +85,6 @@ static UIImage *fakeImage(void) {
   CGFloat expectedDistance = contentWidth / 2 + view.contentHorizontalMargin;
   XCTAssertEqualWithAccuracy(view.label.center.x - view.iconImageView.center.x, expectedDistance,
                              (CGFloat)0.001);
-}
-
-- (void)testSetSelectedItemTintColorUpdatesInkColor {
-  // Given
-  MDCBottomNavigationItemView *item1 = [[MDCBottomNavigationItemView alloc] init];
-  MDCBottomNavigationItemView *item2 = [[MDCBottomNavigationItemView alloc] init];
-  item1.selected = YES;
-  UIColor *item1DefaultInkColor = item1.inkView.inkColor;
-  UIColor *item2DefaultInkColor = item2.inkView.inkColor;
-
-  // When
-  item1.selectedItemTintColor = UIColor.cyanColor;
-  item2.selectedItemTintColor = UIColor.cyanColor;
-
-  // Then
-  XCTAssertNotEqualObjects(item1.inkView.inkColor, item1DefaultInkColor);
-  XCTAssertNotEqualObjects(item2.inkView.inkColor, item2DefaultInkColor);
-  XCTAssertEqualObjects(item1.inkView.inkColor, item2.inkView.inkColor);
 }
 
 - (void)testSetTitleVisibilityUpdatesLayout {

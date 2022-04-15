@@ -46,7 +46,6 @@ class BottomNavigationTypicalUseSwiftExample: UIViewController {
 
     // Select a bottom navigation bar item.
     bottomNavBar.selectedItem = tabBarItem2
-    bottomNavBar.enableRippleBehavior = true
   }
 
   func layoutBottomNavBar() {

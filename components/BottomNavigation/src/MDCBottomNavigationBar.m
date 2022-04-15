@@ -18,9 +18,6 @@
 
 #import "MDCAvailability.h"
 #import "UIView+MaterialElevationResponding.h"
-#import "MDCInkTouchController.h"
-#import "MDCInkTouchControllerDelegate.h"
-#import "MDCInkView.h"
 
 #import "private/MDCBottomNavigationBar+Private.h"
 #import "private/MDCBottomNavigationItemView.h"
@@ -53,8 +50,7 @@ static const CGFloat kBadgeFontSize = 8;
 static const CGFloat kDefaultActiveIndicatorHeight = 30;
 static const CGFloat kDefaultActiveIndicatorWidth = 60;
 
-@interface MDCBottomNavigationBar () <MDCInkTouchControllerDelegate,
-                                      MDCRippleTouchControllerDelegate>
+@interface MDCBottomNavigationBar () <MDCRippleTouchControllerDelegate>
 
 @property(nonatomic, assign) BOOL itemsDistributed;
 @property(nonatomic, readonly) BOOL isTitleBelowIcon;
@@ -65,9 +61,7 @@ static const CGFloat kDefaultActiveIndicatorWidth = 60;
 @property(nonatomic, assign) CGRect itemLayoutFrame;
 @property(nonatomic, strong) UIVisualEffectView *blurEffectView;
 @property(nonatomic, strong) UIView *itemsLayoutView;
-@property(nonatomic, strong) NSMutableArray *inkControllers;
 @property(nonatomic, strong) UILayoutGuide *barItemsLayoutGuide NS_AVAILABLE_IOS(9_0);
-@property(nonatomic, assign) BOOL enableRippleBehavior;
 
 // Selection indicator
 @property(nonatomic, assign) BOOL showsSelectionIndicator;
@@ -181,7 +175,6 @@ static BOOL gEnablePerformantShadow = NO;
       .active = YES;
   [_barItemsLayoutGuide.trailingAnchor constraintEqualToAnchor:_itemsLayoutView.trailingAnchor]
       .active = YES;
-  _enableRippleBehavior = YES;
 }
 
 - (void)layoutSubviews {
@@ -583,10 +576,6 @@ static BOOL gEnablePerformantShadow = NO;
     [itemView removeFromSuperview];
   }
   [self.itemViews removeAllObjects];
-  [self.inkControllers removeAllObjects];
-  if (!self.inkControllers) {
-    _inkControllers = [@[] mutableCopy];
-  }
   [self removeObserversFromTabBarItems];
 
   _items = [items copy];
@@ -630,12 +619,6 @@ static BOOL gEnablePerformantShadow = NO;
     itemView.badgeFont = self.itemBadgeTextFont;
 
     itemView.tag = item.tag;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    MDCInkTouchController *controller = [[MDCInkTouchController alloc] initWithView:itemView];
-#pragma clang diagnostic pop
-    controller.delegate = self;
-    [self.inkControllers addObject:controller];
     itemView.rippleTouchController.delegate = self;
 
     if (item.image) {
@@ -874,35 +857,12 @@ static BOOL gEnablePerformantShadow = NO;
   }
 }
 
-#pragma mark - MDCInkTouchControllerDelegate methods
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-- (MDCInkView *)inkTouchController:(MDCInkTouchController *)inkTouchController
-            inkViewAtTouchLocation:(CGPoint)location {
-  if ([inkTouchController.view isKindOfClass:[MDCBottomNavigationItemView class]]) {
-    return ((MDCBottomNavigationItemView *)inkTouchController.view).inkView;
-  }
-  return nil;
-}
-
-- (BOOL)inkTouchController:(MDCInkTouchController *)inkTouchController
-    shouldProcessInkTouchesAtTouchLocation:(CGPoint)location {
-  if (self.enableRippleBehavior) {
-    return NO;
-  }
-  return YES;
-}
-#pragma clang diagnostic pop
-
 #pragma mark - MDCRippleTouchControllerDelegate methods
 
+// TODO(b/229038068): Add gating for Ripple behavior in BottomNavigation
 - (BOOL)rippleTouchController:(MDCRippleTouchController *)rippleTouchController
     shouldProcessRippleTouchesAtTouchLocation:(CGPoint)location {
-  if (self.enableRippleBehavior) {
-    return YES;
-  }
-  return NO;
+  return YES;
 }
 
 #pragma mark - MDCElevation
@@ -924,30 +884,20 @@ static BOOL gEnablePerformantShadow = NO;
   [self updateShadow];
 }
 
+// TODO(b/229038068): Add gating for Ripple behavior in BottomNavigation
 - (void)cancelRippleInItemView:(MDCBottomNavigationItemView *)itemView animated:(BOOL)animated {
-  if (self.enableRippleBehavior) {
-    if (animated) {
-      [itemView.rippleTouchController.rippleView beginRippleTouchUpAnimated:YES completion:nil];
-    } else {
-      [itemView.rippleTouchController.rippleView cancelAllRipplesAnimated:NO completion:nil];
-    }
+  if (animated) {
+    [itemView.rippleTouchController.rippleView beginRippleTouchUpAnimated:YES completion:nil];
   } else {
-    if (animated) {
-      [itemView.inkView startTouchEndAtPoint:itemView.center animated:YES withCompletion:nil];
-    } else {
-      [itemView.inkView cancelAllAnimationsAnimated:NO];
-    }
+    [itemView.rippleTouchController.rippleView cancelAllRipplesAnimated:NO completion:nil];
   }
 }
 
+// TODO(b/229038068): Add gating for Ripple behavior in BottomNavigation
 - (void)beginRippleInItemView:(MDCBottomNavigationItemView *)itemView animated:(BOOL)animated {
-  if (self.enableRippleBehavior) {
-    [itemView.rippleTouchController.rippleView beginRippleTouchDownAtPoint:itemView.center
-                                                                  animated:animated
-                                                                completion:nil];
-  } else {
-    [itemView.inkView startTouchBeganAtPoint:itemView.center animated:animated withCompletion:nil];
-  }
+  [itemView.rippleTouchController.rippleView beginRippleTouchDownAtPoint:itemView.center
+                                                                animated:animated
+                                                              completion:nil];
 }
 
 #pragma mark - UILargeContentViewerInteractionDelegate
@@ -961,7 +911,7 @@ static BOOL gEnablePerformantShadow = NO;
       (MDCBottomNavigationItemView *)self.lastLargeContentViewerItem;
 
   if (!CGRectContainsPoint(self.bounds, point)) {
-    // The touch has wandered outside of the view. Clear the ripple/ink and do not display the
+    // The touch has wandered outside of the view. Clear the ripple and do not display the
     // content viewer.
     if (lastItemView) {
       [self cancelRippleInItemView:lastItemView animated:NO];
@@ -980,7 +930,7 @@ static BOOL gEnablePerformantShadow = NO;
     if (lastItemView) {
       [self cancelRippleInItemView:lastItemView animated:NO];
     }
-    // Only start ink/ripple if it's not the first touch down of the long press
+    // Only start ripple if it's not the first touch down of the long press
     if (self.isLargeContentLongPressInProgress) {
       [self beginRippleInItemView:itemView animated:NO];
     }

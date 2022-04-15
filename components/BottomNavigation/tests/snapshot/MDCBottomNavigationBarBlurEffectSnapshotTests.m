@@ -15,13 +15,12 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCBottomNavigationItemView.h"
-
-#import "MaterialBottomNavigation.h"
-#import "MaterialInk.h"
-#import "MaterialSnapshot.h"
 #import "supplemental/MDCBottomNavigationSnapshotTestUtilities.h"
 #import "supplemental/MDCFakeBottomNavigationBar.h"
+#import "MDCBottomNavigationBar.h"
+#import "MDCSnapshotTestCase.h"
+#import "UIImage+MDCSnapshot.h"
+#import "UIView+MDCSnapshot.h"
 
 @interface MDCBottomNavigationBarBlurEffectSnapshotTests : MDCSnapshotTestCase
 @property(nonatomic, strong) MDCFakeBottomNavigationBar *navigationBar;
@@ -81,16 +80,6 @@
   [self snapshotVerifyView:backgroundView];
 }
 
-- (void)performInkTouchOnBar:(MDCBottomNavigationBar *)navigationBar item:(UITabBarItem *)item {
-  [navigationBar layoutIfNeeded];
-  MDCBottomNavigationItemView *itemView =
-      (MDCBottomNavigationItemView *)[navigationBar viewForItem:item];
-  [itemView.inkView startTouchBeganAtPoint:CGPointMake(CGRectGetMidX(itemView.bounds),
-                                                       CGRectGetMidY(itemView.bounds))
-                                  animated:NO
-                            withCompletion:nil];
-}
-
 - (void)changeToRTLAndArabicWithTitle:(NSString *)title {
   self.navigationBar.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
   for (UITabBarItem *item in self.navigationBar.items) {
@@ -121,7 +110,6 @@
   navigationBar.frame =
       CGRectMake(0, MDCBottomNavigationBarTestHeightTypical, MDCBottomNavigationBarTestWidthTypical,
                  MDCBottomNavigationBarTestHeightTypical);
-  [self performInkTouchOnBar:navigationBar item:self.tabItem2];
 }
 
 #pragma mark - Tests
@@ -204,7 +192,6 @@
   [self.navigationBar.barItemsBottomAnchor constraintEqualToAnchor:superView.bottomAnchor
                                                           constant:-20]
       .active = YES;
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
   [self.navigationBar setNeedsLayout];
   [self.navigationBar layoutIfNeeded];
   [self.navigationBar setNeedsUpdateConstraints];
@@ -234,7 +221,6 @@
   [superView.trailingAnchor constraintEqualToAnchor:self.navigationBar.trailingAnchor].active = YES;
 
   // When
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
   [superView layoutIfNeeded];
 
   // Then

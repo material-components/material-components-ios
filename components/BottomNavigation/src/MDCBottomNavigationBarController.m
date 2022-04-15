@@ -92,7 +92,6 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
   self = [super init];
   if (self) {
     _navigationBar = [[MDCBottomNavigationBar alloc] init];
-    _navigationBar.enableRippleBehavior = YES;
     _content = [[UIView alloc] init];
     _selectedIndex = NSNotFound;
     _dismissingLargeItemView = NO;

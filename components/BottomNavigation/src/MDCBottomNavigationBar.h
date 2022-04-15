@@ -107,9 +107,9 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  Color of selected item. Applies color to items' icons and text. If set also sets
  selectedItemTitleColor. Default color is black.
 
- By default, setting this property will also configure the ripple and ink color of all item views.
+ By default, setting this property will also configure the ripple color of all item views.
  If @c rippleColor has been set to a non-nil value, however, then this property will no longer
- affect the color of ripple or ink behavior.
+ affect the color of ripple behavior.
 
  Use @c rippleColor to configure ripple color instead instead of relying on the side effect behavior
  of this property. The side effect behavior of this property may be removed in the future.
@@ -298,23 +298,6 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
  */
 @property(nonatomic, copy, nullable) UIFont *itemBadgeTextFont API_DEPRECATED_WITH_REPLACEMENT(
     "itemBadgeAppearance.font", ios(12, API_TO_BE_DEPRECATED));
-
-@end
-
-/** APIs that are ToBeDeprecated. */
-@interface MDCBottomNavigationBar (ToBeDeprecated)
-
-/**
- By setting this property to @c YES, the Ripple component will be used instead of Ink
- to display visual feedback to the user.
-
- @note This property will eventually be enabled by default, deprecated, and then deleted as part
- of our migration to Ripple. Learn more at
- https://github.com/material-components/material-components-ios/tree/develop/components/Ink#migration-guide-ink-to-ripple
-
- Defaults to YES.
- */
-@property(nonatomic, assign) BOOL enableRippleBehavior;
 
 @end
 

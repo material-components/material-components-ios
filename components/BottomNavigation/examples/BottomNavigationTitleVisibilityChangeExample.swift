@@ -59,7 +59,6 @@ class BottomNavigationTitleVisibilityChangeExample: UIViewController, MDCBottomN
     bottomNavBar.selectedItem = tabBarItem2
 
     bottomNavBar.delegate = self
-    bottomNavBar.enableRippleBehavior = true
     addInstructionLabel()
   }
 

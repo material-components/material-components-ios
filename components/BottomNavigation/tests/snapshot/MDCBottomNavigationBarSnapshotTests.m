@@ -15,14 +15,12 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCBottomNavigationItemView.h"
 
 #import "supplemental/MDCBottomNavigationSnapshotTestMutableTraitCollection.h"
 #import "supplemental/MDCBottomNavigationSnapshotTestUtilities.h"
 #import "supplemental/MDCFakeBottomNavigationBar.h"
 #import "MDCAvailability.h"
 #import "MDCBottomNavigationBar.h"
-#import "MDCInkView.h"
 #import "MDCSnapshotTestCase.h"
 #import "UIImage+MDCSnapshot.h"
 #import "UIView+MDCSnapshot.h"
@@ -90,16 +88,6 @@ static const CGFloat kHeightShort = 48;
   [self snapshotVerifyView:backgroundView];
 }
 
-- (void)performInkTouchOnBar:(MDCBottomNavigationBar *)navigationBar item:(UITabBarItem *)item {
-  [navigationBar layoutIfNeeded];
-  MDCBottomNavigationItemView *itemView =
-      (MDCBottomNavigationItemView *)[navigationBar viewForItem:item];
-  [itemView.inkView startTouchBeganAtPoint:CGPointMake(CGRectGetMidX(itemView.bounds),
-                                                       CGRectGetMidY(itemView.bounds))
-                                  animated:NO
-                            withCompletion:nil];
-}
-
 - (void)configureBottomNavigation:(MDCFakeBottomNavigationBar *)bottomNavigation
                     withAlignment:(MDCBottomNavigationBarAlignment)alignment
                   titleVisibility:(MDCBottomNavigationBarTitleVisibility)titleVisibility
@@ -139,12 +127,13 @@ static const CGFloat kHeightShort = 48;
 
 #pragma mark - Extreme sizes
 
+// TODO(b/229038068): Update tests tu use performRippleTouchOnBar:
+
 - (void)testJustifiedUnspecifiedAlwaysFiveItemsNarrowWidthShortHeightLTR {
   // When
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.selectedItem = self.tabItem2;
   self.navigationBar.frame = CGRectMake(0, 0, kWidthNarrow, kHeightShort);
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
   [self generateAndVerifySnapshot];
@@ -156,7 +145,6 @@ static const CGFloat kHeightShort = 48;
   self.navigationBar.selectedItem = self.tabItem2;
   self.navigationBar.frame = CGRectMake(0, 0, kWidthNarrow, kHeightShort);
   [self changeToRTLAndArabicWithTitle:MDCBottomNavigationTestShortTitleArabic];
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
   [self generateAndVerifySnapshot];
@@ -167,7 +155,6 @@ static const CGFloat kHeightShort = 48;
   self.navigationBar.titleVisibility = MDCBottomNavigationBarTitleVisibilityAlways;
   self.navigationBar.selectedItem = self.tabItem2;
   self.navigationBar.frame = CGRectMake(0, 0, kWidthWide, kHeightTall);
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
   [self generateAndVerifySnapshot];
@@ -179,7 +166,6 @@ static const CGFloat kHeightShort = 48;
   self.navigationBar.selectedItem = self.tabItem2;
   self.navigationBar.frame = CGRectMake(0, 0, kWidthWide, kHeightTall);
   [self changeToRTLAndArabicWithTitle:MDCBottomNavigationTestShortTitleArabic];
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // Then
   [self generateAndVerifySnapshot];
@@ -198,7 +184,6 @@ static const CGFloat kHeightShort = 48;
   self.navigationBar.traitCollectionOverride = traitCollection;
   CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
   self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // When
   self.tabItem1.titlePositionAdjustment = UIOffsetMake(20, -20);
@@ -219,7 +204,6 @@ static const CGFloat kHeightShort = 48;
   self.navigationBar.traitCollectionOverride = traitCollection;
   CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
   self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
   [self changeToRTLAndArabicWithTitle:MDCBottomNavigationTestShortTitleArabic];
 
   // When
@@ -241,7 +225,6 @@ static const CGFloat kHeightShort = 48;
   self.navigationBar.traitCollectionOverride = traitCollection;
   CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
   self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
 
   // When
   self.tabItem1.titlePositionAdjustment = UIOffsetMake(20, -20);
@@ -262,7 +245,6 @@ static const CGFloat kHeightShort = 48;
   self.navigationBar.traitCollectionOverride = traitCollection;
   CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(kWidthWide, kHeightTall)];
   self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
   [self changeToRTLAndArabicWithTitle:MDCBottomNavigationTestShortTitleArabic];
 
   // When
@@ -284,7 +266,6 @@ static const CGFloat kHeightShort = 48;
                         allTitles:MDCBottomNavigationTestLongTitleLatin];
   self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
                                         MDCBottomNavigationBarTestHeightTypical);
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
   self.navigationBar.selectedItemTintColor = UIColor.orangeColor;
   self.navigationBar.unselectedItemTintColor = UIColor.blackColor;
   self.navigationBar.selectedItem = self.tabItem2;
@@ -306,7 +287,6 @@ static const CGFloat kHeightShort = 48;
                         allTitles:MDCBottomNavigationTestLongTitleLatin];
   self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
                                         MDCBottomNavigationBarTestHeightTypical);
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
   self.navigationBar.selectedItemTintColor = UIColor.orangeColor;
   self.navigationBar.unselectedItemTintColor = UIColor.blackColor;
   self.navigationBar.selectedItem = self.tabItem2;
@@ -328,7 +308,6 @@ static const CGFloat kHeightShort = 48;
                         allTitles:MDCBottomNavigationTestLongTitleLatin];
   self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
                                         MDCBottomNavigationBarTestHeightTypical);
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
   self.navigationBar.selectedItemTintColor = UIColor.orangeColor;
   self.navigationBar.unselectedItemTintColor = UIColor.blackColor;
   self.navigationBar.selectedItem = self.tabItem2;
@@ -350,7 +329,6 @@ static const CGFloat kHeightShort = 48;
                         allTitles:MDCBottomNavigationTestLongTitleLatin];
   self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
                                         MDCBottomNavigationBarTestHeightTypical);
-  [self performInkTouchOnBar:self.navigationBar item:self.tabItem1];
   self.navigationBar.selectedItemTintColor = UIColor.orangeColor;
   self.navigationBar.unselectedItemTintColor = UIColor.blackColor;
   self.navigationBar.selectedItem = self.tabItem2;

@@ -19,14 +19,13 @@
 #import "MDCBadgeAppearance.h"
 #import "MDCBadgeView.h"
 #import "MDCBottomNavigationBar.h"
-#import "MDCInkView.h"
 #import "MDCRippleTouchController.h"
 #import "MDCRippleView.h"
 
 // A number large enough to be larger than any reasonable screen dimension but small enough that
 // CGFloat doesn't lose precision.
 static const CGFloat kMaxSizeDimension = 1000000;
-static const CGFloat MDCBottomNavigationItemViewInkOpacity = (CGFloat)0.150;
+static const CGFloat MDCBottomNavigationItemViewRippleOpacity = (CGFloat)0.150;
 static const CGFloat MDCBottomNavigationItemViewTitleFontSize = 12;
 
 // Selection indicator animation details.
@@ -127,16 +126,6 @@ static CGFloat FloorScaled(CGFloat value, CGFloat scale) {
     [self addSubview:_badge];
     _badge.hidden = YES;
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    _inkView = [[MDCInkView alloc] initWithFrame:self.bounds];
-#pragma clang diagnostic pop
-    _inkView.autoresizingMask =
-        (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
-    _inkView.usesLegacyInkRipple = NO;
-    _inkView.clipsToBounds = NO;
-    [self addSubview:_inkView];
-
     _rippleTouchController = [[MDCRippleTouchController alloc] initWithView:self];
     _rippleTouchController.rippleView.rippleStyle = MDCRippleStyleUnbounded;
 
@@ -206,8 +195,6 @@ static CGFloat FloorScaled(CGFloat value, CGFloat scale) {
 
   [self.label sizeToFit];
   [_badge sizeToFit];
-  self.inkView.maxRippleRadius =
-      (CGFloat)(hypot(CGRectGetHeight(self.bounds), CGRectGetWidth(self.bounds)) / 2);
   [self centerLayoutAnimated:NO];
   [self invalidatePointerInteractions];
 
@@ -586,12 +573,11 @@ static CGFloat FloorScaled(CGFloat value, CGFloat scale) {
     self.label.textColor = self.selectedItemTitleColor;
   }
   if (!_rippleColor) {
-    UIColor *rippleColor =
-        [self.selectedItemTintColor colorWithAlphaComponent:MDCBottomNavigationItemViewInkOpacity];
+    UIColor *rippleColor = [self.selectedItemTintColor
+        colorWithAlphaComponent:MDCBottomNavigationItemViewRippleOpacity];
     if (!rippleColor) {
       rippleColor = [UIColor clearColor];
     }
-    self.inkView.inkColor = rippleColor;
     self.rippleTouchController.rippleView.rippleColor = rippleColor;
   }
 }
@@ -756,7 +742,6 @@ static CGFloat FloorScaled(CGFloat value, CGFloat scale) {
   if (!rippleColor) {
     rippleColor = [UIColor clearColor];
   }
-  self.inkView.inkColor = rippleColor;
   self.rippleTouchController.rippleView.rippleColor = rippleColor;
 }
 

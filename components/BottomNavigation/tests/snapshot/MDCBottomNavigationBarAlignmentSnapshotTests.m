@@ -15,13 +15,12 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCBottomNavigationItemView.h"
-
-#import "MaterialBottomNavigation.h"
-#import "MaterialInk.h"
-#import "MaterialSnapshot.h"
 #import "supplemental/MDCBottomNavigationSnapshotTestMutableTraitCollection.h"
 #import "supplemental/MDCFakeBottomNavigationBar.h"
+#import "MDCBottomNavigationBar.h"
+#import "MDCSnapshotTestCase.h"
+#import "UIImage+MDCSnapshot.h"
+#import "UIView+MDCSnapshot.h"
 
 /** Snapshot tests for MDCBottomNavigationBar's @c alignment property. */
 @interface MDCBottomNavigationBarAlignmentSnapshotTests : MDCSnapshotTestCase
@@ -77,21 +76,12 @@
 - (void)generateAndVerifySnapshot {
   CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(1600, 120)];
   self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
-  [self performInkTouchOnBar:self.navigationBar item:self.navigationBar.items.firstObject];
 
   UIView *backgroundView = [self.navigationBar mdc_addToBackgroundView];
   [self snapshotVerifyView:backgroundView];
 }
 
-- (void)performInkTouchOnBar:(MDCBottomNavigationBar *)navigationBar item:(UITabBarItem *)item {
-  [navigationBar layoutIfNeeded];
-  MDCBottomNavigationItemView *itemView =
-      (MDCBottomNavigationItemView *)[navigationBar viewForItem:item];
-  [itemView.inkView startTouchBeganAtPoint:CGPointMake(CGRectGetMidX(itemView.bounds),
-                                                       CGRectGetMidY(itemView.bounds))
-                                  animated:NO
-                            withCompletion:nil];
-}
+// TODO(b/229038068): Add test for Ripple touchOnBar after adding gating property
 
 - (void)changeToRTLAndArabic {
   static UIFont *urduFont;
