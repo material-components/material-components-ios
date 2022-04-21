@@ -51,7 +51,6 @@
   [super tearDown];
 }
 
-// TODO(b/229038068): Update test for default Ripple state after adding gating property
 /**
  Test to confirm behavior of initializing a @c MDCBottomNavigationBar without any customization.
  */
@@ -64,22 +63,38 @@
     XCTAssertNotNil(itemView.rippleTouchController.rippleView.superview);
     CGRect itemViewBounds = CGRectStandardize(itemView.bounds);
     CGRect rippleBounds = CGRectStandardize(itemView.rippleTouchController.rippleView.bounds);
+    XCTAssertTrue(self.bottomNavigationBar.isRippleEnabled);
     XCTAssertTrue(CGRectEqualToRect(itemViewBounds, rippleBounds), @"%@ is not equal to %@",
                   NSStringFromCGRect(itemViewBounds), NSStringFromCGRect(rippleBounds));
   }
 }
 
-// TODO(b/229038068): Add test for enabled Ripple state after adding gating property
-// TODO(b/229038068): Add test for disabled Ripple state after adding gating property
-// TODO(b/229038068): Add test for toggling Ripple state after adding gating property
-
 /**
- Test to confirm toggling @c enableRippleBehavior triggers ripple on touch.
+ Test to confirm enabling @c enableRippleBehavior triggers ripple on touch.
  */
 - (void)testSetEnableRippleBehaviorToYesThenInvokeItemToCheckRippleIsInvoked {
+  // When
+  self.bottomNavigationBar.rippleEnabled = YES;
+
+  // Then
   for (MDCBottomNavigationItemView *itemView in self.bottomNavigationBar.itemViews) {
     XCTAssertTrue([self.bottomNavigationBar rippleTouchController:itemView.rippleTouchController
                         shouldProcessRippleTouchesAtTouchLocation:CGPointZero]);
+  }
+}
+
+/**
+ Test to confirm disabling @c enableRippleBehavior does not trigger ripple on touch.
+ */
+
+- (void)testSetEnableRippleBehaviorToNoThenInvokeItemToCheckRippleIsNotInvoked {
+  // When
+  self.bottomNavigationBar.rippleEnabled = NO;
+
+  // Then
+  for (MDCBottomNavigationItemView *itemView in self.bottomNavigationBar.itemViews) {
+    XCTAssertFalse([self.bottomNavigationBar rippleTouchController:itemView.rippleTouchController
+                         shouldProcessRippleTouchesAtTouchLocation:CGPointZero]);
   }
 }
 
@@ -89,7 +104,9 @@
  */
 - (void)testSetEnableRippleBehaviorToYesThenSetSelectedItemTintColorToSetRippleColor {
   // When
+  self.bottomNavigationBar.rippleEnabled = YES;
   [self.bottomNavigationBar setSelectedItemTintColor:UIColor.redColor];
+
   // Then
   for (MDCBottomNavigationItemView *itemView in self.bottomNavigationBar.itemViews) {
     XCTAssertEqualObjects(itemView.rippleTouchController.rippleView.rippleColor,

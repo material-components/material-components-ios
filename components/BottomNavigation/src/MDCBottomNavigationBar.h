@@ -243,6 +243,8 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
 
 #pragma mark - Configuring the ripple appearance
 
+@property(nonatomic, getter=isRippleEnabled) BOOL rippleEnabled;
+
 /**
  The color of the ripple effect shown when the user taps on an item.
 

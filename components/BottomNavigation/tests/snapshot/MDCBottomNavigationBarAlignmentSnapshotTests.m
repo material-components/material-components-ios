@@ -18,6 +18,10 @@
 #import "supplemental/MDCBottomNavigationSnapshotTestMutableTraitCollection.h"
 #import "supplemental/MDCFakeBottomNavigationBar.h"
 #import "MDCBottomNavigationBar.h"
+
+#import "../../src/private/MDCBottomNavigationItemView.h"
+#import "MDCRippleTouchController.h"
+#import "MDCRippleView.h"
 #import "MDCSnapshotTestCase.h"
 #import "UIImage+MDCSnapshot.h"
 #import "UIView+MDCSnapshot.h"
@@ -76,12 +80,21 @@
 - (void)generateAndVerifySnapshot {
   CGSize fitSize = [self.navigationBar sizeThatFits:CGSizeMake(1600, 120)];
   self.navigationBar.frame = CGRectMake(0, 0, fitSize.width, fitSize.height);
+  [self performRippleTouchOnBar:self.navigationBar item:self.navigationBar.items.firstObject];
 
   UIView *backgroundView = [self.navigationBar mdc_addToBackgroundView];
   [self snapshotVerifyView:backgroundView];
 }
 
-// TODO(b/229038068): Add test for Ripple touchOnBar after adding gating property
+- (void)performRippleTouchOnBar:(MDCBottomNavigationBar *)navigationBar item:(UITabBarItem *)item {
+  [navigationBar layoutIfNeeded];
+  MDCBottomNavigationItemView *itemView =
+      (MDCBottomNavigationItemView *)[navigationBar viewForItem:item];
+  CGPoint point = CGPointMake(CGRectGetMidX(itemView.bounds), CGRectGetMidY(itemView.bounds));
+  [itemView.rippleTouchController.rippleView beginRippleTouchDownAtPoint:point
+                                                                animated:NO
+                                                              completion:nil];
+}
 
 - (void)changeToRTLAndArabic {
   static UIFont *urduFont;

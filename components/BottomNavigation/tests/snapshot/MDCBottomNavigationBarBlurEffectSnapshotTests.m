@@ -15,9 +15,13 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
+#import "../../src/private/MDCBottomNavigationItemView.h"
+
 #import "supplemental/MDCBottomNavigationSnapshotTestUtilities.h"
 #import "supplemental/MDCFakeBottomNavigationBar.h"
 #import "MDCBottomNavigationBar.h"
+#import "MDCRippleTouchController.h"
+#import "MDCRippleView.h"
 #import "MDCSnapshotTestCase.h"
 #import "UIImage+MDCSnapshot.h"
 #import "UIView+MDCSnapshot.h"
@@ -78,6 +82,16 @@
 - (void)generateAndVerifySnapshot {
   UIView *backgroundView = [self.navigationBar mdc_addToBackgroundView];
   [self snapshotVerifyView:backgroundView];
+}
+
+- (void)performRippleTouchOnBar:(MDCBottomNavigationBar *)navigationBar item:(UITabBarItem *)item {
+  [navigationBar layoutIfNeeded];
+  MDCBottomNavigationItemView *itemView =
+      (MDCBottomNavigationItemView *)[navigationBar viewForItem:item];
+  CGPoint point = CGPointMake(CGRectGetMidX(itemView.bounds), CGRectGetMidY(itemView.bounds));
+  [itemView.rippleTouchController.rippleView beginRippleTouchDownAtPoint:point
+                                                                animated:NO
+                                                              completion:nil];
 }
 
 - (void)changeToRTLAndArabicWithTitle:(NSString *)title {

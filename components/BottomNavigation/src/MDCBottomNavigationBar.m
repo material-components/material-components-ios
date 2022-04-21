@@ -119,6 +119,7 @@ static BOOL gEnablePerformantShadow = NO;
   _truncatesLongTitles = YES;
   _titlesNumberOfLines = 1;
   _mdc_overrideBaseElevation = -1;
+  _rippleEnabled = YES;
 
   _itemBadgeAppearance = [[MDCBadgeAppearance alloc] init];
 
@@ -859,10 +860,9 @@ static BOOL gEnablePerformantShadow = NO;
 
 #pragma mark - MDCRippleTouchControllerDelegate methods
 
-// TODO(b/229038068): Add gating for Ripple behavior in BottomNavigation
 - (BOOL)rippleTouchController:(MDCRippleTouchController *)rippleTouchController
     shouldProcessRippleTouchesAtTouchLocation:(CGPoint)location {
-  return YES;
+  return self.rippleEnabled;
 }
 
 #pragma mark - MDCElevation
@@ -884,20 +884,22 @@ static BOOL gEnablePerformantShadow = NO;
   [self updateShadow];
 }
 
-// TODO(b/229038068): Add gating for Ripple behavior in BottomNavigation
 - (void)cancelRippleInItemView:(MDCBottomNavigationItemView *)itemView animated:(BOOL)animated {
-  if (animated) {
-    [itemView.rippleTouchController.rippleView beginRippleTouchUpAnimated:YES completion:nil];
-  } else {
-    [itemView.rippleTouchController.rippleView cancelAllRipplesAnimated:NO completion:nil];
+  if (self.isRippleEnabled) {
+    if (animated) {
+      [itemView.rippleTouchController.rippleView beginRippleTouchUpAnimated:YES completion:nil];
+    } else {
+      [itemView.rippleTouchController.rippleView cancelAllRipplesAnimated:NO completion:nil];
+    }
   }
 }
 
-// TODO(b/229038068): Add gating for Ripple behavior in BottomNavigation
 - (void)beginRippleInItemView:(MDCBottomNavigationItemView *)itemView animated:(BOOL)animated {
-  [itemView.rippleTouchController.rippleView beginRippleTouchDownAtPoint:itemView.center
-                                                                animated:animated
-                                                              completion:nil];
+  if (self.isRippleEnabled) {
+    [itemView.rippleTouchController.rippleView beginRippleTouchDownAtPoint:itemView.center
+                                                                  animated:animated
+                                                                completion:nil];
+  }
 }
 
 #pragma mark - UILargeContentViewerInteractionDelegate
