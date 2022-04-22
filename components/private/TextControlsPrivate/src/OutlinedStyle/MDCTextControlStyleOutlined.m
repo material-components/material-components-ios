@@ -14,7 +14,6 @@
 
 #import "MDCTextControlStyleOutlined.h"
 
-#import "MDCAvailability.h"
 #include "MaterialAvailability.h"
 #import "MDCTextControlLabelBehavior.h"
 #import "MDCTextControlState.h"
@@ -112,15 +111,9 @@ static const CGFloat kFilledFloatingLabelScaleFactor = (CGFloat)0.75;
                                                 cornerRadius:self.outlineCornerRadius
                                                labelBehavior:textControl.labelBehavior
                                                labelPosition:textControl.labelPosition];
-  CGColorRef strokeColor = (self.outlineColors[@(textControl.textControlState)]).CGColor;
-  if (!CGColorEqualToColor(self.outlinedSublayer.strokeColor, strokeColor)) {
-    animationDuration = 0;
-    self.outlinedSublayer.strokeColor = strokeColor;
-  }
-  [self applyOutlineTo:textControl
-            outlinePath:outlinePath
-       outlineLineWidth:lineWidth
-      animationDuration:animationDuration];
+  [self applyOutlineTo:textControl outlinePath:outlinePath outlineLineWidth:lineWidth];
+  self.outlinedSublayer.strokeColor =
+      ((UIColor *)self.outlineColors[@(textControl.textControlState)]).CGColor;
 }
 
 - (UIFont *)floatingFontWithNormalFont:(UIFont *)font {
@@ -159,48 +152,16 @@ static const CGFloat kFilledFloatingLabelScaleFactor = (CGFloat)0.75;
 
 - (void)applyOutlineTo:(UIView *)view
            outlinePath:(UIBezierPath *)outlinePath
-      outlineLineWidth:(CGFloat)outlineLineWidth
-     animationDuration:(NSTimeInterval)animationDuration {
+      outlineLineWidth:(CGFloat)outlineLineWidth {
+  [CATransaction begin];
+  [CATransaction setDisableActions:YES];
+  self.outlinedSublayer.path = outlinePath.CGPath;
+  self.outlinedSublayer.lineWidth = outlineLineWidth;
+  [CATransaction commit];
+
   if (self.outlinedSublayer.superlayer != view.layer) {
     [view.layer insertSublayer:self.outlinedSublayer atIndex:0];
   }
-
-  if (animationDuration <= 0) {
-    [self.outlinedSublayer removeAllAnimations];
-    self.outlinedSublayer.path = outlinePath.CGPath;
-    self.outlinedSublayer.lineWidth = outlineLineWidth;
-    return;
-  }
-
-  CABasicAnimation *existingAnimation =
-      [self.outlinedSublayer animationForKey:self.class.outlineAnimationKey];
-  [CATransaction begin];
-  [CATransaction setAnimationDuration:animationDuration];
-  BOOL needsAnimation = NO;
-  if (existingAnimation) {
-    CGPathRef toValue = outlinePath.CGPath;
-    if (!CGPathEqualToPath(toValue, self.outlinedSublayer.path)) {
-      [self.outlinedSublayer removeAnimationForKey:self.class.outlineAnimationKey];
-      self.outlinedSublayer.path = toValue;
-      needsAnimation = YES;
-    }
-  } else {
-    needsAnimation = YES;
-  }
-  if (needsAnimation) {
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"path"];
-    animation.timingFunction =
-        [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    animation.repeatCount = 0;
-    animation.removedOnCompletion = NO;
-    animation.fillMode = kCAFillModeForwards;
-    [self.outlinedSublayer addAnimation:animation forKey:self.class.outlineAnimationKey];
-  }
-  [CATransaction commit];
-}
-
-+ (NSString *)outlineAnimationKey {
-  return @"outlineAnimationKey";
 }
 
 + (UIBezierPath *)outlinePathWithViewBounds:(CGRect)viewBounds
