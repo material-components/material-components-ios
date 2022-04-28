@@ -263,20 +263,6 @@ typedef BOOL (^MDCAttributedMessageActionHandler)(NSURL *_Nonnull URL, NSRange r
  */
 @property(nonatomic, assign) CGFloat presentationInitialScaleFactor;
 
-/*
- Indicates whether the alert contents should automatically update their font when the device’s
- UIContentSizeCategory changes.
-
- This property is modeled after the adjustsFontForContentSizeCategory property in the
- UIContentSizeCategoryAdjusting protocol added by Apple in iOS 10.0.
-
- Defaults to @c NO.
- */
-@property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
-    BOOL mdc_adjustsFontForContentSizeCategory __deprecated_msg(
-        "Use adjustsFontForContentSizeCategory with UIKit scalable fonts instead. See "
-        "go/mdc_adjustsFontForContentSizeCategory for more details.");
-
 /**
  By setting this property to @c YES, the Ripple component will be used instead of Ink
  to display visual feedback to the user.

@@ -89,7 +89,6 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
 @end
 
 @implementation MDCAlertControllerView {
-  BOOL _mdc_adjustsFontForContentSizeCategory;
 }
 
 @synthesize adjustsFontForContentSizeCategory = _adjustsFontForContentSizeCategory;
@@ -140,11 +139,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
     self.titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     self.titleLabel.numberOfLines = 0;
     self.titleLabel.textAlignment = NSTextAlignmentNatural;
-    if (self.mdc_adjustsFontForContentSizeCategory) {
-      self.titleLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleTitle];
-    } else {
-      self.titleLabel.font = [MDCTypography titleFont];
-    }
+    self.titleLabel.font = [MDCTypography titleFont];
     self.titleLabel.adjustsFontForContentSizeCategory = self.adjustsFontForContentSizeCategory;
     self.titleLabel.accessibilityTraits |= UIAccessibilityTraitHeader;
     [self.titleView addSubview:self.titleLabel];
@@ -156,12 +151,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
     self.messageTextView.editable = NO;
     self.messageTextView.scrollEnabled = NO;
     self.messageTextView.selectable = YES;  // Enables link tap.
-    if (self.mdc_adjustsFontForContentSizeCategory) {
-      self.messageTextView.font =
-          [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleBody1];
-    } else {
-      self.messageTextView.font = [MDCTypography body1Font];
-    }
+    self.messageTextView.font = [MDCTypography body1Font];
     self.messageTextView.adjustsFontForContentSizeCategory = self.adjustsFontForContentSizeCategory;
     self.messageTextView.textColor = [UIColor colorWithWhite:0 alpha:MDCDialogMessageOpacity];
     // The messageTextView is a private API, and therefore it needs to inherit its background
@@ -209,7 +199,6 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
     button.inkColor = self.buttonInkColor;
     // These two lines must be after @c setTitleFont:forState: in order to @c MDCButton to handle
     // dynamic type correctly.
-    button.mdc_adjustsFontForContentSizeCategory = self.mdc_adjustsFontForContentSizeCategory;
     button.titleLabel.adjustsFontForContentSizeCategory = self.adjustsFontForContentSizeCategory;
     // TODO(#1726): Determine default text color values for Normal and Disabled
     button.minimumSize =
@@ -238,11 +227,6 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
 
 - (void)updateTitleFont {
   UIFont *titleFont = self.titleFont ?: [[self class] titleFontDefault];
-  if (self.mdc_adjustsFontForContentSizeCategory) {
-    titleFont =
-        [titleFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
-                                scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
-  }
 
   self.titleLabel.font = titleFont;
   [self setNeedsLayout];
@@ -342,11 +326,6 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
 
 - (void)updateMessageFont {
   UIFont *messageFont = self.messageFont ?: [[self class] messageFontDefault];
-  if (self.mdc_adjustsFontForContentSizeCategory) {
-    messageFont =
-        [messageFont mdc_fontSizedForMaterialTextStyle:kMessageTextStyle
-                                  scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
-  }
 
   self.messageTextView.font = messageFont;
   [self setNeedsLayout];
@@ -398,11 +377,6 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
       buttonFont = [button titleFontForState:UIControlStateNormal];
     } else {
       buttonFont = button.titleLabel.font;
-    }
-    if (self.mdc_adjustsFontForContentSizeCategory) {
-      buttonFont =
-          [buttonFont mdc_fontSizedForMaterialTextStyle:kTitleTextStyle
-                                   scaledForDynamicType:self.mdc_adjustsFontForContentSizeCategory];
     }
     if (button.enableTitleFontForState) {
       [button setTitleFont:buttonFont forState:UIControlStateNormal];
@@ -1140,20 +1114,6 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
     button.titleLabel.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
   }
   self.messageTextView.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
-}
-
-- (BOOL)mdc_adjustsFontForContentSizeCategory {
-  return _mdc_adjustsFontForContentSizeCategory;
-}
-
-- (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
-  _mdc_adjustsFontForContentSizeCategory = adjusts;
-
-  for (MDCButton *button in self.actionManager.buttonsInActionOrder) {
-    button.mdc_adjustsFontForContentSizeCategory = adjusts;
-  }
-
-  [self updateFonts];
 }
 
 // Update the fonts used based on whether Dynamic Type is enabled.

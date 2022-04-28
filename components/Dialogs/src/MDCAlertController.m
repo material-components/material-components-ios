@@ -110,7 +110,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   // redefines title as well.
   NSString *_alertTitle;
   CGSize _previousLayoutSize;
-  BOOL _mdc_adjustsFontForContentSizeCategory;
   NSString *_imageAccessibilityLabel;
   BOOL _alignIconWithTitle;
 }
@@ -556,25 +555,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 }
 
-- (void)mdc_setAdjustsFontForContentSizeCategory:(BOOL)adjusts {
-  _mdc_adjustsFontForContentSizeCategory = adjusts;
-
-  if (self.alertView) {
-    self.alertView.mdc_adjustsFontForContentSizeCategory = adjusts;
-    [self updateFontsForDynamicType];
-  }
-  if (_mdc_adjustsFontForContentSizeCategory) {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(contentSizeCategoryDidChange:)
-                                                 name:UIContentSizeCategoryDidChangeNotification
-                                               object:nil];
-  } else {
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIContentSizeCategoryDidChangeNotification
-                                                  object:nil];
-  }
-}
-
 // Handles UIContentSizeCategoryDidChangeNotifications
 - (void)contentSizeCategoryDidChange:(__unused NSNotification *)notification {
   [self updateFontsForDynamicType];
@@ -853,12 +833,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   // Create buttons for the actions (if not already created) and apply default styling
   for (MDCAlertAction *action in self.actions) {
     [self addButtonToAlertViewForAction:action];
-  }
-  // Explicitly overwrite the view default if true
-  // We set this last to make sure all other properties are set first and no overridden by setting
-  // this.
-  if (self.mdc_adjustsFontForContentSizeCategory) {
-    self.alertView.mdc_adjustsFontForContentSizeCategory = YES;
   }
 }
 
