@@ -17,6 +17,10 @@
 
 #import <Foundation/Foundation.h>
 
+API_DEPRECATED_BEGIN("Use branded UIButton (iOS 13/14) / UIButtonConfiguration (iOS 15+) instead. "
+                     "See go/material-ios-buttons for more details.",
+                     ios(12, 12))
+
 /**
  The Material Design typography system's themer for instances of MDCButton.
 
@@ -42,3 +46,5 @@ __deprecated_msg("Please use MDCButton+MaterialTheming instead. (Note: Typograph
                      toButton:(nonnull MDCButton *)button;
 
 @end
+
+API_DEPRECATED_END

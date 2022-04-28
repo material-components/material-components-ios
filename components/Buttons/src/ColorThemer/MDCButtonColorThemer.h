@@ -17,7 +17,9 @@
 
 #import <Foundation/Foundation.h>
 
-#pragma mark - Soon to be deprecated
+API_DEPRECATED_BEGIN("Use branded UIButton (iOS 13/14) / UIButtonConfiguration (iOS 15+) instead. "
+                     "See go/material-ios-buttons for more details.",
+                     ios(12, 12))
 
 /**
  Color themers for instances of MDCButton and MDCFloatingButton.
@@ -26,8 +28,7 @@
  @c MDC*ButtonColorThemer classes instead. Learn more at
  components/schemes/Color/docs/migration-guide-semantic-color-scheme.md
  */
-__deprecated_msg("Please use the MDCButton+MaterialTheming API instead.")
-    @interface MDCButtonColorThemer : NSObject
+@interface MDCButtonColorThemer : NSObject
 
 /**
  Applies a color scheme's properties to an MDCButton.
@@ -92,3 +93,5 @@ __deprecated_msg("Please use the MDCButton+MaterialTheming API instead.")
                 toButton:(nonnull MDCButton *)button;
 
 @end
+
+API_DEPRECATED_END

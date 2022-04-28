@@ -17,6 +17,10 @@
 
 #import <Foundation/Foundation.h>
 
+API_DEPRECATED_BEGIN("Use branded UIButton (iOS 13/14) / UIButtonConfiguration (iOS 15+) instead. "
+                     "See go/material-ios-buttons for more details.",
+                     ios(12, 12))
+
 @interface MDCFloatingButton (MaterialTheming)
 
 /**
@@ -31,3 +35,5 @@
 - (void)applySecondaryThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 
 @end
+
+API_DEPRECATED_END

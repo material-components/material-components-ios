@@ -17,6 +17,10 @@
 
 #import "MDCButton.h"
 
+API_DEPRECATED_BEGIN("Use branded UIButton (iOS 13/14) / UIButtonConfiguration (iOS 15+) instead. "
+                     "See go/material-ios-buttons for more details.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  Shapes for Material Floating buttons.
 
@@ -273,3 +277,5 @@ typedef NS_ENUM(NSInteger, MDCFloatingButtonImageLocation) {
     __deprecated_msg("Use setCenterVisibleArea:forShape:inMode: instead.");
 
 @end
+
+API_DEPRECATED_END

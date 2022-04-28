@@ -15,6 +15,10 @@
 #import <MaterialComponents/MaterialButtons.h>
 #import "MaterialContainerScheme.h"
 
+API_DEPRECATED_BEGIN("Use branded UIButton (iOS 13/14) / UIButtonConfiguration (iOS 15+) instead. "
+                     "See go/material-ios-buttons for more details.",
+                     ios(12, 12))
+
 /**
  This category is used to style MDCButtons instances to a specific Material style which can be found
  within the [Material Guidelines](https://material.io/design/components/buttons.html).
@@ -45,3 +49,5 @@
 - (void)applyTextThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 
 @end
+
+API_DEPRECATED_END

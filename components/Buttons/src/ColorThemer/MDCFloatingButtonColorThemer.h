@@ -17,6 +17,10 @@
 
 #import <Foundation/Foundation.h>
 
+API_DEPRECATED_BEGIN("Use branded UIButton (iOS 13/14) / UIButtonConfiguration (iOS 15+) instead. "
+                     "See go/material-ios-buttons for more details.",
+                     ios(12, 12))
+
 /**
  The Material Design color system's floating button themer for instances of MDCFloatingButton.
 
@@ -24,9 +28,7 @@
  `MDCFloatingButton`'s `-applySecondaryThemeWithScheme:`
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-__deprecated_msg("Please use [MDCFloatingButton applySecondaryThemeWithScheme:] instead. (Note: "
-                 "Color theming is no longer available as an independent API.)")
-    @interface MDCFloatingButtonColorThemer : NSObject
+@interface MDCFloatingButtonColorThemer : NSObject
 
 /**
  Applies a color scheme's properties to an MDCFloatingButton using the floating button style.
@@ -42,3 +44,5 @@ __deprecated_msg("Please use [MDCFloatingButton applySecondaryThemeWithScheme:] 
                         toButton:(nonnull MDCFloatingButton *)button;
 
 @end
+
+API_DEPRECATED_END

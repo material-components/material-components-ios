@@ -17,6 +17,10 @@
 
 #import "MDCFloatingButton.h"
 
+API_DEPRECATED_BEGIN("Use branded UIButton (iOS 13/14) / UIButtonConfiguration (iOS 15+) instead. "
+                     "See go/material-ios-buttons for more details.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 @class MDCFloatingButtonModeAnimator;
 
 /**
@@ -33,3 +37,5 @@
                                                  mode:(MDCFloatingButtonMode)mode;
 
 @end
+
+API_DEPRECATED_END

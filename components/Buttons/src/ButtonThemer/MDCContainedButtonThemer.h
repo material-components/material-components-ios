@@ -18,6 +18,10 @@
 
 #import <Foundation/Foundation.h>
 
+API_DEPRECATED_BEGIN("Use branded UIButton (iOS 13/14) / UIButtonConfiguration (iOS 15+) instead. "
+                     "See go/material-ios-buttons for more details.",
+                     ios(12, 12))
+
 /**
  The Material Design contained button themer for instances of MDCButton.
 
@@ -25,8 +29,7 @@
  `MDCButton`'s `-applyContainedThemeWithScheme:`
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-__deprecated_msg("Please use MDCButton:applyContainedThemeWithScheme: instead.")
-    @interface MDCContainedButtonThemer : NSObject
+@interface MDCContainedButtonThemer : NSObject
 
 /**
  Applies a button scheme's properties to an MDCButton using the contained button style.
@@ -41,3 +44,5 @@ __deprecated_msg("Please use MDCButton:applyContainedThemeWithScheme: instead.")
 + (void)applyScheme:(nonnull id<MDCButtonScheming>)scheme toButton:(nonnull MDCButton *)button;
 
 @end
+
+API_DEPRECATED_END

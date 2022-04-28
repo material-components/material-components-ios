@@ -22,6 +22,10 @@
 #import "MaterialShadowElevations.h"
 #import "MaterialShapes.h"
 
+API_DEPRECATED_BEGIN("Use branded UIButton (iOS 13/14) / UIButtonConfiguration (iOS 15+) instead. "
+                     "See go/material-ios-buttons for more details.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  A Material flat, raised or floating button.
 
@@ -457,3 +461,5 @@
 @property(nonatomic) UIEdgeInsets hitAreaInsets __deprecated_msg("Use centerVisibleArea instead.");
 
 @end
+
+API_DEPRECATED_END
