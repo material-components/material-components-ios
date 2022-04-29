@@ -14,6 +14,10 @@
 
 #import "MaterialButtons.h"
 
+API_DEPRECATED_BEGIN("Use branded UINavigationController instead. "
+                     "See go/material-ios-app-bars for more details.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  The MDCButtonBarButton class is used by MDCButtonBar.
  */
@@ -44,3 +48,5 @@
 @property(nonatomic, nullable) UIImage *largeContentImage NS_AVAILABLE_IOS(13_0);
 
 @end
+
+API_DEPRECATED_END

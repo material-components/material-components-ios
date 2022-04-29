@@ -14,6 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN("Use branded UINavigationController instead. "
+                     "See go/material-ios-app-bars for more details.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 @class MDCButtonBar;
 
 /**
@@ -50,3 +54,5 @@
     __deprecated_msg("There will be no replacement for this API.");
 
 @end
+
+API_DEPRECATED_END

@@ -16,6 +16,10 @@
 
 #import "MaterialAvailability.h"
 
+API_DEPRECATED_BEGIN("Use branded UINavigationController instead. "
+                     "See go/material-ios-app-bars for more details.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  The position of the button bar, typically aligned with the leading or trailing edge of the screen.
 
@@ -259,3 +263,5 @@ typedef NS_OPTIONS(NSUInteger, MDCBarButtonItemLayoutHints) {
     UILargeContentViewerInteractionDelegate>
 @end
 #endif  // MDC_AVAILABLE_SDK_IOS(13_0)
+
+API_DEPRECATED_END
