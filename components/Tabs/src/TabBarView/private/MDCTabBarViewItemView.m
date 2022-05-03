@@ -16,9 +16,11 @@
 
 #import <CoreGraphics/CoreGraphics.h>
 
-#import "MaterialRipple.h"
+#import "MDCBadgeAppearance.h"
+#import "MDCBadgeView.h"
+#import "MDCRippleTouchController.h"
 #import "MDCTabBarViewItemViewDelegate.h"
-#import "MaterialMath.h"
+#import "MDCMath.h"
 
 /** The minimum height of any item view with only a title or image (not both). */
 static const CGFloat kMinHeightTitleOrImageOnly = 48;
@@ -29,16 +31,29 @@ static const CGFloat kMinHeightTitleAndImage = 72;
 /** The vertical padding between the image view and the title label. */
 static const CGFloat kImageTitlePadding = 3;
 
+// The fonts available on iOS differ from that used on Material.io.  When trying to approximate
+// the position on iOS, it seems like a horizontal inset of 10 points looks pretty close.
+static const CGFloat kBadgeXOffsetFromIconEdgeWithTextLTR = -8;
+
+// However, when the badge has no visible text, its horizontal center should be 1 point inset from
+// the edge of the image.
+static const CGFloat kBadgeXOffsetFromIconEdgeEmptyLTR = -1;
+
 @interface MDCTabBarViewItemView ()
 
 /** Indicates the selection status of this item view. */
 @property(nonatomic, assign, getter=isSelected) BOOL selected;
+- (CGPoint)badgeCenterFromFrame:(CGRect)frame isRTL:(BOOL)isRTL;
 
 @end
 
-@implementation MDCTabBarViewItemView
+@implementation MDCTabBarViewItemView {
+  MDCBadgeView *_Nonnull _badge;
+}
 
 @synthesize selectedImage = _selectedImage;
+@synthesize badgeText = _badgeText;
+@synthesize badgeAppearance = _badgeAppearance;
 
 #pragma mark - Init
 
@@ -82,6 +97,38 @@ static const CGFloat kImageTitlePadding = 3;
     _titleLabel.isAccessibilityElement = NO;
     [self addSubview:_titleLabel];
   }
+
+  if (!_badgeAppearance) {
+    // We store a local copy of the badge appearance so that we can consistently override with the
+    // UITabBarItem badgeColor property.
+    _badgeAppearance = [[MDCBadgeAppearance alloc] init];
+  }
+
+  if (!_badge) {
+    _badge = [[MDCBadgeView alloc] initWithFrame:CGRectZero];
+    _badge.isAccessibilityElement = NO;
+    [self addSubview:_badge];
+    _badge.hidden = YES;
+  }
+}
+
+- (CGPoint)badgeCenterFromFrame:(CGRect)frame isRTL:(BOOL)isRTL {
+  CGSize badgeSize = [_badge sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+
+  CGFloat badgeCenterY = CGRectGetMinY(frame) + (badgeSize.height / 2);
+
+  CGFloat badgeCenterXOffset = kBadgeXOffsetFromIconEdgeWithTextLTR + badgeSize.width / 2;
+  if (self.badgeText.length == 0) {
+    badgeCenterXOffset = kBadgeXOffsetFromIconEdgeEmptyLTR;
+  }
+  CGFloat badgeCenterX =
+      isRTL ? CGRectGetMinX(frame) - badgeCenterXOffset : CGRectGetMaxX(frame) + badgeCenterXOffset;
+
+  // Account for the badge's outer border width.
+  badgeCenterX -= _badge.appearance.borderWidth / 2;
+  badgeCenterY -= _badge.appearance.borderWidth / 2;
+
+  return CGPointMake(badgeCenterX, badgeCenterY);
 }
 
 #pragma mark - UIView
@@ -93,11 +140,20 @@ static const CGFloat kImageTitlePadding = 3;
     return;
   }
 
+  [_badge sizeToFit];
+
+  BOOL isRTL =
+      self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
+
   if (self.titleLabel.text.length && !self.iconImageView.image) {
-    self.titleLabel.frame = [self titleLabelFrameForTitleOnlyLayout];
+    CGRect titleLabelFrame = [self titleLabelFrameForTitleOnlyLayout];
+    self.titleLabel.frame = titleLabelFrame;
+    _badge.center = [self badgeCenterFromFrame:titleLabelFrame isRTL:isRTL];
     return;
   } else if (!self.titleLabel.text.length && self.iconImageView.image) {
-    self.iconImageView.frame = [self iconImageViewFrameForImageOnlyLayout];
+    CGRect iconImageFrame = [self iconImageViewFrameForImageOnlyLayout];
+    self.iconImageView.frame = iconImageFrame;
+    _badge.center = [self badgeCenterFromFrame:iconImageFrame isRTL:isRTL];
     return;
   } else {
     CGRect titleLabelFrame = CGRectZero;
@@ -105,6 +161,7 @@ static const CGFloat kImageTitlePadding = 3;
     [self layoutTitleLabelFrame:&titleLabelFrame iconImageViewFrame:&iconImageViewFrame];
     self.titleLabel.frame = titleLabelFrame;
     self.iconImageView.frame = iconImageViewFrame;
+    _badge.center = [self badgeCenterFromFrame:iconImageViewFrame isRTL:isRTL];
   }
 }
 
@@ -199,6 +256,7 @@ static const CGFloat kImageTitlePadding = 3;
 - (CGSize)sizeThatFitsTextOnly:(CGSize)size {
   CGSize maxSize = CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX);
   CGSize labelSize = [self.titleLabel sizeThatFits:maxSize];
+
   UIEdgeInsets contentInsets =
       [self contentInsetsForItemViewStyle:MDCTabBarViewItemViewStyleTextOnly];
   return CGSizeMake(
@@ -260,6 +318,51 @@ static const CGFloat kImageTitlePadding = 3;
     return [self.itemViewDelegate contentInsetsForItemViewStyle:itemViewStyle];
   }
   return UIEdgeInsetsZero;
+}
+
+#pragma mark - Displaying a value in the badge
+
+- (void)setBadgeText:(NSString *)badgeText {
+  _badgeText = badgeText;
+  _badge.text = self.badgeText;
+  if (badgeText == nil) {
+    _badge.hidden = YES;
+  } else {
+    _badge.hidden = NO;
+  }
+  [self setNeedsLayout];
+}
+
+- (NSString *)badgeText {
+  return _badgeText;
+}
+
+#pragma mark - Configuring the badge's visual appearance
+
+- (void)commitBadgeAppearance {
+  MDCBadgeAppearance *appearance = [_badgeAppearance copy];
+  if (_badgeColor) {
+    appearance.backgroundColor = _badgeColor;
+  }
+  _badge.appearance = appearance;
+}
+
+- (void)setBadgeAppearance:(MDCBadgeAppearance *)badgeAppearance {
+  _badgeAppearance = [badgeAppearance copy];
+
+  [self commitBadgeAppearance];
+}
+
+- (void)setBadgeColor:(nullable UIColor *)badgeColor {
+  if (badgeColor == nil) {
+    // The new MDCBadgeAppearance API treats nil as equivalent to tintColor now, in alignment with
+    // UIKit, so to maintain backward-compatibility with expected behavior, we force-cast nil to a
+    // clearColor instance.
+    badgeColor = [UIColor clearColor];
+  }
+  _badgeColor = badgeColor;
+
+  [self commitBadgeAppearance];
 }
 
 #pragma mark - UIAccessibility

@@ -20,6 +20,7 @@
 #import "private/MDCTabBarViewPrivateIndicatorContext.h"
 #import "CAMediaTimingFunction+MDCAnimationTiming.h"
 #import "MDCAvailability.h"
+#import "MDCBadgeAppearance.h"
 #import "MDCRippleTouchController.h"
 #import "MDCRippleView.h"
 #import "MDCTabBarItemCustomViewing.h"
@@ -64,6 +65,9 @@ static const CGFloat kBottomDividerHeight = 1;
 /// Default duration in seconds for selection change animations.
 static const NSTimeInterval kSelectionChangeAnimationDuration = 0.3;
 
+/** The font size of the badge text. */
+static const CGFloat kBadgeFontSize = 8;
+
 static NSString *const kSelectedImageKeyPath = @"selectedImage";
 static NSString *const kImageKeyPath = @"image";
 static NSString *const kTitleKeyPath = @"title";
@@ -74,6 +78,8 @@ static NSString *const kAccessibilityTraitsKeyPath = @"accessibilityTraits";
 static NSString *const kTitlePositionAdjustment = @"titlePositionAdjustment";
 static NSString *const kLargeContentSizeImage = @"largeContentSizeImage";
 static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageInsets";
+static NSString *const kBadgeValueKeyPath = @"badgeValue";
+static NSString *const kBadgeColorKeyPath = @"badgeColor";
 
 #ifdef __IPHONE_13_4
 @interface MDCTabBarView (PointerInteractions) <UIPointerInteractionDelegate,
@@ -167,6 +173,10 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
   _useDefaultItemViewContentInsets = YES;
   self.backgroundColor = UIColor.whiteColor;
   self.showsHorizontalScrollIndicator = NO;
+
+  _itemBadgeAppearance = [[MDCBadgeAppearance alloc] init];
+  _itemBadgeAppearance.textColor = UIColor.whiteColor;
+  _itemBadgeAppearance.font = [UIFont systemFontOfSize:kBadgeFontSize];
 
   _selectionIndicatorView = [[MDCTabBarViewIndicatorView alloc] init];
   _selectionIndicatorView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -295,7 +305,11 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
       mdcItemView.titleLabel.textColor = [self titleColorForState:UIControlStateNormal];
       mdcItemView.image = item.image;
       mdcItemView.selectedImage = item.selectedImage;
+      mdcItemView.badgeText = item.badgeValue;
+      mdcItemView.badgeColor = item.badgeColor;
       mdcItemView.rippleTouchController.rippleView.rippleColor = self.rippleColor;
+
+      mdcItemView.badgeAppearance = self.itemBadgeAppearance;
 
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
       if (@available(iOS 13, *)) {
@@ -346,6 +360,16 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
 
   [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
+}
+
+- (void)setItemBadgeAppearance:(MDCBadgeAppearance *)itemBadgeAppearance {
+  _itemBadgeAppearance = [itemBadgeAppearance copy];
+
+  for (UIView *itemView in self.itemViews) {
+    if ([itemView isKindOfClass:[MDCTabBarViewItemView class]]) {
+      ((MDCTabBarViewItemView *)itemView).badgeAppearance = _itemBadgeAppearance;
+    }
+  }
 }
 
 - (void)setSelectedItem:(UITabBarItem *)selectedItem {
@@ -648,6 +672,14 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
            forKeyPath:kLargeContentSizeImageInsets
               options:NSKeyValueObservingOptionNew
               context:kKVOContextMDCTabBarView];
+    [item addObserver:self
+           forKeyPath:kBadgeValueKeyPath
+              options:NSKeyValueObservingOptionNew
+              context:kKVOContextMDCTabBarView];
+    [item addObserver:self
+           forKeyPath:kBadgeColorKeyPath
+              options:NSKeyValueObservingOptionNew
+              context:kKVOContextMDCTabBarView];
   }
 }
 
@@ -673,6 +705,8 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
     [item removeObserver:self
               forKeyPath:kLargeContentSizeImageInsets
                  context:kKVOContextMDCTabBarView];
+    [item removeObserver:self forKeyPath:kBadgeValueKeyPath context:kKVOContextMDCTabBarView];
+    [item removeObserver:self forKeyPath:kBadgeColorKeyPath context:kKVOContextMDCTabBarView];
   }
 }
 
@@ -707,6 +741,10 @@ static NSString *const kLargeContentSizeImageInsets = @"largeContentSizeImageIns
     } else if ([keyPath isEqualToString:kTitleKeyPath]) {
       tabBarItemView.titleLabel.text = newValue;
       [self markIntrinsicContentSizeAndLayoutNeedingUpdateForSelfAndItemView:tabBarItemView];
+    } else if ([keyPath isEqualToString:kBadgeValueKeyPath]) {
+      tabBarItemView.badgeText = newValue;
+    } else if ([keyPath isEqualToString:kBadgeColorKeyPath]) {
+      tabBarItemView.badgeColor = newValue;
     } else if ([keyPath isEqualToString:kAccessibilityLabelKeyPath]) {
       tabBarItemView.accessibilityLabel = newValue;
     } else if ([keyPath isEqualToString:kAccessibilityHintKeyPath]) {

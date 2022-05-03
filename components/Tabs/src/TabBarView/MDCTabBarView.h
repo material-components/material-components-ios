@@ -62,6 +62,8 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewLayoutStyle) {
   MDCTabBarViewLayoutStyleNonFixedClusteredCentered = 6,
 };
 
+@class MDCBadgeAppearance;
+
 /**
  An implementation of Material Tabs (https://material.io/design/components/tabs.html).
  */
@@ -86,6 +88,14 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
  The color for the Ripple effect for touch feedback.
  */
 @property(nonnull, nonatomic, copy) UIColor *rippleColor;
+
+/**
+ The default appearance to be used for all item badges.
+
+ If a given UITabBarItem has set a non-nil badgeColor, then that value will be used for that item
+ view's badge instead of the backgroundColor associated with this appearance object.
+ */
+@property(nonatomic, copy, nonnull) MDCBadgeAppearance *itemBadgeAppearance;
 
 /** The tab bar view delegate. */
 @property(nullable, nonatomic, weak) id<MDCTabBarViewDelegate> tabBarDelegate;
