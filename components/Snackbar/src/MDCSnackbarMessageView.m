@@ -14,12 +14,13 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-#import "MaterialAnimationTiming.h"
-#import "MaterialAvailability.h"
-#import "MaterialButtons.h"
-#import "MaterialElevation.h"
-#import "MaterialShadowElevations.h"
-#import "MaterialShadowLayer.h"
+#import "CAMediaTimingFunction+MDCAnimationTiming.h"
+#import "MDCAvailability.h"
+#import "MDCButton.h"
+#import "MDCFlatButton.h"
+#import "UIView+MaterialElevationResponding.h"
+#import "MDCShadowElevations.h"
+#import "MDCShadowLayer.h"
 #import "MDCSnackbarManager.h"
 #import "MDCSnackbarMessage.h"
 #import "MDCSnackbarMessageView.h"
@@ -27,8 +28,10 @@
 #import "MDCSnackbarOverlayView.h"
 #import "MaterialSnackbarStrings.h"
 #import "MaterialSnackbarStrings_table.h"
-#import "MaterialTypography.h"
-#import "MaterialMath.h"
+#import "MDCFontTextStyle.h"
+#import "MDCTypography.h"
+#import "UIFont+MaterialTypography.h"
+#import "MDCMath.h"
 
 NSString *const MDCSnackbarMessageTitleAutomationIdentifier =
     @"MDCSnackbarMessageTitleAutomationIdentifier";
@@ -1225,12 +1228,26 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+  // This check determines if pointInside has been called with an "empty" touch parameter.
+  // An empty touch is a UIEvent of type UIEventTypeTouch, with a nil `allTouches` property.
+  // The check's purpose is prevention of instant snackbar dismissal when VoiceControl is enabled.
+
+  // If VoiceControl is enabled, pointInside is called with an empty touch when a snackbar appears.
+  // If VoiceOver is enabled, pointInside is called with an empty touch when focusing an element.
+
+  // This check does not prevent taps & swipes from passing through to the accessibilityAffordance
+  // check below when VoiceOver or SwitchControl are enabled.
+  if ([event allTouches] == nil && event.type == UIEventTypeTouches &&
+      event.subtype == UIEventSubtypeNone) {
+    return [super pointInside:point withEvent:event];
+  }
+
   BOOL result = [super pointInside:point withEvent:event];
   BOOL accessibilityEnabled =
       UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning();
   if (accessibilityEnabled && self.enableDismissalAccessibilityAffordance &&
       CGRectContainsPoint(self.dismissalAccessibilityAffordance.frame, point)) {
-    // Count @c dismissalAccessibilitAffordance as hittable when VoiceOver is running.
+    // Count @c dismissalAccessibilityAffordance as hittable when VoiceOver is running.
     return YES;
   }
   if (!result && !accessibilityEnabled && _shouldDismissOnOverlayTap) {
