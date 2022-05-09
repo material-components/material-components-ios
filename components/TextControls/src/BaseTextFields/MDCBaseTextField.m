@@ -16,13 +16,23 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MaterialTextControls+Enums.h"
+#import "MDCTextControlLabelBehavior.h"
+#import "MDCTextControlState.h"
+#import "MDCTextControlStyleBase.h"
+#import "MDCTextControl.h"
 #import "MDCTextControlAssistiveLabelDrawPriority.h"
 
 #import "MDCBaseTextFieldDelegate.h"
-#import "MaterialTextControlsPrivate+BaseStyle.h"
-#import "MaterialTextControlsPrivate+Shared.h"
-#import "MaterialTextControlsPrivate+TextFields.h"
+#import "MDCTextControlAssistiveLabelView.h"
+#import "MDCTextControlColorViewModel.h"
+#import "MDCTextControlHorizontalPositioning.h"
+#import "MDCTextControlHorizontalPositioningReference.h"
+#import "MDCTextControlLabelAnimation.h"
+#import "MDCTextControlLabelSupport.h"
+#import "MDCTextControlPlaceholderSupport.h"
+#import "MDCBaseTextFieldLayout.h"
+#import "MDCTextControlTextField.h"
+#import "MDCTextControlTextFieldSideViewAlignment.h"
 
 static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
 
@@ -118,6 +128,9 @@ static char *const kKVOContextMDCBaseTextField = "kKVOContextMDCBaseTextField";
   UIFont *assistiveFont = [UIFont systemFontOfSize:assistiveFontSize];
   self.assistiveLabelView.leadingAssistiveLabel.font = assistiveFont;
   self.assistiveLabelView.trailingAssistiveLabel.font = assistiveFont;
+  UIGestureRecognizer *tapGestureRecognizer =
+      [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(becomeFirstResponder)];
+  [self.assistiveLabelView addGestureRecognizer:tapGestureRecognizer];
   [self addSubview:self.assistiveLabelView];
 }
 
