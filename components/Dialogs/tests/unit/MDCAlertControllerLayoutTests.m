@@ -24,6 +24,11 @@
 static const CGFloat kFourInchPortraitWidth = 320.0;
 static const CGFloat kFourInchLandscapeWidth = 568.0;
 
+/** Expose private properties for testing. */
+@interface MDCAlertControllerView (Testing)
+@property(nonatomic, readonly) BOOL isVerticalActionsLayout;
+@end
+
 @interface MDCAlertControllerLayoutTests : XCTestCase
 
 @end
@@ -77,6 +82,47 @@ static const CGFloat kFourInchLandscapeWidth = 568.0;
   // padding between buttons.
   XCTAssertEqualWithAccuracy(sizeOnFourInchLandscape.height * 2, sizeOnFourInchPortrait.height, 20);
   XCTAssertGreaterThan(sizeOnFourInchLandscape.width, sizeOnFourInchPortrait.width);
+}
+
+- (void)testButtonLayoutReturnsToHorizontalWhenFontSizeChanges {
+  // Given
+  _alertController = [MDCAlertController alertControllerWithTitle:nil message:@"Hello"];
+  MDCAlertAction *longNamedAction = [MDCAlertAction actionWithTitle:@"Long action name"
+                                                            handler:nil];
+  MDCAlertAction *otherAction = [MDCAlertAction actionWithTitle:@"Other" handler:nil];
+  [_alertController addAction:longNamedAction];
+  [_alertController addAction:otherAction];
+  MDCAlertControllerView *view = (MDCAlertControllerView *)_alertController.view;
+  // Set the bounds of the view such that the buttons will fit horizontally with the smaller font
+  // size but must be vertical with the larger font size.
+  view.bounds = CGRectMake(0, 0, 350, 500);
+
+  // When
+  // With the smaller font size, the buttons should start in a horizontal layout.
+  for (MDCAlertAction *action in _alertController.actions) {
+    [[_alertController buttonForAction:action] setTitleFont:[UIFont systemFontOfSize:20]
+                                                   forState:UIControlStateNormal];
+  }
+  [view layoutSubviews];
+  XCTAssertFalse(view.isVerticalActionsLayout);
+
+  // When the font size is increased, the buttons should be arranged vertically.
+  for (MDCAlertAction *action in _alertController.actions) {
+    [[_alertController buttonForAction:action] setTitleFont:[UIFont systemFontOfSize:40]
+                                                   forState:UIControlStateNormal];
+  }
+  [view layoutSubviews];
+  XCTAssertTrue(view.isVerticalActionsLayout);
+
+  // When the font size is decreased again, the buttons should return to a horizontal layout.
+  for (MDCAlertAction *action in _alertController.actions) {
+    [[_alertController buttonForAction:action] setTitleFont:[UIFont systemFontOfSize:20]
+                                                   forState:UIControlStateNormal];
+  }
+  [view layoutSubviews];
+
+  // Then
+  XCTAssertFalse(view.isVerticalActionsLayout);
 }
 
 @end

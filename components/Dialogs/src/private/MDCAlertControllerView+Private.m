@@ -1058,9 +1058,12 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
               MDCContentHorizontalAlignmentJustified) {
         buttonRect.size.width = maxButtonWidth;
         button.bounds = buttonRect;
-        // Adjust minimumSize based on maxButtonWidth to increase the visible area of button.
-        button.minimumSize = CGSizeMake(MAX(maxButtonWidth, MDCDialogActionButtonMinimumWidth),
-                                        button.minimumSize.height);
+        if (self.actionsHorizontalAlignmentInVerticalLayout ==
+            MDCContentHorizontalAlignmentJustified) {
+          // Adjust minimumSize based on maxButtonWidth to increase the visible area of button.
+          button.minimumSize = CGSizeMake(MAX(maxButtonWidth, MDCDialogActionButtonMinimumWidth),
+                                          button.minimumSize.height);
+        }
       }
 
       buttonCenter.y += multiplier * (buttonRect.size.height / 2.0f);
