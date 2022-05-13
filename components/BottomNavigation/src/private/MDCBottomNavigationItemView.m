@@ -106,6 +106,7 @@ static CGFloat FloorScaled(CGFloat value, CGFloat scale) {
 
     _iconImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
     _iconImageView.isAccessibilityElement = NO;
+    _iconImageView.tintAdjustmentMode = UIViewTintAdjustmentModeNormal;
     [self addSubview:_iconImageView];
 
     _label = [[UILabel alloc] initWithFrame:CGRectZero];
