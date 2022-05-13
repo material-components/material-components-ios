@@ -229,6 +229,7 @@ static BOOL gEnablePerformantShadow = NO;
 
   // Disable default highlight state.
   self.adjustsImageWhenHighlighted = NO;
+  self.tintAdjustmentMode = UIViewTintAdjustmentModeNormal;
 
 #if (!defined(TARGET_OS_TV) || TARGET_OS_TV == 0)
   self.showsTouchWhenHighlighted = NO;
