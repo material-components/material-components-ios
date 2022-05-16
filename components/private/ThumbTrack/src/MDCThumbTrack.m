@@ -708,6 +708,10 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
                             delay:0
                           options:options
                        animations:^{
+                         if (activeSegmentShrinking) {
+                           [self updateDotsViewActiveSegment];
+                         }
+
                          // Set _value ivar instead of property to avoid conflicts with logic that
                          // sends UIControlEventValueChanged.
 

@@ -252,6 +252,62 @@ static void MoveSliderThumbToRelativePosition(MDCSlider *slider,
   [self generateSnapshotAndVerifyForView:self.slider];
 }
 
+- (void)testDiscreteSliderShrinksFilledSectionWithoutCrossingAnchor {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityAlways;
+  self.slider.filledTrackAnchorValue = 0;
+  self.slider.value = self.slider.maximumValue - 3;
+
+  // When
+  self.slider.value = self.slider.filledTrackAnchorValue + 3;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testDiscreteSliderGrowsFilledSectionWithoutCrossingAnchor {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityAlways;
+  self.slider.filledTrackAnchorValue = 0;
+  self.slider.value = self.slider.filledTrackAnchorValue + 3;
+
+  // When
+  self.slider.value = self.slider.maximumValue - 3;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testDiscreteSliderCrossesAnchorAndShrinksFilledSection {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityAlways;
+  self.slider.filledTrackAnchorValue = 0;
+  self.slider.value = self.slider.maximumValue - 3;
+
+  // When
+  self.slider.value = self.slider.filledTrackAnchorValue - 3;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
+- (void)testDiscreteSliderCrossesAnchorAndGrowsFilledSection {
+  // Given
+  [self makeSliderDiscrete:self.slider];
+  self.slider.trackTickVisibility = MDCSliderTrackTickVisibilityAlways;
+  self.slider.filledTrackAnchorValue = 0;
+  self.slider.value = self.slider.filledTrackAnchorValue - 3;
+
+  // When
+  self.slider.value = self.slider.maximumValue - 3;
+
+  // Then
+  [self generateSnapshotAndVerifyForView:self.slider];
+}
+
 - (void)testImplicitlyNonDiscreteSliderAtMinimum {
   // Given
   self.slider.discrete = YES;
