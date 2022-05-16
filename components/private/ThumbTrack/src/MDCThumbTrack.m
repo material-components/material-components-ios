@@ -645,6 +645,10 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
   // default to animating with Ease in / Ease out
 
   if (animated) {
+    BOOL hasInheritedAnimationDuration = UIView.inheritedAnimationDuration > 0;
+    NSTimeInterval animationDuration =
+        hasInheritedAnimationDuration ? UIView.inheritedAnimationDuration : kAnimationDuration;
+
     // UIView animateWithDuration:delay:options:animations: takes a different block signature.
     void (^animationCompletion)(BOOL) = ^void(BOOL finished) {
       if (!finished) {
@@ -668,23 +672,38 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
         (_value < _filledTrackAnchorValue && _filledTrackAnchorValue < previousValue);
     if (crossesAnchor) {
       CGFloat currentValue = _value;
-      CGFloat animationDurationToAnchor = (fabs(previousValue - _filledTrackAnchorValue) /
-                                           fabs(previousValue - currentValue)) *
-                                          kAnimationDuration;
+      CGFloat animationDurationToAnchor =
+          (fabs(previousValue - _filledTrackAnchorValue) / fabs(previousValue - currentValue)) *
+          animationDuration;
+      CGFloat animationDurationAfterAnchor = animationDuration - animationDurationToAnchor;
+      if (hasInheritedAnimationDuration) {
+        // If the animation duration is being set by a UIView animation block outside of this class,
+        // the first animation to the anchor will have the inherited duration. So to maintain a
+        // consistent animation speed throughout, the animation duration after the anchor should be
+        // proportionate to the relative distance traveled after the anchor.
+        animationDurationToAnchor = animationDuration;
+        animationDurationAfterAnchor = animationDuration *
+                                       fabs(currentValue - _filledTrackAnchorValue) /
+                                       fabs(previousValue - _filledTrackAnchorValue);
+      }
       void (^afterCrossingAnchorAnimation)(BOOL) = ^void(__unused BOOL finished) {
         UIViewAnimationOptions options = baseAnimationOptions | UIViewAnimationOptionCurveEaseOut;
-        [UIView animateWithDuration:(kAnimationDuration - animationDurationToAnchor)
+        [UIView animateWithDuration:animationDurationAfterAnchor
                               delay:0
                             options:options
                          animations:^{
                            [self updateViewsMainIsAnimated:animated
-                                              withDuration:(kAnimationDuration -
-                                                            animationDurationToAnchor)
+                                              withDuration:animationDurationAfterAnchor
                                           animationOptions:options];
                          }
                          completion:animationCompletion];
       };
-      UIViewAnimationOptions options = baseAnimationOptions | UIViewAnimationOptionCurveEaseIn;
+      UIViewAnimationOptions options = baseAnimationOptions;
+      if (!hasInheritedAnimationDuration) {
+        // If this class is controlling the animation, it can specify the animation curve; if not,
+        // default to UIViewAnimationOptionCurveEaseInOut by not specifying a curve.
+        options = options | UIViewAnimationOptionCurveEaseIn;
+      }
       [UIView animateWithDuration:animationDurationToAnchor
                             delay:0
                           options:options
@@ -705,7 +724,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
                        }
                        completion:afterCrossingAnchorAnimation];
     } else {
-      [UIView animateWithDuration:kAnimationDuration
+      [UIView animateWithDuration:animationDuration
                             delay:0
                           options:baseAnimationOptions
                        animations:^{
@@ -713,7 +732,7 @@ static inline CGFloat DistanceFromPointToPoint(CGPoint point1, CGPoint point2) {
                            [self updateDotsViewActiveSegment];
                          }
                          [self updateViewsMainIsAnimated:animated
-                                            withDuration:kAnimationDuration
+                                            withDuration:animationDuration
                                         animationOptions:baseAnimationOptions];
                        }
                        completion:animationCompletion];
