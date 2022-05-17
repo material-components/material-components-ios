@@ -457,7 +457,7 @@ static NSString *const kSecondLongAction = @"Second Long Long Action";
                                                          emphasis:MDCActionEmphasisMedium
                                                           handler:nil]];
   [self.alertController applyThemeWithScheme:self.containerScheme2019];
-  CGFloat width = 359.0f;  // Minimum width that fits both actions (calculated manually).
+  CGFloat width = 500.0f;  // Minimum width that fits both actions (calculated manually).
   [self.alertController sizeToFitContentInBounds:CGSizeMake(width, 300.0f)];
   MDCAlertControllerView *alertView = (MDCAlertControllerView *)self.alertController.view;
 

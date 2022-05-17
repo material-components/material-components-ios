@@ -482,6 +482,11 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
     size.height = actionsInsets.top + maxButtonHeight + actionsInsets.bottom;
   }
 
+  NSUInteger count = self.actionManager.buttonsInActionOrder.count;
+  if (self.actionsHorizontalAlignment == MDCContentHorizontalAlignmentJustified) {
+    size.width = [self widestAction] * count + [self horizontalSpacing];
+  }
+
   return size;
 }
 
@@ -814,32 +819,18 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   CGSize verticalSize = [self actionButtonsSizeInVerticalLayout];
 
   BOOL isVertical = boundsSize.width < horizontalSize.width;
-  NSUInteger count = self.actionManager.buttonsInActionOrder.count;
-  if (self.actionsHorizontalAlignment == MDCContentHorizontalAlignmentJustified && count > 1) {
-    // b/155350470: ensure long justified actions are vertically aligned based on the longest
-    // button.
-    isVertical =
-        [self widestAction] > (CGFloat)ceil((boundingWidth - [self horizontalSpacing]) / count);
-  }
   CGSize actionsSize;
   if (isVertical) {
     // Use VerticalLayout
-    if (self.actionsHorizontalAlignmentInVerticalLayout == MDCContentHorizontalAlignmentJustified) {
-      verticalSize.width = boundingWidth - (self.actionsInsets.left + self.actionsInsets.right);
-    }
     actionsSize.width = MIN(verticalSize.width, boundsSize.width);
     actionsSize.height = MIN(verticalSize.height, boundsSize.height);
-    self.verticalActionsLayout = YES;
   } else {
     // Use HorizontalLayout
-    if (self.actionsHorizontalAlignment == MDCContentHorizontalAlignmentJustified) {
-      horizontalSize.width = boundingWidth - (self.actionsInsets.left + self.actionsInsets.right);
-    }
     actionsSize.width = MIN(horizontalSize.width, boundsSize.width);
     actionsSize.height = MIN(horizontalSize.height, boundsSize.height);
-    self.verticalActionsLayout = NO;
   }
 
+  self.verticalActionsLayout = isVertical;
   actionsSize.width = (CGFloat)ceil(actionsSize.width);
   actionsSize.height = (CGFloat)ceil(actionsSize.height);
 
