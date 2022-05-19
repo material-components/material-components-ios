@@ -502,6 +502,34 @@ static const int64_t kDispatchTimeWait = (int64_t)((CGFloat)0.2 * NSEC_PER_SEC);
   XCTAssertFalse(self.manager.internalManager.currentSnackbar.accessibilityElementsHidden);
 }
 
+- (void)testAccessibilityElementsUpdateWhenVoiceOverStatusChanges {
+  // Given
+  MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
+  action.title = @"Tap Me";
+  self.message.action = action;
+
+  [self.manager showMessage:self.message];
+  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
+  // Wait for the snackbar to be displayed.
+  dispatch_async(dispatch_get_main_queue(), ^{
+    // Wait for the completion block to run after displaying the snackbar.
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [expectation fulfill];
+    });
+  });
+  [self waitForExpectationsWithTimeout:3 handler:nil];
+  XCTAssertTrue(self.manager.internalManager.currentSnackbar.accessibilityElementsHidden);
+
+  // When
+  self.manager.internalManager.isVoiceOverRunningOverride = YES;
+  [[NSNotificationCenter defaultCenter]
+      postNotificationName:UIAccessibilityVoiceOverStatusDidChangeNotification
+                    object:nil];
+
+  // Then
+  XCTAssertFalse(self.manager.internalManager.currentSnackbar.accessibilityElementsHidden);
+}
+
 - (void)testMessageCustomizationUsingWillPresentBlock {
   // Given
   __block BOOL blockCalled = NO;

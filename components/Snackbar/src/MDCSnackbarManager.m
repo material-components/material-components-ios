@@ -129,6 +129,12 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
     _manager = manager;
     _pendingMessages = [[NSMutableArray alloc] init];
     _suspensionTokens = [NSMutableDictionary dictionary];
+
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+           selector:@selector(updateAccessibilityElements)
+               name:UIAccessibilityVoiceOverStatusDidChangeNotification
+             object:nil];
   }
   return self;
 }
@@ -221,7 +227,6 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
         if (shouldDismiss) {
           shouldDismiss = NO;
 
-          // If the user
           [self hideSnackbarViewReally:snackbarView withAction:action userPrompted:userInitiated];
         }
       };
@@ -247,8 +252,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
       showSnackbarView:snackbarView
               animated:YES
             completion:^{
-              if (snackbarView.accessibilityViewIsModal || message.focusOnShow ||
-                  ![self isSnackbarTransient:snackbarView]) {
+              if ([self snackbarAllowsFocus:snackbarView]) {
                 UIAccessibilityPostNotification(self.manager.focusAccessibilityNotification,
                                                 snackbarView);
               } else {
@@ -340,6 +344,16 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 }
 
 #pragma mark - Helper methods
+
+- (void)updateAccessibilityElements {
+  self.currentSnackbar.accessibilityElementsHidden =
+      ![self snackbarAllowsFocus:self.currentSnackbar];
+}
+
+- (BOOL)snackbarAllowsFocus:(MDCSnackbarMessageView *)snackbarView {
+  return snackbarView.accessibilityViewIsModal || snackbarView.message.focusOnShow ||
+         ![self isSnackbarTransient:snackbarView];
+}
 
 - (BOOL)isVoiceOverRunning {
   if (UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning() ||
