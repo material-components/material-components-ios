@@ -16,6 +16,9 @@
 
 #import "MDCFontTextStyle.h"
 
+API_DEPRECATED_BEGIN("Use typography tokens instead. See go/material-ios-tokens for more details.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  Provides a means of storing defining font metrics based on size categories.
 
@@ -58,3 +61,5 @@
                                  sizeCategory:(nonnull NSString *)sizeCategory;
 
 @end
+
+API_DEPRECATED_END

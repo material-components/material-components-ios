@@ -14,4 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN("Use local trait collections instead.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 UIContentSizeCategory GetCurrentSizeCategory(void);
+
+API_DEPRECATED_END

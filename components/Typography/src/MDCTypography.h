@@ -14,7 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
-#pragma mark - Soon to be deprecated
+API_DEPRECATED_BEGIN("Use typography tokens instead. See go/material-ios-tokens for more details.",
+                     ios(12, API_TO_BE_DEPRECATED))
 
 /**
  MDCTypography uses this protocol to delegate responsibility of loading the custom fonts.
@@ -152,3 +153,5 @@
  */
 @interface MDCSystemFontLoader : NSObject <MDCTypographyFontLoading>
 @end
+
+API_DEPRECATED_END
