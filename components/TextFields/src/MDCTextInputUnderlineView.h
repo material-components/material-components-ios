@@ -14,13 +14,15 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN("Use UITextField and UITextView within grouped list cells."
+                     "See go/material-ios-text-fields for more details.",
+                     ios(12, 12))
+
 /**
  A view that draws the underline effect for an instance of MDCTextInput. The underline has 2
  possible states enabled and disabled. Disabled shows a dotted line instead of solid.
  */
-__deprecated_msg(
-    "MDCTextField and its associated classes are deprecated. Please use TextControls instead.")
-    @interface MDCTextInputUnderlineView : UIView<NSCopying>
+@interface MDCTextInputUnderlineView : UIView <NSCopying>
 
 @property(nonatomic, strong) UIColor *color;
 @property(nonatomic, strong) UIColor *disabledColor;
@@ -28,3 +30,5 @@ __deprecated_msg(
 @property(nonatomic, assign) CGFloat lineHeight;
 
 @end
+
+API_DEPRECATED_END

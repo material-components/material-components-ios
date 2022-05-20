@@ -17,6 +17,10 @@
 #import "MDCTextInput.h"
 #import "MaterialElevation.h"
 
+API_DEPRECATED_BEGIN("Use UITextField and UITextView within grouped list cells."
+                     "See go/material-ios-text-fields for more details.",
+                     ios(12, 12))
+
 /** When text is manually set via .text or setText:, this notification fires. */
 extern NSString *_Nonnull const MDCTextFieldTextDidSetTextNotification;
 
@@ -27,10 +31,8 @@ extern NSString *_Nonnull const MDCTextInputDidToggleEnabledNotification;
   Material Design compliant single-line text input.
   https://www.google.com/design/spec/components/text-fields.html#text-fields-single-line-text-field
  */
-__deprecated_msg(
-    "MDCTextField and its associated classes are deprecated. Please use TextControls instead.")
-    @interface MDCTextField
-    : UITextField<MDCTextInput, MDCLeadingViewTextInput, MDCElevatable, MDCElevationOverriding>
+@interface MDCTextField
+    : UITextField <MDCTextInput, MDCLeadingViewTextInput, MDCElevatable, MDCElevationOverriding>
 
 /** MDCTextField does not implement borders that conform to UITextBorderStyle. */
 @property(nonatomic, assign) UITextBorderStyle borderStyle NS_UNAVAILABLE;
@@ -66,3 +68,5 @@ __deprecated_msg(
     (MDCTextField *_Nonnull textField, UITraitCollection *_Nullable previousTraitCollection);
 
 @end
+
+API_DEPRECATED_END

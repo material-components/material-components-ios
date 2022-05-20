@@ -25,14 +25,16 @@
 @protocol MDCMultilineTextInputDelegate;
 @protocol MDCMultilineTextInputLayoutDelegate;
 
+API_DEPRECATED_BEGIN("Use UITextField and UITextView within grouped list cells."
+                     "See go/material-ios-text-fields for more details.",
+                     ios(12, 12))
+
 /**
   Material Design themed mutiline text field (multiline text input).
   https://www.google.com/design/spec/components/text-fields.html#text-fields-multi-line-text-field
  */
-__deprecated_msg(
-    "MDCTextField and its associated classes are deprecated. Please use TextControls instead.")
-    @interface MDCMultilineTextField
-    : UIView<MDCTextInput, MDCMultilineTextInput, MDCElevatable, MDCElevationOverriding>
+@interface MDCMultilineTextField
+    : UIView <MDCTextInput, MDCMultilineTextInput, MDCElevatable, MDCElevationOverriding>
 
 /** A mirror of the same property that already exists on UITextField, UITextView, and UILabel. */
 @property(nonatomic, assign) BOOL adjustsFontForContentSizeCategory;
@@ -122,3 +124,5 @@ concatenating.
 @property(nullable, nonatomic, copy) NSString *accessibilityLabel;
 
 @end
+
+API_DEPRECATED_END

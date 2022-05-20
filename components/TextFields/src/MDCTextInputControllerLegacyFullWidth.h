@@ -14,6 +14,10 @@
 
 #import "MDCTextInputControllerFullWidth.h"
 
+API_DEPRECATED_BEGIN("Use UITextField and UITextView within grouped list cells."
+                     "See go/material-ios-text-fields for more details.",
+                     ios(12, 12))
+
 /**
  Material Design compliant text field. The logic for 'automagic' error states changes:
  underline color, underline text color.
@@ -54,8 +58,8 @@
  placeholder as distinct from `label text`. The placeholder-related properties of this class most
  closely align with the "label text" as described in the guidance.
  */
-__deprecated_msg(
-    "MDCTextField and its associated classes are deprecated. Please use TextControls instead.")
-    @interface MDCTextInputControllerLegacyFullWidth : MDCTextInputControllerFullWidth
+@interface MDCTextInputControllerLegacyFullWidth : MDCTextInputControllerFullWidth
 
 @end
+
+API_DEPRECATED_END

@@ -27,6 +27,10 @@
    - https://github.com/adamwaite/Validator
  */
 
+API_DEPRECATED_BEGIN("Use UITextField and UITextView within grouped list cells."
+                     "See go/material-ios-text-fields for more details.",
+                     ios(12, 12))
+
 /**
  This represents different options for the relationship between the labels and the alignment rect.
  */
@@ -42,9 +46,7 @@ typedef NS_ENUM(NSUInteger, MDCTextInputTextInsetsMode) {
 @protocol MDCTextInputPositioningDelegate;
 
 /** Common API for Material Design compliant text inputs. */
-__deprecated_msg(
-    "MDCTextField and its associated classes are deprecated. Please use TextControls instead.")
-    @protocol MDCTextInput<NSObject>
+@protocol MDCTextInput <NSObject>
 
 /**
  The attributed text string of the placeholder label.
@@ -276,3 +278,5 @@ __deprecated_msg(
 @property(nonatomic, assign) NSUInteger minimumLines UI_APPEARANCE_SELECTOR;
 
 @end
+
+API_DEPRECATED_END

@@ -12,16 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <UIKit/UIKit.h>
+
+API_DEPRECATED_BEGIN("Use UITextField and UITextView within grouped list cells."
+                     "See go/material-ios-text-fields for more details.",
+                     ios(12, 12))
+
 /**
  MDCMultilineTextInputDelegate has a method common to the UITextFieldDelegate protocol but not
  found in UITextViewDelegate.
  */
-
-#import <UIKit/UIKit.h>
-
-__deprecated_msg(
-    "MDCTextField and its associated classes are deprecated. Please use TextControls instead.")
-    @protocol MDCMultilineTextInputDelegate<NSObject>
+@protocol MDCMultilineTextInputDelegate <NSObject>
 
 @optional
 
@@ -39,3 +40,5 @@ __deprecated_msg(
 - (BOOL)multilineTextFieldShouldClear:(UIView<MDCTextInput> *)textField;
 
 @end
+
+API_DEPRECATED_END

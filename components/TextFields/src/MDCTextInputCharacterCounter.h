@@ -16,6 +16,10 @@
 
 @protocol MDCTextInput;
 
+API_DEPRECATED_BEGIN("Use UITextField and UITextView within grouped list cells."
+                     "See go/material-ios-text-fields for more details.",
+                     ios(12, 12))
+
 /**
  Protocol for custom character counters.
 
@@ -23,9 +27,7 @@
  of context), this object can instead choose to do sophisticated counting (ie: ignoring whitespace,
  ignoring url strings, ignoring usernames, etc).
  */
-__deprecated_msg(
-    "MDCTextField and its associated classes are deprecated. Please use TextControls instead.")
-    @protocol MDCTextInputCharacterCounter<NSObject>
+@protocol MDCTextInputCharacterCounter <NSObject>
 
 /**
  Returns the count of characters for the text field.
@@ -43,8 +45,8 @@ __deprecated_msg(
 
  MDCTextInputAllCharactersCounter is naive (counts each character regardless of context).
  */
-__deprecated_msg(
-    "MDCTextField and its associated classes are deprecated. Please use TextControls instead.")
-    @interface MDCTextInputAllCharactersCounter : NSObject<MDCTextInputCharacterCounter>
+@interface MDCTextInputAllCharactersCounter : NSObject <MDCTextInputCharacterCounter>
 
 @end
+
+API_DEPRECATED_END

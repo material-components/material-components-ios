@@ -15,6 +15,10 @@
 #import "MaterialContainerScheme.h"
 #import "MaterialTextFields.h"
 
+API_DEPRECATED_BEGIN("Use UITextField and UITextView within grouped list cells."
+                     "See go/material-ios-text-fields for more details.",
+                     ios(12, 12))
+
 /**
  This category is used to style MDCTextInputControllerUnderline instances to a specific Material
  style which can be found within the [Material
@@ -31,3 +35,5 @@
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 
 @end
+
+API_DEPRECATED_END

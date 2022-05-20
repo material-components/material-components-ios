@@ -14,6 +14,10 @@
 
 #import "MDCTextInputControllerBase.h"
 
+API_DEPRECATED_BEGIN("Use UITextField and UITextView within grouped list cells."
+                     "See go/material-ios-text-fields for more details.",
+                     ios(12, 12))
+
 @interface MDCTextInputControllerBase (Subclassing)
 
 @property(nonatomic, assign, readonly, getter=isDisplayingCharacterCountError)
@@ -51,3 +55,5 @@
                                            widthHint:(CGFloat)widthHint;
 
 @end
+
+API_DEPRECATED_END

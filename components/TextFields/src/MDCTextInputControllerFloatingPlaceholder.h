@@ -14,6 +14,10 @@
 
 #import "MDCTextInputController.h"
 
+API_DEPRECATED_BEGIN("Use UITextField and UITextView within grouped list cells."
+                     "See go/material-ios-text-fields for more details.",
+                     ios(12, 12))
+
 /**
  Controllers that have the ability to move the placeholder to a title position.
 
@@ -21,9 +25,7 @@
  placeholder as distinct from `label text`. The placeholder-related properties of this class most
  closely align with the "label text" as described in the guidance.
  */
-__deprecated_msg(
-    "MDCTextField and its associated classes are deprecated. Please use TextControls instead.")
-    @protocol MDCTextInputControllerFloatingPlaceholder<MDCTextInputController>
+@protocol MDCTextInputControllerFloatingPlaceholder <MDCTextInputController>
 
 /**
  The color applied to the placeholder when floating and the text field is first responder. However,
@@ -106,3 +108,5 @@ __deprecated_msg(
 @property(class, nonatomic, assign, getter=isFloatingEnabledDefault) BOOL floatingEnabledDefault;
 
 @end
+
+API_DEPRECATED_END

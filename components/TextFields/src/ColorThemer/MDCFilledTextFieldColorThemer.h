@@ -17,6 +17,10 @@
 #import "MaterialColorScheme.h"
 #import "MaterialTextFields.h"
 
+API_DEPRECATED_BEGIN("Use UITextField and UITextView within grouped list cells."
+                     "See go/material-ios-text-fields for more details.",
+                     ios(12, 12))
+
 /**
  The Material Design color system's filled text field themer.
 
@@ -43,3 +47,5 @@
      toTextInputControllerFilled:(nonnull MDCTextInputControllerFilled *)textInputControllerFilled;
 
 @end
+
+API_DEPRECATED_END

@@ -15,6 +15,10 @@
 #import "MDCButton.h"
 #import "MDCTextInput.h"
 
+API_DEPRECATED_BEGIN("Use UITextField and UITextView within grouped list cells."
+                     "See go/material-ios-text-fields for more details.",
+                     ios(12, 12))
+
 extern const CGFloat MDCTextInputBorderRadius;
 extern const CGFloat MDCTextInputFullPadding;
 extern const CGFloat MDCTextInputHalfPadding;
@@ -79,3 +83,5 @@ UIKIT_EXTERN UIColor *_Nonnull MDCTextInputCursorColor(void);
 - (void)clearButtonDidTouch;
 
 @end
+
+API_DEPRECATED_END

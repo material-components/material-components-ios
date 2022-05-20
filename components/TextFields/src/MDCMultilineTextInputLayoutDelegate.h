@@ -16,9 +16,11 @@
 
 @protocol MDCMultilineTextInput;
 
-__deprecated_msg(
-    "MDCTextField and its associated classes are deprecated. Please use TextControls instead.")
-    @protocol MDCMultilineTextInputLayoutDelegate<NSObject>
+API_DEPRECATED_BEGIN("Use UITextField and UITextView within grouped list cells."
+                     "See go/material-ios-text-fields for more details.",
+                     ios(12, 12))
+
+@protocol MDCMultilineTextInputLayoutDelegate <NSObject>
 
 @optional
 /**
@@ -35,3 +37,5 @@ __deprecated_msg(
       didChangeContentSize:(CGSize)size;
 
 @end
+
+API_DEPRECATED_END
