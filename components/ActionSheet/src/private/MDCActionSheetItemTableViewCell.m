@@ -63,7 +63,6 @@ static inline UIColor *RippleColor() {
 }
 
 - (void)commonMDCActionSheetItemViewInit {
-  self.translatesAutoresizingMaskIntoConstraints = NO;
   self.selectionStyle = UITableViewCellSelectionStyleNone;
   self.accessibilityTraits = UIAccessibilityTraitButton;
   _contentContainerView = [[UIView alloc] initWithFrame:self.bounds];
@@ -76,10 +75,10 @@ static inline UIColor *RippleColor() {
       constraintEqualToAnchor:_contentContainerView.leadingAnchor];
   _contentContainerLeadingConstraint.active = YES;
   _contentContainerBottomConstraint =
-      [_contentContainerView.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor];
+      [self.contentView.bottomAnchor constraintEqualToAnchor:_contentContainerView.bottomAnchor];
   _contentContainerBottomConstraint.active = YES;
-  _contentContainerTrailingConstraint = [_contentContainerView.trailingAnchor
-      constraintEqualToAnchor:self.contentView.layoutMarginsGuide.trailingAnchor];
+  _contentContainerTrailingConstraint = [self.contentView.layoutMarginsGuide.trailingAnchor
+      constraintEqualToAnchor:_contentContainerView.trailingAnchor];
   _contentContainerTrailingConstraint.active = YES;
 
   _divider = [[UIView alloc] init];
@@ -103,7 +102,6 @@ static inline UIColor *RippleColor() {
   [_contentContainerView addSubview:_actionLabel];
   _actionLabel.numberOfLines = 0;
   _actionLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  [_actionLabel sizeToFit];
   _actionLabel.font = [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleSubheadline];
   _actionLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
   _actionLabel.textColor = [UIColor.blackColor colorWithAlphaComponent:kLabelAlpha];
@@ -114,16 +112,14 @@ static inline UIColor *RippleColor() {
   [_actionLabel.topAnchor constraintEqualToAnchor:_contentContainerView.topAnchor
                                          constant:kActionItemTitleVerticalPadding]
       .active = YES;
-  NSLayoutConstraint *labelBottomConstraint =
-      [_actionLabel.bottomAnchor constraintEqualToAnchor:_contentContainerView.bottomAnchor
-                                                constant:-kActionItemTitleVerticalPadding];
-  labelBottomConstraint.priority = UILayoutPriorityDefaultHigh;
-  labelBottomConstraint.active = YES;
+  [_actionLabel.bottomAnchor constraintEqualToAnchor:_contentContainerView.bottomAnchor
+                                            constant:-kActionItemTitleVerticalPadding]
+      .active = YES;
   _titleLeadingConstraint =
       [_actionLabel.leadingAnchor constraintEqualToAnchor:_contentContainerView.leadingAnchor
                                                  constant:leadingConstant];
   _titleLeadingConstraint.active = YES;
-  [_contentContainerView.trailingAnchor constraintEqualToAnchor:_actionLabel.trailingAnchor]
+  [_actionLabel.trailingAnchor constraintEqualToAnchor:_contentContainerView.trailingAnchor]
       .active = YES;
 
   _rippleColor = RippleColor();
