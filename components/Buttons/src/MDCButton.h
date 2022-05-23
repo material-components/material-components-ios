@@ -428,6 +428,20 @@ API_DEPRECATED_BEGIN("Use branded UIButton (iOS 13/14) / UIButtonConfiguration (
  */
 @property(nonatomic, assign) CGFloat inkMaxRippleRadius UI_APPEARANCE_SELECTOR;
 
+@end
+
+@interface MDCButton (Deprecated)
+
+/**
+ Insets to apply to the button’s hit area.
+
+ Allows the button to detect touches outside of its bounds. A negative value indicates an
+ extension past the bounds.
+
+ Default is UIEdgeInsetsZero.
+ */
+@property(nonatomic) UIEdgeInsets hitAreaInsets __deprecated_msg("Use centerVisibleArea instead.");
+
 /*
  Indicates whether the button should automatically update its font when the device’s
  UIContentSizeCategory is changed.
@@ -444,21 +458,8 @@ API_DEPRECATED_BEGIN("Use branded UIButton (iOS 13/14) / UIButtonConfiguration (
  scalable font.
  */
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
-    BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
-
-@end
-
-@interface MDCButton (Deprecated)
-
-/**
- Insets to apply to the button’s hit area.
-
- Allows the button to detect touches outside of its bounds. A negative value indicates an
- extension past the bounds.
-
- Default is UIEdgeInsetsZero.
- */
-@property(nonatomic) UIEdgeInsets hitAreaInsets __deprecated_msg("Use centerVisibleArea instead.");
+    BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR __deprecated_msg(
+        "Use titleLabel.adjustsFontForContentSizeCategory");
 
 @end
 

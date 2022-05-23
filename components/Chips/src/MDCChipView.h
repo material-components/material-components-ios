@@ -340,6 +340,10 @@ When @c centerVisibleArea is @c NO, this value is @c UIEdgeInsetsZero.
  */
 @property(nonatomic, assign) BOOL enableRippleBehavior;
 
+@end
+
+@interface MDCChipView (Deprecated)
+
 /*
  Indicates whether the chip should automatically update its font when the device’s
  UIContentSizeCategory is changed.
@@ -356,6 +360,7 @@ When @c centerVisibleArea is @c NO, this value is @c UIEdgeInsetsZero.
  scalable font.
  */
 @property(nonatomic, readwrite, setter=mdc_setAdjustsFontForContentSizeCategory:)
-    BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR;
+    BOOL mdc_adjustsFontForContentSizeCategory UI_APPEARANCE_SELECTOR __deprecated_msg(
+        "Use titleLabel.adjustsFontForContentSizeCategory");
 
 @end
