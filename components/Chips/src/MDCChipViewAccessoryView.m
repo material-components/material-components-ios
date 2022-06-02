@@ -3,15 +3,15 @@
 @implementation MDCChipViewAccessoryView
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  if (!CGSizeEqualToSize(self.preferedSize, CGSizeZero)) {
-    return self.preferedSize;
+  if (!CGSizeEqualToSize(self.preferredsize, CGSizeZero)) {
+    return self.preferredsize;
   }
   return [super sizeThatFits:size];
 }
 
 - (CGSize)intrinsicContentSize {
-  if (!CGSizeEqualToSize(self.preferedSize, CGSizeZero)) {
-    return self.preferedSize;
+  if (!CGSizeEqualToSize(self.preferredsize, CGSizeZero)) {
+    return self.preferredsize;
   }
 
   return [super intrinsicContentSize];

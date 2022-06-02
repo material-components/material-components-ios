@@ -15,6 +15,6 @@ __attribute__((objc_subclassing_restricted))
  no effect if set to @c CGSizeZero .
  */
 // NOLINTNEXTLINE
-@property(nonatomic, assign) CGSize preferedSize;
+@property(nonatomic, assign) CGSize preferredsize;
 
 @end
