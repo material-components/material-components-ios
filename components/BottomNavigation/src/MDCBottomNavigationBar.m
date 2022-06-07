@@ -23,6 +23,7 @@
 #import "private/MDCBottomNavigationItemView.h"
 #import "MDCBadgeAppearance.h"
 #import "MDCBottomNavigationBarDelegate.h"
+#import "MDCBottomNavigationBar+ItemView.h"
 #import "MDCPalettes.h"
 #import "MDCRippleTouchController.h"
 #import "MDCRippleTouchControllerDelegate.h"
@@ -53,7 +54,6 @@ static const CGFloat kDefaultActiveIndicatorWidth = 60;
 @interface MDCBottomNavigationBar () <MDCRippleTouchControllerDelegate>
 
 @property(nonatomic, assign) BOOL itemsDistributed;
-@property(nonatomic, readonly) BOOL isTitleBelowIcon;
 @property(nonatomic, assign) CGFloat maxLandscapeClusterContainerWidth;
 @property(nonatomic, strong) NSMutableArray<MDCBottomNavigationItemView *> *itemViews;
 @property(nonatomic, readonly) UIEdgeInsets mdc_safeAreaInsets;
@@ -63,10 +63,6 @@ static const CGFloat kDefaultActiveIndicatorWidth = 60;
 @property(nonatomic, strong) UIView *itemsLayoutView;
 @property(nonatomic, strong) UILayoutGuide *barItemsLayoutGuide NS_AVAILABLE_IOS(9_0);
 
-// Selection indicator
-@property(nonatomic, assign) BOOL showsSelectionIndicator;
-@property(nonatomic, assign) CGSize selectionIndicatorSize;
-@property(nonatomic, strong, nonnull) UIColor *selectionIndicatorColor;
 
 #if MDC_AVAILABLE_SDK_IOS(13_0)
 /**
@@ -582,85 +578,22 @@ static BOOL gEnablePerformantShadow = NO;
   _items = [items copy];
 
   for (NSUInteger i = 0; i < items.count; i++) {
-    UITabBarItem *item = items[i];
     MDCBottomNavigationItemView *itemView =
         [[MDCBottomNavigationItemView alloc] initWithFrame:CGRectZero];
-    itemView.title = item.title;
-    itemView.titleNumberOfLines = self.titlesNumberOfLines;
-    itemView.itemTitleFont = self.itemTitleFont;
 
-    // rippleColor must be set before selectedItemTintColor because selectedItemTintColor's behavior
-    // depends on the value of rippleColor.
-    itemView.rippleColor = self.rippleColor;
-    itemView.selectedItemTintColor = self.selectedItemTintColor;
-
-    itemView.selectedItemTitleColor = self.selectedItemTitleColor;
-    itemView.unselectedItemTintColor = self.unselectedItemTintColor;
-
-    itemView.titleVisibility = self.titleVisibility;
-    itemView.titleBelowIcon = self.isTitleBelowIcon;
-    itemView.accessibilityValue = item.accessibilityValue;
-    itemView.accessibilityElementIdentifier = item.accessibilityIdentifier;
-    itemView.accessibilityLabel = item.accessibilityLabel;
-    itemView.accessibilityHint = item.accessibilityHint;
-    itemView.isAccessibilityElement = item.isAccessibilityElement;
-    itemView.contentVerticalMargin = self.itemsContentVerticalMargin;
-    itemView.contentHorizontalMargin = self.itemsContentHorizontalMargin;
-    itemView.truncatesTitle = self.truncatesLongTitles;
-    itemView.titlePositionAdjustment = item.titlePositionAdjustment;
-
-    itemView.selectionIndicatorColor = self.selectionIndicatorColor;
-    itemView.selectionIndicatorSize = self.selectionIndicatorSize;
-
-    itemView.badgeAppearance = self.itemBadgeAppearance;
-
-    // TODO(featherless): Delete once everyone has migrated to itemBadgeAppearance.
-    itemView.badgeColor = self.itemBadgeBackgroundColor;
-    itemView.badgeTextColor = self.itemBadgeTextColor;
-    itemView.badgeFont = self.itemBadgeTextFont;
-
-    itemView.tag = item.tag;
     itemView.rippleTouchController.delegate = self;
-
-    if (item.image) {
-      itemView.image = item.image;
-    }
-    if (item.selectedImage) {
-      itemView.selectedImage = item.selectedImage;
-    }
-    if (item.badgeValue) {
-      itemView.badgeText = item.badgeValue;
-    }
-    if (item.badgeColor) {
-      itemView.badgeColor = item.badgeColor;
-    }
     itemView.selected = NO;
 
-#if MDC_AVAILABLE_SDK_IOS(13_0)
-    if (@available(iOS 13, *)) {
-      itemView.largeContentImageInsets = item.largeContentSizeImageInsets;
-      itemView.largeContentImage = item.largeContentSizeImage;
-    }
-#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
-
-#ifdef __IPHONE_13_4
-    if (@available(iOS 13.4, *)) {
-      // Because some iOS 13 betas did not have the UIPointerInteraction class, we need to verify
-      // that it exists before attempting to use it.
-      if (NSClassFromString(@"UIPointerInteraction")) {
-        UIPointerInteraction *pointerInteraction =
-            [[UIPointerInteraction alloc] initWithDelegate:self];
-        [itemView addInteraction:pointerInteraction];
-      }
-    }
-#endif
+    [self configureItemView:itemView withItem:items[i]];
 
     [itemView.button addTarget:self
                         action:@selector(didTouchUpInsideButton:)
               forControlEvents:UIControlEventTouchUpInside];
+
     [self.itemViews addObject:itemView];
     [self.itemsLayoutView addSubview:itemView];
   }
+
   self.selectedItem = nil;
   [self addObserversToTabBarItems];
   [self invalidateIntrinsicContentSize];
