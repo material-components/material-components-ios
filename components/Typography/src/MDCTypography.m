@@ -51,7 +51,6 @@ static id<MDCTypographyFontLoading> gFontLoader = nil;
   return [[self fontLoader] lightFontOfSize:112];
 }
 
-
 + (UIFont *)display3Font {
   return [[self fontLoader] regularFontOfSize:56];
 }
@@ -73,7 +72,6 @@ static id<MDCTypographyFontLoading> gFontLoader = nil;
 + (UIFont *)titleFont {
   return [[self fontLoader] mediumFontOfSize:20];
 }
-
 
 + (UIFont *)subheadFont {
   return [[self fontLoader] regularFontOfSize:16];
@@ -129,15 +127,21 @@ static id<MDCTypographyFontLoading> gFontLoader = nil;
   self = [super init];
   if (self) {
     _fontCache = [[NSCache alloc] init];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didChangeContentSizeCategory)
-                                                 name:UIContentSizeCategoryDidChangeNotification
-                                               object:nil];
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+           selector:@selector(accessibilityFontAttributesDidChange)
+               name:UIContentSizeCategoryDidChangeNotification
+             object:nil];
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+           selector:@selector(accessibilityFontAttributesDidChange)
+               name:UIAccessibilityBoldTextStatusDidChangeNotification
+             object:nil];
   }
   return self;
 }
 
-- (void)didChangeContentSizeCategory {
+- (void)accessibilityFontAttributesDidChange {
   [_fontCache removeAllObjects];
 }
 
