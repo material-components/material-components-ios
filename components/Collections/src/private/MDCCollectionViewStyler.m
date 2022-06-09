@@ -14,10 +14,11 @@
 
 #import "MDCCollectionViewStyler.h"
 
-#import "MaterialCollectionLayoutAttributes.h"
+#import "MDCCollectionViewLayoutAttributes.h"
+#import "MDCCollectionViewStyling.h"
 #import "MDCCollectionViewStylingDelegate.h"
-#import "MaterialPalettes.h"
-#import "MaterialColor.h"
+#import "MDCPalettes.h"
+#import "UIColor+MaterialDynamic.h"
 
 #include <tgmath.h>
 
@@ -91,6 +92,9 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
 /** An set of index paths for items that are inlaid. */
 @property(nonatomic, strong) NSMutableSet *inlaidIndexPathSet;
 
+/** The user interface style for the app. */
+@property(nonatomic) UIUserInterfaceStyle previousUserInterfaceStyle;
+
 @end
 
 @implementation MDCCollectionViewStyler
@@ -146,6 +150,8 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
 
     // Caching.
     _cellBackgroundCaches = [NSMutableDictionary dictionary];
+
+    _previousUserInterfaceStyle = self.collectionView.traitCollection.userInterfaceStyle;
   }
   return self;
 }
@@ -577,7 +583,9 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
   if (!cellBackgroundCache) {
     cellBackgroundCache = [self cellBackgroundCache];
     _cellBackgroundCaches[backgroundColor] = cellBackgroundCache;
-  } else if ([cellBackgroundCache pointerAtIndex:backgroundCacheKey]) {
+  } else if ([cellBackgroundCache pointerAtIndex:backgroundCacheKey] &&
+             self.previousUserInterfaceStyle ==
+                 self.collectionView.traitCollection.userInterfaceStyle) {
     return (__bridge UIImage *)[cellBackgroundCache pointerAtIndex:backgroundCacheKey];
   }
 
@@ -665,6 +673,7 @@ NS_INLINE CGRect RectShift(CGRect rect, CGFloat dx, CGFloat dy) {
   UIImage *resizableImage = [self resizableImage:image];
   [cellBackgroundCache replacePointerAtIndex:backgroundCacheKey
                                  withPointer:(__bridge void *)(resizableImage)];
+  self.previousUserInterfaceStyle = self.collectionView.traitCollection.userInterfaceStyle;
   return resizableImage;
 }
 
