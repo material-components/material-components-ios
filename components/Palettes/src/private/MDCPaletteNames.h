@@ -37,6 +37,9 @@
 
 #import <Foundation/Foundation.h>
 
+API_DEPRECATED_BEGIN("Use tokens instead. See go/material-ios-tokens.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 #define MDC_PALETTE_TINT_50_INTERNAL_NAME @"50"
 #define MDC_PALETTE_TINT_100_INTERNAL_NAME @"100"
 #define MDC_PALETTE_TINT_200_INTERNAL_NAME @"200"
@@ -54,3 +57,5 @@
 
 /** Return YES if a string is one of the pre-defined tint/accent names. */
 BOOL MDCPaletteIsTintOrAccentName(NSString* _Nonnull name);
+
+API_DEPRECATED_END
