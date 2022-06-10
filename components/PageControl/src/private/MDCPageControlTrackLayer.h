@@ -15,6 +15,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN("Use a branded UIPageControl instead.", ios(12, API_TO_BE_DEPRECATED))
+
 /**
  This shape layer provides a rounded rectangular track on which a page indicator can travel
  between subsequent indicators. The track animates on appearance, removal, and when its
@@ -83,3 +85,5 @@
 - (void)resetAtPoint:(CGPoint)point;
 
 @end
+
+API_DEPRECATED_END

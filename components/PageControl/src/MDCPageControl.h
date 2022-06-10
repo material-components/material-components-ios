@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN("Use a branded UIPageControl instead.", ios(12, API_TO_BE_DEPRECATED))
+
 /**
  A Material page control.
 
@@ -144,3 +146,5 @@
     (MDCPageControl *_Nonnull pageControl, UITraitCollection *_Nullable previousTraitCollection);
 
 @end
+
+API_DEPRECATED_END
