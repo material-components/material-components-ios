@@ -17,6 +17,8 @@
 
 #import <Foundation/Foundation.h>
 
+API_DEPRECATED_BEGIN("Use a branded UISlider instead.", ios(12, API_TO_BE_DEPRECATED))
+
 /**
  The Material Design color system's themer for instances of MDCSlider.
 
@@ -76,3 +78,5 @@
 + (nonnull MDCBasicColorScheme *)defaultSliderDarkColorScheme;
 
 @end
+
+API_DEPRECATED_END

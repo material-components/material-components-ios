@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN("Use a branded UISlider instead.", ios(12, API_TO_BE_DEPRECATED))
+
 @class MDCSlider;
 
 @protocol MDCSliderDelegate <NSObject>
@@ -55,3 +57,5 @@
 - (nonnull NSString *)slider:(nonnull MDCSlider *)slider accessibilityLabelForValue:(CGFloat)value;
 
 @end
+
+API_DEPRECATED_END
