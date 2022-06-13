@@ -15,6 +15,10 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN(
+    "Use Branding APIs (go/material-ios-branding) or tokens (go/material-ios-tokens) instead.",
+    ios(12, API_TO_BE_DEPRECATED))
+
 /**
  A simple color scheme that provides semantic context for the colors it uses. There are no optional
  properties and all colors must be provided, supporting more reliable color theming.
@@ -136,3 +140,5 @@ typedef NS_ENUM(NSInteger, MDCColorSchemeDefaults) {
             withBackgroundColor:(nonnull UIColor *)backgroundColor;
 
 @end
+
+API_DEPRECATED_END

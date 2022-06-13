@@ -15,6 +15,10 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN(
+    "Use Branding APIs (go/material-ios-branding) or tokens (go/material-ios-tokens) instead.",
+    ios(12, API_TO_BE_DEPRECATED))
+
 /**
  A tonal palette consists of a main color and variants of the main color that are lighter and darker
  shades of the main color. Material design guidelines recommend one main color with nine color
@@ -73,3 +77,5 @@
                         darkColorIndex:(NSUInteger)darkColorIndex NS_DESIGNATED_INITIALIZER;
 
 @end
+
+API_DEPRECATED_END
