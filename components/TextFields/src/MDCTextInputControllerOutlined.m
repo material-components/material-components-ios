@@ -19,6 +19,8 @@
 #import "MDCTextInputUnderlineView.h"
 #import "private/MDCTextInputControllerBase+Subclassing.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 
 #pragma mark - Class Properties
 
@@ -322,3 +324,5 @@ static UIRectCorner _roundedCornersDefault = UIRectCornerAllCorners;
 }
 
 @end
+
+#pragma clang diagnostic pop

@@ -15,6 +15,8 @@
 #import "MDCTextInputControllerBase.h"
 #import "private/MDCTextInputControllerBase+Subclassing.h"
 
+#import "CAMediaTimingFunction+MDCAnimationTiming.h"
+#import "MDCPalettes.h"
 #import "MDCMultilineTextField.h"
 #import "MDCTextField.h"
 #import "MDCTextInput.h"
@@ -24,10 +26,13 @@
 #import "MDCTextInputControllerFloatingPlaceholder.h"
 #import "MDCTextInputUnderlineView.h"
 
-#import "MaterialAnimationTiming.h"
-#import "MaterialMath.h"
-#import "MaterialPalettes.h"
-#import "MaterialTypography.h"
+#import "MDCFontTextStyle.h"
+#import "UIFont+MaterialSimpleEquality.h"
+#import "UIFont+MaterialTypography.h"
+#import "MDCMath.h"
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 
 #pragma mark - Constants
 
@@ -1710,3 +1715,5 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
 }
 
 @end
+
+#pragma clang diagnostic pop

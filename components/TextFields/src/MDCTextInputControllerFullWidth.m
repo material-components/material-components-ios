@@ -14,6 +14,7 @@
 
 #import "MDCTextInputControllerFullWidth.h"
 
+#import "MDCPalettes.h"
 #import "MDCIntrinsicHeightTextView.h"
 #import "MDCMultilineTextField.h"
 #import "MDCTextField.h"
@@ -22,8 +23,11 @@
 #import "MDCTextInputController.h"
 #import "MDCTextInputUnderlineView.h"
 
-#import "MaterialPalettes.h"
-#import "MaterialTypography.h"
+#import "MDCFontTextStyle.h"
+#import "UIFont+MaterialTypography.h"
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-implementations"
 
 static const CGFloat MDCTextInputControllerFullWidthHintTextOpacity = (CGFloat)0.54;
 static const CGFloat MDCTextInputControllerFullWidthHorizontalInnerPadding = 8;
@@ -1193,3 +1197,5 @@ static UIFont *_trailingUnderlineLabelFontDefault;
 }
 
 @end
+
+#pragma clang diagnostic pop
