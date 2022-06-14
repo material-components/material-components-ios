@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN("Use a branded UISlider instead.", ios(12, API_TO_BE_DEPRECATED))
+
 @interface MDCNumericValueLabel : UIView <UIContentSizeCategoryAdjusting>
 
 /** The background color of the value label. */
@@ -29,3 +31,5 @@
 @property(nonatomic, strong, null_resettable) UIFont *font;
 
 @end
+
+API_DEPRECATED_END

@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN("Use a branded UISlider instead.", ios(12, API_TO_BE_DEPRECATED))
+
 // Credit to the Beacon Tools iOS team for the idea for this implementations
 @interface MDCDiscreteDotView : UIView
 
@@ -35,3 +37,5 @@
 @property(nonatomic, assign) CGRect activeDotsSegment;
 
 @end
+
+API_DEPRECATED_END

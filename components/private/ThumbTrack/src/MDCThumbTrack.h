@@ -16,6 +16,8 @@
 
 #import "MaterialShadowElevations.h"
 
+API_DEPRECATED_BEGIN("Use a branded UISlider instead.", ios(12, API_TO_BE_DEPRECATED))
+
 /** The visibility of the discrete dots. */
 typedef NS_ENUM(NSUInteger, MDCThumbDiscreteDotVisibility) {
   /** Discrete dots are never shown. */
@@ -393,3 +395,5 @@ typedef NS_ENUM(NSUInteger, MDCThumbDiscreteDotVisibility) {
 - (void)thumbTrack:(nonnull MDCThumbTrack *)thumbTrack didAnimateToValue:(CGFloat)value;
 
 @end
+
+API_DEPRECATED_END

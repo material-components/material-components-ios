@@ -18,6 +18,8 @@
 #import "MDCNumericValueLabel.h"
 #import "MDCDiscreteDotView.h"
 
+API_DEPRECATED_BEGIN("Use a branded UISlider instead.", ios(12, API_TO_BE_DEPRECATED))
+
 @interface MDCThumbTrack (Private)
 
 @property(nonatomic, nonnull, readonly) MDCNumericValueLabel *numericValueLabel;
@@ -28,3 +30,5 @@
 @property(nonatomic, nonnull, readonly) MDCDiscreteDotView *discreteDotView;
 
 @end
+
+API_DEPRECATED_END

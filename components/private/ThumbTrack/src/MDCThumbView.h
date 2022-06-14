@@ -16,6 +16,8 @@
 
 #import "MaterialShadowElevations.h"
 
+API_DEPRECATED_BEGIN("Use a branded UISlider instead.", ios(12, API_TO_BE_DEPRECATED))
+
 @interface MDCThumbView : UIView
 
 /**
@@ -51,3 +53,5 @@
 @property(nonnull, nonatomic, strong) UIColor *shadowColor;
 
 @end
+
+API_DEPRECATED_END
