@@ -14,6 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN("Use a branded UITextField (go/material-ios-text-fields) or branded "
+                     "UITextView (go/material-ios-text-views) instead",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /** This type is used to configure the behavior of an TextControl label. */
 typedef NS_ENUM(NSInteger, MDCTextControlLabelBehavior) {
   /** Indicates that the text field label animates to a position above the text when editing begins.
@@ -22,3 +26,5 @@ typedef NS_ENUM(NSInteger, MDCTextControlLabelBehavior) {
   /** Indicates that the text field label disappears when editing begins. */
   MDCTextControlLabelBehaviorDisappears,
 };
+
+API_DEPRECATED_END

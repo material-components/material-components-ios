@@ -14,6 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN("Use a branded UITextField (go/material-ios-text-fields) or branded "
+                     "UITextView (go/material-ios-text-views) instead",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 @class MDCBaseTextField;
 
 /**
@@ -68,3 +72,5 @@ covered by @c UITextFieldDelegate.
 - (void)baseTextField:(MDCBaseTextField *)textField didUpdateIntrinsicHeight:(CGFloat)height;
 
 @end
+
+API_DEPRECATED_END

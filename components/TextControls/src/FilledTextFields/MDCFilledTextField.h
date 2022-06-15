@@ -16,6 +16,9 @@
 
 #import "MaterialTextControls+BaseTextFields.h"
 
+API_DEPRECATED_BEGIN("Use a branded UITextField (go/material-ios-text-fields) instead",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  An implementation of a Material filled text field.
  */
@@ -57,3 +60,5 @@ __attribute__((objc_subclassing_restricted)) @interface MDCFilledTextField : MDC
 - (nonnull UIColor *)underlineColorForState:(MDCTextControlState)state;
 
 @end
+
+API_DEPRECATED_END

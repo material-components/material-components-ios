@@ -15,6 +15,10 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN("Use a branded UITextField (go/material-ios-text-fields) or branded "
+                     "UITextView (go/material-ios-text-views) instead",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  A set of mutually exclusive readonly states that text controls can inhabit. The value of a text
  control's MDCTextControlState is internally determined by whether or it it's editing and whether or
@@ -36,3 +40,5 @@ typedef NS_ENUM(NSInteger, MDCTextControlState) {
 };
 
 MDCTextControlState MDCTextControlStateWith(BOOL isEnabled, BOOL isEditing);
+
+API_DEPRECATED_END

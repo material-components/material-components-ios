@@ -16,6 +16,9 @@
 
 #import "MaterialTextControls+Enums.h"
 
+API_DEPRECATED_BEGIN("Use a branded UITextField (go/material-ios-text-fields) instead",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 @protocol MDCBaseTextFieldDelegate;
 
 /**
@@ -254,3 +257,5 @@ ignore the text field, so that is not recommended.
 @property(nullable, nonatomic, copy) NSString *accessibilityLabel;
 
 @end
+
+API_DEPRECATED_END

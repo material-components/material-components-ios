@@ -16,6 +16,9 @@
 
 #import "MaterialTextControls+BaseTextFields.h"
 
+API_DEPRECATED_BEGIN("Use a branded UITextField (go/material-ios-text-fields) instead",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  An implementation of a Material outlined text field.
  */
@@ -42,3 +45,5 @@ __attribute__((objc_subclassing_restricted)) @interface MDCOutlinedTextField : M
 - (nonnull UIColor *)outlineColorForState:(MDCTextControlState)state;
 
 @end
+
+API_DEPRECATED_END
