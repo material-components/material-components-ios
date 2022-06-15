@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN("Follow go/material-ios-dynamic-type instead.", ios(12, API_TO_BE_DEPRECATED))
+
 /**
  Set of constants that describe Material's text styles.
 
@@ -80,3 +82,5 @@ API_DEPRECATED("Follow go/material-ios-dynamic-type#custom-fonts instead.",
 - (nonnull UIFont *)scaledFontWithFont:(nonnull UIFont *)font;
 
 @end
+
+API_DEPRECATED_END
