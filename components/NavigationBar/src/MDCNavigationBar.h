@@ -16,12 +16,13 @@
 
 #import "MaterialElevation.h"
 
+API_DEPRECATED_BEGIN(
+    "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
+    ios(11, API_TO_BE_DEPRECATED))
+
 @protocol MDCButtonBarDelegate;
 
 /** Specifies the title alignment of the |MDCNavigationBar|. */
-API_DEPRECATED(
-    "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
-    ios(11, API_TO_BE_DEPRECATED))
 typedef NS_ENUM(NSInteger, MDCNavigationBarTitleAlignment) {
   /** Aligns the title to the center of the NavigationBar. */
   MDCNavigationBarTitleAlignmentCenter,
@@ -32,9 +33,7 @@ typedef NS_ENUM(NSInteger, MDCNavigationBarTitleAlignment) {
 /**
  Behaviors that affect the layout of an |MDCNavigationBar|'s titleView.
  */
-API_DEPRECATED(
-    "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
-    ios(11, API_TO_BE_DEPRECATED))
+
 typedef NS_ENUM(NSInteger, MDCNavigationBarTitleViewLayoutBehavior) {
   /**
    The title view's width will equal the navigation bar's width minus any space consumed by the
@@ -60,9 +59,7 @@ typedef NS_ENUM(NSInteger, MDCNavigationBarTitleViewLayoutBehavior) {
  This protocol defines all of the properties on UINavigationItem that can be listened to by
  MDCNavigationBar.
  */
-API_DEPRECATED(
-    "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
-    ios(11, API_TO_BE_DEPRECATED))
+
 @protocol MDCUINavigationItemObservables <NSObject>
 @required
 
@@ -89,9 +86,7 @@ API_DEPRECATED(
   Material NavigationBarTextColorAccessibilityMutator depends on the Navigation Bar material
   component and MDFTextAccessibility Framework.
   */
-API_DEPRECATED(
-    "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
-    ios(11, API_TO_BE_DEPRECATED))
+
 @interface MDCNavigationBarTextColorAccessibilityMutator : NSObject
 
 /**
@@ -114,9 +109,6 @@ API_DEPRECATED(
  This view is not designed to have subviews added to it except via through its declared properties
  (e.g. titleView).
  */
-API_DEPRECATED(
-    "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
-    ios(11, API_TO_BE_DEPRECATED))
 IB_DESIGNABLE
 @interface MDCNavigationBar : UIView <MDCElevatable, MDCElevationOverriding>
 
@@ -404,3 +396,5 @@ IB_DESIGNABLE
     NSDictionary<NSAttributedStringKey, id> *titleTextAttributes UI_APPEARANCE_SELECTOR;
 
 @end
+
+API_DEPRECATED_END
