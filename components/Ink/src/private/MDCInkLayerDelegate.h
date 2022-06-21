@@ -14,6 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN(
+    "Use default system highlight behavior instead (go/material-ios-touch-response)",
+    ios(12, API_TO_BE_DEPRECATED))
+
 @class MDCInkLayer;
 
 /**
@@ -39,3 +43,5 @@
 - (void)inkLayerAnimationDidEnd:(nonnull MDCInkLayer *)inkLayer;
 
 @end
+
+API_DEPRECATED_END

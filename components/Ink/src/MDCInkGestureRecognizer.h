@@ -14,6 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN(
+    "Use default system highlight behavior instead (go/material-ios-touch-response)",
+    ios(12, API_TO_BE_DEPRECATED))
+
 /**
  Custom gesture recognizer to observe the various ink response states.
 
@@ -58,3 +62,5 @@ __deprecated_msg("Please use MDCRippleTouchController instead.") @interface MDCI
 - (BOOL)isTouchWithinTargetBounds;
 
 @end
+
+API_DEPRECATED_END

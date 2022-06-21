@@ -14,6 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN(
+    "Use default system highlight behavior instead (go/material-ios-touch-response)",
+    ios(12, API_TO_BE_DEPRECATED))
+
 @class MDCLegacyInkLayerRipple;
 
 @protocol MDCLegacyInkLayerRippleDelegate <MDCLegacyInkLayerDelegate>
@@ -27,3 +31,5 @@
                 finished:(BOOL)finished;
 
 @end
+
+API_DEPRECATED_END

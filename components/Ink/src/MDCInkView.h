@@ -18,6 +18,10 @@
 // longer import delegates as transitive dependencies.
 #import "MDCInkViewDelegate.h"
 
+API_DEPRECATED_BEGIN(
+    "Use default system highlight behavior instead (go/material-ios-touch-response)",
+    ios(12, API_TO_BE_DEPRECATED))
+
 @protocol MDCInkViewDelegate;
 
 /** Completion block signature for all ink animations. */
@@ -178,3 +182,5 @@ __deprecated_msg("Please use MDCRippleView instead.") @interface MDCInkView : UI
 + (nonnull MDCInkView *)injectedInkViewForView:(nonnull UIView *)view;
 
 @end
+
+API_DEPRECATED_END

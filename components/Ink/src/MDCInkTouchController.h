@@ -18,6 +18,10 @@
 // longer import delegates as transitive dependencies.
 #import "MDCInkTouchControllerDelegate.h"
 
+API_DEPRECATED_BEGIN(
+    "Use default system highlight behavior instead (go/material-ios-touch-response)",
+    ios(12, API_TO_BE_DEPRECATED))
+
 @class MDCInkGestureRecognizer;
 @class MDCInkTouchController;
 @class MDCInkView;
@@ -127,3 +131,5 @@ __deprecated_msg("Please use MDCRippleTouchController instead.") @interface MDCI
 - (MDCInkView *_Nullable)inkViewAtTouchLocation:(CGPoint)location;
 
 @end
+
+API_DEPRECATED_END
