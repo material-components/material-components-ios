@@ -14,6 +14,10 @@
 
 #import "MDCTabBarAlignment.h"
 
+API_DEPRECATED_BEGIN(
+    "MDCTabBar is deprecated. Please use MDCTabBarView instead. See go/material-ios-tabs",
+    ios(12, API_TO_BE_DEPRECATED))
+
 /**
  Alignment options that are not fully supported in MDC-iOS. These should map exactly back to
  `MDCTabBarAlignment` for values that semantically match.
@@ -35,3 +39,5 @@ typedef NS_ENUM(NSInteger, MDCTabBarExtendedAlignment) {
    */
   MDCTabBarExtendedAlignmentBestEffortJustified,
 };
+
+API_DEPRECATED_END
