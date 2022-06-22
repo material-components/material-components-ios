@@ -14,6 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN("Follow go/material-ios-tabbar-migration to use MDCTabBarView instead.",
+                     ios(12, 12))
+
 /** Appearance for content within tab bar items. */
 typedef NS_ENUM(NSInteger, MDCTabBarItemAppearance) {
   /** Tabs are shown as titles. Badges are not supported for this appearance. */
@@ -25,3 +28,5 @@ typedef NS_ENUM(NSInteger, MDCTabBarItemAppearance) {
   /** Tabs are shown as images with titles underneath. */
   MDCTabBarItemAppearanceTitledImages,
 };
+
+API_DEPRECATED_END

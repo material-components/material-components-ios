@@ -16,8 +16,13 @@
 
 #import "MDCTabBarIndicatorTemplate.h"
 
+API_DEPRECATED_BEGIN("Follow go/material-ios-tabbar-migration to use MDCTabBarView instead.",
+                     ios(12, 12))
+
 /*
  Default indicator template which produces a fixed-height solid line underneath the selected tab.
  */
 @interface MDCTabBarUnderlineIndicatorTemplate : NSObject <MDCTabBarIndicatorTemplate>
 @end
+
+API_DEPRECATED_END

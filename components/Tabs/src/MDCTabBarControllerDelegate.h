@@ -14,11 +14,12 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN("Follow go/material-ios-tabbar-migration to use MDCTabBarView instead.",
+                     ios(12, 12))
+
 @class MDCTabBarViewController;
 
-__deprecated_msg(
-    "Use MDCTabBarView instead. See go/material-ios-tabbar-migration for more details.")
-    @protocol MDCTabBarControllerDelegate<NSObject>
+@protocol MDCTabBarControllerDelegate <NSObject>
 @optional
 
 /**
@@ -47,3 +48,5 @@ __deprecated_msg(
     didSelectViewController:(nonnull UIViewController *)viewController;
 
 @end
+
+API_DEPRECATED_END

@@ -14,15 +14,16 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN(
+    "Follow go/material-ios-tabbar-migration to use MDCTabBarViewDelegate instead.", ios(12, 12))
+
 @class MDCTabBar;
 
 /**
  Delegate protocol for MDCTabBar. Clients may implement this protocol to receive notifications of
  selection changes in the tab bar or to determine the bar's position.
  */
-__deprecated_msg(
-    "Use MDCTabBarViewDelegate instead. See go/material-ios-tabbar-migration for more details.")
-    @protocol MDCTabBarDelegate<UIBarPositioningDelegate>
+@protocol MDCTabBarDelegate <UIBarPositioningDelegate>
 
 @optional
 
@@ -46,3 +47,5 @@ __deprecated_msg(
 - (void)tabBar:(nonnull MDCTabBar *)tabBar didSelectItem:(nonnull UITabBarItem *)item;
 
 @end
+
+API_DEPRECATED_END

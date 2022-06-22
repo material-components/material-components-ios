@@ -14,6 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN("Follow go/material-ios-tabbar-migration to use MDCTabBarView instead.",
+                     ios(12, 12))
+
 /** Appearance for content within tab bar items. */
 typedef NS_ENUM(NSInteger, MDCTabBarTextTransform) {
   /** The default text transform is applied based on the bar's position. */
@@ -25,3 +28,5 @@ typedef NS_ENUM(NSInteger, MDCTabBarTextTransform) {
   /** Text on tabs is uppercased for display. */
   MDCTabBarTextTransformUppercase = 2,
 };
+
+API_DEPRECATED_END

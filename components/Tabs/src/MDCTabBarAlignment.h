@@ -14,6 +14,9 @@
 
 #import <Foundation/Foundation.h>
 
+API_DEPRECATED_BEGIN("Follow go/material-ios-tabbar-migration to use MDCTabBarView instead.",
+                     ios(12, 12))
+
 /** Alignment styles for items in a tab bar. */
 typedef NS_ENUM(NSInteger, MDCTabBarAlignment) {
   /** Items are aligned on the leading edge and sized to fit their content. */
@@ -34,3 +37,5 @@ typedef NS_ENUM(NSInteger, MDCTabBarAlignment) {
   /** Tabs are center-aligned on the selected item. */
   MDCTabBarAlignmentCenterSelected,
 };
+
+API_DEPRECATED_END

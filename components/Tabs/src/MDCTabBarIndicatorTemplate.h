@@ -14,6 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN("Follow go/material-ios-tabbar-migration to use MDCTabBarView instead.",
+                     ios(12, 12))
+
 @class MDCTabBarIndicatorAttributes;
 @protocol MDCTabBarIndicatorContext;
 
@@ -32,3 +35,5 @@
     (nonnull id<MDCTabBarIndicatorContext>)context;
 
 @end
+
+API_DEPRECATED_END
