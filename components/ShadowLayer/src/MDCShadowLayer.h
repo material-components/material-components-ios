@@ -15,6 +15,9 @@
 #import <UIKit/UIKit.h>
 #import "MaterialShadowElevations.h"
 
+API_DEPRECATED_BEGIN("Follow go/material-ios-shadows to use UIKit shadows instead.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  Metrics of the Material shadow effect.
 
@@ -104,3 +107,5 @@
 - (void)prepareShadowPath;
 
 @end
+
+API_DEPRECATED_END
