@@ -14,6 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN("Use a branded UICollectionViewCell (go/material-ios-lists) or branded "
+                     "UITableViewCell (go/material-ios-lists) instead",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  * Allows `UICollectionViewLayout` subclasses to inform `MDCBaseCell` what size the cell can be.
  *
@@ -38,3 +42,5 @@
 @property(nonatomic, readonly) BOOL isFixedHeight;
 
 @end
+
+API_DEPRECATED_END

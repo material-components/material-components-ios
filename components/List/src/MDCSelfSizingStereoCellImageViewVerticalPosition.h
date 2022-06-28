@@ -14,6 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN("Use a branded UICollectionViewCell (go/material-ios-lists) or branded "
+                     "UITableViewCell (go/material-ios-lists) instead",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  This enum represents different positions for the side image views in an @c
  MDCSelfSizingStereoCell.
@@ -29,3 +33,5 @@ typedef NS_ENUM(NSUInteger, MDCSelfSizingStereoCellImageViewVerticalPosition) {
    */
   MDCSelfSizingStereoCellImageViewVerticalPositionCenter,
 };
+
+API_DEPRECATED_END

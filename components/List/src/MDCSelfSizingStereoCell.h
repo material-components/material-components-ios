@@ -17,6 +17,10 @@
 #import "MDCBaseCell.h"
 #import "MDCSelfSizingStereoCellImageViewVerticalPosition.h"
 
+API_DEPRECATED_BEGIN("Use a branded UICollectionViewCell (go/material-ios-lists) or branded "
+                     "UITableViewCell (go/material-ios-lists) instead",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  MDCSelfSizingStereoCell is intended to be an easy to use readymade implementation of a basic
  "Stereo" cell. A stereo cell can be thought of as a roughly symmetrical cell with image views on
@@ -83,3 +87,5 @@ __attribute__((objc_subclassing_restricted)) @interface MDCSelfSizingStereoCell 
     BOOL mdc_adjustsFontForContentSizeCategory;
 
 @end
+
+API_DEPRECATED_END

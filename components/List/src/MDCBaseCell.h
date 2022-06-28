@@ -17,6 +17,10 @@
 #import "MaterialElevation.h"
 #import "MaterialShadowElevations.h"
 
+API_DEPRECATED_BEGIN("Use a branded UICollectionViewCell (go/material-ios-lists) or branded "
+                     "UITableViewCell (go/material-ios-lists) instead",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 @interface MDCBaseCell : UICollectionViewCell <MDCElevatable, MDCElevationOverriding>
 
 /**
@@ -61,3 +65,5 @@
 @property(nonatomic, strong, nonnull) UIColor *inkColor;
 
 @end
+
+API_DEPRECATED_END
