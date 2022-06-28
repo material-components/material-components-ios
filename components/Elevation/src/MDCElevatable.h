@@ -15,6 +15,9 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <Foundation/Foundation.h>
 
+API_DEPRECATED_BEGIN("Use colors with dynamic providers that handle elevation instead.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  Provides APIs for @c UIViews to communicate their elevation throughout the view hierarchy.
  */
@@ -40,3 +43,5 @@
     (id<MDCElevatable> _Nonnull object, CGFloat absoluteElevation);
 
 @end
+
+API_DEPRECATED_END

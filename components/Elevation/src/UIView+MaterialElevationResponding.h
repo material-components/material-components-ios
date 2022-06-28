@@ -15,6 +15,9 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN("Use colors with dynamic providers that handle elevation instead.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  Allows elevation changes to propagate down the view hierarchy and allows objects conforming to
  @c MDCElevatable to react to those changes accordingly.
@@ -51,3 +54,5 @@
 - (void)mdc_elevationDidChange;
 
 @end
+
+API_DEPRECATED_END

@@ -15,6 +15,9 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN("Use colors with dynamic providers that handle elevation instead.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  Provides extension to UIColor for Material Elevation usage.
  */
@@ -63,3 +66,5 @@
                          (nonnull UITraitCollection *)traitCollection
                                                 elevation:(CGFloat)elevation;
 @end
+
+API_DEPRECATED_END
