@@ -17,6 +17,9 @@
 #import "MaterialFeatureHighlight.h"
 #import "MaterialThemes.h"
 
+API_DEPRECATED_BEGIN("Consider using a modal sheet to explain new features instead.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  The Material Design color system's themer for instances of MDCFeatureHighlightViewController.
 
@@ -60,3 +63,5 @@
     __deprecated_msg("Customize your MDCFeatureHighlight using its styling APIs directly.");
 
 @end
+
+API_DEPRECATED_END

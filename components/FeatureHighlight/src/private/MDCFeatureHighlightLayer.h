@@ -14,6 +14,9 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+API_DEPRECATED_BEGIN("Consider using a modal sheet to explain new features instead.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 @interface MDCFeatureHighlightLayer : CAShapeLayer
 
 - (void)setPosition:(CGPoint)position animated:(BOOL)animated;
@@ -27,3 +30,5 @@
 - (void)animateFillColorOverKeyframes:(NSArray *)colors keyTimes:(NSArray *)keyTimes;
 
 @end
+
+API_DEPRECATED_END

@@ -14,6 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN("Consider using a modal sheet to explain new features instead.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /** The default alpha for the outer highlight circle. */
 extern const CGFloat kMDCFeatureHighlightOuterHighlightAlpha;
 
@@ -159,3 +162,5 @@ typedef void (^MDCFeatureHighlightCompletion)(BOOL accepted);
 - (void)rejectFeature;
 
 @end
+
+API_DEPRECATED_END

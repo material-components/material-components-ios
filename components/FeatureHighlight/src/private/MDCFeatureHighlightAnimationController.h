@@ -14,6 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN("Consider using a modal sheet to explain new features instead.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 typedef enum : NSUInteger {
   MDCFeatureHighlightDismissAccepted,
   MDCFeatureHighlightDismissRejected,
@@ -25,3 +28,5 @@ typedef enum : NSUInteger {
 @property(nonatomic, assign, getter=isPresenting) BOOL presenting;
 
 @end
+
+API_DEPRECATED_END

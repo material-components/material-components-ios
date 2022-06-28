@@ -14,6 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN("Consider using a modal sheet to explain new features instead.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 @interface MDCFeatureHighlightView : UIView <UIContentSizeCategoryAdjusting>
 
 @property(nonatomic, strong, nullable) UIColor *innerHighlightColor UI_APPEARANCE_SELECTOR;
@@ -41,3 +44,5 @@
      UITraitCollection *_Nullable previousTraitCollection);
 
 @end
+
+API_DEPRECATED_END

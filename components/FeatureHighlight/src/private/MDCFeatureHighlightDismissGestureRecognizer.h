@@ -14,9 +14,14 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN("Consider using a modal sheet to explain new features instead.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 @interface MDCFeatureHighlightDismissGestureRecognizer : UIGestureRecognizer
 
 @property(nonatomic, readonly) CGFloat progress;
 @property(nonatomic, readonly) CGFloat velocity;
 
 @end
+
+API_DEPRECATED_END
