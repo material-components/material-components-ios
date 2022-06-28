@@ -14,6 +14,9 @@
 
 #import "MDCCollectionViewCell.h"
 
+API_DEPRECATED_BEGIN("Follow go/material-ios-lists for list guidance instead.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /** Default cell height for single line of text. Defaults to 48. */
 extern const CGFloat MDCCellDefaultOneLineHeight;
 
@@ -71,3 +74,5 @@ extern const CGFloat MDCCellDefaultThreeLineHeight;
 @property(nonatomic, readonly, strong, nullable) UIImageView *imageView;
 
 @end
+
+API_DEPRECATED_END
