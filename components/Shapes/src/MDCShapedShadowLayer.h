@@ -16,6 +16,9 @@
 
 #import "MaterialShadowLayer.h"
 
+API_DEPRECATED_BEGIN("Follow go/material-ios-shadows to use UIKit shadows instead.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 @protocol MDCShapeGenerating;
 
 /*
@@ -79,3 +82,5 @@
 @property(nonatomic, strong, nonnull) CAShapeLayer *colorLayer;
 
 @end
+
+API_DEPRECATED_END

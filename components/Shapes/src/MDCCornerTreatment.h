@@ -14,6 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN("Use layer.cornerRadius to achieve rounded corners.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 @class MDCPathGenerator;
 
 /**
@@ -71,3 +74,5 @@ typedef NS_ENUM(NSInteger, MDCCornerTreatmentValueType) {
                                                   forViewSize:(CGSize)size;
 
 @end
+
+API_DEPRECATED_END

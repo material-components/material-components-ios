@@ -16,6 +16,9 @@
 
 #import "MaterialShadowElevations.h"
 
+API_DEPRECATED_BEGIN("Use layer.cornerRadius to achieve rounded corners.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 @protocol MDCShapeGenerating;
 
 /**
@@ -68,3 +71,5 @@
     NS_DESIGNATED_INITIALIZER;
 
 @end
+
+API_DEPRECATED_END

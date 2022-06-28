@@ -15,6 +15,9 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <Foundation/Foundation.h>
 
+API_DEPRECATED_BEGIN("Use layer.cornerRadius to achieve rounded corners.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  MDCPathGenerator is a factory for creating CGPaths. Describe your path with the
  lineTo and addArc... methods, then call appendToCGPath to append them to a
@@ -114,3 +117,5 @@
              transform:(nullable CGAffineTransform *)transform;
 
 @end
+
+API_DEPRECATED_END

@@ -16,6 +16,9 @@
 
 #import "MDCShapeGenerating.h"
 
+API_DEPRECATED_BEGIN("Use layer.cornerRadius to achieve rounded corners.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 @class MDCCornerTreatment;
 @class MDCEdgeTreatment;
 
@@ -62,3 +65,5 @@
 - (void)setEdges:(MDCEdgeTreatment *)edgeShape;
 
 @end
+
+API_DEPRECATED_END
