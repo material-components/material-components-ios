@@ -21,6 +21,10 @@
 // MDCAppBarNavigationControllerToBeDeprecatedDelegate as a transitive dependency.
 #import "MDCAppBarNavigationControllerToBeDeprecatedDelegate.h"
 
+API_DEPRECATED_BEGIN(
+    "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
+    ios(11, API_TO_BE_DEPRECATED))
+
 @class MDCAppBar;
 @class MDCAppBarViewController;
 @class MDCAppBarNavigationController;
@@ -198,3 +202,5 @@ __attribute__((objc_subclassing_restricted)) @interface MDCAppBarNavigationContr
         "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.");
 
 @end
+
+API_DEPRECATED_END

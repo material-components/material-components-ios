@@ -15,15 +15,16 @@
 #import "MaterialAppBar.h"
 #import "MaterialTypographyScheme.h"
 
+API_DEPRECATED_BEGIN(
+    "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
+    ios(11, API_TO_BE_DEPRECATED))
+
 /**
  The Material Design typography system's themer for instances of MDCAppBar.
 
  @warning This API will eventually be deprecated.
  Learn more at docs/theming.md#migration-guide-themers-to-theming-extensions
  */
-API_DEPRECATED(
-    "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
-    ios(11, API_TO_BE_DEPRECATED))
 @interface MDCAppBarTypographyThemer : NSObject
 @end
 
@@ -56,3 +57,5 @@ API_DEPRECATED(
                      toAppBar:(nonnull MDCAppBar *)appBar;
 
 @end
+
+API_DEPRECATED_END

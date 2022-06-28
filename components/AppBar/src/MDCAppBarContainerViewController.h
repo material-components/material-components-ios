@@ -16,6 +16,10 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN(
+    "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
+    ios(11, API_TO_BE_DEPRECATED))
+
 @class MDCAppBar;
 @class MDCAppBarViewController;
 
@@ -102,3 +106,5 @@ API_DEPRECATED(
 @property(nonatomic, strong, nonnull, readonly) MDCAppBar *appBar;
 
 @end
+
+API_DEPRECATED_END

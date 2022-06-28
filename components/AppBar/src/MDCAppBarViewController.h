@@ -18,6 +18,10 @@
 #import "MaterialHeaderStackView.h"
 #import "MaterialNavigationBar.h"
 
+API_DEPRECATED_BEGIN(
+    "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
+    ios(11, API_TO_BE_DEPRECATED))
+
 @class MDCAppBarViewController;
 @protocol MDCAppBarViewControllerAccessibilityPerformEscapeDelegate;
 
@@ -143,3 +147,5 @@ API_UNAVAILABLE(tvos, watchos)
 @property(nonatomic) BOOL inferTopSafeAreaInsetFromViewController;
 
 @end
+
+API_DEPRECATED_END
