@@ -16,7 +16,6 @@ import CoreGraphics
 import UIKit
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialAppBar_Theming 
-import MaterialComponents.MaterialFlexibleHeader_CanAlwaysExpandToMaximumHeight 
 import MaterialComponents.MaterialTabs
 import MaterialComponents.MaterialContainerScheme
 
@@ -159,7 +158,6 @@ class AppBarInheritedAnimatedJumpExample: UIViewController {
     // Give the tab bar enough height to accommodate all possible item appearances.
     appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
     appBarViewController.inferTopSafeAreaInsetFromViewController = true
-    appBarViewController.headerView.canAlwaysExpandToMaximumHeight = true
     appBarViewController.headerView.sharedWithManyScrollViews = true
 
     appBarViewController.headerView.minimumHeight = 56

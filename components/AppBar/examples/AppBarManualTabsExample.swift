@@ -16,15 +16,12 @@ import CoreGraphics
 import UIKit
 import MaterialComponents.MaterialAppBar
 import MaterialComponents.MaterialAppBar_Theming 
-import MaterialComponents.MaterialFlexibleHeader_CanAlwaysExpandToMaximumHeight 
 import MaterialComponents.MaterialTabs
 import MaterialComponents.MaterialContainerScheme
 
 // An example that demonstrates the behavior of an App Bar with Tabs and manually swapped tab view
 // controllers. This example is distinct from a typical tab bar view controller in that it does not
-// make use of a horizontally-paging scroll view. This example also makes use of the
-// canAlwaysExpandToMaximumHeight API to allow the header to maintain its expanded state when
-// swapping between tabs.
+// make use of a horizontally-paging scroll view.
 class AppBarManualTabsExample: UIViewController {
 
   lazy var appBarViewController: MDCAppBarViewController = self.makeAppBar()
@@ -119,7 +116,6 @@ class AppBarManualTabsExample: UIViewController {
     // Give the tab bar enough height to accomodate all possible item appearances.
     appBarViewController.headerView.minMaxHeightIncludesSafeArea = false
     appBarViewController.inferTopSafeAreaInsetFromViewController = true
-    appBarViewController.headerView.canAlwaysExpandToMaximumHeight = true
     appBarViewController.headerView.sharedWithManyScrollViews = true
 
     appBarViewController.headerView.minimumHeight = 56

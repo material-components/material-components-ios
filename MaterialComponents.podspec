@@ -838,18 +838,6 @@ Pod::Spec.new do |mdc|
     extension.dependency "MaterialComponents/FlexibleHeader+ShiftBehavior"
   end
 
-  mdc.subspec "FlexibleHeader+CanAlwaysExpandToMaximumHeight" do |extension|
-    extension.ios.deployment_target = '10.0'
-    extension.public_header_files = [
-      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.h"
-    ]
-    extension.source_files = [
-      "components/#{extension.base_name.split('+')[0]}/src/#{extension.base_name.split('+')[1]}/*.{h,m}"
-    ]
-
-    extension.dependency "MaterialComponents/#{extension.base_name.split('+')[0]}"
-  end
-
   # HeaderStackView
 
   mdc.subspec "HeaderStackView" do |component|
