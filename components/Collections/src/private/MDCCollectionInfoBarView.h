@@ -18,6 +18,10 @@
 // longer import delegates as transitive dependencies.
 #import "MDCCollectionInfoBarViewDelegate.h"
 
+API_DEPRECATED_BEGIN(
+    "Use branded UICollectionView APIs instead. See go/material-ios-lists for guidance.",
+    ios(11, API_TO_BE_DEPRECATED))
+
 @class MDCCollectionInfoBarView;
 
 @protocol MDCCollectionInfoBarViewDelegate;
@@ -121,3 +125,5 @@ typedef NS_ENUM(NSUInteger, MDCCollectionInfoBarViewStyle) {
 - (void)dismissAnimated:(BOOL)animated;
 
 @end
+
+API_DEPRECATED_END

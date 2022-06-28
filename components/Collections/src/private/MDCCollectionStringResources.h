@@ -14,6 +14,10 @@
 
 #import <Foundation/Foundation.h>
 
+API_DEPRECATED_BEGIN(
+    "Use branded UICollectionView APIs instead. See go/material-ios-lists for guidance.",
+    ios(11, API_TO_BE_DEPRECATED))
+
 /**
  Shorthand for returning a resource from MDCCollectionStringResources's singleton.
  */
@@ -32,3 +36,5 @@
 - (nonnull NSString *)infoBarGestureHintString;
 
 @end
+
+API_DEPRECATED_END

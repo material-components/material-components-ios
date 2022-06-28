@@ -14,6 +14,10 @@
 
 #import "MDCCollectionViewEditing.h"
 
+API_DEPRECATED_BEGIN(
+    "Use branded UICollectionView APIs instead. See go/material-ios-lists for guidance.",
+    ios(11, API_TO_BE_DEPRECATED))
+
 /**
  The MDCCollectionViewEditingManager class provides an implementation for a UICollectionView to
  set its editing properties.
@@ -37,3 +41,5 @@
 - (nonnull instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
 
 @end
+
+API_DEPRECATED_END

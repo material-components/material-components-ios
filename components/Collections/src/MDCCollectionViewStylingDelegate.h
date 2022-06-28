@@ -16,6 +16,10 @@
 
 #import "MDCCollectionViewStyling.h"  // IWYU pragma: keep
 
+API_DEPRECATED_BEGIN(
+    "Use branded UICollectionView APIs instead. See go/material-ios-lists for guidance.",
+    ios(11, API_TO_BE_DEPRECATED))
+
 @class MDCInkTouchController;
 @class MDCInkView;
 @class MDCRippleTouchController;
@@ -196,3 +200,5 @@
                     rippleViewAtIndexPath:(nonnull NSIndexPath *)indexPath;
 
 @end
+
+API_DEPRECATED_END

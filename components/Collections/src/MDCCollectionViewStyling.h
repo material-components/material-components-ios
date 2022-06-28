@@ -14,6 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN(
+    "Use branded UICollectionView APIs instead. See go/material-ios-lists for guidance.",
+    ios(11, API_TO_BE_DEPRECATED))
+
 @protocol MDCCollectionViewStylingDelegate;
 @class MDCCollectionViewLayoutAttributes;
 
@@ -276,3 +280,5 @@ typedef NS_ENUM(NSUInteger, MDCCollectionViewCellLayoutType) {
 - (void)beginCellAppearanceAnimation;
 
 @end
+
+API_DEPRECATED_END

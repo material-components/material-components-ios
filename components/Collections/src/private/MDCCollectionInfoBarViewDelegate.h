@@ -14,6 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN(
+    "Use branded UICollectionView APIs instead. See go/material-ios-lists for guidance.",
+    ios(11, API_TO_BE_DEPRECATED))
+
 @class MDCCollectionInfoBarView;
 
 @protocol MDCCollectionInfoBarViewDelegate <NSObject>
@@ -81,3 +85,5 @@
         didAutoDismiss:(BOOL)didAutoDismiss;
 
 @end
+
+API_DEPRECATED_END

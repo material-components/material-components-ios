@@ -14,6 +14,10 @@
 
 #import "MDCCollectionViewStyling.h"
 
+API_DEPRECATED_BEGIN(
+    "Use branded UICollectionView APIs instead. See go/material-ios-lists for guidance.",
+    ios(11, API_TO_BE_DEPRECATED))
+
 /**
  The MDCCollectionViewStyler class provides a default implementation for a UICollectionView to set
  its style properties.
@@ -33,3 +37,5 @@
     NS_DESIGNATED_INITIALIZER;
 
 @end
+
+API_DEPRECATED_END

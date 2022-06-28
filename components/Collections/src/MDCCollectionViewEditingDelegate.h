@@ -14,6 +14,10 @@
 
 #import <Foundation/Foundation.h>
 
+API_DEPRECATED_BEGIN(
+    "Use branded UICollectionView APIs instead. See go/material-ios-lists for guidance.",
+    ios(11, API_TO_BE_DEPRECATED))
+
 /**
  A delegate protocol that provides editing notifications for three types of collection view
  gestural interations:
@@ -343,3 +347,5 @@
     didCancelSwipeToDismissSection:(NSInteger)section;
 
 @end
+
+API_DEPRECATED_END

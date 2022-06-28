@@ -14,6 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN(
+    "Use branded UICollectionView APIs instead. See go/material-ios-lists for guidance.",
+    ios(11, API_TO_BE_DEPRECATED))
+
 /**
  The MDCCollectionViewFlowLayout class provides a Material Design layout implementation of a
  UICollectionViewFlowLayout layout.
@@ -25,3 +29,5 @@
 @interface MDCCollectionViewFlowLayout : UICollectionViewFlowLayout
 
 @end
+
+API_DEPRECATED_END

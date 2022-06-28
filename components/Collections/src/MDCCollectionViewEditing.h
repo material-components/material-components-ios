@@ -14,6 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN(
+    "Use branded UICollectionView APIs instead. See go/material-ios-lists for guidance.",
+    ios(11, API_TO_BE_DEPRECATED))
+
 @protocol MDCCollectionViewEditingDelegate;
 
 /** The MDCCollectionViewEditing protocol defines the editing state for a UICollectionView. */
@@ -77,3 +81,5 @@
 - (void)updateReorderCellPosition;
 
 @end
+
+API_DEPRECATED_END

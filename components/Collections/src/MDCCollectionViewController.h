@@ -18,6 +18,10 @@
 #import "MDCCollectionViewEditingDelegate.h"
 #import "MDCCollectionViewStylingDelegate.h"  // IWYU pragma: keep
 
+API_DEPRECATED_BEGIN(
+    "Use branded UICollectionView APIs instead. See go/material-ios-lists for guidance.",
+    ios(11, API_TO_BE_DEPRECATED))
+
 @protocol MDCCollectionViewEditing;
 @protocol MDCCollectionViewStyling;
 
@@ -83,3 +87,5 @@
 - (CGFloat)cellWidthAtSectionIndex:(NSInteger)section;
 
 @end
+
+API_DEPRECATED_END
