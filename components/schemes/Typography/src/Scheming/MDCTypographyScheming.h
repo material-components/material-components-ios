@@ -14,9 +14,6 @@
 
 #import <UIKit/UIKit.h>
 
-API_DEPRECATED_BEGIN("Follow go/material-ios-tokens#typescale-tokens to use font tokens instead.",
-                     ios(12, API_TO_BE_DEPRECATED))
-
 /**
  A simple typography scheme that provides semantic fonts. There are no optional
  properties, all fonts must be provided, supporting more reliable typography theming.
@@ -98,5 +95,3 @@ API_DEPRECATED_BEGIN("Follow go/material-ios-tokens#typescale-tokens to use font
 @property(nonatomic, assign, readonly) BOOL useCurrentContentSizeCategoryWhenApplied;
 
 @end
-
-API_DEPRECATED_END

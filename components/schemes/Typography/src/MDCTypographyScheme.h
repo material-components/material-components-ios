@@ -14,10 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MDCTypographyScheming.h"
-
-API_DEPRECATED_BEGIN("Follow go/material-ios-tokens#typescale-tokens to use font tokens instead.",
-                     ios(12, API_TO_BE_DEPRECATED))
+#import "MaterialTypographyScheme+Scheming.h"
 
 /**
  An enum of default typography schemes that are supported.
@@ -86,5 +83,3 @@ typedef NS_ENUM(NSInteger, MDCTypographySchemeDefaults) {
 - (nonnull instancetype)initWithDefaults:(MDCTypographySchemeDefaults)defaults;
 
 @end
-
-API_DEPRECATED_END
