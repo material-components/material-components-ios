@@ -18,6 +18,10 @@
 #import <MaterialComponents/MaterialShapeScheme.h>
 #import <MaterialComponents/MaterialTypographyScheme.h>
 
+API_DEPRECATED_BEGIN(
+    "Use Branding APIs (go/material-ios-branding) or tokens (go/material-ios-tokens) instead.",
+    ios(12, API_TO_BE_DEPRECATED))
+
 /**
  A container scheme that exposes properties for all supported Material Theming subsystem schemes.
  */
@@ -63,3 +67,5 @@ __attribute__((objc_subclassing_restricted)) @interface MDCContainerScheme
 @property(nonatomic, nullable, readwrite) MDCShapeScheme *shapeScheme;
 
 @end
+
+API_DEPRECATED_END

@@ -15,6 +15,9 @@
 #import <Foundation/Foundation.h>
 #import "MaterialShapes.h"
 
+API_DEPRECATED_BEGIN("Use shape tokens (go/material-ios-tokens) instead.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  This enum consists of the different types of shape corners.
 
@@ -77,3 +80,5 @@ typedef NS_ENUM(NSInteger, MDCShapeCornerFamily) {
                               andSize:(CGFloat)cornerSize;
 
 @end
+
+API_DEPRECATED_END

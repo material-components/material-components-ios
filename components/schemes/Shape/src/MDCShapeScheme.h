@@ -16,6 +16,9 @@
 #import <UIKit/UIKit.h>
 #import "MDCShapeCategory.h"
 
+API_DEPRECATED_BEGIN("Use shape tokens (go/material-ios-tokens) instead.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  A simple shape scheme that provides semantic meaning.
  Each MDCShapeCategory is mapped to a component.
@@ -74,3 +77,5 @@ typedef NS_ENUM(NSInteger, MDCShapeSchemeDefaults) {
 - (nonnull instancetype)initWithDefaults:(MDCShapeSchemeDefaults)defaults;
 
 @end
+
+API_DEPRECATED_END
