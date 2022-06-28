@@ -15,6 +15,10 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN("Use a branded UITextField (go/material-ios-text-fields) or branded "
+                     "UITextView (go/material-ios-text-views) instead",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  Dictates the relative importance of the underline labels, and the order in which they are laid out.
  It is important to note that at the time this documentation is being written this type is not
@@ -40,3 +44,5 @@ typedef NS_ENUM(NSUInteger, MDCTextControlAssistiveLabelDrawPriority) {
    */
   MDCTextControlAssistiveLabelDrawPriorityCustom,
 };
+
+API_DEPRECATED_END

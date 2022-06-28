@@ -13,6 +13,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+API_DEPRECATED_BEGIN("Use a branded UITextField (go/material-ios-text-fields) or branded "
+                     "UITextView (go/material-ios-text-views) instead",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  This enum describes different approaches to vertically positioning side views (@c leadingView, @c
  trailingView, and the clear button) in a text field. MDCBaseTextFieldLayout uses this to help it
@@ -28,3 +32,5 @@ typedef NS_ENUM(NSUInteger, MDCTextControlTextFieldSideViewAlignment) {
    */
   MDCTextControlTextFieldSideViewAlignmentAlignedWithText,
 };
+
+API_DEPRECATED_END

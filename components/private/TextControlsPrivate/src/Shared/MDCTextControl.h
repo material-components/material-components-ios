@@ -24,6 +24,10 @@
 #import "MDCTextControlLabelSupport.h"
 #import "MDCTextControlVerticalPositioningReference.h"
 
+API_DEPRECATED_BEGIN("Use a branded UITextField (go/material-ios-text-fields) or branded "
+                     "UITextView (go/material-ios-text-views) instead",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 UIFont *_Nonnull MDCTextControlDefaultUITextFieldFont(void);
 
 FOUNDATION_EXTERN const CGFloat kMDCTextControlDefaultAnimationDuration;
@@ -215,3 +219,5 @@ FOUNDATION_EXTERN const CGFloat kMDCTextControlDefaultAnimationDuration;
 - (nonnull MDCTextControlHorizontalPositioningReference *)horizontalPositioningReference;
 
 @end
+
+API_DEPRECATED_END

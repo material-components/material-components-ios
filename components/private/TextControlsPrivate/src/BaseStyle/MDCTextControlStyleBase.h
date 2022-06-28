@@ -17,9 +17,15 @@
 
 #import "MDCTextControl.h"
 
+API_DEPRECATED_BEGIN("Use a branded UITextField (go/material-ios-text-fields) or branded "
+                     "UITextView (go/material-ios-text-views) instead",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  A base implementation of MDCTextControlStyle. This is only used for base text controls, i.e.
  ones that are not filled or outlined.
  */
 @interface MDCTextControlStyleBase : NSObject <MDCTextControlStyle>
 @end
+
+API_DEPRECATED_END

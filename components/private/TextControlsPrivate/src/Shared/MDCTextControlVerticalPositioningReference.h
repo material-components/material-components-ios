@@ -18,6 +18,10 @@
 #import "MDCTextControlLabelBehavior.h"
 #import "MDCTextControlLabelSupport.h"
 
+API_DEPRECATED_BEGIN("Use a branded UITextField (go/material-ios-text-fields) or branded "
+                     "UITextView (go/material-ios-text-views) instead",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  Style objects vend objects conforming to this protocol to provide the MDCTextControl's layout
  object with information about the vertical positions of views. This helps achieve the variations in
@@ -55,3 +59,5 @@ CGFloat MDCTextControlPaddingValueWithMinimumPadding(CGFloat minimumPadding, CGF
 BOOL MDCTextControlShouldLayoutForFloatingLabelWithLabelPosition(
     MDCTextControlLabelPosition labelPosition, MDCTextControlLabelBehavior labelBehavior,
     NSString *labelText);
+
+API_DEPRECATED_END

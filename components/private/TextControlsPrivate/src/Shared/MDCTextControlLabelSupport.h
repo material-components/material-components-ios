@@ -14,6 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN("Use a branded UITextField (go/material-ios-text-fields) or branded "
+                     "UITextView (go/material-ios-text-views) instead",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  This enum represents different positional states the label can be in.
  */
@@ -36,3 +40,5 @@ MDCTextControlLabelPosition MDCTextControlLabelPositionWith(BOOL hasLabelText, B
                                                             BOOL canLabelFloat, BOOL isEditing);
 
 CGSize MDCTextControlLabelSizeWith(NSString *text, CGFloat maxWidth, UIFont *font);
+
+API_DEPRECATED_END

@@ -15,8 +15,14 @@
 #import <UIKit/UIKit.h>
 #import "MDCTextControlLabelSupport.h"
 
+API_DEPRECATED_BEGIN("Use a branded UITextField (go/material-ios-text-fields) or branded "
+                     "UITextView (go/material-ios-text-views) instead",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  This method tells an MDCTextControl whether its placeholder should be visible.
  */
 BOOL MDCTextControlShouldPlaceholderBeVisibleWithPlaceholder(
     NSString *placeholder, NSString *text, MDCTextControlLabelPosition labelPosition);
+
+API_DEPRECATED_END

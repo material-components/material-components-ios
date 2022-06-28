@@ -15,6 +15,10 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN("Use a branded UITextField (go/material-ios-text-fields) or branded "
+                     "UITextView (go/material-ios-text-views) instead",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 @interface UIBezierPath (MDCTextControlStyle)
 
 - (void)mdc_addTopRightCornerFromPoint:(CGPoint)point1
@@ -31,3 +35,5 @@
                            withRadius:(CGFloat)radius;
 
 @end
+
+API_DEPRECATED_END

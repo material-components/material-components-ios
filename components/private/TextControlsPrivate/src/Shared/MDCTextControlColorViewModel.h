@@ -17,6 +17,10 @@
 
 #import "MDCTextControlState.h"
 
+API_DEPRECATED_BEGIN("Use a branded UITextField (go/material-ios-text-fields) or branded "
+                     "UITextView (go/material-ios-text-views) instead",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  This object represents a group of colors that are applied on a state by state basis to
  MDCTextControls. Each property corresponds to a Contained Input View specific subview.
@@ -49,3 +53,5 @@
 - (nonnull instancetype)initWithState:(MDCTextControlState)state NS_DESIGNATED_INITIALIZER;
 
 @end
+
+API_DEPRECATED_END

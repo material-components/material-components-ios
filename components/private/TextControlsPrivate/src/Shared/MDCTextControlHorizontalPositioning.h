@@ -14,6 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN("Use a branded UITextField (go/material-ios-text-fields) or branded "
+                     "UITextView (go/material-ios-text-views) instead",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  Objects conforming to this protocol provide information to layout objects regarding the horizontal
  positioning of TextControl subviews.
@@ -38,3 +42,5 @@
 @property(nonatomic, assign) CGFloat horizontalInterItemSpacing;
 
 @end
+
+API_DEPRECATED_END
