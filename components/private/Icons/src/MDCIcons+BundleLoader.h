@@ -14,6 +14,9 @@
 
 #import "MDCIcons.h"
 
+API_DEPRECATED_BEGIN("Follow go/material-ios-icons and use UIKit API instead.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  The MDCIcons class is designed to be extended by adding individual icon extensions to a project.
 
@@ -30,3 +33,5 @@
 + (nullable NSBundle *)bundleNamed:(nonnull NSString *)bundleName;
 
 @end
+
+API_DEPRECATED_END
