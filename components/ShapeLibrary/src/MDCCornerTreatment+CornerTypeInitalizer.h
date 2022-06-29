@@ -18,6 +18,9 @@
 #import "MDCCutCornerTreatment.h"
 #import "MDCRoundedCornerTreatment.h"
 
+API_DEPRECATED_BEGIN("Use explicit mask layers and shape paths instead.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 @interface MDCCornerTreatment (CornerTypeInitalizer)
 
 /**
@@ -78,3 +81,5 @@
                                     valueType:(MDCCornerTreatmentValueType)valueType;
 
 @end
+
+API_DEPRECATED_END

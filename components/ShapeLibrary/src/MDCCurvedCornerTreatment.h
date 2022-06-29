@@ -16,6 +16,9 @@
 
 #import "MaterialShapes.h"
 
+API_DEPRECATED_BEGIN("Use explicit mask layers and shape paths instead.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  A curved corner treatment. Distinct from MDCRoundedCornerTreatment in that MDCurvedCornerTreatment
  also supports asymmetric curved corners.
@@ -38,3 +41,5 @@
 - (nonnull instancetype)init;
 
 @end
+
+API_DEPRECATED_END

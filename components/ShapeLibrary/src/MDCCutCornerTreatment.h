@@ -16,6 +16,9 @@
 
 #import "MaterialShapes.h"
 
+API_DEPRECATED_BEGIN("Use explicit mask layers and shape paths instead.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  A cut corner treatment subclassing MDCCornerTreatment.
  This can be used to set corners in MDCRectangleShapeGenerator.
@@ -55,3 +58,5 @@
 - (nonnull instancetype)init;
 
 @end
+
+API_DEPRECATED_END

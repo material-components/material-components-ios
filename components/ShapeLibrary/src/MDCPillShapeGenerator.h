@@ -16,9 +16,13 @@
 
 #import "MaterialShapes.h"
 
+API_DEPRECATED_BEGIN("Use cornerRadius instead.", ios(12, API_TO_BE_DEPRECATED))
+
 /**
  A pill shape generator. Rounds the corners such that the shorter sides of the generated shape are
  entirely rounded.
  */
 @interface MDCPillShapeGenerator : NSObject <MDCShapeGenerating>
 @end
+
+API_DEPRECATED_END

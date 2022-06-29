@@ -16,6 +16,9 @@
 
 #import "MaterialShapes.h"
 
+API_DEPRECATED_BEGIN("Use explicit mask layers and shape paths instead.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 typedef enum : NSUInteger {
   MDCTriangleEdgeStyleHandle,
   MDCTriangleEdgeStyleCut,
@@ -45,3 +48,5 @@ typedef enum : NSUInteger {
 - (nonnull instancetype)init NS_UNAVAILABLE;
 
 @end
+
+API_DEPRECATED_END

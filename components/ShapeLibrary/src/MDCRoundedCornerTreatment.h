@@ -15,6 +15,8 @@
 
 #import "MaterialShapes.h"
 
+API_DEPRECATED_BEGIN("Use cornerRadius instead.", ios(12, API_TO_BE_DEPRECATED))
+
 /**
  A rounded corner treatment.
  */
@@ -36,3 +38,5 @@
 - (nonnull instancetype)init;
 
 @end
+
+API_DEPRECATED_END

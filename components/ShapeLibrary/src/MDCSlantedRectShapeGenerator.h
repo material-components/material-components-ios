@@ -16,6 +16,9 @@
 
 #import "MaterialShapes.h"
 
+API_DEPRECATED_BEGIN("Use explicit mask layers and shape paths instead.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  A slanted rectangle shape generator.
 
@@ -29,3 +32,5 @@
 @property(nonatomic, assign) CGFloat slant;
 
 @end
+
+API_DEPRECATED_END
