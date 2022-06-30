@@ -112,7 +112,13 @@ Default value is 0 (meaning, the accessory view's horizontal insets are determin
 
 @end
 
-@interface MDCAlertControllerView (ToBeDeprecated)
+@interface MDCAlertControllerView (Deprecated)
+
+@property(nonatomic, strong, nullable) UIColor *buttonColor UI_APPEARANCE_SELECTOR __deprecated_msg(
+    "Use MDCAlertController's buttonForAction API");
+@property(nonatomic, strong, nullable)
+    UIColor *buttonInkColor UI_APPEARANCE_SELECTOR __deprecated_msg(
+        "Use MDCAlertController's buttonForAction API");
 
 /**
  By setting this property to @c YES, the Ripple component will be used instead of Ink to display
@@ -124,15 +130,7 @@ Default value is 0 (meaning, the accessory view's horizontal insets are determin
 
  Defaults to @c NO.
  */
-@property(nonatomic, assign) BOOL enableRippleBehavior;
+@property(nonatomic, assign) BOOL enableRippleBehavior __deprecated_msg(
+    "See go/material-ios-touch-response, Ripple should not be used.");
 
-@end
-
-@interface MDCAlertControllerView (Deprecated)
-
-@property(nonatomic, strong, nullable) UIColor *buttonColor UI_APPEARANCE_SELECTOR __deprecated_msg(
-    "Use MDCAlertController's buttonForAction API");
-@property(nonatomic, strong, nullable)
-    UIColor *buttonInkColor UI_APPEARANCE_SELECTOR __deprecated_msg(
-        "Use MDCAlertController's buttonForAction API");
 @end

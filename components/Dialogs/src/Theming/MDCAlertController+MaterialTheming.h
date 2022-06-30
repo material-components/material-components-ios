@@ -15,6 +15,9 @@
 #import <MaterialComponents/MaterialDialogs.h>
 #import "MaterialContainerScheme.h"
 
+API_DEPRECATED_BEGIN("Follow go/material-ios-dialogs for guidance on how to use branding.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  This category is used to style MDCAlertController instances to a specific Material style which can
  be found within the [Material Guidelines](https://material.io/design/components/dialogs.html).
@@ -30,3 +33,5 @@
 - (void)applyThemeWithScheme:(nonnull id<MDCContainerScheming>)scheme;
 
 @end
+
+API_DEPRECATED_END
