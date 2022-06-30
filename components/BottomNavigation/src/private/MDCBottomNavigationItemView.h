@@ -23,7 +23,10 @@ __attribute__((objc_subclassing_restricted))
 @property(nonatomic, assign) BOOL titleBelowIcon;
 @property(nonatomic, assign) BOOL selected;
 @property(nonatomic, assign) MDCBottomNavigationBarTitleVisibility titleVisibility;
-@property(nonatomic, strong, nonnull) MDCRippleTouchController *rippleTouchController;
+@property(nonatomic, strong, nonnull)
+    MDCRippleTouchController *rippleTouchController API_DEPRECATED(
+        "Follow go/material-ios-touch-response for guidance instead.", ios(12, API_TO_BE_DEPRECATED)
+    );
 @property(nonatomic, assign) UIOffset titlePositionAdjustment;
 
 @property(nonatomic, copy, nullable) NSString *title;
@@ -87,7 +90,8 @@ __attribute__((objc_subclassing_restricted))
 #pragma mark - Configuring the ripple appearance
 
 /** The color of the ripple effect shown when the user taps on an item. */
-@property(nonatomic, strong, nullable) UIColor *rippleColor;
+@property(nonatomic, strong, nullable) UIColor *rippleColor API_DEPRECATED(
+    "Follow go/material-ios-touch-response for guidance instead.", ios(12, API_TO_BE_DEPRECATED));
 
 #pragma mark - Displaying a value in the badge
 
@@ -97,8 +101,9 @@ __attribute__((objc_subclassing_restricted))
  The badge will only be visible if the text is a non-empty string. To hide the badge, set this
  property to nil or an empty string.
  */
-@property(nonatomic, copy, nullable, direct) NSString *badgeText;
-
+@property(nonatomic, copy, nullable, direct) NSString *badgeText API_DEPRECATED(
+    "See go/material-ios-badges for badge appearance guidance instead.",
+    ios(12, API_TO_BE_DEPRECATED));
 #pragma mark - Configuring a badge's visual appearance
 
 /**
@@ -115,7 +120,9 @@ __attribute__((objc_subclassing_restricted))
  If not nil, this value will override badgeAppearance.backgroundColor. If nil, then
  badgeAppearance.backgroundColor will be used instead.
  */
-@property(nonatomic, strong, nullable, direct) UIColor *badgeColor;
+@property(nonatomic, strong, nullable, direct) UIColor *badgeColor API_DEPRECATED_WITH_REPLACEMENT(
+    "badgeAppearance.backgroundColor", ios(12, API_TO_BE_DEPRECATED));
+;
 
 /**
  The color of the text representing this item's badge value.

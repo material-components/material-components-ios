@@ -251,7 +251,8 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
  When this property is nil, the ripple's color will be inferred from @c selectedItemTintColor. If
  you want a clear ripple, you must set @c rippleColor to UIColor.clearColor.
 */
-@property(nonatomic, strong, nullable) UIColor *rippleColor;
+@property(nonatomic, strong, nullable) UIColor *rippleColor API_DEPRECATED(
+    "Follow go/material-ios-touch-response for guidance instead.", ios(12, API_TO_BE_DEPRECATED));
 
 #pragma mark - Configuring the default visual appearance for all badges
 
