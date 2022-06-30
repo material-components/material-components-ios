@@ -14,6 +14,9 @@
 
 #import "MDCChipView.h"
 
+API_DEPRECATED_BEGIN("Use a branded UIButton instead (go/material-ios-buttons)",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 @interface MDCChipView (Private)
 
 - (void)startTouchBeganAnimationAtPoint:(CGPoint)point;
@@ -35,3 +38,5 @@
 @property(nonatomic, strong, null_resettable) MDCShadowsCollection *shadowsCollection;
 
 @end
+
+API_DEPRECATED_END

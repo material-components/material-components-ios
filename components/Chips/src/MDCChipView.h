@@ -20,6 +20,8 @@
 #import "MaterialShadowElevations.h"
 #import "MaterialShapes.h"
 
+API_DEPRECATED_BEGIN("Use a branded UIButton instead (go/material-ios-buttons)",
+                     ios(12, API_TO_BE_DEPRECATED))
 /*
  A Material chip.
 
@@ -364,3 +366,5 @@ When @c centerVisibleArea is @c NO, this value is @c UIEdgeInsetsZero.
         "Use titleLabel.adjustsFontForContentSizeCategory");
 
 @end
+
+API_DEPRECATED_END
