@@ -31,18 +31,17 @@ static const CGFloat kMinHeightTitleAndImage = 72;
 /** The vertical padding between the image view and the title label. */
 static const CGFloat kImageTitlePadding = 3;
 
-// The fonts available on iOS differ from that used on Material.io.  When trying to approximate
-// the position on iOS, it seems like a horizontal inset of 10 points looks pretty close.
-static const CGFloat kBadgeXOffsetFromIconEdgeWithTextLTR = -8;
+/** The horizontal padding between the image view or title label and badge. */
+static const CGFloat kBadgeXOffset = 4;
 
-// However, when the badge has no visible text, its horizontal center should be 1 point inset from
-// the edge of the image.
-static const CGFloat kBadgeXOffsetFromIconEdgeEmptyLTR = -1;
+/** The amount the badge overlaps with the image view when an image is present. */
+static const CGFloat kBadgeXInset = 12;
 
 @interface MDCTabBarViewItemView ()
 
 /** Indicates the selection status of this item view. */
 @property(nonatomic, assign, getter=isSelected) BOOL selected;
+
 - (CGPoint)badgeCenterFromFrame:(CGRect)frame isRTL:(BOOL)isRTL;
 
 @end
@@ -115,20 +114,27 @@ static const CGFloat kBadgeXOffsetFromIconEdgeEmptyLTR = -1;
 - (CGPoint)badgeCenterFromFrame:(CGRect)frame isRTL:(BOOL)isRTL {
   CGSize badgeSize = [_badge sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
 
-  CGFloat badgeCenterY = CGRectGetMinY(frame) + (badgeSize.height / 2);
+  CGFloat halfBadgeHeight = badgeSize.height / 2;
+  CGFloat halfBadgeWidth = badgeSize.width / 2;
 
-  CGFloat badgeCenterXOffset = kBadgeXOffsetFromIconEdgeWithTextLTR + badgeSize.width / 2;
-  if (self.badgeText.length == 0) {
-    badgeCenterXOffset = kBadgeXOffsetFromIconEdgeEmptyLTR;
-  }
-  CGFloat badgeCenterX =
-      isRTL ? CGRectGetMinX(frame) - badgeCenterXOffset : CGRectGetMaxX(frame) + badgeCenterXOffset;
-
-  // Account for the badge's outer border width.
-  badgeCenterX -= _badge.appearance.borderWidth / 2;
+  CGFloat badgeCenterY = (CGRectGetMinY(frame) - 4) + halfBadgeHeight;
   badgeCenterY -= _badge.appearance.borderWidth / 2;
 
-  return CGPointMake(badgeCenterX, badgeCenterY);
+  CGFloat xCenter = isRTL ? (CGRectGetMinX(frame) - kBadgeXOffset) + halfBadgeWidth
+                          : (CGRectGetMaxX(frame) + kBadgeXOffset) - halfBadgeWidth;
+  xCenter -= _badge.appearance.borderWidth / 2;
+
+  return CGPointMake(xCenter, badgeCenterY);
+}
+
+- (CGPoint)centerForOnlyTitleFromFrame:(CGRect)frame isRTL:(BOOL)isRTL {
+  CGSize badgeSize = [_badge sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
+
+  CGFloat halfBadgeWidth = badgeSize.width / 2;
+  CGFloat centerY = CGRectGetMidY(frame);
+  CGFloat centerX = isRTL ? CGRectGetMinX(frame) - halfBadgeWidth - kBadgeXOffset
+                          : CGRectGetMaxX(frame) + halfBadgeWidth + kBadgeXOffset;
+  return CGPointMake(centerX, centerY);
 }
 
 #pragma mark - UIView
@@ -145,12 +151,15 @@ static const CGFloat kBadgeXOffsetFromIconEdgeEmptyLTR = -1;
   BOOL isRTL =
       self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
 
-  if (self.titleLabel.text.length && !self.iconImageView.image) {
+  BOOL hasTitle = self.titleLabel.text.length > 0 ? YES : NO;
+  BOOL hasIcon = self.iconImageView.image != nil ? YES : NO;
+
+  if (hasTitle && !hasIcon) {
     CGRect titleLabelFrame = [self titleLabelFrameForTitleOnlyLayout];
     self.titleLabel.frame = titleLabelFrame;
-    _badge.center = [self badgeCenterFromFrame:titleLabelFrame isRTL:isRTL];
+    _badge.center = [self centerForOnlyTitleFromFrame:titleLabelFrame isRTL:isRTL];
     return;
-  } else if (!self.titleLabel.text.length && self.iconImageView.image) {
+  } else if (!hasTitle && hasIcon) {
     CGRect iconImageFrame = [self iconImageViewFrameForImageOnlyLayout];
     self.iconImageView.frame = iconImageFrame;
     _badge.center = [self badgeCenterFromFrame:iconImageFrame isRTL:isRTL];
@@ -259,6 +268,13 @@ static const CGFloat kBadgeXOffsetFromIconEdgeEmptyLTR = -1;
 
   UIEdgeInsets contentInsets =
       [self contentInsetsForItemViewStyle:MDCTabBarViewItemViewStyleTextOnly];
+  if (self.badgeText != nil) {
+    CGSize badgeSize = [_badge sizeThatFits:maxSize];
+    return CGSizeMake(MAX([self minWidth], badgeSize.width + kBadgeXOffset + labelSize.width +
+                                               contentInsets.left + contentInsets.right),
+                      MAX(kMinHeightTitleOrImageOnly,
+                          labelSize.height + contentInsets.top + contentInsets.bottom));
+  }
   return CGSizeMake(
       MAX([self minWidth], labelSize.width + contentInsets.left + contentInsets.right),
       MAX(kMinHeightTitleOrImageOnly, labelSize.height + contentInsets.top + contentInsets.bottom));
@@ -268,6 +284,14 @@ static const CGFloat kBadgeXOffsetFromIconEdgeEmptyLTR = -1;
   CGSize imageIntrinsicContentSize = self.iconImageView.intrinsicContentSize;
   UIEdgeInsets contentInsets =
       [self contentInsetsForItemViewStyle:MDCTabBarViewItemViewStyleImageOnly];
+  if (self.badgeText != nil) {
+    CGSize badgeSize = [_badge sizeThatFits:size];
+    return CGSizeMake(
+        MAX([self minWidth], badgeSize.width - kBadgeXInset + imageIntrinsicContentSize.width +
+                                 contentInsets.left + contentInsets.right),
+        MAX(kMinHeightTitleOrImageOnly,
+            imageIntrinsicContentSize.height + contentInsets.top + contentInsets.bottom));
+  }
   return CGSizeMake(MAX([self minWidth],
                         imageIntrinsicContentSize.width + contentInsets.left + contentInsets.right),
                     MAX(kMinHeightTitleOrImageOnly, imageIntrinsicContentSize.height +
@@ -280,6 +304,15 @@ static const CGFloat kBadgeXOffsetFromIconEdgeEmptyLTR = -1;
   CGSize imageFitSize = self.iconImageView.intrinsicContentSize;
   UIEdgeInsets contentInsets =
       [self contentInsetsForItemViewStyle:MDCTabBarViewItemViewStyleTextAndImage];
+  if (self.badgeText != nil) {
+    CGSize badgeSize = [_badge sizeThatFits:maxSize];
+    CGFloat badgeIconWidth = imageFitSize.width + badgeSize.width - kBadgeXInset;
+    return CGSizeMake(
+        MAX([self minWidth],
+            contentInsets.left + MAX(badgeIconWidth, labelFitSize.width) + contentInsets.right),
+        MAX(kMinHeightTitleAndImage, contentInsets.top + imageFitSize.height + kImageTitlePadding +
+                                         labelFitSize.height + contentInsets.bottom));
+  }
   return CGSizeMake(
       MAX([self minWidth],
           contentInsets.left + MAX(imageFitSize.width, labelFitSize.width) + contentInsets.right),
@@ -330,6 +363,7 @@ static const CGFloat kBadgeXOffsetFromIconEdgeEmptyLTR = -1;
   } else {
     _badge.hidden = NO;
   }
+
   [self setNeedsLayout];
 }
 
