@@ -19,6 +19,11 @@
 #import "MDCActionSheetController.h"
 #import "MaterialInk.h"
 
+API_DEPRECATED_BEGIN(
+    "Use a UIMenu instead. Use UIAlertController in action sheet style for destructive "
+    "confirmations. See go/material-ios-menus for guidance.",
+    ios(12, API_TO_BE_DEPRECATED))
+
 @interface MDCActionSheetItemTableViewCell : UITableViewCell
 /**
   The action contains the title, image, and handler
@@ -71,3 +76,5 @@
 @property(nonatomic, strong, nonnull) UILabel *actionLabel;
 
 @end
+
+API_DEPRECATED_END

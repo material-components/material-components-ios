@@ -21,6 +21,11 @@
 #import "MaterialBottomSheet.h"
 #import "MaterialElevation.h"
 
+API_DEPRECATED_BEGIN(
+    "Use a UIMenu instead. Use UIAlertController in action sheet style for destructive "
+    "confirmations. See go/material-ios-menus for guidance.",
+    ios(12, API_TO_BE_DEPRECATED))
+
 @class MDCActionSheetAction;
 @class MDCActionSheetController;
 @protocol MDCActionSheetControllerDelegate;
@@ -45,9 +50,6 @@
  in a sheet from the bottom.
 
  */
-API_DEPRECATED("Use a UIMenu instead. Use UIAlertController in action sheet style for destructive "
-               "confirmations. See go/material-ios-menus for guidance.",
-               ios(12, API_TO_BE_DEPRECATED))
 __attribute__((objc_subclassing_restricted))
 @interface MDCActionSheetController
     : UIViewController<MDCElevatable, MDCElevationOverriding, UIContentSizeCategoryAdjusting,
@@ -247,3 +249,5 @@ __attribute__((objc_subclassing_restricted))
 - (void)setModalPresentationStyle:(UIModalPresentationStyle)modalPresentationStyle NS_UNAVAILABLE;
 
 @end
+
+API_DEPRECATED_END

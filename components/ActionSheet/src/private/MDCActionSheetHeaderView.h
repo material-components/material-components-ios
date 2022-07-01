@@ -16,6 +16,11 @@
 
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN(
+    "Use a UIMenu instead. Use UIAlertController in action sheet style for destructive "
+    "confirmations. See go/material-ios-menus for guidance.",
+    ios(12, API_TO_BE_DEPRECATED))
+
 @interface MDCActionSheetHeaderView : UIView <UIContentSizeCategoryAdjusting>
 
 - (nonnull instancetype)initWithFrame:(CGRect)frame;
@@ -36,3 +41,5 @@
 @property(nonatomic, strong, nullable) UIColor *messageTextColor;
 
 @end
+
+API_DEPRECATED_END

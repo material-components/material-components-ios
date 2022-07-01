@@ -18,6 +18,11 @@
 
 @class MDCActionSheetController;
 
+API_DEPRECATED_BEGIN(
+    "Use a UIMenu instead. Use UIAlertController in action sheet style for destructive "
+    "confirmations. See go/material-ios-menus for guidance.",
+    ios(12, API_TO_BE_DEPRECATED))
+
 /**
  Defines methods that allows the adopting delegate to respond to messages from an
  @c MDCActionSheetController.
@@ -50,3 +55,5 @@ API_DEPRECATED("Use a UIMenu instead. Use UIAlertController in action sheet styl
               willDisplayView:(nonnull UIView *)view
             forRowAtIndexPath:(nonnull NSIndexPath *)indexPath;
 @end
+
+API_DEPRECATED_END
