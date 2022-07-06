@@ -473,6 +473,11 @@ typedef void (^MDCActionHandler)(MDCAlertAction *_Nonnull action);
 @property(nonatomic, nullable, readonly) NSString *title;
 
 /**
+ The action to execute when the button is pressed.
+ */
+@property(nonatomic, nullable, readonly) MDCActionHandler tapHandler;
+
+/**
  The @c MDCActionEmphasis emphasis of the button that will be rendered for the action.
  */
 @property(nonatomic, readonly) MDCActionEmphasis emphasis;

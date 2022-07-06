@@ -32,12 +32,6 @@
 // The Bundle for string resources.
 static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
-@interface MDCAlertAction ()
-
-@property(nonatomic, nullable, copy) MDCActionHandler tapHandler;
-
-@end
-
 @implementation MDCAlertAction
 
 + (instancetype)actionWithTitle:(nonnull NSString *)title
