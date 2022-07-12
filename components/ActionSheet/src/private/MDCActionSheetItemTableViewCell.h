@@ -14,15 +14,15 @@
 
 #import "MDCMinimumOS.h"  // IWYU pragma: keep
 
-#import <MaterialComponents/MaterialInk.h>
 #import <UIKit/UIKit.h>
 #import "MDCActionSheetController.h"
+#import "MaterialInk.h"  // ComponentImport
 #import "MaterialInk.h"
 
 API_DEPRECATED_BEGIN(
     "Use a UIMenu instead. Use UIAlertController in action sheet style for destructive "
     "confirmations. See go/material-ios-menus for guidance.",
-    ios(12, API_TO_BE_DEPRECATED))
+    ios(12, 12))
 
 @interface MDCActionSheetItemTableViewCell : UITableViewCell
 /**

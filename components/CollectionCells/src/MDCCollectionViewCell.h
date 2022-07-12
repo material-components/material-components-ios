@@ -17,8 +17,7 @@
 #import "MaterialInk.h"  // IWYU pragma: keep
 #import "MaterialRipple.h"  // IWYU pragma: keep
 
-API_DEPRECATED_BEGIN("Follow go/material-ios-lists for list guidance instead.",
-                     ios(12, API_TO_BE_DEPRECATED))
+API_DEPRECATED_BEGIN("Follow go/material-ios-lists for list guidance instead.", ios(12, 12))
 
 /** The available cell accessory view types. Based on UITableViewCellAccessoryType. */
 typedef NS_ENUM(NSUInteger, MDCCollectionViewCellAccessoryType) {

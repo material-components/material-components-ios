@@ -17,7 +17,7 @@
 
 API_DEPRECATED_BEGIN(
     "Use Branding APIs (go/material-ios-branding) or tokens (go/material-ios-tokens) instead.",
-    ios(12, API_TO_BE_DEPRECATED))
+    ios(12, 12))
 
 /**
  A simple color scheme that provides semantic context for the colors it uses. There are no optional

@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <MaterialComponents/MaterialDialogs.h>
+#import "MaterialDialogs.h"  // ComponentImport
 #import "MaterialContainerScheme.h"
 
 API_DEPRECATED_BEGIN("Follow go/material-ios-dialogs for guidance on how to use branding.",
-                     ios(12, API_TO_BE_DEPRECATED))
+                     ios(12, 12))
 
 /**
  An MDCDialogPresentationController theming extension used in theming

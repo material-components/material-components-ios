@@ -19,7 +19,7 @@
 
 API_DEPRECATED_BEGIN("Use a branded UICollectionViewCell (go/material-ios-lists) or branded "
                      "UITableViewCell (go/material-ios-lists) instead",
-                     ios(12, API_TO_BE_DEPRECATED))
+                     ios(12, 12))
 
 /**
  MDCSelfSizingStereoCell is intended to be an easy to use readymade implementation of a basic
@@ -40,7 +40,8 @@ API_DEPRECATED_BEGIN("Use a branded UICollectionViewCell (go/material-ios-lists)
  The client is expected NOT to manually set the frames of the view themselves or manipulate the view
  hierarchy in any way.
  */
-__attribute__((objc_subclassing_restricted)) @interface MDCSelfSizingStereoCell : MDCBaseCell
+__attribute__((objc_subclassing_restricted))
+@interface MDCSelfSizingStereoCell : MDCBaseCell
 
 /**
  The UIImageView responsible for displaying the leading image.

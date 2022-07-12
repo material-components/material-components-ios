@@ -14,8 +14,7 @@
 
 #import "MDCTabBar.h"
 
-API_DEPRECATED_BEGIN("Use MDCTabBarView instead (go/material-ios-tabs)",
-                     ios(12, API_TO_BE_DEPRECATED))
+API_DEPRECATED_BEGIN("Use MDCTabBarView instead (go/material-ios-tabs)", ios(12, 12))
 
 /**
  Provides methods for overriding the size class properties of an MDCTabBar.

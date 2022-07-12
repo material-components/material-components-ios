@@ -14,8 +14,7 @@
 
 #import "MDCCollectionViewCell.h"
 
-API_DEPRECATED_BEGIN("Follow go/material-ios-lists for list guidance instead.",
-                     ios(12, API_TO_BE_DEPRECATED))
+API_DEPRECATED_BEGIN("Follow go/material-ios-lists for list guidance instead.", ios(12, 12))
 
 /** Default cell height for single line of text. Defaults to 48. */
 extern const CGFloat MDCCellDefaultOneLineHeight;

@@ -21,7 +21,7 @@
 // longer import delegates as transitive dependencies.
 #import "MDCSliderDelegate.h"
 
-API_DEPRECATED_BEGIN("Use a branded UISlider instead.", ios(12, API_TO_BE_DEPRECATED))
+API_DEPRECATED_BEGIN("Use a branded UISlider instead.", ios(12, 12))
 
 /** The visibility of the track tick marks. */
 typedef NS_ENUM(NSUInteger, MDCSliderTrackTickVisibility) {

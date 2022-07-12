@@ -14,11 +14,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class MDCButtonBar;
+
 API_DEPRECATED_BEGIN("Use branded UINavigationController instead. "
                      "See go/material-ios-app-bars for more details.",
-                     ios(12, API_TO_BE_DEPRECATED))
-
-@class MDCButtonBar;
+                     ios(12, 12))
 
 /**
  The MDCButtonBarDelegate protocol defines the means by which MDCButtonBar can request that a

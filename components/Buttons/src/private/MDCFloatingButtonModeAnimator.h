@@ -17,16 +17,17 @@
 
 #import "MDCFloatingButton.h"
 
+@protocol MDCFloatingButtonModeAnimatorDelegate;
+
 API_DEPRECATED_BEGIN("Use branded UIButton (iOS 13/14) / UIButtonConfiguration (iOS 15+) instead. "
                      "See go/material-ios-buttons for more details.",
-                     ios(12, API_TO_BE_DEPRECATED))
-
-@protocol MDCFloatingButtonModeAnimatorDelegate;
+                     ios(12, 12))
 
 /**
  Animates an MDCFloatingButton's mode.
  */
-__attribute__((objc_subclassing_restricted)) @interface MDCFloatingButtonModeAnimator : NSObject
+__attribute__((objc_subclassing_restricted))
+@interface MDCFloatingButtonModeAnimator : NSObject
 
 - (nonnull instancetype)initWithTitleLabel:(nonnull UILabel *)titleLabel
                    titleLabelContainerView:(nonnull UIView *)titleLabelContainerView

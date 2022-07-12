@@ -17,7 +17,7 @@
 
 API_DEPRECATED_BEGIN(
     "Use Branding APIs (go/material-ios-branding) or tokens (go/material-ios-tokens) instead.",
-    ios(12, API_TO_BE_DEPRECATED))
+    ios(12, 12))
 
 /**
  A tonal palette consists of a main color and variants of the main color that are lighter and darker

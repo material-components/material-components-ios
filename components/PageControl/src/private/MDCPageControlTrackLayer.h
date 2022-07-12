@@ -15,7 +15,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIKit.h>
 
-API_DEPRECATED_BEGIN("Use a branded UIPageControl instead.", ios(12, API_TO_BE_DEPRECATED))
+API_DEPRECATED_BEGIN("Use a branded UIPageControl instead.", ios(12, 12))
 
 /**
  This shape layer provides a rounded rectangular track on which a page indicator can travel

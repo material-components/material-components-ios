@@ -16,7 +16,7 @@
 #import <UIKit/UIKit.h>
 
 API_DEPRECATED_BEGIN("Use colors with dynamic providers that handle elevation instead.",
-                     ios(12, API_TO_BE_DEPRECATED))
+                     ios(12, 12))
 
 /**
  Provides extension to UIColor for Material Elevation usage.

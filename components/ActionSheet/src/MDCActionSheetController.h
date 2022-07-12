@@ -21,14 +21,14 @@
 #import "MaterialBottomSheet.h"
 #import "MaterialElevation.h"
 
-API_DEPRECATED_BEGIN(
-    "Use a UIMenu instead. Use UIAlertController in action sheet style for destructive "
-    "confirmations. See go/material-ios-menus for guidance.",
-    ios(12, API_TO_BE_DEPRECATED))
-
 @class MDCActionSheetAction;
 @class MDCActionSheetController;
 @protocol MDCActionSheetControllerDelegate;
+
+API_DEPRECATED_BEGIN(
+    "Use a UIMenu instead. Use UIAlertController in action sheet style for destructive "
+    "confirmations. See go/material-ios-menus for guidance.",
+    ios(12, 12))
 
 /**
  MDCActionSheetController displays an alert message to the user, similar to

@@ -17,7 +17,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-API_DEPRECATED_BEGIN("Use UIViewAnimationCurve instead.", ios(12, API_TO_BE_DEPRECATED))
+API_DEPRECATED_BEGIN("Use UIViewAnimationCurve instead.", ios(12, 12))
 
 /**
  Material Design easing curve animation values.

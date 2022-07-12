@@ -17,7 +17,7 @@
 #import "MDCFontTextStyle.h"
 
 API_DEPRECATED_BEGIN("Use typography tokens instead. See go/material-ios-tokens for more details.",
-                     ios(11, API_TO_BE_DEPRECATED))
+                     ios(11, 12))
 
 /**
  A representation of a mapping of UIContentSizeCategory keys to font size values.

@@ -41,7 +41,7 @@
  fitted height for topBar. The width will be whatever width was provided.
  */
 API_DEPRECATED_BEGIN("Use native UIKit UINavigation instead. See go/material-ios-app-bars.",
-                     ios(12, API_TO_BE_DEPRECATED))
+                     ios(12, 12))
 IB_DESIGNABLE
 @interface MDCHeaderStackView : UIView
 

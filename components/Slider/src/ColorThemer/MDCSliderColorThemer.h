@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialColorScheme.h"
 #import "MaterialSlider.h"
+#import "MaterialColorScheme.h"
 
 #import <Foundation/Foundation.h>
 
-API_DEPRECATED_BEGIN("Use a branded UISlider instead.", ios(12, API_TO_BE_DEPRECATED))
+API_DEPRECATED_BEGIN("Use a branded UISlider instead.", ios(12, 12))
 
 /**
  The Material Design color system's themer for instances of MDCSlider.

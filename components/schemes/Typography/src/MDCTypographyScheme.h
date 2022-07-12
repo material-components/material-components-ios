@@ -17,7 +17,7 @@
 #import "MaterialTypographyScheme+Scheming.h"
 
 API_DEPRECATED_BEGIN("Follow go/material-ios-tokens#typescale-tokens to use font tokens instead.",
-                     ios(12, API_TO_BE_DEPRECATED))
+                     ios(12, 12))
 
 /**
  An enum of default typography schemes that are supported.

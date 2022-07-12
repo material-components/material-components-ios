@@ -19,7 +19,7 @@
 
 API_DEPRECATED_BEGIN("Use a branded UITextField (go/material-ios-text-fields) or branded "
                      "UITextView (go/material-ios-text-views) instead",
-                     ios(12, API_TO_BE_DEPRECATED))
+                     ios(12, 12))
 
 /**
  This object represents a group of colors that are applied on a state by state basis to

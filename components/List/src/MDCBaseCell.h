@@ -19,7 +19,7 @@
 
 API_DEPRECATED_BEGIN("Use a branded UICollectionViewCell (go/material-ios-lists) or branded "
                      "UITableViewCell (go/material-ios-lists) instead",
-                     ios(12, API_TO_BE_DEPRECATED))
+                     ios(12, 12))
 
 @interface MDCBaseCell : UICollectionViewCell <MDCElevatable, MDCElevationOverriding>
 

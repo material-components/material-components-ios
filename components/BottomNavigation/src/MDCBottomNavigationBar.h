@@ -252,7 +252,7 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
  you want a clear ripple, you must set @c rippleColor to UIColor.clearColor.
 */
 @property(nonatomic, strong, nullable) UIColor *rippleColor API_DEPRECATED(
-    "Follow go/material-ios-touch-response for guidance instead.", ios(12, API_TO_BE_DEPRECATED));
+    "Follow go/material-ios-touch-response for guidance instead.", ios(12, 12));
 
 #pragma mark - Configuring the default visual appearance for all badges
 
@@ -280,7 +280,7 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
  */
 @property(nonatomic, copy, nullable)
     UIColor *itemBadgeBackgroundColor API_DEPRECATED_WITH_REPLACEMENT(
-        "itemBadgeAppearance.backgroundColor", ios(12, API_TO_BE_DEPRECATED));
+        "itemBadgeAppearance.backgroundColor", ios(12, 12));
 
 /**
  Text color for badges.
@@ -290,7 +290,7 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
  Default is white.
  */
 @property(nonatomic, copy, nullable) UIColor *itemBadgeTextColor API_DEPRECATED_WITH_REPLACEMENT(
-    "itemBadgeAppearance.textColor", ios(12, API_TO_BE_DEPRECATED));
+    "itemBadgeAppearance.textColor", ios(12, 12));
 
 /**
  Text font for badges.
@@ -300,7 +300,7 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
  Default is a small system font.
  */
 @property(nonatomic, copy, nullable) UIFont *itemBadgeTextFont API_DEPRECATED_WITH_REPLACEMENT(
-    "itemBadgeAppearance.font", ios(12, API_TO_BE_DEPRECATED));
+    "itemBadgeAppearance.font", ios(12, 12));
 
 @end
 

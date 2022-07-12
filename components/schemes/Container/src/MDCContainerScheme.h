@@ -14,13 +14,13 @@
 
 #import <Foundation/Foundation.h>
 
-#import <MaterialComponents/MaterialColorScheme.h>
-#import <MaterialComponents/MaterialShapeScheme.h>
-#import <MaterialComponents/MaterialTypographyScheme.h>
+#import "MaterialColorScheme.h"  // SchemeImport
+#import "MaterialShapeScheme.h"  // SchemeImport
+#import "MaterialTypographyScheme.h"  // SchemeImport
 
 API_DEPRECATED_BEGIN(
     "Use Branding APIs (go/material-ios-branding) or tokens (go/material-ios-tokens) instead.",
-    ios(12, API_TO_BE_DEPRECATED))
+    ios(12, 12))
 
 /**
  A container scheme that exposes properties for all supported Material Theming subsystem schemes.
@@ -48,8 +48,8 @@ API_DEPRECATED_BEGIN(
  MDCContainerScheme is a class conforming to MDCContainerScheming that contains
  schemes values for theming systems.
  */
-__attribute__((objc_subclassing_restricted)) @interface MDCContainerScheme
-    : NSObject<MDCContainerScheming>
+__attribute__((objc_subclassing_restricted))
+@interface MDCContainerScheme : NSObject<MDCContainerScheming>
 
 /**
  Defaults to @c MDCColorSchemeDefaultsMaterial201804

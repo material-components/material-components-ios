@@ -15,8 +15,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIKit.h>
 
-API_DEPRECATED_BEGIN("Use layer.cornerRadius to achieve rounded corners.",
-                     ios(12, API_TO_BE_DEPRECATED))
+API_DEPRECATED_BEGIN("Use layer.cornerRadius to achieve rounded corners.", ios(12, 12))
 
 @protocol MDCShapeGenerating;
 

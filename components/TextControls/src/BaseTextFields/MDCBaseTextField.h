@@ -16,8 +16,7 @@
 
 #import "MaterialTextControls+Enums.h"
 
-API_DEPRECATED_BEGIN("Use a branded UITextField (go/material-ios-text-fields) instead",
-                     ios(12, API_TO_BE_DEPRECATED))
+API_DEPRECATED_BEGIN("Use a branded UITextField (go/material-ios-text-fields) instead", ios(12, 12))
 
 @protocol MDCBaseTextFieldDelegate;
 
@@ -103,8 +102,7 @@ API_DEPRECATED_BEGIN("Use a branded UITextField (go/material-ios-text-fields) in
  @param state The MDCTextControlState.
  */
 - (void)setNormalLabelColor:(nonnull UIColor *)normalLabelColor
-                   forState:(MDCTextControlState)state
-    NS_SWIFT_NAME(setNormalLabelColor(_:for:));
+                   forState:(MDCTextControlState)state NS_SWIFT_NAME(setNormalLabelColor(_:for:));
 
 /**
  Returns the normal label color for a given state.

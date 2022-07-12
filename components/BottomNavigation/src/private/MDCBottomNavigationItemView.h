@@ -25,8 +25,7 @@ __attribute__((objc_subclassing_restricted))
 @property(nonatomic, assign) MDCBottomNavigationBarTitleVisibility titleVisibility;
 @property(nonatomic, strong, nonnull)
     MDCRippleTouchController *rippleTouchController API_DEPRECATED(
-        "Follow go/material-ios-touch-response for guidance instead.", ios(12, API_TO_BE_DEPRECATED)
-    );
+        "Follow go/material-ios-touch-response for guidance instead.", ios(12, 12));
 @property(nonatomic, assign) UIOffset titlePositionAdjustment;
 
 @property(nonatomic, copy, nullable) NSString *title;
@@ -91,7 +90,7 @@ __attribute__((objc_subclassing_restricted))
 
 /** The color of the ripple effect shown when the user taps on an item. */
 @property(nonatomic, strong, nullable) UIColor *rippleColor API_DEPRECATED(
-    "Follow go/material-ios-touch-response for guidance instead.", ios(12, API_TO_BE_DEPRECATED));
+    "Follow go/material-ios-touch-response for guidance instead.", ios(12, 12));
 
 #pragma mark - Displaying a value in the badge
 
@@ -102,8 +101,7 @@ __attribute__((objc_subclassing_restricted))
  property to nil or an empty string.
  */
 @property(nonatomic, copy, nullable, direct) NSString *badgeText API_DEPRECATED(
-    "See go/material-ios-badges for badge appearance guidance instead.",
-    ios(12, API_TO_BE_DEPRECATED));
+    "See go/material-ios-badges for badge appearance guidance instead.", ios(12, 12));
 #pragma mark - Configuring a badge's visual appearance
 
 /**
@@ -121,7 +119,7 @@ __attribute__((objc_subclassing_restricted))
  badgeAppearance.backgroundColor will be used instead.
  */
 @property(nonatomic, strong, nullable, direct) UIColor *badgeColor API_DEPRECATED_WITH_REPLACEMENT(
-    "badgeAppearance.backgroundColor", ios(12, API_TO_BE_DEPRECATED));
+    "badgeAppearance.backgroundColor", ios(12, 12));
 ;
 
 /**
@@ -131,7 +129,7 @@ __attribute__((objc_subclassing_restricted))
  */
 @property(nonatomic, copy, null_resettable, direct)
     UIColor *badgeTextColor API_DEPRECATED_WITH_REPLACEMENT("badgeAppearance.textColor",
-                                                            ios(12, API_TO_BE_DEPRECATED));
+                                                            ios(12, 12));
 
 /**
  The font that will be used to display the value of this item's badge.
@@ -139,8 +137,7 @@ __attribute__((objc_subclassing_restricted))
  This property is a proxy for badgeAppearance.font.
  */
 @property(nonatomic, copy, null_resettable, direct)
-    UIFont *badgeFont API_DEPRECATED_WITH_REPLACEMENT("badgeAppearance.font",
-                                                      ios(12, API_TO_BE_DEPRECATED));
+    UIFont *badgeFont API_DEPRECATED_WITH_REPLACEMENT("badgeAppearance.font", ios(12, 12));
 
 #pragma mark - UILargeContentViewerItem
 

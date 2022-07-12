@@ -16,8 +16,7 @@
 
 #import "MaterialShapes.h"
 
-API_DEPRECATED_BEGIN("Use explicit mask layers and shape paths instead.",
-                     ios(12, API_TO_BE_DEPRECATED))
+API_DEPRECATED_BEGIN("Use explicit mask layers and shape paths instead.", ios(12, 12))
 
 /**
  A slanted rectangle shape generator.

@@ -18,7 +18,7 @@
 
 API_DEPRECATED_BEGIN(
     "Use Branding APIs (go/material-ios-branding) or tokens (go/material-ios-tokens) instead.",
-    ios(12, API_TO_BE_DEPRECATED))
+    ios(12, 12))
 
 /**
  A color scheme comprised of set of primary and secondary colors. Material design guidelines

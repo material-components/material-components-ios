@@ -23,8 +23,7 @@
  + [UIFont mdc_preferredFontForMaterialTextStyle:]
  + [UIFontDescriptor mdc_preferredFontDescriptorForMaterialTextStyle:]
  */
-API_DEPRECATED("Follow go/material-ios-dynamic-type#custom-fonts instead.",
-               ios(11, API_TO_BE_DEPRECATED))
+API_DEPRECATED("Follow go/material-ios-dynamic-type#custom-fonts instead.", ios(11, 12))
 typedef NS_ENUM(NSInteger, MDCFontTextStyle) {
   MDCFontTextStyleBody1,
   MDCFontTextStyleBody2,

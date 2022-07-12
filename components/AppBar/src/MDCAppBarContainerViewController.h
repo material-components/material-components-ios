@@ -16,12 +16,12 @@
 
 #import <UIKit/UIKit.h>
 
-API_DEPRECATED_BEGIN(
-    "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
-    ios(11, API_TO_BE_DEPRECATED))
-
 @class MDCAppBar;
 @class MDCAppBarViewController;
+
+API_DEPRECATED_BEGIN(
+    "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
+    ios(11, 12))
 
 /**
  The MDCAppBarContainerViewController controller provides an interface for placing a
@@ -47,7 +47,7 @@ API_DEPRECATED_BEGIN(
  */
 API_DEPRECATED(
     "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
-    ios(11, API_TO_BE_DEPRECATED))
+    ios(11, 12))
 @interface MDCAppBarContainerViewController : UIViewController
 
 /**

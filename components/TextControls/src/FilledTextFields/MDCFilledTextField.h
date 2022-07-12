@@ -16,13 +16,13 @@
 
 #import "MaterialTextControls+BaseTextFields.h"
 
-API_DEPRECATED_BEGIN("Use a branded UITextField (go/material-ios-text-fields) instead",
-                     ios(12, API_TO_BE_DEPRECATED))
+API_DEPRECATED_BEGIN("Use a branded UITextField (go/material-ios-text-fields) instead", ios(12, 12))
 
 /**
  An implementation of a Material filled text field.
  */
-__attribute__((objc_subclassing_restricted)) @interface MDCFilledTextField : MDCBaseTextField
+__attribute__((objc_subclassing_restricted))
+@interface MDCFilledTextField : MDCBaseTextField
 
 /**
  MDCFilledTextField does not support UITextBorderStyle borders.

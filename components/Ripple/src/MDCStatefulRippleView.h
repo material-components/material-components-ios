@@ -16,7 +16,7 @@
 
 API_DEPRECATED_BEGIN("Follow go/material-ios-touch-response, touch response should use system "
                      "highlighting behavior.",
-                     ios(12, API_TO_BE_DEPRECATED))
+                     ios(12, 12))
 
 /**
  Provides the current state of the ripple. The ripple is either in its normal state, or in the

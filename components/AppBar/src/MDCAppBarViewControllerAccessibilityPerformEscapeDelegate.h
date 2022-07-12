@@ -16,11 +16,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class MDCAppBarViewController;
+
 API_DEPRECATED_BEGIN(
     "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
-    ios(11, API_TO_BE_DEPRECATED))
-
-@class MDCAppBarViewController;
+    ios(11, 12))
 
 /**
  A delegate that can be implemented in order to respond to events specific to
@@ -28,7 +28,7 @@ API_DEPRECATED_BEGIN(
  */
 API_DEPRECATED(
     "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
-    ios(11, API_TO_BE_DEPRECATED))
+    ios(11, 12))
 API_UNAVAILABLE(tvos, watchos)
 @protocol MDCAppBarViewControllerAccessibilityPerformEscapeDelegate <NSObject>
 @required

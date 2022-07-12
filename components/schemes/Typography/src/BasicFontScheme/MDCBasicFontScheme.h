@@ -14,8 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-API_DEPRECATED_BEGIN("Follow go/material-ios-typography for typography guidance.",
-                     ios(12, API_TO_BE_DEPRECATED))
+API_DEPRECATED_BEGIN("Follow go/material-ios-typography for typography guidance.", ios(12, 12))
 
 #pragma mark - To be deprecated
 

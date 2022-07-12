@@ -129,8 +129,7 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 @property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView API_DEPRECATED(
-    "Ripple/Ink will be replaced with more immediate highlighting effects.",
-    ios(12, API_TO_BE_DEPRECATED));
+    "Ripple/Ink will be replaced with more immediate highlighting effects.", ios(12, 12));
 #pragma clang diagnostic pop
 
 /**
@@ -138,8 +137,7 @@
  view, and can be used by setting `enableRippleBehavior` to YES after initializing the card.
  */
 @property(nonatomic, readonly, strong, nonnull) MDCStatefulRippleView *rippleView API_DEPRECATED(
-    "Ripple/Ink will be replaced with more immediate highlighting effects.",
-    ios(12, API_TO_BE_DEPRECATED));
+    "Ripple/Ink will be replaced with more immediate highlighting effects.", ios(12, 12));
 
 /**
  By setting this property to YES, you will enable and use inkView's successor rippleView as the
@@ -149,17 +147,15 @@
  Defaults to NO.
  */
 @property(nonatomic, assign) BOOL enableRippleBehavior API_DEPRECATED(
-    "Ripple/Ink will be replaced with more immediate highlighting effects.",
-    ios(12, API_TO_BE_DEPRECATED));
+    "Ripple/Ink will be replaced with more immediate highlighting effects.", ios(12, 12));
 
 /**
  A block that is invoked when the @c MDCCard receives a call to @c
  traitCollectionDidChange:. The block is called after the call to the superclass.
  */
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
-    (MDCCard *_Nonnull card, UITraitCollection *_Nullable previousTraitCollection)
-        API_DEPRECATED("Ripple/Ink will be replaced with more immediate highlighting effects.",
-                       ios(12, API_TO_BE_DEPRECATED));
+    (MDCCard *_Nonnull card, UITraitCollection *_Nullable previousTraitCollection) API_DEPRECATED(
+        "Ripple/Ink will be replaced with more immediate highlighting effects.", ios(12, 12));
 
 /*
  The shape generator used to define the card's shape.
@@ -173,6 +169,6 @@
  Default value for shapeGenerator is nil.
  */
 @property(nullable, nonatomic, strong) id<MDCShapeGenerating> shapeGenerator API_DEPRECATED(
-    "Shape generators are no longer supported.", ios(12, API_TO_BE_DEPRECATED));
+    "Shape generators are no longer supported.", ios(12, 12));
 
 @end

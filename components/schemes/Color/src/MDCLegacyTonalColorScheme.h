@@ -22,7 +22,7 @@
 
 API_DEPRECATED_BEGIN(
     "Use Branding APIs (go/material-ios-branding) or tokens (go/material-ios-tokens) instead.",
-    ios(12, API_TO_BE_DEPRECATED))
+    ios(12, 12))
 
 /**
  A tonal color scheme is a color scheme based on a primary tonal color palette and secondary tonal

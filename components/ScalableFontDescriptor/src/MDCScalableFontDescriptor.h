@@ -59,8 +59,9 @@
 
  @seealso https://developer.apple.com/documentation/uikit/uifont/scaling_fonts_automatically
  */
-API_DEPRECATED_BEGIN("Use go/material-ios-typography instead.", ios(12, API_TO_BE_DEPRECATED))
-__attribute__((objc_subclassing_restricted)) @interface MDCScalableFontDescriptor : NSObject
+API_DEPRECATED_BEGIN("Use go/material-ios-typography instead.", ios(12, 12))
+__attribute__((objc_subclassing_restricted))
+@interface MDCScalableFontDescriptor : NSObject
 
 /**
  A description of the font that will be loaded by baseFont and

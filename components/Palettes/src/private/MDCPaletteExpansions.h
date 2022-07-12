@@ -14,8 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-API_DEPRECATED_BEGIN("Use tokens instead. See go/material-ios-tokens.",
-                     ios(12, API_TO_BE_DEPRECATED))
+API_DEPRECATED_BEGIN("Use tokens instead. See go/material-ios-tokens.", ios(12, 12))
 
 UIColor* _Nonnull MDCPaletteTintFromTargetColor(UIColor* _Nonnull targetColor,
                                                 NSString* _Nonnull tintName);

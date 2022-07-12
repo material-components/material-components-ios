@@ -27,7 +27,7 @@
 - (void)applyPrimaryThemeWithScheme:(id<MDCContainerScheming>)containerScheme
     API_DEPRECATED(
         "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
-        ios(11, API_TO_BE_DEPRECATED));
+        ios(11, 12));
 
 /**
  Applies the Material Theming "Surface" Top App Bar variant where the AppBar's surface is colored
@@ -36,6 +36,6 @@
 - (void)applySurfaceThemeWithScheme:(id<MDCContainerScheming>)containerScheme
     API_DEPRECATED(
         "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
-        ios(11, API_TO_BE_DEPRECATED));
+        ios(11, 12));
 
 @end

@@ -16,7 +16,7 @@
 
 API_DEPRECATED_BEGIN("Follow go/material-ios-touch-response, touch response should use system "
                      "highlighting behavior.",
-                     ios(12, API_TO_BE_DEPRECATED))
+                     ios(12, 12))
 
 // TODO(b/151929968): Delete import of delegate headers when client code has been migrated to no
 // longer import delegates as transitive dependencies.

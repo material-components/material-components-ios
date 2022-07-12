@@ -16,7 +16,7 @@
 
 API_DEPRECATED_BEGIN(
     "Use branded UICollectionView APIs instead. See go/material-ios-lists for guidance.",
-    ios(11, API_TO_BE_DEPRECATED))
+    ios(11, 12))
 
 /**
  The MDCCollectionViewStyler class provides a default implementation for a UICollectionView to set

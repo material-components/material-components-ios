@@ -18,12 +18,12 @@
 #import "MaterialHeaderStackView.h"
 #import "MaterialNavigationBar.h"
 
-API_DEPRECATED_BEGIN(
-    "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
-    ios(11, API_TO_BE_DEPRECATED))
-
 @class MDCAppBarViewController;
 @protocol MDCAppBarViewControllerAccessibilityPerformEscapeDelegate;
+
+API_DEPRECATED_BEGIN(
+    "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
+    ios(11, 12))
 
 /**
  MDCAppBarViewController is a flexible header view controller that manages a navigation bar and
@@ -31,7 +31,7 @@ API_DEPRECATED_BEGIN(
  */
 API_DEPRECATED(
     "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
-    ios(11, API_TO_BE_DEPRECATED))
+    ios(11, 12))
 API_UNAVAILABLE(tvos, watchos)
 @interface MDCAppBarViewController : MDCFlexibleHeaderViewController
 
@@ -95,7 +95,7 @@ API_UNAVAILABLE(tvos, watchos)
  */
 API_DEPRECATED(
     "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
-    ios(11, API_TO_BE_DEPRECATED))
+    ios(11, 12))
 API_UNAVAILABLE(tvos, watchos)
 @interface MDCAppBar : NSObject
 

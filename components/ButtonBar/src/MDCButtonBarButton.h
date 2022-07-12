@@ -16,7 +16,7 @@
 
 API_DEPRECATED_BEGIN("Use branded UINavigationController instead. "
                      "See go/material-ios-app-bars for more details.",
-                     ios(12, API_TO_BE_DEPRECATED))
+                     ios(12, 12))
 
 /**
  The MDCButtonBarButton class is used by MDCButtonBar.

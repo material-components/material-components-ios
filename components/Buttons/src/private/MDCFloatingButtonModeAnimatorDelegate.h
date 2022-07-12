@@ -19,7 +19,7 @@
 
 API_DEPRECATED_BEGIN("Use branded UIButton (iOS 13/14) / UIButtonConfiguration (iOS 15+) instead. "
                      "See go/material-ios-buttons for more details.",
-                     ios(12, API_TO_BE_DEPRECATED))
+                     ios(12, 12))
 
 @class MDCFloatingButtonModeAnimator;
 

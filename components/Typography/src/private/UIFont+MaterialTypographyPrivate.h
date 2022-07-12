@@ -15,7 +15,7 @@
 #import <UIKit/UIKit.h>
 
 API_DEPRECATED_BEGIN("Use typography tokens instead. See go/material-ios-tokens for more details.",
-                     ios(12, API_TO_BE_DEPRECATED))
+                     ios(12, 12))
 
 @interface UIFont (MaterialTypographyPrivate)
 

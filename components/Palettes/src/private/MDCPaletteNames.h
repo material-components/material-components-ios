@@ -37,8 +37,7 @@
 
 #import <Foundation/Foundation.h>
 
-API_DEPRECATED_BEGIN("Use tokens instead. See go/material-ios-tokens.",
-                     ios(12, API_TO_BE_DEPRECATED))
+API_DEPRECATED_BEGIN("Use tokens instead. See go/material-ios-tokens.", ios(12, 12))
 
 #define MDC_PALETTE_TINT_50_INTERNAL_NAME @"50"
 #define MDC_PALETTE_TINT_100_INTERNAL_NAME @"100"

@@ -16,19 +16,19 @@
 
 #import <UIKit/UIKit.h>
 
-API_DEPRECATED_BEGIN(
-    "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
-    ios(11, API_TO_BE_DEPRECATED))
-
 @class MDCAppBar;
 @class MDCAppBarNavigationController;
+
+API_DEPRECATED_BEGIN(
+    "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
+    ios(11, 12))
 
 /**
  Defines delegate methods that will be deprecated.
  */
 API_DEPRECATED(
     "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
-    ios(11, API_TO_BE_DEPRECATED))
+    ios(11, 12))
 @protocol MDCAppBarNavigationControllerToBeDeprecatedDelegate <NSObject>
 @optional
 

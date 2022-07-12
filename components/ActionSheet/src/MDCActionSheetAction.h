@@ -24,7 +24,7 @@
  */
 API_DEPRECATED("Use a UIMenu instead. Use UIAlertController in action sheet style for destructive "
                "confirmations. See go/material-ios-menus for guidance.",
-               ios(12, API_TO_BE_DEPRECATED))
+               ios(12, 12))
 typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
 
 /**
@@ -33,7 +33,7 @@ typedef void (^MDCActionSheetHandler)(MDCActionSheetAction *_Nonnull action);
  */
 API_DEPRECATED("Use a UIMenu instead. Use UIAlertController in action sheet style for destructive "
                "confirmations. See go/material-ios-menus for guidance.",
-               ios(12, API_TO_BE_DEPRECATED))
+               ios(12, 12))
 @interface MDCActionSheetAction : NSObject <NSCopying, UIAccessibilityIdentification>
 
 /**
