@@ -21,7 +21,11 @@
 
 @protocol MDCShapeGenerating;
 
+// TODO(b/238930139): Remove usage of this deprecated API.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 @interface MDCCard : UIControl <MDCElevatable, MDCElevationOverriding>
+#pragma clang diagnostic pop
 
 /**
  The corner radius for the card

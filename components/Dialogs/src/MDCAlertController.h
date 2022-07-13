@@ -26,6 +26,9 @@
 @class MDCAlertController;
 @protocol MDCAlertControllerDelegate;
 
+// TODO(b/238930139): Remove usage of this deprecated API.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 /**
  MDCAlertController displays an alert message to the user, similar to UIAlertController.
 
@@ -36,6 +39,7 @@
  */
 @interface MDCAlertController
     : UIViewController <MDCElevatable, MDCElevationOverriding, UIContentSizeCategoryAdjusting>
+#pragma clang diagnostic pop
 
 /**
  Convenience constructor to create and return a view controller for displaying an alert to the user.

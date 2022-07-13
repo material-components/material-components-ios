@@ -30,6 +30,9 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
   MDCBannerViewLayoutStyleMultiRowAlignedButton,  // Multiple rows with aligned buttons horizontally
 };
 
+// TODO(b/238930139): Remove usage of this deprecated API.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 /**
  The MDCBannerView class creates and configures a view to represent a Material Banner.
 
@@ -38,6 +41,7 @@ typedef NS_ENUM(NSInteger, MDCBannerViewLayoutStyle) {
  */
 __attribute__((objc_subclassing_restricted)) @interface MDCBannerView
     : UIView<MDCElevatable, MDCElevationOverriding>
+#pragma clang diagnostic pop
 
 /**
  The layout style of a @c MDCBannerView.
@@ -58,13 +62,20 @@ __attribute__((objc_subclassing_restricted)) @interface MDCBannerView
  */
 @property(nonatomic, readonly, strong, nonnull) UIImageView *imageView;
 
+// TODO(b/238930139): Remove usage of this deprecated API.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 /**
  A leading button that displays on a @c MDCBannerView.
  This @c leadingButton is displayed on the leading edge of the view. If it does not fit on the same
  row as @c trailingButton, it will be placed above @c trailingButton.
  */
 @property(nonatomic, readonly, strong, nonnull) MDCButton *leadingButton;
+#pragma clang diagnostic pop
 
+// TODO(b/238930139): Remove usage of this deprecated API.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 /**
  A trailing button that displays on a @c MDCBannerView.
  This @c trailingButton is displayed on the trailing edge of the view. If it does not fit on the
@@ -73,6 +84,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCBannerView
  Set @c hidden to @c YES on @c trailingButton if only one button is desired on @c MDCBannerView.
  */
 @property(nonatomic, readonly, strong, nonnull) MDCButton *trailingButton;
+#pragma clang diagnostic pop
 
 /**
  A Boolean value that controls whether the divider of the banner is visible.

@@ -53,6 +53,9 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
 @protocol MDCFlexibleHeaderViewAnimationDelegate;
 @protocol MDCFlexibleHeaderViewDelegate;
 
+// TODO(b/238930139): Remove usage of this deprecated API.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 /**
  MDCFlexibleHeaderView tracks the content offset of a scroll view and adjusts its size and
  position according to a configurable set of behaviors.
@@ -64,6 +67,7 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderScrollPhase) {
  */
 IB_DESIGNABLE
 @interface MDCFlexibleHeaderView : UIView <MDCElevatable, MDCElevationOverriding>
+#pragma clang diagnostic pop
 
 #pragma mark Custom shadow
 

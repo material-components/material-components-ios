@@ -67,8 +67,12 @@
 /** Enables ordering actions by emphasis when they are vertically aligned. */
 @property(nonatomic, assign) BOOL orderVerticalActionsByEmphasis;
 
+// TODO(b/238930139): Remove usage of this deprecated API.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 - (void)addActionButton:(nonnull MDCButton *)button;
 + (void)styleAsTextButton:(nonnull MDCButton *)button;
+#pragma clang diagnostic pop
 
 - (CGSize)calculatePreferredContentSizeForBounds:(CGSize)boundsSize;
 

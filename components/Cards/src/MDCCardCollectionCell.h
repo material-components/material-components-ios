@@ -75,7 +75,11 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
   MDCCardCellVerticalImageAlignmentBottom,
 };
 
+// TODO(b/238930139): Remove usage of this deprecated API.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 @interface MDCCardCollectionCell : UICollectionViewCell <MDCElevatable, MDCElevationOverriding>
+#pragma clang diagnostic pop
 
 /**
  When selectable is set to YES, a tap on a cell will trigger a visual change between selected

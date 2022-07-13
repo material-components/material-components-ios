@@ -16,6 +16,9 @@
 
 @interface MDCAlertController (ButtonForAction)
 
+// TODO(b/238930139): Remove usage of this deprecated API.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 /**
  Returns an MDCButton associated with the given action. This method might create the button if
  no associated button exists for the action. Buttons returned by this method may not (yet)
@@ -29,5 +32,6 @@
  must first be added to the alert).
  */
 - (nullable MDCButton *)buttonForAction:(nonnull MDCAlertAction *)action;
+#pragma clang diagnostic pop
 
 @end

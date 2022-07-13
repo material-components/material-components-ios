@@ -23,6 +23,9 @@
  */
 @property(nonatomic, nonnull, strong, readonly) NSArray<MDCAlertAction *> *actions;
 
+// TODO(b/238930139): Remove usage of this deprecated API.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 /**
  Returns the list of buttons for the provided actions. Only returns buttons which have already
  been created. Unlike buttonForAction, it does not create buttons, and as a results, may
@@ -32,6 +35,7 @@
  Note: It is the caller's responsibility to make sure buttons is added to the view hierarchy.
  */
 @property(nonatomic, nonnull, strong, readonly) NSArray<MDCButton *> *buttonsInActionOrder;
+#pragma clang diagnostic pop
 
 /**
  Adding an action with no associated button (will be created later)
@@ -50,10 +54,14 @@
  */
 - (nullable MDCButton *)buttonForAction:(nonnull MDCAlertAction *)action;
 
+// TODO(b/238930139): Remove usage of this deprecated API.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 /**
  Returns the action for the given button.
  */
 - (nullable MDCAlertAction *)actionForButton:(nonnull MDCButton *)button;
+#pragma clang diagnostic pop
 
 /**
  Creates a button for the given action if the action is not yet associated with a button.
