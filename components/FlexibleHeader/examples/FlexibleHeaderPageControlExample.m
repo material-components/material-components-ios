@@ -14,9 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialButtons.h"
-#import "MaterialFlexibleHeader.h"
-#import "MaterialPageControl.h"
+#import "MDCFlexibleHeaderView.h"
+#import "MDCFlexibleHeaderViewController.h"
 
 static const CGFloat kFlexibleHeaderMinHeight = 200;
 
@@ -24,7 +23,7 @@ static const CGFloat kFlexibleHeaderMinHeight = 200;
 
 @property(nonatomic, strong) UIScrollView *scrollView;
 @property(nonatomic, strong) MDCFlexibleHeaderViewController *fhvc;
-@property(nonatomic, strong) MDCPageControl *pageControl;
+@property(nonatomic, strong) UIPageControl *pageControl;
 @property(nonatomic, copy) NSArray *pages;
 @property(nonatomic, strong) UIScrollView *pageScrollView;
 
@@ -123,7 +122,7 @@ static const CGFloat kFlexibleHeaderMinHeight = 200;
   self.pages = [pages copy];
 
   // Page control configuration.
-  self.pageControl = [[MDCPageControl alloc] init];
+  self.pageControl = [[UIPageControl alloc] init];
   self.pageControl.numberOfPages = pageColors.count;
 
   // We want the page control to span the bottom of the screen.
@@ -156,26 +155,12 @@ static const CGFloat kFlexibleHeaderMinHeight = 200;
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
   if (scrollView == self.scrollView) {
     [self.fhvc scrollViewDidScroll:scrollView];
-  } else if (scrollView == self.pageScrollView) {
-    [_pageControl scrollViewDidScroll:scrollView];
-  }
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-  if (scrollView == self.pageScrollView) {
-    [_pageControl scrollViewDidEndDecelerating:scrollView];
-  }
-}
-
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-  if (scrollView == self.pageScrollView) {
-    [_pageControl scrollViewDidEndScrollingAnimation:scrollView];
   }
 }
 
 #pragma mark - User events
 
-- (void)didChangePage:(MDCPageControl *)sender {
+- (void)didChangePage:(UIPageControl *)sender {
   CGPoint offset = self.pageScrollView.contentOffset;
   offset.x = sender.currentPage * self.pageScrollView.bounds.size.width;
   [self.pageScrollView setContentOffset:offset animated:YES];
