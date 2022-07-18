@@ -26,6 +26,9 @@
 @protocol MDCSnackbarManagerDelegate;
 @protocol MDCSnackbarSuspensionToken;
 
+// TODO(b/238930139): Remove usage of this deprecated API.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 /**
  Provides a means of displaying an unobtrusive message to the user.
 
@@ -38,6 +41,7 @@
  UIWindow is used an attempt is made to find the top-most view controller in the view hierarchy.
  */
 @interface MDCSnackbarManager : NSObject <MDCElevationOverriding>
+#pragma clang diagnostic pop
 
 /**
  The default shared instance of MDCSnackbarManager.

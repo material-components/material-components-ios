@@ -18,10 +18,14 @@
 #import "MaterialElevation.h"
 #import "MaterialShadowElevations.h"
 
+// TODO(b/238930139): Remove usage of this deprecated API.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 /**
  Class which provides the default implementation of a Snackbar.
  */
 @interface MDCSnackbarMessageView : UIView <MDCElevatable, MDCElevationOverriding>
+#pragma clang diagnostic pop
 
 /**
  The color for the background of the Snackbar message view.
@@ -56,17 +60,25 @@
  */
 @property(nonatomic, strong, nullable) UIFont *buttonFont UI_APPEARANCE_SELECTOR;
 
+// TODO(b/238930139): Remove usage of this deprecated API.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 /**
  The action button for the snackbar, if `message.action` is set.
  */
 @property(nonatomic, strong, nullable) MDCButton *actionButton;
+#pragma clang diagnostic pop
 
+// TODO(b/238930139): Remove usage of this deprecated API.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 /**
  Deprecated. Please use `actionButton` instead. Returns an array with `actionButton` if
  `actionButton` is not nil, otherewise returns an empty array.
  */
 @property(nonatomic, strong, nullable, readonly)
     NSArray<MDCButton *> *actionButtons __deprecated_msg("Please use `actionButton` instead`.");
+#pragma clang diagnostic pop
 
 /**
  The elevation of the snackbar view.
