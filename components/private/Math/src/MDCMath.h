@@ -17,14 +17,6 @@
 #import <UIKit/UIKit.h>
 #import <math.h>
 
-static inline CGFloat MDCDegreesToRadians(CGFloat degrees) {
-#if CGFLOAT_IS_DOUBLE
-  return degrees * (CGFloat)M_PI / 180.0;
-#else
-  return degrees * (CGFloat)M_PI / 180;
-#endif
-}
-
 static inline BOOL MDCCGFloatEqual(CGFloat a, CGFloat b) {
   const CGFloat constantK = 3;
 #if CGFLOAT_IS_DOUBLE
