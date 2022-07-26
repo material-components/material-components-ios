@@ -294,12 +294,17 @@
     (MDCSnackbarMessageView *_Nonnull messageView,
      UITraitCollection *_Nullable previousTraitCollection);
 
+// TODO(b/238930139): Remove usage of this deprecated API.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 /**
  A block that is invoked when the manager's current snackbar's MDCSnackbarMessageView elevation
  changes, and its mdc_elevationDidChangeBlock is called.
  */
 @property(nonatomic, copy, nullable) void (^mdc_elevationDidChangeBlockForMessageView)
     (id<MDCElevatable> _Nonnull object, CGFloat absoluteElevation);
+#pragma clang diagnostic pop
+
 @end
 
 
