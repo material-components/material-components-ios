@@ -15,6 +15,7 @@
 import XCTest
 import MaterialComponents.MaterialChips
 import MaterialComponents.MaterialChips_Theming 
+import MaterialComponents.MaterialColor
 import MaterialComponents.MaterialShapeLibrary
 import MaterialComponents.MaterialColorScheme
 import MaterialComponents.MaterialContainerScheme
@@ -38,19 +39,19 @@ class ChipsMaterialThemingTests: XCTestCase {
     let onSurface87OpacityColor = colorScheme.onSurfaceColor.withAlphaComponent(0.87)
     let onSurface16OpacityColor = colorScheme.onSurfaceColor.withAlphaComponent(0.16)
     let backgroundColor =
-      MDCSemanticColorScheme.blendColor(
+      UIColor.mdc_blendColor(
         onSurface12OpacityColor,
         withBackgroundColor: colorScheme.surfaceColor)
     let selectedBackgroundColor =
-      MDCSemanticColorScheme.blendColor(
+      UIColor.mdc_blendColor(
         onSurface12OpacityColor,
         withBackgroundColor: backgroundColor)
     let textColor =
-      MDCSemanticColorScheme.blendColor(
+      UIColor.mdc_blendColor(
         onSurface87OpacityColor,
         withBackgroundColor: backgroundColor)
     let selectedTextColor =
-      MDCSemanticColorScheme.blendColor(
+      UIColor.mdc_blendColor(
         onSurface87OpacityColor,
         withBackgroundColor: selectedBackgroundColor)
 
@@ -107,19 +108,19 @@ class ChipsMaterialThemingTests: XCTestCase {
     let onSurface87OpacityColor = colorScheme.onSurfaceColor.withAlphaComponent(0.87)
     let onSurface16OpacityColor = colorScheme.onSurfaceColor.withAlphaComponent(0.16)
     let borderColor =
-      MDCSemanticColorScheme.blendColor(
+      UIColor.mdc_blendColor(
         onSurface12OpacityColor,
         withBackgroundColor: colorScheme.surfaceColor)
     let selectedBackgroundColor =
-      MDCSemanticColorScheme.blendColor(
+      UIColor.mdc_blendColor(
         onSurface12OpacityColor,
         withBackgroundColor: colorScheme.surfaceColor)
     let textColor =
-      MDCSemanticColorScheme.blendColor(
+      UIColor.mdc_blendColor(
         onSurface87OpacityColor,
         withBackgroundColor: colorScheme.surfaceColor)
     let selectedTextColor =
-      MDCSemanticColorScheme.blendColor(
+      UIColor.mdc_blendColor(
         onSurface87OpacityColor,
         withBackgroundColor: selectedBackgroundColor)
 
