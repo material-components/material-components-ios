@@ -65,7 +65,6 @@ class MDCDragonsController: UIViewController,
     case main
   }
 
-  @available(iOS 14.0, *)
   private(set) lazy var dataSource: UICollectionViewDiffableDataSource<Section, CBCNode>! = nil
   var collectionView: UICollectionView! = nil
 

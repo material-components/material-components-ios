@@ -4,7 +4,6 @@ import XCTest
 
 class NavigationRailTests: XCTestCase {
 
-  @available(iOS 13.0, *)
   lazy var navigationRailViewController: NavigationRailViewController! = nil
 
   override func setUp() {
