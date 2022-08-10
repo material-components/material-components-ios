@@ -14,7 +14,7 @@
 
 #import "MDCSemanticColorScheme.h"
 
-#import "MaterialColor.h"
+#import "UIColor+MaterialDynamic.h"
 
 static UIColor *ColorFromRGB(uint32_t colorValue) {
   return [UIColor colorWithRed:(CGFloat)(((colorValue >> 16) & 0xFF) / 255.0)

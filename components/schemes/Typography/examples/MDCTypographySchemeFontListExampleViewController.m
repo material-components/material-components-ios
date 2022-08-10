@@ -14,8 +14,8 @@
 
 #import "MDCTypographySchemeFontListExampleViewController.h"
 
-#import "MaterialColorScheme.h"
-#import "MaterialTypographyScheme.h"
+#import "MDCSemanticColorScheme.h"
+#import "MDCTypographyScheme.h"
 
 @interface HairlineSeparatorView : UITableViewCell
 

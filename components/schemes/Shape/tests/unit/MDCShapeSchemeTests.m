@@ -14,9 +14,11 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialShapeLibrary.h"
-#import "MaterialShapes.h"
-#import "MaterialShapeScheme.h"
+#import "MDCCornerTreatment+CornerTypeInitalizer.h"
+#import "MDCCutCornerTreatment.h"
+#import "MDCCornerTreatment.h"
+#import "MDCShapeCategory.h"
+#import "MDCShapeScheme.h"
 
 @interface MDCShapeSchemeTests : XCTestCase
 @end

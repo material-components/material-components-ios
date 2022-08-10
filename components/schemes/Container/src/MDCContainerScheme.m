@@ -14,9 +14,9 @@
 
 #import "MDCContainerScheme.h"
 
-#import "MaterialColorScheme.h"
+#import "MDCSemanticColorScheme.h"
 
-#import "MaterialTypographyScheme.h"
+#import "MDCTypographyScheme.h"
 
 @implementation MDCContainerScheme
 

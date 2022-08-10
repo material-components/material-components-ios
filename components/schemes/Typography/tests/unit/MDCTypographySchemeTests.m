@@ -15,9 +15,9 @@
 #import <Foundation/Foundation.h>
 #import <XCTest/XCTest.h>
 
-#import "MaterialTypographyScheme.h"
-
-#import <MaterialComponents/MaterialTypography.h>
+#import "UIFont+MaterialScalable.h"
+#import "UIFont+MaterialSimpleEquality.h"
+#import "MDCTypographyScheme.h"
 
 @interface MDCTypographySchemeTests : XCTestCase
 @end

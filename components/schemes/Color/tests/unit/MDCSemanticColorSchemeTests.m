@@ -17,7 +17,6 @@
 #import "MDCAvailability.h"
 #import "MDCMath.h"
 #import "MDCSemanticColorScheme.h"
-#import "UIColor+MaterialBlending.h"
 
 static UIColor *ColorFromRGB(uint32_t colorValue) {
   return [[UIColor alloc] initWithRed:(CGFloat)(((colorValue >> 16) & 0xFF) / 255.0)
