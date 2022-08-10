@@ -120,7 +120,6 @@ __attribute__((objc_subclassing_restricted))
  */
 @property(nonatomic, strong, nullable, direct) UIColor *badgeColor API_DEPRECATED_WITH_REPLACEMENT(
     "badgeAppearance.backgroundColor", ios(12, 12));
-;
 
 /**
  The color of the text representing this item's badge value.

@@ -432,10 +432,27 @@ static const CGFloat kHeightShort = 48;
   [self generateAndVerifySnapshot];
 }
 
-- (void)testNilBadgeColorsRendersClearBackgroundAndUILabelDefaultTextColor {
+- (void)testClearBadgeColorsRendersClearBackgroundAndUILabelDefaultTextColor {
   // Given
   self.tabItem1.badgeValue = @"";
   self.tabItem2.badgeValue = @"Black on Clear";
+  self.tabItem3.badgeValue = @"Black on Green";
+  self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
+                                        MDCBottomNavigationBarTestHeightTypical);
+
+  // When
+  self.tabItem3.badgeColor = UIColor.greenColor;
+  self.navigationBar.itemBadgeBackgroundColor = [UIColor clearColor];
+  self.navigationBar.itemBadgeTextColor = nil;
+
+  // Then
+  [self generateAndVerifySnapshot];
+}
+
+- (void)testNilBadgeColorsRendersTintBackgroundAndUILabelDefaultTextColor {
+  // Given
+  self.tabItem1.badgeValue = @"";
+  self.tabItem2.badgeValue = @"Black on Tint Color";
   self.tabItem3.badgeValue = @"Black on Green";
   self.navigationBar.frame = CGRectMake(0, 0, MDCBottomNavigationBarTestWidthiPad,
                                         MDCBottomNavigationBarTestHeightTypical);

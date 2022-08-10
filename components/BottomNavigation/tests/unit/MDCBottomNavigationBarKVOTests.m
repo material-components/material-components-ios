@@ -161,6 +161,15 @@ static UIImage *fakeImage() {
 
   // Then
   MDCBottomNavigationItemView *itemView = self.bottomNavigationBar.itemViews.firstObject;
+  XCTAssertNil(itemView.badgeColor);
+}
+
+- (void)testChangeBadgeColorToClearColor {
+  // When
+  self.barItem.badgeColor = [UIColor clearColor];
+
+  // Then
+  MDCBottomNavigationItemView *itemView = self.bottomNavigationBar.itemViews.firstObject;
   XCTAssertEqualObjects(itemView.badgeColor, [UIColor clearColor]);
 }
 

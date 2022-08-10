@@ -768,11 +768,7 @@ static CGFloat FloorScaled(CGFloat value, CGFloat scale) {
 #pragma mark - Configuring the badge's visual appearance
 
 - (void)commitBadgeAppearance {
-  MDCBadgeAppearance *appearance = [_badgeAppearance copy];
-  if (_badgeColor) {
-    appearance.backgroundColor = _badgeColor;
-  }
-  _badge.appearance = appearance;
+  _badge.appearance = [_badgeAppearance copy];
 }
 
 - (void)setBadgeAppearance:(MDCBadgeAppearance *)badgeAppearance {
@@ -782,16 +778,13 @@ static CGFloat FloorScaled(CGFloat value, CGFloat scale) {
 }
 
 - (void)setBadgeColor:(nullable UIColor *)badgeColor {
-  if (badgeColor == nil) {
-    // Bottom navigation historically treated nil as clear color for badges. The new
-    // MDCBadgeAppearance API treats nil as equivalent to tintColor now, in alignment with UIKit,
-    // so to maintain backward-compatibility with expected behavior, we force-cast nil to a
-    // clearColor instance.
-    badgeColor = [UIColor clearColor];
-  }
-  _badgeColor = badgeColor;
+  _badgeAppearance.backgroundColor = badgeColor;
 
   [self commitBadgeAppearance];
+}
+
+- (nullable UIColor *)badgeColor {
+  return _badgeAppearance.backgroundColor;
 }
 
 - (void)setBadgeTextColor:(nullable UIColor *)badgeTextColor {
