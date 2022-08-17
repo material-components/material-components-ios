@@ -108,11 +108,7 @@
   [self dismissViewControllerAnimated:NO completion:nil];
 
 #if MDC_AVAILABLE_SDK_IOS(13_0)
-  if (@available(iOS 13, *)) {
-    [self presentDemoAnimated:NO modalPresentationStyle:UIModalPresentationAutomatic];
-  } else {
-    [self presentDemoAnimated:NO modalPresentationStyle:UIModalPresentationFullScreen];
-  }
+  [self presentDemoAnimated:NO modalPresentationStyle:UIModalPresentationAutomatic];
 #else
   [self presentDemoAnimated:NO modalPresentationStyle:UIModalPresentationFullScreen];
 #endif

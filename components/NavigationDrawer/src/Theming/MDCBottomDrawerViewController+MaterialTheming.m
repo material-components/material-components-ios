@@ -51,20 +51,16 @@ static const CGFloat kTopHandleAlpha = 0.12f;
                                                withScheme:colorScheme];
       }
     };
-#if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
-    if (@available(iOS 13.0, *)) {
-      self.traitCollectionDidChangeBlock = ^(MDCBottomDrawerViewController *_Nonnull bottomDrawer,
-                                             UITraitCollection *_Nullable previousTraitCollection) {
-        if ([bottomDrawer.traitCollection
-                hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-          [MDCBottomDrawerViewController
-              mdc_setResolvedBackgroundColorForBottomDrawer:bottomDrawer
-                                  applyToTrackingScrollView:applyToTrackingScrollView
-                                                 withScheme:colorScheme];
-        }
-      };
-    }
-#endif
+    self.traitCollectionDidChangeBlock = ^(MDCBottomDrawerViewController *_Nonnull bottomDrawer,
+                                           UITraitCollection *_Nullable previousTraitCollection) {
+      if ([bottomDrawer.traitCollection
+              hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+        [MDCBottomDrawerViewController
+            mdc_setResolvedBackgroundColorForBottomDrawer:bottomDrawer
+                                applyToTrackingScrollView:applyToTrackingScrollView
+                                               withScheme:colorScheme];
+      }
+    };
   }
   self.scrimColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kScrimAlpha];
   self.topHandleColor = [colorScheme.onSurfaceColor colorWithAlphaComponent:kTopHandleAlpha];

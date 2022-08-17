@@ -49,18 +49,16 @@ static NSString *const kReusableIdentifierItem = @"itemCellIdentifier";
             ] mutableCopy]];
 
 #if MDC_AVAILABLE_SDK_IOS(13_0)
-  if (@available(iOS 13.0, *)) {
-    UIColor *dynamicColor = [UIColor
-        colorWithDynamicProvider:^UIColor *_Nonnull(UITraitCollection *_Nonnull traitCollection) {
-          if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
-            return UIColor.lightGrayColor;
-          } else {
-            return UIColor.darkGrayColor;
-          }
-        }];
-    [_cellBackgroundColors addObject:dynamicColor];
-    [_content[0] addObject:@"Dyanmic Color"];
-  }
+  UIColor *dynamicColor = [UIColor
+      colorWithDynamicProvider:^UIColor *_Nonnull(UITraitCollection *_Nonnull traitCollection) {
+        if (traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+          return UIColor.lightGrayColor;
+        } else {
+          return UIColor.darkGrayColor;
+        }
+      }];
+  [_cellBackgroundColors addObject:dynamicColor];
+  [_content[0] addObject:@"Dyanmic Color"];
 #endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 
   // Customize collection view settings.
