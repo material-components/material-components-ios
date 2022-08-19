@@ -23,6 +23,7 @@
  for more information. It will make sure that the underlying longPressGestureRecognizer
  doesn't cancel the ink tap visual causing the ink to disappear once the reorder begins.
  */
-- (void)mdc_setupCardReordering;
+- (void)mdc_setupCardReordering API_DEPRECATED(
+    "Use a branded UIView or UICollectionViewCell instead.", ios(12, API_TO_BE_DEPRECATED));
 
 @end

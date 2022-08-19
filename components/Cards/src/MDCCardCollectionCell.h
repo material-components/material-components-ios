@@ -20,6 +20,8 @@
 
 @protocol MDCShapeGenerating;
 
+API_DEPRECATED_BEGIN("Use a branded UICollectionViewCell instead.", ios(12, API_TO_BE_DEPRECATED))
+
 /**
  Through the lifecycle of the cell, the cell can go through one of the 3 states,
  normal, highlighted, and selected. The cell starts in its default state, normal.
@@ -340,3 +342,5 @@ typedef NS_ENUM(NSInteger, MDCCardCellVerticalImageAlignment) {
     "Shape generators are no longer supported.", ios(12, 12));
 
 @end
+
+API_DEPRECATED_END

@@ -42,7 +42,7 @@ tests, and demonstration apps.
 ### Style
 
 Material Components for iOS follows [Google's Objective-C style
-guide](https://github.com/google/styleguide/blob/gh-pages/objcguide.md) for Objective-C code. Note that the
+guide](https://google.github.io/styleguide/objcguide.xml) for Objective-C code. Note that the
 Objective-C style guide uses the [Google C++ style
 guide](https://google.github.io/styleguide/cppguide.html) as its "superclass", meaning that rules
 from the C++ style guide are in effect unless the Objective-C style guide indicates otherwise.
