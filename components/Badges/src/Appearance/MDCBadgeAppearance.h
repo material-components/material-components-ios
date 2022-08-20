@@ -38,9 +38,6 @@ __attribute__((objc_subclassing_restricted))
 /** The font that will be used to display the value. */
 @property(nonatomic, strong, nullable, direct) UIFont *font;
 
-/** The font that will be used to display the value when in Bold Text mode. */
-@property(nonatomic, strong, nullable, direct) UIFont *boldFont API_AVAILABLE(ios(13.0));
-
 /**
  The color of the border surrounding the badge.
 

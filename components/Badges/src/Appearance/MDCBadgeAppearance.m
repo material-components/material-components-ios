@@ -13,7 +13,6 @@
   config.backgroundColor = self.backgroundColor;
   config.textColor = self.textColor;
   config.font = self.font;
-  config.boldFont = self.boldFont;
   config.borderColor = self.borderColor;
   config.borderWidth = self.borderWidth;
   return config;

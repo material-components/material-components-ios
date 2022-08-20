@@ -133,18 +133,9 @@ static const CGFloat kMinDiameter = 9;
 }
 
 - (void)updateFont {
-  _label.font = [self fontForCurrentTraitCollection];
+  _label.font = _appearance.font;
   [self setNeedsLayout];
   [self invalidateIntrinsicContentSize];
-}
-
-- (nullable UIFont *)fontForCurrentTraitCollection {
-  if (@available(iOS 13, *)) {
-    if (self.traitCollection.legibilityWeight == UILegibilityWeightBold) {
-      return _appearance.boldFont ?: _appearance.font;
-    }
-  }
-  return _appearance.font;
 }
 
 - (void)updateBorderColor {
@@ -159,7 +150,7 @@ static const CGFloat kMinDiameter = 9;
 
   // Content
   _label.textColor = _appearance.textColor;
-  if (![_label.font isEqual:[self fontForCurrentTraitCollection]]) {
+  if (![_label.font isEqual:_appearance.font]) {
     [self updateFont];
     intrinsicSizeAffected = YES;
   }
