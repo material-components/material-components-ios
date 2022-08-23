@@ -12,15 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialSnapshot.h"
+#import "MDCSnackbarManager.h"
+#import "MDCSnackbarMessage.h"
+#import "MDCSnackbarMessageView.h"
 
-// Clang-format wants to reorder these imports, but CocoaPods will fail to build if the main target
-// isn't imported first.
 // clang-format off
-#import "MaterialSnackbar.h"
-#import "../../src/private/MDCSnackbarMessageViewInternal.h"
-#import "../../src/private/MDCSnackbarManagerInternal.h"
-#import "../../src/private/MDCSnackbarOverlayView.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCSnackbarMessageViewInternal.h"
+#import "MDCSnackbarManagerInternal.h"
+#import "MDCSnackbarOverlayView.h"
+#import "MDCSnapshotTestCase.h"
+#import "UIView+MDCSnapshot.h"
+#pragma clang diagnostic pop
 // clang-format on
 
 /** The width of the Snackbar for testing. */

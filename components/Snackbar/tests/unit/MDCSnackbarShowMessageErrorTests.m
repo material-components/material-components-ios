@@ -14,9 +14,14 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialSnackbar.h"
+#import "MDCSnackbarManager.h"
+#import "MDCSnackbarMessage.h"
+#import "MDCSnackbarMessageView.h"
 
-#import "../../src/private/MDCSnackbarMessageInternal.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCSnackbarMessageInternal.h"
+#pragma clang diagnostic pop
 
 NSString *const kErrorDomain = @"com.google.mdc.snackbar";
 

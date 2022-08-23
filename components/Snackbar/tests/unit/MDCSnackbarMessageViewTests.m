@@ -14,15 +14,18 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialButtons.h"
-#import "MaterialShadowElevations.h"
-#import "MaterialSnackbar.h"
+#import "MDCButton.h"
+#import "MDCShadowElevations.h"
+#import "MDCSnackbarManager.h"
+#import "MDCSnackbarMessage.h"
+#import "MDCSnackbarMessageView.h"
 #import "MDCFakeMDCSnackbarManagerDelegate.h"
-#import "MDCFontScaler.h"
-#import "MaterialTypography.h"
 
-#import "../../src/private/MDCSnackbarManagerInternal.h"
-#import "../../src/private/MDCSnackbarOverlayView.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCSnackbarManagerInternal.h"
+#import "MDCSnackbarOverlayView.h"
+#pragma clang diagnostic pop
 
 static const int64_t kDispatchTimeWait = (int64_t)((CGFloat)0.2 * NSEC_PER_SEC);
 

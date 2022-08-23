@@ -14,11 +14,16 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialButtons.h"
-#import "MaterialInk.h"
-#import "MaterialSnackbar.h"
+#import "MDCButton.h"
+#import "MDCInkView.h"
+#import "MDCSnackbarManager.h"
+#import "MDCSnackbarMessage.h"
+#import "MDCSnackbarMessageView.h"
 
-#import "../../src/private/MDCSnackbarManagerInternal.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCSnackbarManagerInternal.h"
+#pragma clang diagnostic pop
 
 @interface MDCSnackbarManagerInternal (RippleTesting)
 @property(nonatomic) MDCSnackbarMessageView *currentSnackbar;

@@ -13,9 +13,15 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
-#import "../../src/private/MDCSnackbarManagerInternal.h"
-#import "MaterialShadowElevations.h"
-#import "MaterialSnackbar.h"
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCShadowElevations.h"
+#import "MDCSnackbarManager.h"
+#import "MDCSnackbarMessage.h"
+#import "MDCSnackbarMessageView.h"
+#import "MDCSnackbarManagerInternal.h"
+#pragma clang diagnostic pop
 
 @interface MDCSnackbarManagerInternal (SnackbarManagerTesting)
 @property(nonatomic) MDCSnackbarMessageView *currentSnackbar;
