@@ -15,8 +15,11 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCItemBar.h"
-#import "../../src/private/MDCItemBarStyle.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCItemBar.h"
+#import "MDCItemBarStyle.h"
+#pragma clang diagnostic pop
 
 @interface MDCItemBar (Testing)
 - (UITabBarItem *)itemAtIndexPath:(NSIndexPath *)indexPath;

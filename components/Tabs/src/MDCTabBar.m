@@ -14,20 +14,22 @@
 
 #import "MDCTabBar.h"
 
+#import "MDCInkView.h"
+#import "MDCRippleView.h"
+#import "MDCTabBarExtendedAlignment.h"
 #import "MDCTabBarAlignment.h"
+#import "MDCTabBarDelegate.h"
 #import "MDCTabBarItemAppearance.h"
 #import "MDCTabBarTextTransform.h"
-#import "MDCItemBarDelegate.h"
-
-#import "private/MDCItemBar.h"
-#import "private/MDCItemBarAlignment.h"
-#import "private/MDCItemBarStyle.h"
-#import "MaterialInk.h"
-#import "MaterialRipple.h"
-#import "MDCTabBarExtendedAlignment.h"
-#import "MDCTabBarDelegate.h"
 #import "MDCTabBarUnderlineIndicatorTemplate.h"
-#import "MaterialTypography.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCItemBar.h"
+#import "MDCItemBarAlignment.h"
+#import "MDCItemBarDelegate.h"
+#import "MDCItemBarStyle.h"
+#pragma clang diagnostic pop
+#import "MDCTypography.h"
 
 /// Padding between image and title in points, according to the spec.
 static const CGFloat kImageTitleSpecPadding = 10;

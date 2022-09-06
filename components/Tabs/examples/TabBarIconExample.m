@@ -12,16 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "supplemental/TabBarIconExampleSupplemental.h"
+#import "MDCAppBarColorThemer.h"
+#import "MDCAppBarViewController.h"
+#import "MDCButton.h"
+#import "MDCHeaderStackView.h"
+#import "TabBarIconExampleSupplemental.h"
 
-#import "MaterialAppBar+ColorThemer.h"
-#import "MaterialAppBar.h"
-#import "MaterialButtons.h"
-#import "MaterialHeaderStackView.h"
-#import "MaterialTabs.h"
-#import "MaterialTabs+Theming.h"
-#import "MaterialColorScheme.h"
-#import "MaterialContainerScheme.h"
+#import "MDCTabBar.h"
+#import "MDCTabBarAlignment.h"
+#import "MDCTabBarItemAppearance.h"
+#import "MDCTabBar+MaterialTheming.h"
+#import "MDCSemanticColorScheme.h"
+#import "MDCContainerScheme.h"
 
 @interface TabBarIconExample ()
 @property(nonatomic, strong) UIBarButtonItem *addStarButtonItem;

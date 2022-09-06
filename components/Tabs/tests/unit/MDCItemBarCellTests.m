@@ -14,10 +14,13 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCItemBarCell+Private.h"
-#import "../../src/private/MDCItemBarCell.h"
-#import "../../src/private/MDCItemBarStyle.h"
-#import "MaterialRipple.h"
+#import "MDCRippleTouchController.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCItemBarCell+Private.h"
+#import "MDCItemBarCell.h"
+#import "MDCItemBarStyle.h"
+#pragma clang diagnostic pop
 
 @interface MDCItemBarCellTests : XCTestCase
 

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 /**
  A simple protocol that custom views rendered in MDCTabBarView must adopt.

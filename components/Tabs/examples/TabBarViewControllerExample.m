@@ -14,10 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
-#import "supplemental/TabBarViewControllerExampleSupplemental.h"
-#import "MaterialTabs.h"
-#import "MaterialTabs+Theming.h"
-#import "MaterialContainerScheme.h"
+#import "TabBarViewControllerExampleSupplemental.h"
+#import "MDCTabBar.h"
+#import "MDCTabBar+MaterialTheming.h"
+#import "MDCContainerScheme.h"
 
 @implementation TabBarViewControllerExample
 

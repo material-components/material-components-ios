@@ -14,7 +14,10 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCItemBar.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCItemBar.h"
+#pragma clang diagnostic pop
 #import "MDCTabBar.h"
 
 // Returns the underlying collection view from a given tabBar. If one cannot be extracted, returns

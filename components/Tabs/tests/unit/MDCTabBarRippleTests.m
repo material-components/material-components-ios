@@ -14,12 +14,17 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCItemBar.h"
-#import "../../src/private/MDCItemBarCell.h"
-#import "../../src/private/MDCItemBarStyle.h"
-#import "MaterialInk.h"
-#import "MaterialRipple.h"
-#import "MaterialTabs.h"
+#import "MDCInkTouchController.h"
+#import "MDCInkView.h"
+#import "MDCRippleTouchController.h"
+#import "MDCRippleView.h"
+#import "MDCTabBar.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCItemBar.h"
+#import "MDCItemBarCell.h"
+#import "MDCItemBarStyle.h"
+#pragma clang diagnostic pop
 
 @interface MDCTabBar (Testing)
 - (void)updateItemBarStyle;
