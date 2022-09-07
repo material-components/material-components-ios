@@ -26,7 +26,7 @@ static const CGFloat kActionItemTitleVerticalPadding = 18;
 /** The height of the divider. */
 static const CGFloat kDividerHeight = 1;
 
-static inline UIColor *RippleColor() {
+static inline UIColor *RippleColor(void) {
   return [[UIColor alloc] initWithWhite:0 alpha:(CGFloat)0.14];
 }
 

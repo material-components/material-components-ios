@@ -35,7 +35,7 @@ static NSString *const kSelectedViewControllerRestorationKey = @"selectedViewCon
  The transform of the large item view when it is in a transitional state (appearing or
  dismissing).
  */
-static CGAffineTransform LargeItemViewAnimationTransitionTransform() {
+static CGAffineTransform LargeItemViewAnimationTransitionTransform(void) {
   return CGAffineTransformScale(CGAffineTransformIdentity, (CGFloat)0.97, (CGFloat)0.97);
 }
 

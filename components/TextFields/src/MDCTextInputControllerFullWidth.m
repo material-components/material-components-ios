@@ -34,11 +34,11 @@ static const CGFloat MDCTextInputControllerFullWidthHorizontalInnerPadding = 8;
 static const CGFloat MDCTextInputControllerFullWidthHorizontalPadding = 16;
 static const CGFloat MDCTextInputControllerFullWidthVerticalPadding = 20;
 
-static inline UIColor *MDCTextInputControllerFullWidthInlinePlaceholderTextColorDefault() {
+static inline UIColor *MDCTextInputControllerFullWidthInlinePlaceholderTextColorDefault(void) {
   return [UIColor colorWithWhite:0 alpha:MDCTextInputControllerFullWidthHintTextOpacity];
 }
 
-static inline UIColor *MDCTextInputControllerFullWidthErrorColorDefault() {
+static inline UIColor *MDCTextInputControllerFullWidthErrorColorDefault(void) {
   return [MDCPalette redPalette].accent400;
 }
 

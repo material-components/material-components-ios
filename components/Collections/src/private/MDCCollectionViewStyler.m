@@ -52,16 +52,14 @@ static const CGFloat kCollectionViewGridDefaultPadding = 4;
 static const CGSize kCellImageSize = {44, 44};
 static const CGFloat kCollectionViewCellDefaultBorderWidth = 1;
 static const CGFloat kCollectionViewCellDefaultBorderRadius = (CGFloat)1.5;
-static inline UIColor *kCollectionViewCellDefaultBorderColor() {
+static inline UIColor *kCollectionViewCellDefaultBorderColor(void) {
   return [UIColor colorWithWhite:0 alpha:(CGFloat)0.05];
 }
 
 /** Cell shadowing */
 static const CGFloat kCollectionViewCellDefaultShadowWidth = 1;
-static inline CGSize kCollectionViewCellDefaultShadowOffset() {
-  return CGSizeMake(0, 1);
-}
-static inline UIColor *kCollectionViewCellDefaultShadowColor() {
+static inline CGSize kCollectionViewCellDefaultShadowOffset(void) { return CGSizeMake(0, 1); }
+static inline UIColor *kCollectionViewCellDefaultShadowColor(void) {
   return [UIColor colorWithWhite:0 alpha:(CGFloat)0.1];
 }
 

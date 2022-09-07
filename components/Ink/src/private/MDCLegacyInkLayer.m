@@ -54,7 +54,7 @@ static inline CGFloat MDCLegacyInkLayerRadiusBounds(CGFloat maxRippleRadius,
   }
 }
 
-static inline CGFloat MDCLegacyInkLayerRandom() {
+static inline CGFloat MDCLegacyInkLayerRandom(void) {
   const uint32_t max_value = 10000;
   return (CGFloat)arc4random_uniform(max_value + 1) / max_value;
 }

@@ -38,30 +38,21 @@ static const CGFloat kValueLabelMinHeight = 48.0f;
 static const CGFloat kValueLabelAspectRatio = 0.81f;
 static const CGFloat kValueLabelThumbPadding = 4.0f;
 
-static UIColor *ValueLabelTextColorDefault() {
-  return UIColor.whiteColor;
-}
+static UIColor *ValueLabelTextColorDefault(void) { return UIColor.whiteColor; }
 
-static UIColor *ValueLabelBackgroundColorDefault() {
-  return UIColor.blueColor;
-}
+static UIColor *ValueLabelBackgroundColorDefault(void) { return UIColor.blueColor; }
 
-static UIColor *TrackOnColorDefault() {
-  return UIColor.blueColor;
-}
+static UIColor *TrackOnColorDefault(void) { return UIColor.blueColor; }
 
-static UIColor *ThumbEnabledColorDefault() {
-  return UIColor.blueColor;
-}
+static UIColor *ThumbEnabledColorDefault(void) { return UIColor.blueColor; }
 
-static UIColor *InkColorDefault() {
+static UIColor *InkColorDefault(void) {
   return [UIColor.blueColor colorWithAlphaComponent:kTrackOnAlpha];
 }
 
-static UIFont *ValueLabelFontDefault() {
+static UIFont *ValueLabelFontDefault(void) {
   return [[MDCTypography fontLoader] regularFontOfSize:12];
 }
-
 
 // TODO(iangordon): Properly handle broken tgmath
 

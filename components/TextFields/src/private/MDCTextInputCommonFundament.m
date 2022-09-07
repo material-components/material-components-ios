@@ -42,21 +42,17 @@ const CGFloat MDCTextInputFullPadding = 16;
 const CGFloat MDCTextInputHalfPadding = 8;
 const CGFloat MDCTextInputClearButtonTouchTargetSize = 48;
 
-UIColor *_Nonnull MDCTextInputCursorColor() {
-  return [MDCPalette bluePalette].accent700;
-}
+UIColor *_Nonnull MDCTextInputCursorColor(void) { return [MDCPalette bluePalette].accent700; }
 
-static inline UIColor *MDCTextInputDefaultPlaceholderTextColor() {
+static inline UIColor *MDCTextInputDefaultPlaceholderTextColor(void) {
   return [UIColor colorWithWhite:0 alpha:MDCTextInputHintTextOpacity];
 }
 
-static inline UIColor *MDCTextInputTextColor() {
+static inline UIColor *MDCTextInputTextColor(void) {
   return [UIColor colorWithWhite:0 alpha:MDCTextInputOpacity];
 }
 
-static inline UIColor *MDCTextInputUnderlineColor() {
-  return [UIColor lightGrayColor];
-}
+static inline UIColor *MDCTextInputUnderlineColor(void) { return [UIColor lightGrayColor]; }
 
 @implementation MDCTextInputClearButton
 

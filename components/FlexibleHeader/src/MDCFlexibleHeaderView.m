@@ -1347,7 +1347,7 @@ static char *const kKVOContextMDCFlexibleHeaderView = "kKVOContextMDCFlexibleHea
 // This function is a temporary inclusion to stop an assert from triggering on iOS 10.3b until
 // we determine the cause. Remove once #1254 is closed.
 #if DEBUG
-static BOOL isRunningiOS10_3OrAbove() {
+static BOOL isRunningiOS10_3OrAbove(void) {
   static dispatch_once_t onceToken;
   static BOOL isRunningiOS10_3OrAbove;
   dispatch_once(&onceToken, ^{

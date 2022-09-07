@@ -48,19 +48,19 @@ static const NSTimeInterval
     MDCTextInputControllerBaseDefaultFloatingPlaceholderUpAnimationDuration = (CGFloat)0.3;
 static const NSTimeInterval kDefaultErrorAnnouncementDelay = (CGFloat)0.050;
 
-static inline UIColor *MDCTextInputControllerBaseDefaultInlinePlaceholderTextColorDefault() {
+static inline UIColor *MDCTextInputControllerBaseDefaultInlinePlaceholderTextColorDefault(void) {
   return [UIColor colorWithWhite:0 alpha:MDCTextInputControllerBaseDefaultHintTextOpacity];
 }
 
-static inline UIColor *MDCTextInputControllerBaseDefaultActiveColorDefault() {
+static inline UIColor *MDCTextInputControllerBaseDefaultActiveColorDefault(void) {
   return [MDCPalette bluePalette].accent700;
 }
 
-static inline UIColor *MDCTextInputControllerBaseDefaultNormalUnderlineColorDefault() {
+static inline UIColor *MDCTextInputControllerBaseDefaultNormalUnderlineColorDefault(void) {
   return [UIColor lightGrayColor];
 }
 
-static inline UIColor *MDCTextInputControllerBaseDefaultTextErrorColorDefault() {
+static inline UIColor *MDCTextInputControllerBaseDefaultTextErrorColorDefault(void) {
   return [MDCPalette redPalette].accent400;
 }
 

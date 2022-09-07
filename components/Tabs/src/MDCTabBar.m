@@ -83,9 +83,7 @@ static MDCItemBarAlignment MDCItemBarAlignmentForTabBarAlignment(
   return MDCItemBarAlignmentLeading;
 }
 
-static inline UIColor *RippleColor() {
-  return [UIColor colorWithWhite:1 alpha:(CGFloat)0.7];
-}
+static inline UIColor *RippleColor(void) { return [UIColor colorWithWhite:1 alpha:(CGFloat)0.7]; }
 
 @protocol MDCTabBarSizeClassDelegate;
 @protocol MDCTabBarDisplayDelegate;

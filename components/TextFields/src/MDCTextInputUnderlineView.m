@@ -18,9 +18,7 @@
 static const CGFloat MDCTextInputUnderlineDefaultHeight = 1;
 
 // TODO: (larche): Make disabled color parameterized?
-static inline UIColor *MDCTextInputUnderlineColor() {
-  return [UIColor lightGrayColor];
-}
+static inline UIColor *MDCTextInputUnderlineColor(void) { return [UIColor lightGrayColor]; }
 
 @interface MDCTextInputUnderlineView ()
 

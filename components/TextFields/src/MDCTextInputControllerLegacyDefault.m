@@ -27,7 +27,7 @@ static const CGFloat MDCTextInputControllerLegacyDefaultVerticalHalfPadding = 8;
 static const CGFloat MDCTextInputControllerLegacyDefaultVerticalPadding = 16;
 static const CGFloat kButtonOpacity = 0.54f;
 
-static inline UIBezierPath *MDCTextInputControllerLegacyDefaultEmptyPath() {
+static inline UIBezierPath *MDCTextInputControllerLegacyDefaultEmptyPath(void) {
   return [UIBezierPath bezierPath];
 }
 
