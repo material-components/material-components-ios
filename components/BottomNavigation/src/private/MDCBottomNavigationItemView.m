@@ -44,6 +44,14 @@ static const CGFloat kBadgeXOffsetFromIconEdgeWithTextLTR = -8;
 // the edge of the image.
 static const CGFloat kBadgeXOffsetFromIconEdgeEmptyLTR = -1;
 
+// Offsets used for anchored layout
+static const CGFloat kAnchorVerticalOffsetWithLabel = -25.0;
+static const CGFloat kAnchorVerticalOffsetWithoutLabel = -16.0;
+static const CGFloat kBadgeVerticalOffset = 2.0f;
+static const CGFloat kIconVerticalOffset = 1.0;
+static const CGFloat kLabelVerticalOffset = 7.0;
+static const CGFloat kSelectionIndicatorVerticalOffset = 1.0;
+
 // The duration of the (de)selection transition animation.
 static const NSTimeInterval kMDCBottomNavigationItemViewSelectionAnimationDuration = 0.100f;
 
@@ -68,23 +76,10 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
 #endif
 }
 
-// We need this because the current layout logic deals so much with .center, which can result in
-// layouts getting sub-pixel misaligned. Using FloorScaled ensures that the origin values we're
-// computing from .center are properly pixel-aligned, reducing unnecessary aliasing.
-// Ideally, we would be doing layout based off of frames instead of .center, which would remove the
-// need for this function.
-static CGFloat FloorScaled(CGFloat value, CGFloat scale) {
-  if (scale == 0) {
-    return value;
-  }
-  return floor(value * scale) / scale;
-}
-
 @interface MDCBottomNavigationItemView ()
 
 @property(nonatomic, strong) UILabel *label;
 - (CGPoint)badgeCenterFromIconFrame:(CGRect)iconFrame isRTL:(BOOL)isRTL;
-
 @end
 
 @implementation MDCBottomNavigationItemView {
@@ -157,6 +152,11 @@ static CGFloat FloorScaled(CGFloat value, CGFloat scale) {
 }
 
 - (CGSize)sizeThatFitsForVerticalLayout {
+  // TODO(b/244765238): Remove branching layout logic after GM3 migrations
+  if ([self showsSelectionIndicator]) {
+    return [self sizeThatFitsForVerticalAnchoredLayout];
+  }
+
   CGSize maxSize = CGSizeMake(kMaxSizeDimension, kMaxSizeDimension);
   CGSize iconSize = [self.iconImageView sizeThatFits:maxSize];
   CGRect iconFrame = CGRectMake(0, 0, iconSize.width, iconSize.height);
@@ -176,6 +176,11 @@ static CGFloat FloorScaled(CGFloat value, CGFloat scale) {
 }
 
 - (CGSize)sizeThatFitsForHorizontalLayout {
+  // TODO(b/244765238): Remove branching layout logic after GM3 migrations
+  if ([self showsSelectionIndicator]) {
+    return [self sizeThatFitsForHorizontalAnchoredLayout];
+  }
+
   CGSize maxSize = CGSizeMake(kMaxSizeDimension, kMaxSizeDimension);
   CGSize iconSize = [self.iconImageView sizeThatFits:maxSize];
   CGRect iconFrame = CGRectMake(0, 0, iconSize.width, iconSize.height);
@@ -199,20 +204,21 @@ static CGFloat FloorScaled(CGFloat value, CGFloat scale) {
   [self centerLayoutAnimated:NO];
   [self invalidatePointerInteractions];
 
-  if (_showsSelectionIndicator) {
-    CGPoint imageCenter = _iconImageView.center;
-    CGFloat screenScale = self.window.screen.scale;
-    _selectionIndicator.frame =
-        CGRectMake(FloorScaled(imageCenter.x - _selectionIndicatorSize.width / 2, screenScale),
-                   FloorScaled(imageCenter.y - _selectionIndicatorSize.height / 2, screenScale),
-                   _selectionIndicatorSize.width, _selectionIndicatorSize.height);
+  // TODO(b/244765238): Remove branching layout logic after GM3 migrations
+  if ([self showsSelectionIndicator]) {
+    _selectionIndicator.frame = [self selectionIndicatorFrame];
     _selectionIndicator.layer.cornerRadius = _selectionIndicator.bounds.size.height / 2;
+    _selectionIndicator.hidden = !_showsSelectionIndicator;
   }
 }
 
 - (void)calculateVerticalLayoutInBounds:(CGRect)contentBounds
                           forLabelFrame:(CGRect *)outLabelFrame
                      iconImageViewFrame:(CGRect *)outIconFrame {
+  if ([self showsSelectionIndicator]) {
+    return [self centerAnchoredLayout];
+  }
+
   // Determine the intrinsic size of the label, icon, and combined content
   CGRect contentBoundingRect = CGRectStandardize(contentBounds);
   CGSize iconImageViewSize = [self.iconImageView sizeThatFits:contentBoundingRect.size];
@@ -265,6 +271,12 @@ static CGFloat FloorScaled(CGFloat value, CGFloat scale) {
 - (void)calculateHorizontalLayoutInBounds:(CGRect)contentBounds
                             forLabelFrame:(CGRect *)outLabelFrame
                        iconImageViewFrame:(CGRect *)outIconFrame {
+  // TODO(b/244765238): Remove branching layout logic after GM3 migrations
+  if ([self showsSelectionIndicator]) {
+    return [self calculateHorizontalAnchoredLayoutInBounds:contentBounds
+                                             forLabelFrame:outLabelFrame
+                                        iconImageViewFrame:outIconFrame];
+  }
   // Determine the intrinsic size of the label and icon
   CGRect contentBoundingRect = CGRectStandardize(contentBounds);
   CGSize iconImageViewSize = [self.iconImageView sizeThatFits:contentBoundingRect.size];
@@ -320,6 +332,11 @@ static CGFloat FloorScaled(CGFloat value, CGFloat scale) {
 }
 
 - (void)centerLayoutAnimated:(BOOL)animated {
+  // TODO(b/244765238): Remove branching layout logic after GM3 migrations
+  if ([self showsSelectionIndicator]) {
+    return [self centerAnchoredLayout];
+  }
+
   CGRect labelFrame = CGRectZero;
   CGRect iconImageViewFrame = CGRectZero;
 
@@ -833,4 +850,251 @@ static CGFloat FloorScaled(CGFloat value, CGFloat scale) {
   return _largeContentImage == nil;
 }
 
+#pragma mark - Anchored layout
+
+// anchorPoint is the main point around which the item view's content is centered.
+// In a labelless layout, it is the center point of the item view (0.5x, 0.5y).
+// In a horizontal layout with labels, it is also the center point of the item view.
+// In a vertical layout with labels, it has a slight negative-Y offset (0.5x, 0.5y - yOffset). This
+// shifts it upwards, to account for the label. The selection indicator serves as the main point of
+// reference for all other views. The iconView and badge are enclosed within it. When labels are
+// enabled, the label is adjacent to the indicator.
+
+// (note: these views are all siblings of each other, as well as direct subviews of the ItemView)
+// selectionIndicator: Positioned based on anchorPoint.
+// iconView: Positioned based on anchorPoint and selectionIndicator.
+// badge: Positioned based on selectionIndicator and iconView.
+// label: Positioned based on selectionIndicator and anchorPoint, depending on current layout &
+// language states: (horizontal || vertical) && (LTR || RTL)
+
+//        labelless                      labeled
+// (vertical and horizontal)            (vertical)
+//  ---------------------         ---------------------
+// |                     |       |                     |
+// |                     |       |                     |
+// |                     |       |        -----        |
+// |        -----        |       |       |  o  |       |
+// |       |  o  |       |       |        -----        |
+// |        -----        |       |       <label>       |
+// |                     |       |                     |
+// |                     |       |                     |
+// |                     |       |                     |
+//  ---------------------         ---------------------
+
+//   RTL badge and label           LTR badge and label
+//      (horizontal)                  (horizontal)
+//  ---------------------         ---------------------
+// |                     |       |                     |
+// |                     |       |                     |
+// |                     |       |                     |
+// |           -----     |       |     -----           |
+// |  <label> | *o  |    |       |    |  o* | <label>  |
+// |           -----     |       |     -----           |
+// |                     |       |                     |
+// |                     |       |                     |
+// |                     |       |                     |
+//  ---------------------         ---------------------
+
+- (CGPoint)anchorPoint {
+  CGFloat x = floor(CGRectGetMidX(self.bounds));
+  CGFloat y;
+
+  if (self.titleVisibility == MDCBottomNavigationBarTitleVisibilityNever) {
+    y = floor(CGRectGetMidY(self.bounds)) + kAnchorVerticalOffsetWithoutLabel;
+  } else {
+    y = floor(CGRectGetMidY(self.bounds)) + kAnchorVerticalOffsetWithLabel;
+  }
+  return CGPointMake(x, y);
+}
+
+#pragma mark - Anchored Selection Indicator
+- (CGRect)selectionIndicatorFrame {
+  CGPoint anchorPoint = [self anchorPoint];
+  CGSize selectionIndicatorSize = _selectionIndicatorSize;
+
+  return CGRectMake(anchorPoint.x - selectionIndicatorSize.width * 0.5,
+                    anchorPoint.y + kSelectionIndicatorVerticalOffset, selectionIndicatorSize.width,
+                    selectionIndicatorSize.height);
+}
+
+#pragma mark - Anchored Badge
+- (CGFloat)badgeXForRTLState:(BOOL)isRTL {
+  if (isRTL) {
+    return [self iconX] + floor([self iconSize].width * 0.5) - floor([self badgeSize].width);
+  } else {
+    return [self iconX] + floor([self iconSize].width * 0.5);
+  }
+}
+
+- (CGFloat)badgeY {
+  CGRect indicatorFrame = [self selectionIndicatorFrame];
+
+  return CGRectGetMinY(indicatorFrame) + kBadgeVerticalOffset;
+}
+
+- (CGSize)badgeSize {
+  CGSize maxSize = CGSizeMake(kMaxSizeDimension, kMaxSizeDimension);
+  return [_badge sizeThatFits:maxSize];
+}
+
+#pragma mark - Anchored Icon
+- (CGFloat)iconX {
+  CGPoint anchorPoint = [self anchorPoint];
+
+  return anchorPoint.x - ceil(_iconImageView.bounds.size.width * 0.5);
+}
+
+- (CGFloat)iconY {
+  CGPoint anchorPoint = [self anchorPoint];
+  CGRect indicatorFrame = [self selectionIndicatorFrame];
+  return floor(anchorPoint.y + floor(indicatorFrame.size.height * 0.5) -
+               floor(CGRectGetMidY(_iconImageView.bounds))) +
+         kIconVerticalOffset;
+}
+
+- (CGSize)iconSize {
+  CGSize maxSize = CGSizeMake(kMaxSizeDimension, kMaxSizeDimension);
+  return [_iconImageView sizeThatFits:maxSize];
+}
+
+#pragma mark - Anchored Label
+- (CGFloat)labelX {
+  CGPoint anchorPoint = [self anchorPoint];
+  return anchorPoint.x - ceil(CGRectGetMidX(_label.bounds));
+}
+
+// Label is anchored based on the frame provided for the active indicator
+// (Not the current frame of the active indicator itself, since there may not be an indicator
+// present) This frame can be calculated and referenced even if the indicator is disabled
+- (CGFloat)labelY {
+  CGRect selectionIndicatorFrame = [self selectionIndicatorFrame];
+  CGPoint anchorPoint = [self anchorPoint];
+
+  return anchorPoint.y + floor(selectionIndicatorFrame.size.height) + kLabelVerticalOffset;
+}
+
+- (CGSize)labelSize {
+  CGSize maxSize = CGSizeMake(kMaxSizeDimension, kMaxSizeDimension);
+  return [_label sizeThatFits:maxSize];
+}
+
+#pragma mark - Branched anchored layout methods
+// Note that layoutSubviews is branched in its implementation, despite not having a branching method
+// here.
+
+- (CGSize)sizeThatFitsForVerticalAnchoredLayout {
+  MDCBadgeView *badge = _badge;
+
+  CGSize iconSize = [self iconSize];
+  CGRect iconFrame = CGRectMake(0, 0, iconSize.width, iconSize.height);
+
+  BOOL isRTL =
+      self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
+  CGRect normalizedBadgeFrame =
+      CGRectIntegral(CGRectMake([self badgeXForRTLState:isRTL], [self badgeY],
+                                badge.bounds.size.width, badge.bounds.size.height));
+  CGRect labelFrame = CGRectZero;
+  if (![self isTitleHidden]) {
+    CGSize labelSize = [self labelSize];
+    labelFrame =
+        CGRectIntegral(CGRectMake([self labelX], [self labelY], labelSize.width, labelSize.height));
+  }
+  return CGRectStandardize(CGRectUnion(labelFrame, CGRectUnion(iconFrame, normalizedBadgeFrame)))
+      .size;
+}
+
+- (void)centerAnchoredLayout {
+  BOOL isRTL =
+      self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
+
+  CGFloat badgeX = [self badgeXForRTLState:isRTL];
+  CGFloat badgeY = [self badgeY];
+  CGSize badgeSize = [self badgeSize];
+  CGRect badgeFrame = CGRectIntegral(CGRectMake(badgeX, badgeY, badgeSize.width, badgeSize.height));
+  _badge.frame = badgeFrame;
+
+  CGFloat iconX = [self iconX];
+  CGFloat iconY = [self iconY];
+  CGSize iconSize = [self iconSize];
+  CGRect iconFrame = CGRectIntegral(CGRectMake(iconX, iconY, iconSize.width, iconSize.height));
+  _iconImageView.frame = iconFrame;
+
+  CGFloat labelX = [self labelX];
+  CGFloat labelY = [self labelY];
+  CGSize labelSize = [self labelSize];
+  CGRect labelFrame = CGRectIntegral(CGRectMake(labelX, labelY, labelSize.width, labelSize.height));
+  _label.frame = labelFrame;
+}
+
+- (CGSize)sizeThatFitsForHorizontalAnchoredLayout {
+  MDCBadgeView *badge = _badge;
+
+  CGSize iconSize = [self iconSize];
+  CGRect iconFrame = CGRectMake(0, 0, iconSize.width, iconSize.height);
+
+  BOOL isRTL =
+      self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
+  CGRect normalizedBadgeFrame =
+      CGRectIntegral(CGRectMake([self badgeXForRTLState:isRTL], [self badgeY],
+                                badge.bounds.size.width, badge.bounds.size.height));
+  CGSize labelSize = [self labelSize];
+  CGRect labelFrame = CGRectMake(CGRectGetMaxX(iconFrame) + self.contentHorizontalMargin,
+                                 floor(CGRectGetMidY(iconFrame) - labelSize.height / 2),
+                                 labelSize.width, labelSize.height);
+  return CGRectStandardize(CGRectUnion(labelFrame, CGRectUnion(iconFrame, normalizedBadgeFrame)))
+      .size;
+}
+
+// Mostly unchanged from previous implementation
+// Need to refactor and fix, since horizontal layout is currently broken for anchored layout
+// TODO(b/244478503)
+- (void)calculateHorizontalAnchoredLayoutInBounds:(CGRect)contentBounds
+                                    forLabelFrame:(CGRect *)outLabelFrame
+                               iconImageViewFrame:(CGRect *)outIconFrame {
+  CGRect contentBoundingRect = CGRectStandardize(contentBounds);
+  CGSize iconImageViewSize = [self.iconImageView sizeThatFits:contentBoundingRect.size];
+  CGSize maxLabelSize = CGSizeMake(
+      contentBoundingRect.size.width - self.contentHorizontalMargin - iconImageViewSize.width,
+      contentBoundingRect.size.height);
+  CGSize labelSize = [self.label sizeThatFits:maxLabelSize];
+
+  CGFloat contentsWidth = iconImageViewSize.width + self.contentHorizontalMargin + labelSize.width;
+  CGFloat remainingContentWidth = CGRectGetWidth(contentBoundingRect);
+  if (contentsWidth > remainingContentWidth) {
+    contentsWidth = remainingContentWidth;
+  }
+  // If the content width and available width are different, the internal spacing required to center
+  // the contents.
+  CGFloat contentPadding = (remainingContentWidth - contentsWidth) / 2;
+  remainingContentWidth -= iconImageViewSize.width + self.contentHorizontalMargin;
+  if (self.truncatesTitle) {
+    labelSize = CGSizeMake(MIN(labelSize.width, remainingContentWidth), labelSize.height);
+  }
+
+  // Account for RTL
+  BOOL isRTL =
+      self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
+  NSInteger rtlCoefficient = isRTL ? -1 : 1;
+  CGFloat layoutStartingPoint =
+      isRTL ? CGRectGetMaxX(contentBoundingRect) : CGRectGetMinX(contentBoundingRect);
+
+  CGFloat centerY = CGRectGetMidY(contentBoundingRect);
+  // Amount icon center is offset from the leading edge.
+  CGFloat iconCenterOffset = contentPadding + iconImageViewSize.width / 2;
+
+  // Determine the position of the label and icon
+  CGPoint iconImageViewCenter =
+      CGPointMake(layoutStartingPoint + rtlCoefficient * iconCenterOffset, centerY);
+
+  // Assign the frames to the inout arguments
+  if (outLabelFrame != NULL) {
+    *outLabelFrame =
+        CGRectIntegral(CGRectMake([self labelX], [self labelY], labelSize.width, labelSize.height));
+  }
+  if (outIconFrame != NULL) {
+    *outIconFrame = CGRectMake(floor(iconImageViewCenter.x - (iconImageViewSize.width / 2)),
+                               floor(iconImageViewCenter.y - (iconImageViewSize.height / 2)),
+                               iconImageViewSize.width, iconImageViewSize.height);
+  }
+}
 @end

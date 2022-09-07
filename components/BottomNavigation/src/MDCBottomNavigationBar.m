@@ -783,7 +783,7 @@ static BOOL gEnablePerformantShadow = NO;
   }
 }
 
-- (void)setActiveIndicatorSize:(CGSize)selectionIndicatorSize {
+- (void)setSelectionIndicatorSize:(CGSize)selectionIndicatorSize {
   _selectionIndicatorSize = selectionIndicatorSize;
 
   for (MDCBottomNavigationItemView *itemView in self.itemViews) {
