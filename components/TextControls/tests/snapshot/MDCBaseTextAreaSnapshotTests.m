@@ -16,8 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "supplemental/MDCTextControlSnapshotTestHelpers.h"
 #import "MDCBaseTextArea.h"
+#import "MDCTextControlSnapshotTestHelpers.h"
 
 @interface MDCBaseTextArea (AnimationDuration)
 @property(nonatomic, assign) NSTimeInterval animationDuration;

@@ -17,14 +17,25 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <QuartzCore/QuartzCore.h>
 
-#import "private/MDCBaseTextAreaLayout.h"
-#import "private/MDCBaseTextAreaTextView.h"
 #import "MDCBaseTextAreaDelegate.h"
 #import "MDCTextControlLabelBehavior.h"
 #import "MDCTextControlState.h"
-#import "MaterialTextControlsPrivate+BaseStyle.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCBaseTextAreaLayout.h"
+#import "MDCBaseTextAreaTextView.h"
+#import "MDCTextControlStyleBase.h"
+#import "MDCTextControl.h"
 #import "MDCTextControlAssistiveLabelDrawPriority.h"
-#import "MaterialTextControlsPrivate+Shared.h"
+#import "MDCTextControlAssistiveLabelView.h"
+#import "MDCTextControlColorViewModel.h"
+#import "MDCTextControlGradientManager.h"
+#import "MDCTextControlHorizontalPositioning.h"
+#import "MDCTextControlHorizontalPositioningReference.h"
+#import "MDCTextControlLabelAnimation.h"
+#import "MDCTextControlLabelSupport.h"
+#import "MDCTextControlPlaceholderSupport.h"
+#pragma clang diagnostic pop
 
 static char *const kKVOContextMDCBaseTextArea = "kKVOContextMDCBaseTextArea";
 

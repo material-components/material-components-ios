@@ -12,13 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialSnapshot.h"
+#import "MDCOutlinedTextField.h"
 
 #import <UIKit/UIKit.h>
 
-#import "supplemental/MDCBaseTextFieldTestsSnapshotTestHelpers.h"
-#import "supplemental/MDCTextControlSnapshotTestHelpers.h"
-#import "MaterialTextControls+OutlinedTextFields.h"
+#import "MDCBaseTextFieldTestsSnapshotTestHelpers.h"
+#import "MDCTextControlSnapshotTestHelpers.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCSnapshotTestCase.h"
+#pragma clang diagnostic pop
 
 @interface MDCOutlinedTextFieldTestsSnapshotTests : MDCSnapshotTestCase
 @property(strong, nonatomic) MDCOutlinedTextField *textField;
