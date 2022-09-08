@@ -51,6 +51,7 @@ static const CGFloat kBadgeVerticalOffset = 2.0f;
 static const CGFloat kIconVerticalOffset = 1.0;
 static const CGFloat kLabelVerticalOffset = 7.0;
 static const CGFloat kSelectionIndicatorVerticalOffset = 1.0;
+static const CGFloat kLabelHorizontalOffset = 8.0;
 
 // The duration of the (de)selection transition animation.
 static const NSTimeInterval kMDCBottomNavigationItemViewSelectionAnimationDuration = 0.100f;
@@ -273,9 +274,7 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
                        iconImageViewFrame:(CGRect *)outIconFrame {
   // TODO(b/244765238): Remove branching layout logic after GM3 migrations
   if ([self showsSelectionIndicator]) {
-    return [self calculateHorizontalAnchoredLayoutInBounds:contentBounds
-                                             forLabelFrame:outLabelFrame
-                                        iconImageViewFrame:outIconFrame];
+    return [self centerAnchoredLayout];
   }
   // Determine the intrinsic size of the label and icon
   CGRect contentBoundingRect = CGRectStandardize(contentBounds);
@@ -852,7 +851,7 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
 
 #pragma mark - Anchored layout
 
-// anchorPoint is the main point around which the item view's content is centered.
+// midPoint is the main point around which the item view's content is centered.
 // In a labelless layout, it is the center point of the item view (0.5x, 0.5y).
 // In a horizontal layout with labels, it is also the center point of the item view.
 // In a vertical layout with labels, it has a slight negative-Y offset (0.5x, 0.5y - yOffset). This
@@ -861,10 +860,10 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
 // enabled, the label is adjacent to the indicator.
 
 // (note: these views are all siblings of each other, as well as direct subviews of the ItemView)
-// selectionIndicator: Positioned based on anchorPoint.
-// iconView: Positioned based on anchorPoint and selectionIndicator.
+// selectionIndicator: Positioned based on midPoint.
+// iconView: Positioned based on midPoint and selectionIndicator.
 // badge: Positioned based on selectionIndicator and iconView.
-// label: Positioned based on selectionIndicator and anchorPoint, depending on current layout &
+// label: Positioned based on selectionIndicator and midPoint, depending on current layout &
 // language states: (horizontal || vertical) && (LTR || RTL)
 
 //        labelless                      labeled
@@ -895,11 +894,11 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
 // |                     |       |                     |
 //  ---------------------         ---------------------
 
-- (CGPoint)anchorPoint {
+- (CGPoint)midPoint {
   CGFloat x = floor(CGRectGetMidX(self.bounds));
   CGFloat y;
 
-  if (self.titleVisibility == MDCBottomNavigationBarTitleVisibilityNever) {
+  if (self.titleVisibility == MDCBottomNavigationBarTitleVisibilityNever || !self.titleBelowIcon) {
     y = floor(CGRectGetMidY(self.bounds)) + kAnchorVerticalOffsetWithoutLabel;
   } else {
     y = floor(CGRectGetMidY(self.bounds)) + kAnchorVerticalOffsetWithLabel;
@@ -909,27 +908,30 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
 
 #pragma mark - Anchored Selection Indicator
 - (CGRect)selectionIndicatorFrame {
-  CGPoint anchorPoint = [self anchorPoint];
+  CGPoint midPoint = [self midPoint];
   CGSize selectionIndicatorSize = _selectionIndicatorSize;
 
-  return CGRectMake(anchorPoint.x - selectionIndicatorSize.width * 0.5,
-                    anchorPoint.y + kSelectionIndicatorVerticalOffset, selectionIndicatorSize.width,
+  return CGRectMake(midPoint.x - selectionIndicatorSize.width * 0.5,
+                    midPoint.y + kSelectionIndicatorVerticalOffset, selectionIndicatorSize.width,
                     selectionIndicatorSize.height);
 }
 
 #pragma mark - Anchored Badge
-- (CGFloat)badgeXForRTLState:(BOOL)isRTL {
-  if (isRTL) {
-    return [self iconX] + floor([self iconSize].width * 0.5) - floor([self badgeSize].width);
-  } else {
-    return [self iconX] + floor([self iconSize].width * 0.5);
-  }
-}
-
-- (CGFloat)badgeY {
+- (CGPoint)badgePositionForRTLState:(BOOL)isRTL {
+  CGPoint iconPosition = [self iconPosition];
   CGRect indicatorFrame = [self selectionIndicatorFrame];
+  CGFloat iconX = iconPosition.x;
 
-  return CGRectGetMinY(indicatorFrame) + kBadgeVerticalOffset;
+  CGFloat badgeX;
+  if (isRTL) {
+    badgeX = iconX + floor([self iconSize].width * 0.5) - floor([self badgeSize].width);
+  } else {
+    badgeX = iconX + floor([self iconSize].width * 0.5);
+  }
+
+  CGFloat badgeY = CGRectGetMinY(indicatorFrame) + kBadgeVerticalOffset;
+
+  return CGPointMake(badgeX, badgeY);
 }
 
 - (CGSize)badgeSize {
@@ -938,18 +940,14 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
 }
 
 #pragma mark - Anchored Icon
-- (CGFloat)iconX {
-  CGPoint anchorPoint = [self anchorPoint];
+- (CGPoint)iconPosition {
+  CGPoint midPoint = [self midPoint];
+  CGFloat iconX = midPoint.x - ceil(CGRectGetMidX(_iconImageView.bounds));
+  CGFloat iconY = floor(midPoint.y + floor(_selectionIndicatorSize.height * 0.5) -
+                        floor(CGRectGetMidY(_iconImageView.bounds))) +
+                  kIconVerticalOffset;
 
-  return anchorPoint.x - ceil(_iconImageView.bounds.size.width * 0.5);
-}
-
-- (CGFloat)iconY {
-  CGPoint anchorPoint = [self anchorPoint];
-  CGRect indicatorFrame = [self selectionIndicatorFrame];
-  return floor(anchorPoint.y + floor(indicatorFrame.size.height * 0.5) -
-               floor(CGRectGetMidY(_iconImageView.bounds))) +
-         kIconVerticalOffset;
+  return CGPointMake(iconX, iconY);
 }
 
 - (CGSize)iconSize {
@@ -958,24 +956,58 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
 }
 
 #pragma mark - Anchored Label
-- (CGFloat)labelX {
-  CGPoint anchorPoint = [self anchorPoint];
-  return anchorPoint.x - ceil(CGRectGetMidX(_label.bounds));
+- (CGSize)labelSize {
+  CGSize maxSize = CGSizeMake(kMaxSizeDimension, kMaxSizeDimension);
+  return [_label sizeThatFits:maxSize];
+}
+
+- (CGFloat)labelXForRTLState:(BOOL)isRTL isHorizontalLayout:(BOOL)isHorizontalLayout {
+  if (isHorizontalLayout) {
+    return [self labelXForHorizontalLayoutWithRTLState:isRTL];
+  } else {
+    return [self labelXForVerticalLayout];
+  }
 }
 
 // Label is anchored based on the frame provided for the active indicator
 // (Not the current frame of the active indicator itself, since there may not be an indicator
 // present) This frame can be calculated and referenced even if the indicator is disabled
-- (CGFloat)labelY {
-  CGRect selectionIndicatorFrame = [self selectionIndicatorFrame];
-  CGPoint anchorPoint = [self anchorPoint];
-
-  return anchorPoint.y + floor(selectionIndicatorFrame.size.height) + kLabelVerticalOffset;
+- (CGFloat)labelYForHorizontalLayoutState:(BOOL)isHorizontalLayout {
+  if (isHorizontalLayout) {
+    return [self labelYForHorizontalLayout];
+  } else {
+    return [self labelYForVerticalLayout];
+  }
 }
 
-- (CGSize)labelSize {
-  CGSize maxSize = CGSizeMake(kMaxSizeDimension, kMaxSizeDimension);
-  return [_label sizeThatFits:maxSize];
+// Vertical Label (x,y)
+- (CGFloat)labelXForVerticalLayout {
+  CGPoint midPoint = [self midPoint];
+  return midPoint.x - ceil(CGRectGetMidX(_label.bounds));
+}
+
+- (CGFloat)labelYForVerticalLayout {
+  CGPoint midPoint = [self midPoint];
+
+  return midPoint.y + floor(_selectionIndicatorSize.height) + kLabelVerticalOffset;
+}
+
+// Horizontal Label (x, y)
+- (CGFloat)labelXForHorizontalLayoutWithRTLState:(BOOL)isRTL {
+  CGPoint midPoint = [self midPoint];
+  CGRect selectionIndicatorFrame = [self selectionIndicatorFrame];
+  CGSize labelSize = [self labelSize];
+
+  if (isRTL) {
+    return CGRectGetMinX(selectionIndicatorFrame) - labelSize.width - kLabelHorizontalOffset;
+  } else {
+    return midPoint.x + floor(_selectionIndicatorSize.width * 0.5) + kLabelHorizontalOffset;
+  }
+}
+
+- (CGFloat)labelYForHorizontalLayout {
+  CGPoint midPoint = [self midPoint];
+  return midPoint.y + CGRectGetMidY(_iconImageView.bounds);
 }
 
 #pragma mark - Branched anchored layout methods
@@ -990,37 +1022,75 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
 
   BOOL isRTL =
       self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
+  CGPoint badgePosition = [self badgePositionForRTLState:isRTL];
+  CGFloat badgeX = badgePosition.x;
+  CGFloat badgeY = badgePosition.y;
   CGRect normalizedBadgeFrame =
-      CGRectIntegral(CGRectMake([self badgeXForRTLState:isRTL], [self badgeY],
-                                badge.bounds.size.width, badge.bounds.size.height));
+      CGRectIntegral(CGRectMake(badgeX, badgeY, badge.bounds.size.width, badge.bounds.size.height));
   CGRect labelFrame = CGRectZero;
   if (![self isTitleHidden]) {
     CGSize labelSize = [self labelSize];
-    labelFrame =
-        CGRectIntegral(CGRectMake([self labelX], [self labelY], labelSize.width, labelSize.height));
+    labelFrame = CGRectIntegral(CGRectMake([self labelXForRTLState:isRTL isHorizontalLayout:NO],
+                                           [self labelYForHorizontalLayoutState:NO],
+                                           labelSize.width, labelSize.height));
   }
   return CGRectStandardize(CGRectUnion(labelFrame, CGRectUnion(iconFrame, normalizedBadgeFrame)))
       .size;
 }
 
 - (void)centerAnchoredLayout {
+  if (self.titleBelowIcon) {
+    [self centerAnchoredLayoutVertical];
+  } else {
+    [self centerAnchoredLayoutHorizontal];
+  }
+}
+
+- (void)centerAnchoredLayoutVertical {
   BOOL isRTL =
       self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
 
-  CGFloat badgeX = [self badgeXForRTLState:isRTL];
-  CGFloat badgeY = [self badgeY];
+  CGPoint badgePosition = [self badgePositionForRTLState:isRTL];
+  CGFloat badgeX = badgePosition.x;
+  CGFloat badgeY = badgePosition.y;
   CGSize badgeSize = [self badgeSize];
   CGRect badgeFrame = CGRectIntegral(CGRectMake(badgeX, badgeY, badgeSize.width, badgeSize.height));
   _badge.frame = badgeFrame;
 
-  CGFloat iconX = [self iconX];
-  CGFloat iconY = [self iconY];
+  CGPoint iconPosition = [self iconPosition];
+  CGFloat iconX = iconPosition.x;
+  CGFloat iconY = iconPosition.y;
   CGSize iconSize = [self iconSize];
   CGRect iconFrame = CGRectIntegral(CGRectMake(iconX, iconY, iconSize.width, iconSize.height));
   _iconImageView.frame = iconFrame;
 
-  CGFloat labelX = [self labelX];
-  CGFloat labelY = [self labelY];
+  CGFloat labelX = [self labelXForRTLState:isRTL isHorizontalLayout:NO];
+  CGFloat labelY = [self labelYForHorizontalLayoutState:NO];
+  CGSize labelSize = [self labelSize];
+  CGRect labelFrame = CGRectIntegral(CGRectMake(labelX, labelY, labelSize.width, labelSize.height));
+  _label.frame = labelFrame;
+}
+
+- (void)centerAnchoredLayoutHorizontal {
+  BOOL isRTL =
+      self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
+
+  CGPoint badgePosition = [self badgePositionForRTLState:isRTL];
+  CGFloat badgeX = badgePosition.x;
+  CGFloat badgeY = badgePosition.y;
+  CGSize badgeSize = [self badgeSize];
+  CGRect badgeFrame = CGRectIntegral(CGRectMake(badgeX, badgeY, badgeSize.width, badgeSize.height));
+  _badge.frame = badgeFrame;
+
+  CGPoint iconPosition = [self iconPosition];
+  CGFloat iconX = iconPosition.x;
+  CGFloat iconY = iconPosition.y;
+  CGSize iconSize = [self iconSize];
+  CGRect iconFrame = CGRectIntegral(CGRectMake(iconX, iconY, iconSize.width, iconSize.height));
+  _iconImageView.frame = iconFrame;
+
+  CGFloat labelX = [self labelXForHorizontalLayoutWithRTLState:isRTL];
+  CGFloat labelY = [self labelYForHorizontalLayout];
   CGSize labelSize = [self labelSize];
   CGRect labelFrame = CGRectIntegral(CGRectMake(labelX, labelY, labelSize.width, labelSize.height));
   _label.frame = labelFrame;
@@ -1028,15 +1098,18 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
 
 - (CGSize)sizeThatFitsForHorizontalAnchoredLayout {
   MDCBadgeView *badge = _badge;
+  BOOL isRTL =
+      self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
 
   CGSize iconSize = [self iconSize];
   CGRect iconFrame = CGRectMake(0, 0, iconSize.width, iconSize.height);
 
-  BOOL isRTL =
-      self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
+  CGPoint badgePosition = [self badgePositionForRTLState:isRTL];
+  CGFloat badgeX = badgePosition.x;
+  CGFloat badgeY = badgePosition.y;
+
   CGRect normalizedBadgeFrame =
-      CGRectIntegral(CGRectMake([self badgeXForRTLState:isRTL], [self badgeY],
-                                badge.bounds.size.width, badge.bounds.size.height));
+      CGRectIntegral(CGRectMake(badgeX, badgeY, badge.bounds.size.width, badge.bounds.size.height));
   CGSize labelSize = [self labelSize];
   CGRect labelFrame = CGRectMake(CGRectGetMaxX(iconFrame) + self.contentHorizontalMargin,
                                  floor(CGRectGetMidY(iconFrame) - labelSize.height / 2),
@@ -1045,56 +1118,4 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
       .size;
 }
 
-// Mostly unchanged from previous implementation
-// Need to refactor and fix, since horizontal layout is currently broken for anchored layout
-// TODO(b/244478503)
-- (void)calculateHorizontalAnchoredLayoutInBounds:(CGRect)contentBounds
-                                    forLabelFrame:(CGRect *)outLabelFrame
-                               iconImageViewFrame:(CGRect *)outIconFrame {
-  CGRect contentBoundingRect = CGRectStandardize(contentBounds);
-  CGSize iconImageViewSize = [self.iconImageView sizeThatFits:contentBoundingRect.size];
-  CGSize maxLabelSize = CGSizeMake(
-      contentBoundingRect.size.width - self.contentHorizontalMargin - iconImageViewSize.width,
-      contentBoundingRect.size.height);
-  CGSize labelSize = [self.label sizeThatFits:maxLabelSize];
-
-  CGFloat contentsWidth = iconImageViewSize.width + self.contentHorizontalMargin + labelSize.width;
-  CGFloat remainingContentWidth = CGRectGetWidth(contentBoundingRect);
-  if (contentsWidth > remainingContentWidth) {
-    contentsWidth = remainingContentWidth;
-  }
-  // If the content width and available width are different, the internal spacing required to center
-  // the contents.
-  CGFloat contentPadding = (remainingContentWidth - contentsWidth) / 2;
-  remainingContentWidth -= iconImageViewSize.width + self.contentHorizontalMargin;
-  if (self.truncatesTitle) {
-    labelSize = CGSizeMake(MIN(labelSize.width, remainingContentWidth), labelSize.height);
-  }
-
-  // Account for RTL
-  BOOL isRTL =
-      self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
-  NSInteger rtlCoefficient = isRTL ? -1 : 1;
-  CGFloat layoutStartingPoint =
-      isRTL ? CGRectGetMaxX(contentBoundingRect) : CGRectGetMinX(contentBoundingRect);
-
-  CGFloat centerY = CGRectGetMidY(contentBoundingRect);
-  // Amount icon center is offset from the leading edge.
-  CGFloat iconCenterOffset = contentPadding + iconImageViewSize.width / 2;
-
-  // Determine the position of the label and icon
-  CGPoint iconImageViewCenter =
-      CGPointMake(layoutStartingPoint + rtlCoefficient * iconCenterOffset, centerY);
-
-  // Assign the frames to the inout arguments
-  if (outLabelFrame != NULL) {
-    *outLabelFrame =
-        CGRectIntegral(CGRectMake([self labelX], [self labelY], labelSize.width, labelSize.height));
-  }
-  if (outIconFrame != NULL) {
-    *outIconFrame = CGRectMake(floor(iconImageViewCenter.x - (iconImageViewSize.width / 2)),
-                               floor(iconImageViewCenter.y - (iconImageViewSize.height / 2)),
-                               iconImageViewSize.width, iconImageViewSize.height);
-  }
-}
 @end
