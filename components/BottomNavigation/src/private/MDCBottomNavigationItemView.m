@@ -29,9 +29,8 @@ static const CGFloat MDCBottomNavigationItemViewRippleOpacity = (CGFloat)0.150;
 static const CGFloat MDCBottomNavigationItemViewTitleFontSize = 12;
 
 // Selection indicator animation details.
-static const CGFloat kSelectionIndicatorTransformAnimationDuration = 0.25;
+static const CGFloat kSelectionIndicatorTransformAnimationDuration = 0.20;
 static const CGFloat kSelectionIndicatorImageAnimationDuration = 0.15;
-static const CGFloat kSelectionIndicatorUnselectedScale = 0.8;
 
 /** The default value for @c numberOfLines for the title label. */
 static const NSInteger kDefaultTitleNumberOfLines = 1;
@@ -564,7 +563,11 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
   // noise on the unselected item.
   if (selected && animated && _showsSelectionIndicator) {
     [UIView animateWithDuration:kSelectionIndicatorTransformAnimationDuration
-                     animations:selectionIndicatorAnimations];
+                          delay:0
+                        options:UIViewAnimationOptionCurveLinear
+                     animations:selectionIndicatorAnimations
+                     completion:nil];
+
     [UIView animateWithDuration:kSelectionIndicatorImageAnimationDuration
                           delay:0
                         options:UIViewAnimationOptionCurveLinear
@@ -717,8 +720,7 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
     _selectionIndicator.transform = CGAffineTransformIdentity;
     _selectionIndicator.alpha = 1.0;
   } else {
-    _selectionIndicator.transform = CGAffineTransformMakeScale(kSelectionIndicatorUnselectedScale,
-                                                               kSelectionIndicatorUnselectedScale);
+    _selectionIndicator.transform = CGAffineTransformMakeScale(0.25, 1);
     _selectionIndicator.alpha = 0;
   }
 }
