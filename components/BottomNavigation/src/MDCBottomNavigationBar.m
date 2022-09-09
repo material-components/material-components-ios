@@ -214,12 +214,18 @@ static BOOL gEnablePerformantShadow = NO;
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  CGFloat height = self.barHeight;
-  if (self.barHeight <= 0) {
-    height = kBarHeightStackedTitle;
-    if (self.alignment == MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles &&
-        self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
-      height = kBarHeightAdjacentTitle;
+  CGFloat height;
+  if ([self shouldUseAnchoredLayout]) {
+    height = [self calculateBarHeight];
+  } else {
+    height = self.barHeight;
+
+    if (height <= 0) {
+      height = kBarHeightStackedTitle;
+      if (self.alignment == MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles &&
+          self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
+        height = kBarHeightAdjacentTitle;
+      }
     }
   }
 
@@ -275,6 +281,17 @@ static BOOL gEnablePerformantShadow = NO;
 }
 
 - (CGFloat)calculateBarHeight {
+  if ([self shouldUseAnchoredLayout]) {
+    if ([self itemViewsShouldAlwaysHideTitles] ||
+        [self barHeightShouldShrinkBasedOnTraitCollection:self.traitCollection]) {
+      // Return _barHeightWithoutTitles if it has been set to a positive value.
+      // If _barHeightWithoutTitles is 0 (default value) or negative, return _barHeight instead.
+      return _barHeightWithoutTitles > 0 ? _barHeightWithoutTitles : _barHeight;
+    } else {
+      return _barHeight;
+    }
+  }
+
   CGFloat height = self.isTitleBelowIcon ? kBarHeightStackedTitle : kBarHeightAdjacentTitle;
   if (self.barHeight > 0) {
     height = self.barHeight;
@@ -350,11 +367,19 @@ static BOOL gEnablePerformantShadow = NO;
   if (numItems == 0) {
     return;
   }
-  CGFloat navBarHeight = CGRectGetHeight(self.itemsLayoutView.bounds);
+
+  CGFloat navBarHeight;
+
+  if ([self shouldUseAnchoredLayout]) {
+    navBarHeight = [self calculateBarHeight];
+  } else {
+    navBarHeight = CGRectGetHeight(self.itemsLayoutView.bounds);
+  }
+
   CGFloat itemWidth = CGRectGetWidth(self.itemLayoutFrame) / numItems;
   for (NSUInteger i = 0; i < self.itemViews.count; i++) {
     MDCBottomNavigationItemView *itemView = self.itemViews[i];
-    itemView.titleBelowIcon = self.isTitleBelowIcon;
+    [self configureTitleStateForItemView:itemView];
     if (layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
       itemView.frame = CGRectMake(
           floor(CGRectGetMinX(self.itemLayoutFrame) + i * itemWidth + self.itemsHorizontalPadding),
@@ -584,6 +609,7 @@ static BOOL gEnablePerformantShadow = NO;
     itemView.rippleTouchController.delegate = self;
     itemView.selected = NO;
 
+    [self configureTitleStateForItemView:itemView];
     [self configureItemView:itemView withItem:items[i]];
 
     [itemView.button addTarget:self
@@ -759,7 +785,7 @@ static BOOL gEnablePerformantShadow = NO;
   }
   _alignment = alignment;
   for (MDCBottomNavigationItemView *itemView in self.itemViews) {
-    itemView.titleBelowIcon = self.isTitleBelowIcon;
+    [self configureTitleStateForItemView:itemView];
   }
   [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
@@ -981,4 +1007,28 @@ static BOOL gEnablePerformantShadow = NO;
   }
 }
 
+// TODO(b/244765238): Remove branching layout logic after GM3 migrations
+// Assume that setting itemBadgeHorizontalOffset to any value other than its default (0) should
+// activate the new anchored/GM3 layout, and assume that anyone applying GM3 branding for Bottom
+// Navigation will use a non-zero offset.
+- (BOOL)shouldUseAnchoredLayout {
+  return _itemBadgeHorizontalOffset != 0;
+}
+
+- (BOOL)itemViewsShouldAlwaysHideTitles {
+  return _titleVisibility == MDCBottomNavigationBarTitleVisibilityNever;
+}
+
+- (BOOL)barHeightShouldShrinkBasedOnTraitCollection:(UITraitCollection *)traitCollection {
+  return traitCollection.verticalSizeClass == UIUserInterfaceSizeClassCompact ||
+         [self itemViewsShouldAlwaysHideTitles];
+}
+
+- (void)configureTitleStateForItemView:(MDCBottomNavigationItemView *)itemView {
+  if ([self shouldUseAnchoredLayout]) {
+    itemView.titleBelowIcon = ![self itemViewsShouldAlwaysHideTitles];
+  } else {
+    itemView.titleBelowIcon = self.isTitleBelowIcon;
+  }
+}
 @end

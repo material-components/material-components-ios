@@ -51,6 +51,8 @@ static const CGFloat kBadgeVerticalOffset = 2.0f;
 static const CGFloat kIconVerticalOffset = 1.0;
 static const CGFloat kLabelVerticalOffset = 7.0;
 static const CGFloat kSelectionIndicatorVerticalOffset = 1.0;
+
+// Used in horizontal layout only. Offset between label and adjacent image.
 static const CGFloat kLabelHorizontalOffset = 8.0;
 
 // The duration of the (de)selection transition animation.
@@ -147,7 +149,7 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
   }
 }
 
-- (BOOL)isTitleHidden {
+- (BOOL)isTitleHiddenInLegacyLayout {
   return self.titleVisibility == MDCBottomNavigationBarTitleVisibilityNever ||
          (self.titleVisibility == MDCBottomNavigationBarTitleVisibilitySelected && !self.selected);
 }
@@ -167,7 +169,7 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
       CGRectMake(floor(badgeCenter.x - badgeSize.width / 2),
                  floor(badgeCenter.y - badgeSize.height / 2), badgeSize.width, badgeSize.height);
   CGRect labelFrame = CGRectZero;
-  if (![self isTitleHidden]) {
+  if (![self isTitleHiddenInLegacyLayout]) {
     CGSize labelSize = [self.label sizeThatFits:maxSize];
     labelFrame = CGRectMake(floor(CGRectGetMidX(iconFrame) - labelSize.width / 2),
                             CGRectGetMaxY(iconFrame) + self.contentVerticalMargin, labelSize.width,
@@ -227,7 +229,7 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
   CGFloat iconHeight = iconImageViewSize.height;
   CGFloat labelHeight = labelSize.height;
   CGFloat totalContentHeight = iconHeight;
-  if (![self isTitleHidden]) {
+  if (![self isTitleHiddenInLegacyLayout]) {
     totalContentHeight += labelHeight + self.contentVerticalMargin;
   }
 
@@ -242,7 +244,7 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
   CGPoint iconImageViewCenter = CGPointMake(centerX, iconImageViewCenterY);
   // Ignore the horizontal titlePositionAdjustment in a vertical layout to match UITabBar behavior.
   CGFloat centerY;
-  if ([self isTitleHidden]) {
+  if ([self isTitleHiddenInLegacyLayout]) {
     centerY = iconImageViewCenter.y + iconHeight / 2 + self.titlePositionAdjustment.vertical +
               self.contentVerticalMargin / 2;
   } else {
@@ -858,21 +860,21 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
 
 // midPoint is the main point around which the item view's content is centered.
 // In a labelless layout, it is the center point of the item view (0.5x, 0.5y).
-// In a horizontal layout with labels, it is also the center point of the item view.
-// In a vertical layout with labels, it has a slight negative-Y offset (0.5x, 0.5y - yOffset). This
+// In a labeled layout, it is also the center point of the item view.
+// In a labeled, it has a slight negative-Y offset (0.5x, 0.5y - yOffset). This
 // shifts it upwards, to account for the label. The selection indicator serves as the main point of
 // reference for all other views. The iconView and badge are enclosed within it. When labels are
 // enabled, the label is adjacent to the indicator.
 
 // (note: these views are all siblings of each other, as well as direct subviews of the ItemView)
 // selectionIndicator: Positioned based on midPoint.
-// iconView: Positioned based on midPoint and selectionIndicator.
-// badge: Positioned based on selectionIndicator and iconView.
-// label: Positioned based on selectionIndicator and midPoint, depending on current layout &
-// language states: (horizontal || vertical) && (LTR || RTL)
+// IconView: Positioned based on midPoint and selectionIndicator.
+// Badge: Positioned based on selectionIndicator and iconView.
+// Label: Positioned based on selectionIndicator and midPoint, depending on current layout
+// label is hidden in horizontal layout
+// States: (horizontal || vertical) && (LTR || RTL)
 
 //        labelless                      labeled
-// (vertical and horizontal)            (vertical)
 //  ---------------------         ---------------------
 // |                     |       |                     |
 // |                     |       |                     |
@@ -885,15 +887,14 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
 // |                     |       |                     |
 //  ---------------------         ---------------------
 
-//   RTL badge and label           LTR badge and label
-//      (horizontal)                  (horizontal)
+//         LTR badge                    RTL badge
 //  ---------------------         ---------------------
 // |                     |       |                     |
 // |                     |       |                     |
 // |                     |       |                     |
-// |           -----     |       |     -----           |
-// |  <label> | *o  |    |       |    |  o* | <label>  |
-// |           -----     |       |     -----           |
+// |        -----        |       |        -----        |
+// |       |  o* |       |       |       | *o  |       |
+// |        -----        |       |        -----        |
 // |                     |       |                     |
 // |                     |       |                     |
 // |                     |       |                     |
@@ -903,7 +904,9 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
   CGFloat x = floor(CGRectGetMidX(self.bounds));
   CGFloat y;
 
-  if (self.titleVisibility == MDCBottomNavigationBarTitleVisibilityNever || !self.titleBelowIcon) {
+  // Layout is centered when title labels are not visible
+
+  if ([self isTitleHiddenInAnchoredLayout]) {
     y = floor(CGRectGetMidY(self.bounds)) + kAnchorVerticalOffsetWithoutLabel;
   } else {
     y = floor(CGRectGetMidY(self.bounds)) + kAnchorVerticalOffsetWithLabel;
@@ -948,7 +951,9 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
 #pragma mark - Anchored Icon
 - (CGPoint)iconPosition {
   CGPoint midPoint = [self midPoint];
-  CGFloat iconX = midPoint.x - ceil(CGRectGetMidX(_iconImageView.bounds));
+  CGFloat indicatorMidX = CGRectGetMidX(_selectionIndicator.frame);
+
+  CGFloat iconX = indicatorMidX - CGRectGetMidX(_iconImageView.bounds);
   CGFloat iconY = floor(midPoint.y + floor(_selectionIndicatorSize.height * 0.5) -
                         floor(CGRectGetMidY(_iconImageView.bounds))) +
                   kIconVerticalOffset;
@@ -963,8 +968,12 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
 
 #pragma mark - Anchored Label
 - (CGSize)labelSize {
-  CGSize maxSize = CGSizeMake(kMaxSizeDimension, kMaxSizeDimension);
-  return [_label sizeThatFits:maxSize];
+  if ([self isTitleHiddenInAnchoredLayout]) {
+    return CGSizeZero;
+  } else {
+    CGSize maxSize = CGSizeMake(kMaxSizeDimension, kMaxSizeDimension);
+    return [_label sizeThatFits:maxSize];
+  }
 }
 
 - (CGFloat)labelXForRTLState:(BOOL)isRTL isHorizontalLayout:(BOOL)isHorizontalLayout {
@@ -989,7 +998,7 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
 // Vertical Label (x,y)
 - (CGFloat)labelXForVerticalLayout {
   CGPoint midPoint = [self midPoint];
-  return midPoint.x - ceil(CGRectGetMidX(_label.bounds));
+  return midPoint.x - CGRectGetMidX(_label.bounds);
 }
 
 - (CGFloat)labelYForVerticalLayout {
@@ -1024,7 +1033,7 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
   MDCBadgeView *badge = _badge;
 
   CGSize iconSize = [self iconSize];
-  CGRect iconFrame = CGRectMake(0, 0, iconSize.width, iconSize.height);
+  CGRect iconFrame = CGRectIntegral(CGRectMake(0, 0, iconSize.width, iconSize.height));
 
   BOOL isRTL =
       self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
@@ -1034,7 +1043,7 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
   CGRect normalizedBadgeFrame =
       CGRectIntegral(CGRectMake(badgeX, badgeY, badge.bounds.size.width, badge.bounds.size.height));
   CGRect labelFrame = CGRectZero;
-  if (![self isTitleHidden]) {
+  if (![self isTitleHiddenInAnchoredLayout]) {
     CGSize labelSize = [self labelSize];
     labelFrame = CGRectIntegral(CGRectMake([self labelXForRTLState:isRTL isHorizontalLayout:NO],
                                            [self labelYForHorizontalLayoutState:NO],
@@ -1045,10 +1054,10 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
 }
 
 - (void)centerAnchoredLayout {
-  if (self.titleBelowIcon) {
-    [self centerAnchoredLayoutVertical];
-  } else {
+  if ([self isTitleHiddenInAnchoredLayout]) {
     [self centerAnchoredLayoutHorizontal];
+  } else {
+    [self centerAnchoredLayoutVertical];
   }
 }
 
@@ -1067,7 +1076,7 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
   CGFloat iconX = iconPosition.x;
   CGFloat iconY = iconPosition.y;
   CGSize iconSize = [self iconSize];
-  CGRect iconFrame = CGRectIntegral(CGRectMake(iconX, iconY, iconSize.width, iconSize.height));
+  CGRect iconFrame = (CGRectMake(iconX, iconY, iconSize.width, iconSize.height));
   _iconImageView.frame = iconFrame;
 
   CGFloat labelX = [self labelXForRTLState:isRTL isHorizontalLayout:NO];
@@ -1122,6 +1131,20 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
                                  labelSize.width, labelSize.height);
   return CGRectStandardize(CGRectUnion(labelFrame, CGRectUnion(iconFrame, normalizedBadgeFrame)))
       .size;
+}
+
+#pragma mark - traitCollection
+
+// MDCBottomNavigationBarTitleVisibilitySelected is not available in GM3.
+// In any given state, all labels are visible, OR all labels are hidden.
+
+// (self.titleVisibility == MDCBottomNavigationBarTitleVisibilitySelected && !self.selected) is not
+// checked because selection state is not a condition for label visibility in GM3.
+- (BOOL)isTitleHiddenInAnchoredLayout {
+  UITraitCollection *traitCollection = self.traitCollection;
+
+  return traitCollection.verticalSizeClass == UIUserInterfaceSizeClassCompact ||
+         _titleVisibility == MDCBottomNavigationBarTitleVisibilityNever;
 }
 
 @end

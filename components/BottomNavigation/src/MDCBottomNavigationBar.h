@@ -235,6 +235,13 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
 @property(nonatomic, assign) CGFloat barHeight;
 
 /**
+ Sets the height of the navigation bar when titles are not present.
+
+ Defaults to barHeight's value.
+ */
+@property(nonatomic, assign) CGFloat barHeightWithoutTitles;
+
+/**
  Returns the navigation bar subview associated with the specific item.
 
  @param item A UITabBarItem
