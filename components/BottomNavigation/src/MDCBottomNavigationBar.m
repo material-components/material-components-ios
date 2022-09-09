@@ -940,6 +940,15 @@ static BOOL gEnablePerformantShadow = NO;
   }
 }
 
+- (void)setItemBadgeHorizontalOffset:(CGFloat)itemBadgeHorizontalOffset {
+  _itemBadgeHorizontalOffset = itemBadgeHorizontalOffset;
+
+  for (NSUInteger i = 0; i < self.items.count; ++i) {
+    MDCBottomNavigationItemView *itemView = self.itemViews[i];
+    itemView.badgeHorizontalOffset = itemBadgeHorizontalOffset;
+  }
+}
+
 // TODO(featherless): Delete once everyone has migrated to itemBadgeAppearance.
 - (void)setItemBadgeBackgroundColor:(UIColor *)itemBadgeBackgroundColor {
   _itemBadgeBackgroundColor = itemBadgeBackgroundColor;

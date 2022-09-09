@@ -283,6 +283,19 @@ traitCollectionDidChange:. The block is called after the call to the superclass.
         "itemBadgeAppearance.backgroundColor", ios(12, 12));
 
 /**
+ X-offset for Badge position.
+
+ Set this property to adjust horizontal spacing between badges and icons, within item views.
+
+ The additive inverse of this value is applied for RTL layouts. Set this value based on LTR.
+
+ Increasing values shift towards the right, and decreasing values shift towards the left.
+
+ Default is 0.
+ */
+@property(nonatomic, assign) CGFloat itemBadgeHorizontalOffset;
+
+/**
  Text color for badges.
 
  This property is a proxy for itemBadgeAppearance.textColor.

@@ -113,6 +113,16 @@ __attribute__((objc_subclassing_restricted))
 @property(nonatomic, copy, nonnull) MDCBadgeAppearance *badgeAppearance;
 
 /**
+ X-offset for Badge position.
+
+ This property should be set in the BottomNavigationBar, which will then propagate it to its item
+ views.
+
+ Default is 0.
+ */
+@property(nonatomic, assign) CGFloat badgeHorizontalOffset;
+
+/**
  The background color of this item's badge.
 
  If not nil, this value will override badgeAppearance.backgroundColor. If nil, then

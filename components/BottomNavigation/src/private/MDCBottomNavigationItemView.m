@@ -678,6 +678,11 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
   self.button.accessibilityIdentifier = accessibilityElementIdentifier;
 }
 
+- (void)setBadgeHorizontalOffset:(CGFloat)badgeHorizontalOffset {
+  _badgeHorizontalOffset = badgeHorizontalOffset;
+  [self setNeedsLayout];
+}
+
 - (NSString *)accessibilityElementIdentifier {
   return self.button.accessibilityIdentifier;
 }
@@ -924,9 +929,10 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
 
   CGFloat badgeX;
   if (isRTL) {
-    badgeX = iconX + floor([self iconSize].width * 0.5) - floor([self badgeSize].width);
+    badgeX = iconX + floor([self iconSize].width * 0.5) - floor([self badgeSize].width) -
+             _badgeHorizontalOffset;
   } else {
-    badgeX = iconX + floor([self iconSize].width * 0.5);
+    badgeX = iconX + floor([self iconSize].width * 0.5) + _badgeHorizontalOffset;
   }
 
   CGFloat badgeY = CGRectGetMinY(indicatorFrame) + kBadgeVerticalOffset;
