@@ -512,9 +512,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
                                                                                   radius:radius];
     indicator.opacity = kPageControlIndicatorDefaultOpacity;
     [_containerView.layer addSublayer:indicator];
-    NSInteger pageNumber = i;
     if ([self isRTL]) {
-      pageNumber = _numberOfPages - 1 - i;
       [_indicators insertObject:indicator atIndex:0];
       [_indicatorPositions insertObject:[NSValue valueWithCGPoint:indicator.position] atIndex:0];
     } else {
