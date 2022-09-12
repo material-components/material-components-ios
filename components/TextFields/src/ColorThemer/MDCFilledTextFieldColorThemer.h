@@ -14,8 +14,8 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MaterialColorScheme.h"
-#import "MaterialTextFields.h"
+@class MDCTextInputControllerFilled;
+@protocol MDCColorScheming;
 
 API_DEPRECATED_BEGIN("Use UITextField and UITextView within grouped list cells."
                      "See go/material-ios-text-fields for more details.",

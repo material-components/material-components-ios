@@ -18,6 +18,8 @@ API_DEPRECATED_BEGIN("Use UITextField and UITextView within grouped list cells."
                      "See go/material-ios-text-fields for more details.",
                      ios(12, 12))
 
+@protocol MDCTextInput;
+
 /**
  MDCMultilineTextInputDelegate has a method common to the UITextFieldDelegate protocol but not
  found in UITextViewDelegate.

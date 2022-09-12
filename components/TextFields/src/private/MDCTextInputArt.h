@@ -22,6 +22,9 @@ static const CGFloat MDCTextInputClearButtonImageBuiltInPadding = 2;
 
 #pragma mark - Drawing
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-function"
+
 static inline UIBezierPath *MDCPathForClearButtonImageFrame(CGRect frame) {
   // GENERATED CODE
 
@@ -191,5 +194,7 @@ static inline UIBezierPath *MDCPathForClearButtonLegacyImageFrame(CGRect frame) 
 
   return ic_clear_path;
 }
+
+#pragma clang diagnostic pop
 
 API_DEPRECATED_END

@@ -13,6 +13,9 @@
 // limitations under the License.
 
 #import "MDCFilledTextFieldColorThemer.h"
+#import "MDCTextInput.h"
+#import "MDCTextInputControllerFilled.h"
+#import "MDCSemanticColorScheme.h"
 
 static CGFloat const kFilledTextFieldActiveAlpha = (CGFloat)0.87;
 static CGFloat const kFilledTextFieldOnSurfaceAlpha = (CGFloat)0.6;
