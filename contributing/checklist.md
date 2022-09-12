@@ -445,9 +445,6 @@ IB_DESIGNABLE
 
 Nullability annotations improve Swift usage of a component's APIs. Learn more in Apple's [documentation](https://developer.apple.com/library/prerelease/content/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html).
 
-Material Components explicitly annotate all public APIs rather than use `NS_ASSUME_NONNULL_BEGIN`. This is an intentional deviation from Apple’s practice of using the `ASSUME` macros. [Further reading](http://nshipster.com/swift-1.2/#nullability-annotations)
-
-
 1. Add nullability annotations to every header of your component.
 1. Enter YES or NO
 
