@@ -956,9 +956,8 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
   CGFloat indicatorMidX = CGRectGetMidX(_selectionIndicator.frame);
 
   CGFloat iconX = indicatorMidX - CGRectGetMidX(_iconImageView.bounds);
-  CGFloat iconY = floor(midPoint.y + floor(_selectionIndicatorSize.height * 0.5) -
-                        floor(CGRectGetMidY(_iconImageView.bounds))) +
-                  kIconVerticalOffset;
+  CGFloat iconY = midPoint.y + (_selectionIndicatorSize.height * 0.5) -
+                  CGRectGetMidY(_iconImageView.bounds) + kIconVerticalOffset;
 
   return CGPointMake(iconX, iconY);
 }
