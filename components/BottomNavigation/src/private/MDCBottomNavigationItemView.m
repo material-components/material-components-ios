@@ -29,8 +29,7 @@ static const CGFloat MDCBottomNavigationItemViewRippleOpacity = (CGFloat)0.150;
 static const CGFloat MDCBottomNavigationItemViewTitleFontSize = 12;
 
 // Selection indicator animation details.
-static const CGFloat kSelectionIndicatorTransformAnimationDuration = 0.20;
-static const CGFloat kSelectionIndicatorImageAnimationDuration = 0.15;
+static const CGFloat kSelectionIndicatorTransformAnimationDuration = 0.17;
 
 /** The default value for @c numberOfLines for the title label. */
 static const NSInteger kDefaultTitleNumberOfLines = 1;
@@ -69,14 +68,6 @@ const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, 
 #if TARGET_IPHONE_SIMULATOR
 UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coefficient.
 #endif
-
-static CGFloat SimulatorAnimationDragCoefficient(void) {
-#if TARGET_IPHONE_SIMULATOR
-  return UIAnimationDragCoefficient();
-#else
-  return 1.0;
-#endif
-}
 
 @interface MDCBottomNavigationItemView ()
 
@@ -549,7 +540,8 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
     [self commitSelectionIndicatorState];
     [self centerLayoutAnimated:animated];
   };
-  void (^imageAnimations)(void) = ^{
+
+  void (^imageAdjustments)(void) = ^{
     if (selected) {
       self.iconImageView.tintColor = self.selectedItemTintColor;
       self.iconImageView.image = (self.selectedImage) ? self.selectedImage : self.image;
@@ -564,26 +556,14 @@ static CGFloat SimulatorAnimationDragCoefficient(void) {
   if (selected && animated && _showsSelectionIndicator) {
     [UIView animateWithDuration:kSelectionIndicatorTransformAnimationDuration
                           delay:0
-                        options:UIViewAnimationOptionCurveLinear
+                        options:UIViewAnimationOptionCurveEaseOut
                      animations:selectionIndicatorAnimations
                      completion:nil];
 
-    [UIView animateWithDuration:kSelectionIndicatorImageAnimationDuration
-                          delay:0
-                        options:UIViewAnimationOptionCurveLinear
-                     animations:imageAnimations
-                     completion:nil];
-
-    CATransition *transition = [CATransition animation];
-    transition.duration =
-        kSelectionIndicatorImageAnimationDuration * SimulatorAnimationDragCoefficient();
-    transition.timingFunction =
-        [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-    transition.type = kCATransitionFade;
-    [self.iconImageView.layer addAnimation:transition forKey:nil];
+    imageAdjustments();
   } else {
     selectionIndicatorAnimations();
-    imageAnimations();
+    imageAdjustments();
   }
 }
 
