@@ -14,8 +14,15 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/UIFont+MaterialTypographyPrivate.h"
-#import "MaterialTypography.h"
+#import "MDCFontTextStyle.h"
+#import "MDCTypography.h"
+#import "UIFont+MaterialTypography.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "UIFont+MaterialTypographyPrivate.h"
+#pragma clang diagnostic pop
+
+NS_ASSUME_NONNULL_BEGIN
 
 static const CGFloat kEpsilon = (CGFloat)0.001;
 /**
@@ -40,7 +47,7 @@ static const CGFloat kEpsilon = (CGFloat)0.001;
 
 @implementation BodoniOrnamentsFontLoader
 
-- (UIFont *)lightFontOfSize:(CGFloat)fontSize {
+- (nullable UIFont *)lightFontOfSize:(CGFloat)fontSize {
   return [UIFont fontWithName:@"Bodoni Ornaments" size:fontSize];
 }
 
@@ -48,7 +55,7 @@ static const CGFloat kEpsilon = (CGFloat)0.001;
   return [UIFont fontWithName:@"Bodoni Ornaments" size:fontSize];
 }
 
-- (UIFont *)mediumFontOfSize:(CGFloat)fontSize {
+- (nullable UIFont *)mediumFontOfSize:(CGFloat)fontSize {
   return [UIFont fontWithName:@"Bodoni Ornaments" size:fontSize];
 }
 
@@ -201,3 +208,5 @@ static const CGFloat kEpsilon = (CGFloat)0.001;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
