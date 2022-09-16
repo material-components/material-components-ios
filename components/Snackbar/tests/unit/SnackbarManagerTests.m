@@ -58,7 +58,7 @@
     [MDCSnackbarManager.defaultManager showMessage:suspendedMessage];
 
     // When
-    token = nil;
+    (void)token;
   }
 
   // Then
