@@ -17,6 +17,8 @@
 #import <UIKit/UIKit.h>
 #import <math.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 static inline BOOL MDCCGFloatEqual(CGFloat a, CGFloat b) {
   const CGFloat constantK = 3;
 #if CGFLOAT_IS_DOUBLE
@@ -29,6 +31,8 @@ static inline BOOL MDCCGFloatEqual(CGFloat a, CGFloat b) {
   return (fabs(a - b) < constantK * epsilon * fabs(a + b) || fabs(a - b) < min);
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-function"
 /**
  Checks whether the provided floating point number is approximately zero based on a small epsilon.
 
@@ -45,12 +49,18 @@ static inline BOOL MDCFloatIsApproximatelyZero(CGFloat value) {
   return (fabsf(value) < FLT_EPSILON);
 #endif
 }
+#pragma clang diagnostic pop
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-function"
 // Checks whether the provided floating point number is exactly zero.
 static inline BOOL MDCCGFloatIsExactlyZero(CGFloat value) {
   return (value == 0);
 }
+#pragma clang diagnostic pop
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-function"
 /**
  Round the given value to ceiling with provided scale factor.
  If @c scale is zero, then the rounded value will be zero.
@@ -66,7 +76,10 @@ static inline CGFloat MDCCeilScaled(CGFloat value, CGFloat scale) {
 
   return ceil(value * scale) / scale;
 }
+#pragma clang diagnostic pop
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-function"
 /**
  Round the given value to floor with provided scale factor.
  If @c scale is zero, then the rounded value will be zero.
@@ -82,7 +95,10 @@ static inline CGFloat MDCFloorScaled(CGFloat value, CGFloat scale) {
 
   return floor(value * scale) / scale;
 }
+#pragma clang diagnostic pop
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-function"
 /**
  Expand `rect' to the smallest standardized rect containing it with pixel-aligned origin and size.
  If @c scale is zero, then a scale of 1 will be used instead.
@@ -115,6 +131,7 @@ static inline CGRect MDCRectAlignToScale(CGRect rect, CGFloat scale) {
                     ceil((CGRectGetWidth(rect) + adjustWidthHeight.width) * scale) / scale,
                     ceil((CGRectGetHeight(rect) + adjustWidthHeight.height) * scale) / scale);
 }
+#pragma clang diagnostic pop
 
 static inline CGPoint MDCPointRoundWithScale(CGPoint point, CGFloat scale) {
   if (MDCCGFloatEqual(scale, 0)) {
@@ -124,6 +141,8 @@ static inline CGPoint MDCPointRoundWithScale(CGPoint point, CGFloat scale) {
   return CGPointMake(round(point.x * scale) / scale, round(point.y * scale) / scale);
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-function"
 /**
  Expand `size' to the closest larger pixel-aligned value.
  If @c scale is zero, then a CGSizeZero will be returned.
@@ -140,7 +159,10 @@ static inline CGSize MDCSizeCeilWithScale(CGSize size, CGFloat scale) {
 
   return CGSizeMake(ceil(size.width * scale) / scale, ceil(size.height * scale) / scale);
 }
+#pragma clang diagnostic pop
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-function"
 /**
  Align the centerPoint of a view so that its origin is pixel-aligned to the nearest pixel.
  Returns @c CGRectZero if @c scale is zero or @c bounds is @c CGRectNull.
@@ -164,7 +186,10 @@ static inline CGPoint MDCRoundCenterWithBoundsAndScale(CGPoint center,
   origin = MDCPointRoundWithScale(origin, scale);
   return CGPointMake(origin.x + halfWidth, origin.y + halfHeight);
 }
+#pragma clang diagnostic pop
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-function"
 /// Compare two edge insets using MDCCGFloatEqual.
 /// @param insets1 An edge inset to compare with insets2
 /// @param insets2 An edge inset to compare with insets1
@@ -175,3 +200,6 @@ static inline BOOL MDCEdgeInsetsEqualToEdgeInsets(UIEdgeInsets insets1, UIEdgeIn
   BOOL rightEqual = MDCCGFloatEqual(insets1.right, insets2.right);
   return topEqual && leftEqual && bottomEqual && rightEqual;
 }
+#pragma clang diagnostic pop
+
+NS_ASSUME_NONNULL_END
