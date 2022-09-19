@@ -278,7 +278,8 @@ NSString *const MDCCollectionInfoBarKindFooter = @"MDCCollectionInfoBarKindFoote
     CGFloat cellWidth = bounds - insets - (_styler.gridPadding * (_styler.gridColumnCount - 1));
     return cellWidth / _styler.gridColumnCount;
   }
-  return bounds - insets;
+  // Make sure we don't return negative numbers, because will trigger exception
+  return MAX(0, bounds - insets);
 }
 
 - (UIEdgeInsets)insetsAtSectionIndex:(NSInteger)section
