@@ -13,14 +13,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "MDCTextControl.h"
 #import "MDCTextControlTextFieldSideViewAlignment.h"  // IWYU pragma: keep
 
 API_DEPRECATED_BEGIN("Use a branded UITextField (go/material-ios-text-fields) or branded "
                      "UITextView (go/material-ios-text-views) instead",
                      ios(12, 12))
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol MDCTextControlTextField <MDCTextControl>
 @property(nonatomic, assign, readonly) MDCTextControlTextFieldSideViewAlignment sideViewAlignment;
 @end
+
+NS_ASSUME_NONNULL_END
 
 API_DEPRECATED_END

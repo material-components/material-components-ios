@@ -13,9 +13,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import "Foundation/Foundation.h"
+
 API_DEPRECATED_BEGIN("Use a branded UITextField (go/material-ios-text-fields) or branded "
                      "UITextView (go/material-ios-text-views) instead",
                      ios(12, 12))
+
+NS_ASSUME_NONNULL_BEGIN
 
 /**
  This enum describes different approaches to vertically positioning side views (@c leadingView, @c
@@ -32,5 +36,7 @@ typedef NS_ENUM(NSUInteger, MDCTextControlTextFieldSideViewAlignment) {
    */
   MDCTextControlTextFieldSideViewAlignmentAlignedWithText,
 };
+
+NS_ASSUME_NONNULL_END
 
 API_DEPRECATED_END
