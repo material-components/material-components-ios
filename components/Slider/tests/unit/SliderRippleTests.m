@@ -14,12 +14,19 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCSlider+Private.h"
-#import "MaterialInk.h"
-#import "MaterialPalettes.h"
-#import "MaterialRipple.h"
-#import "MaterialSlider.h"
-#import "MaterialThumbTrack.h"
+#import "MDCInkTouchController.h"
+#import "MDCInkView.h"
+#import "MDCPalettes.h"
+#import "MDCRippleView.h"
+#import "MDCSlider.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCSlider+Private.h"
+#import "MDCThumbTrack.h"
+#import "MDCThumbView.h"
+#pragma clang diagnostic pop
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface MDCThumbTrack (Testing)
 @property(nonatomic, strong, nullable) MDCRippleView *rippleView;
@@ -111,3 +118,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

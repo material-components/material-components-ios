@@ -14,12 +14,21 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCSlider+Private.h"
-#import "MaterialPalettes.h"
-#import "MaterialSlider.h"
+#import "MDCPalettes.h"
+#import "MDCShadowElevations.h"
+#import "MDCSlider.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCSlider+Private.h"
+#pragma clang diagnostic pop
 #import "MockUIImpactFeedbackGenerator.h"
-#import "MaterialTypography.h"
-#import "MaterialThumbTrack.h"
+#import "MDCTypography.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCThumbTrack.h"
+#pragma clang diagnostic pop
+
+NS_ASSUME_NONNULL_BEGIN
 
 static const int kNumberOfRepeats = 20;
 static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
@@ -1538,3 +1547,5 @@ static const CGFloat kEpsilonAccuracy = (CGFloat)0.001;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

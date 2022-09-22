@@ -12,15 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialSnapshot.h"
+#import "MDCAvailability.h"
+#import "MDCSlider.h"
 
 #import <UIKit/UIKit.h>
 
-#import "../../src/private/MDCSlider+Private.h"
-#import "../../src/private/MDCSlider_Subclassable.h"
-#import "MaterialAvailability.h"
-#import "MaterialSlider.h"
-#import "MaterialThumbTrack.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCSlider+Private.h"
+#import "MDCSnapshotTestCase.h"
+#import "UIView+MDCSnapshot.h"
+#import "MDCThumbTrack.h"
+#import "MDCThumbView.h"
+#pragma clang diagnostic pop
+
+NS_ASSUME_NONNULL_BEGIN
 
 /** A @c UITouch subclass where the location can be set. */
 @interface MDCSliderSnapshotTestTouchFake : UITouch
@@ -31,7 +37,7 @@
 
 @implementation MDCSliderSnapshotTestTouchFake
 
-- (CGPoint)locationInView:(UIView *)view {
+- (CGPoint)locationInView:(nullable UIView *)view {
   return self.mdc_touchPoint;
 }
 
@@ -83,19 +89,10 @@ static void MoveSliderThumbToRelativePosition(MDCSlider *slider,
  */
 @interface MDCSliderWithCustomTraitCollection : MDCSlider
 @property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
-@property(nonatomic, strong) MDCThumbTrack *thumbTrack;
 
 @end
 
 @implementation MDCSliderWithCustomTraitCollection
-
-- (MDCThumbTrack *)thumbTrack {
-  return _thumbTrack;
-}
-
-- (void)setThumbTrack:(MDCThumbTrack *)thumbTrack {
-  _thumbTrack = thumbTrack;
-}
 
 - (UITraitCollection *)traitCollection {
   return self.traitCollectionOverride ?: [super traitCollection];
@@ -103,7 +100,7 @@ static void MoveSliderThumbToRelativePosition(MDCSlider *slider,
 @end
 
 @interface MDCSliderSnapshotTests : MDCSnapshotTestCase
-@property(nonatomic, strong) MDCSliderWithCustomTraitCollection *slider;
+@property(nonatomic, strong, nullable) MDCSliderWithCustomTraitCollection *slider;
 @end
 
 @implementation MDCSliderSnapshotTests
@@ -857,3 +854,5 @@ static void MoveSliderThumbToRelativePosition(MDCSlider *slider,
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
