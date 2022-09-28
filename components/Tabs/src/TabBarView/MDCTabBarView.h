@@ -85,9 +85,11 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
 @property(nonnull, nonatomic, copy) UIColor *bottomDividerColor;
 
 /**
- The color for the Ripple effect for touch feedback.
+ If YES, all ripple behavior will be disabled and a simple highlight effect will be used instead.
+
+ Default value is NO.
  */
-@property(nonnull, nonatomic, copy) UIColor *rippleColor;
+@property(nonatomic) BOOL disableRippleBehavior;
 
 /**
  The default appearance to be used for all item badges.
@@ -270,6 +272,12 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
  @param animated Whether to animate the scroll.
  */
 - (void)scrollToItem:(UITabBarItem *)item animated:(BOOL)animated;
+
+/**
+ The color for the Ripple effect for touch feedback.
+ */
+@property(nonnull, nonatomic, copy)
+    UIColor *rippleColor __deprecated_msg("Enable disableRippleBehavior instead.");
 
 @end
 

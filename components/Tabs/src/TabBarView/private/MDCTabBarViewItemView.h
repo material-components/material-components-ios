@@ -38,8 +38,12 @@
 /** The label to display the title. */
 @property(nonatomic, strong, nonnull) UILabel *titleLabel;
 
-/** The ripple contronller to display the ripple touch effect. */
-@property(nonatomic, strong, nonnull) MDCRippleTouchController *rippleTouchController;
+/**
+ If YES, all ripple behavior will be disabled and a simple highlight effect will be used instead.
+
+ Default value is NO.
+ */
+@property(nonatomic) BOOL disableRippleBehavior;
 
 #pragma mark - Displaying a value in the badge
 
@@ -82,5 +86,10 @@
  @c image . If set to nil (or not set) @c scalesLargeContentImage will return YES otherwise NO.
  */
 @property(nonatomic, nullable) UIImage *largeContentImage NS_AVAILABLE_IOS(13_0);
+
+/** The ripple contronller to display the ripple touch effect. */
+@property(nonatomic, strong, nullable)
+    MDCRippleTouchController *rippleTouchController __deprecated_msg(
+        "Enable disableRippleBehavior instead.");
 
 @end

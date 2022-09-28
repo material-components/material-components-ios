@@ -307,6 +307,7 @@ static NSString *const kBadgeColorKeyPath = @"badgeColor";
       mdcItemView.selectedImage = item.selectedImage;
       mdcItemView.badgeText = item.badgeValue;
       mdcItemView.badgeColor = item.badgeColor;
+      mdcItemView.disableRippleBehavior = self.disableRippleBehavior;
       mdcItemView.rippleTouchController.rippleView.rippleColor = self.rippleColor;
 
       mdcItemView.badgeAppearance = self.itemBadgeAppearance;
@@ -368,6 +369,16 @@ static NSString *const kBadgeColorKeyPath = @"badgeColor";
   for (UIView *itemView in self.itemViews) {
     if ([itemView isKindOfClass:[MDCTabBarViewItemView class]]) {
       ((MDCTabBarViewItemView *)itemView).badgeAppearance = _itemBadgeAppearance;
+    }
+  }
+}
+
+- (void)setDisableRippleBehavior:(BOOL)disableRippleBehavior {
+  _disableRippleBehavior = disableRippleBehavior;
+
+  for (UIView *itemView in self.itemViews) {
+    if ([itemView isKindOfClass:[MDCTabBarViewItemView class]]) {
+      ((MDCTabBarViewItemView *)itemView).disableRippleBehavior = _disableRippleBehavior;
     }
   }
 }

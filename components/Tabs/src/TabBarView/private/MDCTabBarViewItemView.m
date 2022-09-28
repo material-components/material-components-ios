@@ -322,6 +322,16 @@ static const CGFloat kBadgeXInset = 12;
 
 #pragma mark - MDCTabBarViewItemView properties
 
+- (void)setDisableRippleBehavior:(BOOL)disableRippleBehavior {
+  _disableRippleBehavior = disableRippleBehavior;
+
+  if (_disableRippleBehavior) {
+    _rippleTouchController = nil;
+  } else {
+    _rippleTouchController = [[MDCRippleTouchController alloc] initWithView:self];
+  }
+}
+
 - (void)setImage:(UIImage *)image {
   _image = image;
   self.iconImageView.image = self.selected ? self.selectedImage : self.image;
