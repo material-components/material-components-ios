@@ -18,7 +18,7 @@
 #import "MaterialInk.h"
 #import "MaterialRipple.h"
 
-static UIColor *RandomColor() {
+static UIColor *RandomColor(void) {
   switch (arc4random_uniform(5)) {
     case 0:
       return [UIColor colorWithRed:1 green:1 blue:1 alpha:1];

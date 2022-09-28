@@ -18,7 +18,7 @@
 #import "MDCBottomNavigationBar.h"
 
 /** Returns a generated image of the given size. */
-static UIImage *fakeImage() {
+static UIImage *fakeImage(void) {
   UIGraphicsBeginImageContext(CGSizeMake(24, 24));
   UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();

@@ -44,7 +44,7 @@
 
 @implementation MDCTypographySchemeFontListExampleViewController
 
-static NSArray<NSString *> *DemonstrationStrings() {
+static NSArray<NSString *> *DemonstrationStrings(void) {
   static NSArray<NSString *> *kDemonstrationStrings;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
@@ -54,7 +54,7 @@ static NSArray<NSString *> *DemonstrationStrings() {
   return kDemonstrationStrings;
 }
 
-static NSArray<NSString *> *FontStyleNames() {
+static NSArray<NSString *> *FontStyleNames(void) {
   static NSArray<NSString *> *kFontStyleNameStrings;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
@@ -77,7 +77,7 @@ static NSArray<NSString *> *FontStyleNames() {
   return kFontStyleNameStrings;
 }
 
-static NSArray<UIFont *> *Fonts() {
+static NSArray<UIFont *> *Fonts(void) {
   static NSArray<UIFont *> *kTypeFonts;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{

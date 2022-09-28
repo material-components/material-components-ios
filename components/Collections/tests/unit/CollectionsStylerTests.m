@@ -18,30 +18,30 @@
 #import "MDCCollectionViewStylingDelegate.h"
 #import "MDCCollectionViewStyler.h"
 
-static MDCCollectionViewLayoutAttributes* cell00() {
+static MDCCollectionViewLayoutAttributes* cell00(void) {
   return [MDCCollectionViewLayoutAttributes
       layoutAttributesForCellWithIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
 }
-static MDCCollectionViewLayoutAttributes* cell01() {
+static MDCCollectionViewLayoutAttributes* cell01(void) {
   return [MDCCollectionViewLayoutAttributes
       layoutAttributesForCellWithIndexPath:[NSIndexPath indexPathForItem:1 inSection:0]];
 }
-static MDCCollectionViewLayoutAttributes* header0() {
+static MDCCollectionViewLayoutAttributes* header0(void) {
   return [MDCCollectionViewLayoutAttributes
       layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionHeader
                                    withIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
 }
-static MDCCollectionViewLayoutAttributes* header1() {
+static MDCCollectionViewLayoutAttributes* header1(void) {
   return [MDCCollectionViewLayoutAttributes
       layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionHeader
                                    withIndexPath:[NSIndexPath indexPathForItem:1 inSection:1]];
 }
-static MDCCollectionViewLayoutAttributes* footer0() {
+static MDCCollectionViewLayoutAttributes* footer0(void) {
   return [MDCCollectionViewLayoutAttributes
       layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionFooter
                                    withIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
 }
-static MDCCollectionViewLayoutAttributes* footer1() {
+static MDCCollectionViewLayoutAttributes* footer1(void) {
   return [MDCCollectionViewLayoutAttributes
       layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionFooter
                                    withIndexPath:[NSIndexPath indexPathForItem:1 inSection:1]];

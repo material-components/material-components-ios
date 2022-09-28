@@ -30,9 +30,7 @@ static const UIControlState kNumUIControlStates = 2 * UIControlStateSelected - 1
 static const UIControlState kUIControlStateDisabledHighlighted =
     UIControlStateHighlighted | UIControlStateDisabled;
 
-static CGFloat randomNumber() {
-  return arc4random_uniform(100) / (CGFloat)10;
-}
+static CGFloat randomNumber(void) { return arc4random_uniform(100) / (CGFloat)10; }
 
 static CGFloat randomNumberNotEqualTo(const CGFloat targetNumber) {
   while (1) {
@@ -43,7 +41,7 @@ static CGFloat randomNumberNotEqualTo(const CGFloat targetNumber) {
   }
 }
 
-static UIColor *randomColor() {
+static UIColor *randomColor(void) {
   switch (arc4random_uniform(5)) {
     case 0:
       return [UIColor colorWithRed:1 green:1 blue:1 alpha:1];

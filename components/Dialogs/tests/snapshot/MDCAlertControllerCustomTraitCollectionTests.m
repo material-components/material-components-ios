@@ -27,7 +27,7 @@
 #import "MDCSnapshotTestCase.h"
 #import "UIView+MDCSnapshot.h"
 
-static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve() {
+static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve(void) {
   static NSDictionary<UIContentSizeCategory, NSNumber *> *scalingCurve;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{

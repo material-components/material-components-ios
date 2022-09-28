@@ -15,9 +15,7 @@
 #import <XCTest/XCTest.h>
 #import "MaterialActivityIndicator.h"
 
-static CGFloat randomNumber() {
-  return arc4random_uniform(128) + 8;
-}
+static CGFloat randomNumber(void) { return arc4random_uniform(128) + 8; }
 
 @interface MDCActivityIndicator (Private)
 
