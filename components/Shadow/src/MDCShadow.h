@@ -14,8 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
- An immutable shadow object that consists of shadow properties (opacity, radius, offset).
+ An immutable shadow object that consists of shadow properties (opacity, radius, offset, spread).
 
  To generate a shadow instance, please use the MDCShadowBuilder APIs.
  */
@@ -31,6 +33,9 @@ __attribute__((objc_subclassing_restricted)) @interface MDCShadow : NSObject
 
 /** CALayer.shadowOffset */
 @property(nonatomic, readonly) CGSize offset;
+
+/** The spread value of shadow */
+@property(nonatomic, readonly) CGFloat spread;
 
 @end
 
@@ -48,6 +53,9 @@ __attribute__((objc_subclassing_restricted)) @interface MDCShadowBuilder : NSObj
 /** CALayer.shadowOffset */
 @property(nonatomic) CGSize offset;
 
+/** The spread value of shadow */
+@property(nonatomic) CGFloat spread;
+
 /** Returns an immutable value type containing a snapshot of the values in this object. */
 - (nonnull MDCShadow *)build;
 
@@ -56,4 +64,12 @@ __attribute__((objc_subclassing_restricted)) @interface MDCShadowBuilder : NSObj
                                           radius:(CGFloat)radius
                                           offset:(CGSize)offset;
 
+/** Returns a builder with the provided opacity, radius, offset, and spread properties. */
++ (nonnull MDCShadowBuilder *)builderWithOpacity:(CGFloat)opacity
+                                          radius:(CGFloat)radius
+                                          offset:(CGSize)offset
+                                          spread:(CGFloat)spread;
+
 @end
+
+NS_ASSUME_NONNULL_END

@@ -12,10 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <CoreGraphics/CoreGraphics.h>
+
 #import "MDCShadowsCollection.h"
 
-#import "MaterialAvailability.h"
+#import "MDCAvailability.h"
 #import "MDCShadow.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation MDCShadowsCollection {
   NSDictionary<NSNumber *, MDCShadow *> *_shadowValuesForElevation;
@@ -146,6 +150,11 @@ void MDCConfigureShadowForView(UIView *view, MDCShadow *shadow, UIColor *shadowC
   // path) and also rounded corners where the cornerRadius is >0.
   UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:view.bounds
                                                   cornerRadius:view.layer.cornerRadius];
+  if (shadow.spread > 0) {
+    CGRect spreadBounds = CGRectInset(view.bounds, -shadow.spread, -shadow.spread);
+    path = [UIBezierPath bezierPathWithRoundedRect:spreadBounds
+                                      cornerRadius:view.layer.cornerRadius + shadow.spread];
+  }
 
   MDCConfigureShadowForViewWithPath(view, shadow, shadowColor, path.CGPath);
 }
@@ -163,3 +172,5 @@ void MDCConfigureShadowForViewWithPath(UIView *view, MDCShadow *shadow, UIColor 
   view.layer.shadowOffset = shadow.offset;
   view.layer.shadowPath = path;
 }
+
+NS_ASSUME_NONNULL_END

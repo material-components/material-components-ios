@@ -12,9 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialAvailability.h"
-#import "MaterialShadow.h"
-#import "MaterialSnapshot.h"
+#import "MDCAvailability.h"
+#import "MDCShadow.h"
+#import "MDCShadowsCollection.h"
+#import "MDCSnapshotTestCase.h"
+#import "UIView+MDCSnapshot.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 /**
  Returns a dynamic color which is green in light mode and red in dark mode.
@@ -44,6 +48,7 @@ static UIColor *MDCTestDynamicShadowColor(void) {
  */
 @interface MDCShadowTestView : UIView
 @property(nonatomic) CGFloat shadowElevation;
+@property(nonatomic) MDCShadow *customShadow;
 @property(nonatomic, strong, nonnull) UIColor *shadowColor;
 @property(nonatomic, strong, nullable) CAShapeLayer *shapeLayer;
 @property(nonatomic, nullable) CGPathRef shapePath;
@@ -69,12 +74,16 @@ static UIColor *MDCTestDynamicShadowColor(void) {
 
 - (void)layoutSubviews {
   [super layoutSubviews];
+
   if (self.shapePath != nil) {
     _Nonnull CGPathRef shapePath = self.shapePath;
     self.backgroundColor = nil;
     MDCConfigureShadowForViewWithPath(
         self, [MDCShadowsCollectionDefault() shadowForElevation:self.shadowElevation],
         self.shadowColor, shapePath);
+  } else if (self.customShadow != nil) {
+    self.backgroundColor = UIColor.whiteColor;
+    MDCConfigureShadowForView(self, self.customShadow, self.shadowColor);
   } else {
     self.backgroundColor = UIColor.whiteColor;
     MDCConfigureShadowForView(
@@ -83,7 +92,7 @@ static UIColor *MDCTestDynamicShadowColor(void) {
   }
 }
 
-- (void)setShapePath:(CGPathRef)shapePath {
+- (void)setShapePath:(CGPathRef _Nullable)shapePath {
   if (_shapeLayer) {
     [_shapeLayer removeFromSuperlayer];
     _shapeLayer = nil;
@@ -236,4 +245,17 @@ static UIColor *MDCTestDynamicShadowColor(void) {
 #endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 }
 
+- (void)testCustomShadowSpread {
+  // When
+  self.view.customShadow = [[MDCShadowBuilder builderWithOpacity:0.2
+                                                          radius:2.5
+                                                          offset:CGSizeMake(0, 2)
+                                                          spread:0.45] build];
+
+  // Then
+  [self generateSnapshotForIOS13AndVerifyForView:self.view];
+}
+
 @end
+
+NS_ASSUME_NONNULL_END

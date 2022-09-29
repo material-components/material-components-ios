@@ -14,7 +14,10 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialShadow.h"
+#import "MDCShadow.h"
+#import "MDCShadowsCollection.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface MDCShadowsCollection (Testing)
 - (MDCShadow *)shadowForElevation:(CGFloat)elevation;
@@ -33,6 +36,7 @@
   XCTAssertEqual(shadow.opacity, 0);
   XCTAssertEqual(shadow.radius, 0);
   XCTAssertEqual(shadow.offset.width + shadow.offset.height, 0);
+  XCTAssertEqual(shadow.spread, 0);
 }
 
 - (void)testLowElevationShouldReturnShadow {
@@ -43,6 +47,7 @@
   XCTAssertGreaterThan(shadow.opacity, 0);
   XCTAssertGreaterThan(shadow.radius, 0);
   XCTAssertGreaterThan(shadow.offset.width + shadow.offset.height, 0);
+  XCTAssertEqual(shadow.spread, 0);
 }
 
 - (void)testHighElevationShouldReturnShadow {
@@ -53,6 +58,7 @@
   XCTAssertGreaterThan(shadow.opacity, 0);
   XCTAssertGreaterThan(shadow.radius, 0);
   XCTAssertGreaterThan(shadow.offset.width + shadow.offset.height, 0);
+  XCTAssertEqual(shadow.spread, 0);
 }
 
 - (void)testSameElevationShouldBeEqualToSelf {
@@ -123,3 +129,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

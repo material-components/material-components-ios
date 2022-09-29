@@ -14,14 +14,20 @@
 
 #import "MDCShadow.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation MDCShadow
 
-- (instancetype)initWithOpacity:(CGFloat)opacity radius:(CGFloat)radius offset:(CGSize)offset {
+- (instancetype)initWithOpacity:(CGFloat)opacity
+                         radius:(CGFloat)radius
+                         offset:(CGSize)offset
+                         spread:(CGFloat)spread {
   self = [super init];
   if (self) {
     _opacity = opacity;
     _radius = radius;
     _offset = offset;
+    _spread = spread;
   }
   return self;
 }
@@ -35,7 +41,7 @@
   }
   MDCShadow *otherShadow = other;
   return _opacity == otherShadow.opacity && _radius == otherShadow.radius &&
-         CGSizeEqualToSize(_offset, otherShadow.offset);
+         CGSizeEqualToSize(_offset, otherShadow.offset) && _spread == otherShadow.spread;
 }
 
 - (NSUInteger)hash {
@@ -45,6 +51,7 @@
   result = result * kPrime + (NSUInteger)_radius;
   result = result * kPrime + (NSUInteger)(_offset.width);
   result = result * kPrime + (NSUInteger)(_offset.height);
+  result = result * kPrime + (NSUInteger)_spread;
   return result;
 }
 
@@ -53,7 +60,10 @@
 @implementation MDCShadowBuilder
 
 - (MDCShadow *)build {
-  return [[MDCShadow alloc] initWithOpacity:self.opacity radius:self.radius offset:self.offset];
+  return [[MDCShadow alloc] initWithOpacity:self.opacity
+                                     radius:self.radius
+                                     offset:self.offset
+                                     spread:self.spread];
 }
 
 + (MDCShadowBuilder *)builderWithOpacity:(CGFloat)opacity
@@ -63,7 +73,22 @@
   builder.opacity = opacity;
   builder.radius = radius;
   builder.offset = offset;
+  builder.spread = 0.0f;
+  return builder;
+}
+
++ (MDCShadowBuilder *)builderWithOpacity:(CGFloat)opacity
+                                  radius:(CGFloat)radius
+                                  offset:(CGSize)offset
+                                  spread:(CGFloat)spread {
+  MDCShadowBuilder *builder = [[MDCShadowBuilder alloc] init];
+  builder.opacity = opacity;
+  builder.radius = radius;
+  builder.offset = offset;
+  builder.spread = spread;
   return builder;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
