@@ -14,8 +14,13 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCRippleLayer.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCRippleLayer.h"
 #import "MDCRippleLayerDelegate.h"
+#pragma clang diagnostic pop
+
+NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Fake classes
 
@@ -25,7 +30,7 @@
 
 @implementation FakeMDCRippleLayer
 
-- (void)addAnimation:(CAAnimation *)anim forKey:(NSString *)key {
+- (void)addAnimation:(CAAnimation *)anim forKey:(nullable NSString *)key {
   if (!self.addedAnimations) {
     self.addedAnimations = [NSMutableArray array];
   }
@@ -284,3 +289,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

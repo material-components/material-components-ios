@@ -14,8 +14,14 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCRippleLayer.h"
-#import "MaterialRipple.h"
+#import "MDCRippleView.h"
+#import "MDCStatefulRippleView.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCRippleLayer.h"
+#pragma clang diagnostic pop
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface MDCStatefulRippleView (UnitTests)
 @property(nonatomic, strong) MDCRippleLayer *activeRippleLayer;
@@ -174,3 +180,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

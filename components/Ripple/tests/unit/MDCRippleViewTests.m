@@ -14,8 +14,14 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCRippleLayer.h"
-#import "MaterialRipple.h"
+#import "MDCRippleView.h"
+#import "MDCRippleViewDelegate.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCRippleLayer.h"
+#pragma clang diagnostic pop
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface FakeMDCRippleViewAnimationDelegate : NSObject <MDCRippleViewDelegate>
 @property(nonatomic, strong) MDCRippleView *rippleView;
@@ -301,3 +307,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
