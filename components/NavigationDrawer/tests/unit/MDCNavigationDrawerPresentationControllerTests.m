@@ -14,9 +14,14 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCBottomDrawerContainerViewController.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCBottomDrawerContainerViewController.h"
+#pragma clang diagnostic pop
 #import "MDCBottomDrawerPresentationController.h"
 #import "MDCBottomDrawerViewController.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface MDCBottomDrawerPresentationController (Testing)
 @property(nonatomic) UIView *scrimView;
@@ -177,3 +182,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -12,12 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialSnapshot.h"
+#import "MDCBottomDrawerHeader.h"
+#import "MDCBottomDrawerViewController.h"
+#import "MDCBottomDrawerViewController+MaterialTheming.h"
+#import "MDCBottomDrawerSnapshotTestMutableTraitCollection.h"
+#import "MDCSemanticColorScheme.h"
+#import "MDCContainerScheme.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCBottomDrawerContainerViewController.h"
+#import "MDCSnapshotTestCase.h"
+#import "UIView+MDCSnapshot.h"
+#pragma clang diagnostic pop
 
-#import "../../src/private/MDCBottomDrawerContainerViewController.h"
-#import "supplemental/MDCBottomDrawerSnapshotTestMutableTraitCollection.h"
-#import "MaterialNavigationDrawer.h"
-#import "MaterialNavigationDrawer+Theming.h"
+NS_ASSUME_NONNULL_BEGIN
 
 /** Fake MDCBottomDrawerContainerViewController for snapshot testing. */
 @interface FakeBottomDrawerContainerViewController : MDCBottomDrawerContainerViewController
@@ -53,10 +61,11 @@
 @interface MDCBottomDrawerControllerSnapshotTests : MDCSnapshotTestCase
 
 /** The view controller of the snapshotted view. */
-@property(nonatomic, strong) MDCBottomDrawerViewController *bottomDrawerViewController;
+@property(nonatomic, strong, nullable) MDCBottomDrawerViewController *bottomDrawerViewController;
 
 /** The container view controller for the header and content, used for mocking some properties. */
-@property(nonatomic, strong) FakeBottomDrawerContainerViewController *containerViewController;
+@property(nonatomic, strong, nullable)
+    FakeBottomDrawerContainerViewController *containerViewController;
 
 /** Presenting view controller of the Bottom Drawer Container view controller. */
 @property(nonatomic, strong) UIViewController *presentingViewController;
@@ -236,3 +245,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

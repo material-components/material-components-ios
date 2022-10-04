@@ -14,14 +14,23 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCBottomDrawerContainerViewController.h"
-#import "../../src/private/MDCBottomDrawerHeaderMask.h"
-#import "../../src/private/MDCBottomDrawerShadowedView.h"
+#import "MDCBottomDrawerHeader.h"
+#import "MDCBottomDrawerPresentationController.h"
+#import "MDCBottomDrawerPresentationControllerDelegate.h"
 #import "MDCBottomDrawerState.h"
-#import "MaterialNavigationDrawer.h"
-#import "MDCBottomDrawerContainerViewControllerDelegate.h"
+#import "MDCBottomDrawerViewController.h"
+#import "MDCBottomDrawerViewControllerDelegate.h"
 #import "MDCNavigationDrawerFakes.h"
-#import "MaterialShadowLayer.h"
+#import "MDCShadowLayer.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCBottomDrawerContainerViewController.h"
+#import "MDCBottomDrawerContainerViewControllerDelegate.h"
+#import "MDCBottomDrawerHeaderMask.h"
+#import "MDCBottomDrawerShadowedView.h"
+#pragma clang diagnostic pop
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface MDCBottomDrawerDelegateTest
     : UIViewController <MDCBottomDrawerPresentationControllerDelegate,
@@ -1179,3 +1188,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

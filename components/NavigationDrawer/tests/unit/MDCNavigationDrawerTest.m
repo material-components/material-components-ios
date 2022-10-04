@@ -14,10 +14,17 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialNavigationDrawer.h"
-
-#import "../../src/private/MDCBottomDrawerContainerViewController.h"
+#import "MDCBottomDrawerHeader.h"
+#import "MDCBottomDrawerPresentationController.h"
+#import "MDCBottomDrawerState.h"
+#import "MDCBottomDrawerViewController.h"
 #import "MDCNavigationDrawerFakes.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCBottomDrawerContainerViewController.h"
+#pragma clang diagnostic pop
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface MDCBottomDrawerContainerViewController (MDCBottomDrawerHeaderTesting)
 @property(nonatomic) CGFloat contentHeightSurplus;
@@ -29,7 +36,7 @@
 @end
 
 @interface MDCNavigationDrawerTest : XCTestCase
-@property(nonatomic, strong) MDCBottomDrawerViewController *navigationDrawer;
+@property(nonatomic, strong, nullable) MDCBottomDrawerViewController *navigationDrawer;
 @end
 
 @implementation MDCNavigationDrawerTest
@@ -329,3 +336,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
