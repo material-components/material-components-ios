@@ -14,6 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
+@class MDCSnackbarManager;
 @class MDCSnackbarMessageView;
 
 /**
@@ -25,28 +26,36 @@
  This method is called after the MDCSnackbarMessageView instance is initialized and right before
  The view is presented on the screen.
 
+ @param snackbarManager The snackbarManager responsible for the snackbar about to present.
  @param messageView The messageView of the snackbar that will be presented.
  */
-- (void)willPresentSnackbarWithMessageView:(nonnull MDCSnackbarMessageView *)messageView;
+- (void)snackbarManager:(MDCSnackbarManager *)snackbarManager
+    willPresentSnackbarWithMessageView:(nonnull MDCSnackbarMessageView *)messageView;
 
 @optional
 
 /**
  This method is called just before a Snackbar is dismissed.
+
+ @param snackbarManager The snackbarManager responsible for the snackbar that will disappear.
  */
-- (void)snackbarWillDisappear;
+- (void)snackbarWillDisappear:(MDCSnackbarManager *)snackbarManager;
 
 /**
  This method is called after a Snackbar's dismissal animation is finished.
+
+ @param snackbarManager The snackbarManager responsible for the snackbar that disappeared.
  */
-- (void)snackbarDidDisappear;
+- (void)snackbarDidDisappear:(MDCSnackbarManager *)snackbarManager;
 
 /**
  This method is called after the snackbar begins presenting (and is laid out),
  but before the animiation is finished.
 
+ @param snackbarManager The snackbarManager responsible for the snackbar.
  @param messageView The messageView of the snackbar that was just presented.
  */
-- (void)isPresentingSnackbarWithMessageView:(nonnull MDCSnackbarMessageView *)messageView;
+- (void)snackbarManager:(MDCSnackbarManager *)snackbarManager
+    isPresentingSnackbarWithMessageView:(nonnull MDCSnackbarMessageView *)messageView;
 
 @end

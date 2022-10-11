@@ -14,11 +14,12 @@
 
 #import "MDCFakeMDCSnackbarManagerDelegate.h"
 
-#import "MaterialSnackbar.h"
+#import "MDCSnackbarMessageView.h"
 
 @implementation FakeMDCSnackbarManagerDelegate
 
-- (void)willPresentSnackbarWithMessageView:(MDCSnackbarMessageView *)messageView {
+- (void)snackbarManager:(MDCSnackbarManager *)snackbarManager
+    willPresentSnackbarWithMessageView:(MDCSnackbarMessageView *)messageView {
   self.presentedView = messageView;
   if (self.shouldSetSnackbarViewAccessibilityViewIsModal) {
     messageView.accessibilityViewIsModal = YES;
@@ -26,15 +27,16 @@
   [self.willPresentExpectation fulfill];
 }
 
-- (void)snackbarDidDisappear {
+- (void)snackbarDidDisappear:(MDCSnackbarManager *)snackbarManager {
   [self.didDisappearExpectation fulfill];
 }
 
-- (void)snackbarWillDisappear {
+- (void)snackbarWillDisappear:(MDCSnackbarManager *)snackbarManager {
   [self.willDisappearExpectation fulfill];
 }
 
-- (void)isPresentingSnackbarWithMessageView:(MDCSnackbarMessageView *)messageView {
+- (void)snackbarManager:(MDCSnackbarManager *)snackbarManager
+    isPresentingSnackbarWithMessageView:(MDCSnackbarMessageView *)messageView {
   [self.isPresentingExpectation fulfill];
 }
 

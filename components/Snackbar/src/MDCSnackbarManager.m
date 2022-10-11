@@ -14,13 +14,13 @@
 
 #import "MDCSnackbarManager.h"
 
-#import "MaterialButtons.h"
-#import "MaterialOverlayWindow.h"
-#import "MaterialShadowElevations.h"
+#import "MDCButton.h"
+#import "MDCOverlayWindow.h"
+#import "MDCShadowElevations.h"
 #import "MDCSnackbarManagerDelegate.h"
 #import "MDCSnackbarMessage.h"
 #import "MDCSnackbarMessageView.h"
-#import "MaterialApplication.h"
+#import "UIApplication+MDCAppExtensions.h"
 
 #import "private/MDCSnackbarManagerInternal.h"
 #import "private/MDCSnackbarMessageInternal.h"
@@ -237,7 +237,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
                                     snackbarManager:self.manager];
   snackbarView.accessibilityViewIsModal =
       self.manager.shouldEnableAccessibilityViewIsModal && ![self isSnackbarTransient:snackbarView];
-  [self.delegate willPresentSnackbarWithMessageView:snackbarView];
+  [self.delegate snackbarManager:self.manager willPresentSnackbarWithMessageView:snackbarView];
   if (message.snackbarMessageWillPresentBlock) {
     message.snackbarMessageWillPresentBlock(message, snackbarView);
   }
@@ -277,8 +277,9 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
               }
             }];
 
-  if ([self.delegate respondsToSelector:@selector(isPresentingSnackbarWithMessageView:)]) {
-    [self.delegate isPresentingSnackbarWithMessageView:snackbarView];
+  if ([self.delegate respondsToSelector:@selector(snackbarManager:
+                                            isPresentingSnackbarWithMessageView:)]) {
+    [self.delegate snackbarManager:self.manager isPresentingSnackbarWithMessageView:snackbarView];
   }
 }
 
@@ -310,8 +311,8 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
                                                                  completion:nil];
                      }];
 
-  if ([self.delegate respondsToSelector:@selector(snackbarWillDisappear)]) {
-    [self.delegate snackbarWillDisappear];
+  if ([self.delegate respondsToSelector:@selector(snackbarWillDisappear:)]) {
+    [self.delegate snackbarWillDisappear:self.manager];
   }
 
   [self.overlayView
@@ -332,8 +333,8 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 
                          self.currentSnackbar = nil;
 
-                         if ([self.delegate respondsToSelector:@selector(snackbarDidDisappear)]) {
-                           [self.delegate snackbarDidDisappear];
+                         if ([self.delegate respondsToSelector:@selector(snackbarDidDisappear:)]) {
+                           [self.delegate snackbarDidDisappear:self.manager];
                          }
 
                          // Now that the snackbarView is offscreen, we can allow more

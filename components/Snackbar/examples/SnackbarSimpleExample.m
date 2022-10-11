@@ -15,12 +15,15 @@
 #import <UIKit/UIKit.h>
 
 #import "supplemental/SnackbarExampleSupplemental.h"
-#import "MaterialButtons.h"
-#import "MaterialCollections.h"
-#import "MaterialPalettes.h"
-#import "MaterialSnackbar.h"
-#import "MaterialColorScheme.h"
-#import "MaterialTypographyScheme.h"
+#import "MDCButton.h"
+#import "MDCCollectionViewController.h"
+#import "MDCPalettes.h"
+#import "MDCSnackbarManager.h"
+#import "MDCSnackbarManagerDelegate.h"
+#import "MDCSnackbarMessage.h"
+#import "MDCSnackbarMessageView.h"
+#import "MDCSemanticColorScheme.h"
+#import "MDCTypographyScheme.h"
 
 @interface SnackbarSimpleExample : SnackbarExample <MDCSnackbarManagerDelegate>
 @end
@@ -246,7 +249,8 @@
   }
 }
 
-- (void)willPresentSnackbarWithMessageView:(MDCSnackbarMessageView *)messageView {
+- (void)snackbarManager:(MDCSnackbarManager *)snackbarManager
+    willPresentSnackbarWithMessageView:(MDCSnackbarMessageView *)messageView {
   NSLog(@"A snackbar will be presented");
 }
 
