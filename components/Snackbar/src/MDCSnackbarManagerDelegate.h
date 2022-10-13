@@ -17,6 +17,8 @@
 @class MDCSnackbarManager;
 @class MDCSnackbarMessageView;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  Delegate protocol for the MDCSnackbarManager.
  */
@@ -30,7 +32,7 @@
  @param messageView The messageView of the snackbar that will be presented.
  */
 - (void)snackbarManager:(MDCSnackbarManager *)snackbarManager
-    willPresentSnackbarWithMessageView:(nonnull MDCSnackbarMessageView *)messageView;
+    willPresentSnackbarWithMessageView:(MDCSnackbarMessageView *)messageView;
 
 @optional
 
@@ -56,6 +58,8 @@
  @param messageView The messageView of the snackbar that was just presented.
  */
 - (void)snackbarManager:(MDCSnackbarManager *)snackbarManager
-    isPresentingSnackbarWithMessageView:(nonnull MDCSnackbarMessageView *)messageView;
+    isPresentingSnackbarWithMessageView:(MDCSnackbarMessageView *)messageView;
 
 @end
+
+NS_ASSUME_NONNULL_END
