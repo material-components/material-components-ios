@@ -30,14 +30,14 @@ __attribute__((objc_subclassing_restricted)) API_AVAILABLE(ios(13.0))
 
  A value of nil uses the view's tint color; use `clearColor` for no color (transparent).
  */
-@property(nonatomic, strong, nullable, direct) UIColor *backgroundColor;
+@property(nonatomic, strong, nullable) UIColor *backgroundColor;
 
 /**
  The radius of the filled portion of the dot badge.
 
  The width and height of the dot badge's frame will be equal to (innerRadius + borderWidth) * 2.
  */
-@property(nonatomic, direct) CGFloat innerRadius;
+@property(nonatomic) CGFloat innerRadius;
 
 /**
  The color of the border surrounding the badge.
@@ -45,7 +45,7 @@ __attribute__((objc_subclassing_restricted)) API_AVAILABLE(ios(13.0))
  Use this property instead of self.layer.borderColor. This property allows the badge to support
  a border color that responds to trait collection changes.
  */
-@property(nonatomic, strong, nullable, direct) UIColor *borderColor;
+@property(nonatomic, strong, nullable) UIColor *borderColor;
 
 /**
  The width of the border surrounding the badge.
@@ -53,6 +53,6 @@ __attribute__((objc_subclassing_restricted)) API_AVAILABLE(ios(13.0))
  Use this property instead of self.layer.borderWidth. Setting this property will cause the badge's
  intrinsic size and layout to be invalidated.
  */
-@property(nonatomic, direct) CGFloat borderWidth;
+@property(nonatomic) CGFloat borderWidth;
 
 @end

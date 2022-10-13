@@ -100,7 +100,7 @@ __attribute__((objc_subclassing_restricted))
  The badge will only be visible if the text is a non-empty string. To hide the badge, set this
  property to nil or an empty string.
  */
-@property(nonatomic, copy, nullable, direct) NSString *badgeText API_DEPRECATED(
+@property(nonatomic, copy, nullable) NSString *badgeText API_DEPRECATED(
     "See go/material-ios-badges for badge appearance guidance instead.", ios(12, 12));
 #pragma mark - Configuring a badge's visual appearance
 
@@ -128,7 +128,7 @@ __attribute__((objc_subclassing_restricted))
  If not nil, this value will override badgeAppearance.backgroundColor. If nil, then
  badgeAppearance.backgroundColor will be used instead.
  */
-@property(nonatomic, strong, nullable, direct) UIColor *badgeColor API_DEPRECATED_WITH_REPLACEMENT(
+@property(nonatomic, strong, nullable) UIColor *badgeColor API_DEPRECATED_WITH_REPLACEMENT(
     "badgeAppearance.backgroundColor", ios(12, 12));
 
 /**
@@ -136,16 +136,15 @@ __attribute__((objc_subclassing_restricted))
 
  This property is a proxy for badgeAppearance.textColor.
  */
-@property(nonatomic, copy, null_resettable, direct)
-    UIColor *badgeTextColor API_DEPRECATED_WITH_REPLACEMENT("badgeAppearance.textColor",
-                                                            ios(12, 12));
+@property(nonatomic, copy, null_resettable) UIColor *badgeTextColor API_DEPRECATED_WITH_REPLACEMENT(
+    "badgeAppearance.textColor", ios(12, 12));
 
 /**
  The font that will be used to display the value of this item's badge.
 
  This property is a proxy for badgeAppearance.font.
  */
-@property(nonatomic, copy, null_resettable, direct)
+@property(nonatomic, copy, null_resettable)
     UIFont *badgeFont API_DEPRECATED_WITH_REPLACEMENT("badgeAppearance.font", ios(12, 12));
 
 #pragma mark - UILargeContentViewerItem

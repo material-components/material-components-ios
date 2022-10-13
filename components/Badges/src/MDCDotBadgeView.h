@@ -29,7 +29,7 @@ __attribute__((objc_subclassing_restricted)) API_AVAILABLE(ios(13.0)) @interface
 
  Assigning to nil will reset the appearance to reasonable, yet undefined defaults.
  */
-@property(nonatomic, copy, null_resettable, direct) MDCDotBadgeAppearance *appearance;
+@property(nonatomic, copy, null_resettable) MDCDotBadgeAppearance *appearance;
 
 #pragma mark - Unsupported APIs
 

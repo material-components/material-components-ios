@@ -30,13 +30,13 @@ __attribute__((objc_subclassing_restricted))
 
  A value of nil uses the view's tint color; use `clearColor` for no color (transparent).
  */
-@property(nonatomic, strong, nullable, direct) UIColor *backgroundColor;
+@property(nonatomic, strong, nullable) UIColor *backgroundColor;
 
 /** The color of the text representing the value. */
-@property(nonatomic, strong, nullable, direct) UIColor *textColor;
+@property(nonatomic, strong, nullable) UIColor *textColor;
 
 /** The font that will be used to display the value. */
-@property(nonatomic, strong, nullable, direct) UIFont *font;
+@property(nonatomic, strong, nullable) UIFont *font;
 
 /**
  The color of the border surrounding the badge.
@@ -44,7 +44,7 @@ __attribute__((objc_subclassing_restricted))
  Use this property instead of self.layer.borderColor. This property allows the badge to support
  a border color that responds to trait collection changes.
  */
-@property(nonatomic, strong, nullable, direct) UIColor *borderColor;
+@property(nonatomic, strong, nullable) UIColor *borderColor;
 
 /**
  The width of the border surrounding the badge.
@@ -52,6 +52,6 @@ __attribute__((objc_subclassing_restricted))
  Use this property instead of self.layer.borderWidth. Setting this property will cause the badge's
  intrinsic size and layout to be invalidated.
  */
-@property(nonatomic, direct) CGFloat borderWidth;
+@property(nonatomic) CGFloat borderWidth;
 
 @end

@@ -30,12 +30,12 @@ __attribute__((objc_subclassing_restricted))
 #pragma mark - Displaying a value in the badge
 
 /** The human-readable value, typically numerical, that will be shown for this badge. */
-@property(nonatomic, copy, nullable, direct) NSString *text;
+@property(nonatomic, copy, nullable) NSString *text;
 
 #pragma mark - Configuring the badge's visual appearance
 
 /** The appearance attributes for this badge. */
-@property(nonatomic, copy, nonnull, direct) MDCBadgeAppearance *appearance;
+@property(nonatomic, copy, nonnull) MDCBadgeAppearance *appearance;
 
 #pragma mark - Unsupported APIs
 
