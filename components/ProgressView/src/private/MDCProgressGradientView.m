@@ -70,11 +70,21 @@
   self.shapeLayer.path = path.CGPath;
 }
 
-- (void)setColors:(NSArray *)colors {
-  self.gradientLayer.colors = colors;
+- (void)setColors:(NSArray<UIColor *> *)colors {
+  NSMutableArray *colorArray = [[NSMutableArray alloc] init];
+
+  for (id item in colors) {
+    if ([item isKindOfClass:[UIColor class]]) {
+      [colorArray addObject:(id)[item CGColor]];
+    } else {
+      // Assumed to be a CGColor because that was passed in an earlier iteration of this logic.
+      [colorArray addObject:item];
+    }
+  }
+  self.gradientLayer.colors = [colorArray copy];
 }
 
-- (NSArray *)colors {
+- (NSArray<UIColor *> *)colors {
   return self.gradientLayer.colors;
 }
 

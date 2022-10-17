@@ -82,8 +82,7 @@ static const CGFloat MDCProgressViewIndeterminateAnimationDuration = 4;
   _gradientColoredProgressView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.container addSubview:_gradientColoredProgressView];
   _gradientColoredProgressView.progressTintColors = @[
-    (id)MDCPalette.greenPalette.tint500.CGColor, (id)MDCPalette.bluePalette.tint500.CGColor,
-    (id)MDCPalette.redPalette.tint500.CGColor
+    MDCPalette.greenPalette.tint500, MDCPalette.bluePalette.tint500, MDCPalette.redPalette.tint500
   ];
   _gradientColoredProgressView.trackTintColor = MDCPalette.yellowPalette.tint500;
   _gradientColoredProgressView.progress = 0.33f;

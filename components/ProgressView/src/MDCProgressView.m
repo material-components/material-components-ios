@@ -86,12 +86,9 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
   _indeterminateProgressView.hidden = YES;
   [self addSubview:_indeterminateProgressView];
 
-  _progressView.colors = @[
-    (id)MDCProgressViewDefaultTintColor().CGColor, (id)MDCProgressViewDefaultTintColor().CGColor
-  ];
-  _indeterminateProgressView.colors = @[
-    (id)MDCProgressViewDefaultTintColor().CGColor, (id)MDCProgressViewDefaultTintColor().CGColor
-  ];
+  _progressView.colors = @[ MDCProgressViewDefaultTintColor(), MDCProgressViewDefaultTintColor() ];
+  _indeterminateProgressView.colors =
+      @[ MDCProgressViewDefaultTintColor(), MDCProgressViewDefaultTintColor() ];
   _trackView.backgroundColor =
       [[self class] defaultTrackTintColorForProgressTintColor:MDCProgressViewDefaultTintColor()];
 }
@@ -116,10 +113,8 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
   [super traitCollectionDidChange:previousTraitCollection];
 
   if (self.progressTintColor) {
-    self.progressView.colors =
-        @[ (id)self.progressTintColor.CGColor, (id)self.progressTintColor.CGColor ];
-    self.indeterminateProgressView.colors =
-        @[ (id)self.progressTintColor.CGColor, (id)self.progressTintColor.CGColor ];
+    self.progressView.colors = @[ self.progressTintColor, self.progressTintColor ];
+    self.indeterminateProgressView.colors = @[ self.progressTintColor, self.progressTintColor ];
   }
 
   if (self.traitCollectionDidChangeBlock) {
@@ -131,16 +126,15 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
   _progressTintColor = progressTintColor;
   _progressTintColors = nil;
   if (progressTintColor != nil) {
-    self.progressView.colors = @[ (id)progressTintColor.CGColor, (id)progressTintColor.CGColor ];
-    self.indeterminateProgressView.colors =
-        @[ (id)progressTintColor.CGColor, (id)progressTintColor.CGColor ];
+    self.progressView.colors = @[ progressTintColor, progressTintColor ];
+    self.indeterminateProgressView.colors = @[ progressTintColor, progressTintColor ];
   } else {
     self.progressView.colors = nil;
     self.indeterminateProgressView.colors = nil;
   }
 }
 
-- (void)setProgressTintColors:(NSArray *)progressTintColors {
+- (void)setProgressTintColors:(NSArray<UIColor *> *)progressTintColors {
   _progressTintColors = [progressTintColors copy];
   _progressTintColor = nil;
   self.progressView.colors = _progressTintColors;

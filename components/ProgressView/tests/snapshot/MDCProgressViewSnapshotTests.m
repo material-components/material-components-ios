@@ -136,9 +136,8 @@
 
 - (void)testGradientProgress000LTR {
   // Given
-  self.progressView.progressTintColors = @[
-    (id)UIColor.greenColor.CGColor, (id)UIColor.blueColor.CGColor, (id)UIColor.redColor.CGColor
-  ];
+  self.progressView.progressTintColors =
+      @[ UIColor.greenColor, UIColor.blueColor, UIColor.redColor ];
 
   // When
   self.progressView.progress = 0;
@@ -149,9 +148,8 @@
 
 - (void)testGradientProgress050LTR {
   // Given
-  self.progressView.progressTintColors = @[
-    (id)UIColor.greenColor.CGColor, (id)UIColor.blueColor.CGColor, (id)UIColor.redColor.CGColor
-  ];
+  self.progressView.progressTintColors =
+      @[ UIColor.greenColor, UIColor.blueColor, UIColor.redColor ];
 
   // When
   self.progressView.progress = 0.5f;
@@ -162,9 +160,8 @@
 
 - (void)testGradientProgress100LTR {
   // Given
-  self.progressView.progressTintColors = @[
-    (id)UIColor.greenColor.CGColor, (id)UIColor.blueColor.CGColor, (id)UIColor.redColor.CGColor
-  ];
+  self.progressView.progressTintColors =
+      @[ UIColor.greenColor, UIColor.blueColor, UIColor.redColor ];
 
   // When
   self.progressView.progress = 1;
@@ -175,9 +172,8 @@
 
 - (void)testGradientProgress000RTL {
   // Given
-  self.progressView.progressTintColors = @[
-    (id)UIColor.greenColor.CGColor, (id)UIColor.blueColor.CGColor, (id)UIColor.redColor.CGColor
-  ];
+  self.progressView.progressTintColors =
+      @[ UIColor.greenColor, UIColor.blueColor, UIColor.redColor ];
 
   // When
   [self changeViewToRTL:self.progressView];
@@ -189,9 +185,8 @@
 
 - (void)testGradientProgress050RTL {
   // Given
-  self.progressView.progressTintColors = @[
-    (id)UIColor.greenColor.CGColor, (id)UIColor.blueColor.CGColor, (id)UIColor.redColor.CGColor
-  ];
+  self.progressView.progressTintColors =
+      @[ UIColor.greenColor, UIColor.blueColor, UIColor.redColor ];
 
   // When
   [self changeViewToRTL:self.progressView];
@@ -203,9 +198,8 @@
 
 - (void)testGradientProgress100RTL {
   // Given
-  self.progressView.progressTintColors = @[
-    (id)UIColor.greenColor.CGColor, (id)UIColor.blueColor.CGColor, (id)UIColor.redColor.CGColor
-  ];
+  self.progressView.progressTintColors =
+      @[ UIColor.greenColor, UIColor.blueColor, UIColor.redColor ];
 
   // When
   [self changeViewToRTL:self.progressView];
