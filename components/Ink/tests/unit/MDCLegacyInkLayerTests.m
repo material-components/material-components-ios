@@ -13,9 +13,15 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
-#import "../../src/private/MDCLegacyInkLayer+Private.h"
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCLegacyInkLayer+Private.h"
 #import "MDCLegacyInkLayer.h"
 #import "MDCLegacyInkLayerRippleDelegate.h"
+#pragma clang diagnostic pop
+
+NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Property exposure
 
@@ -67,15 +73,16 @@
 #pragma mark - XCTestCase
 
 @interface MDCLegacyInkLayerTests : XCTestCase <MDCLegacyInkLayerRippleDelegate>
-@property(nonatomic, strong) XCTestExpectation *animationDidStartExpectation;
-@property(nonatomic, strong) XCTestExpectation *animationDidStopExpectation;
+@property(nonatomic, strong, nullable) XCTestExpectation *animationDidStartExpectation;
+@property(nonatomic, strong, nullable) XCTestExpectation *animationDidStopExpectation;
 
 @property(nonatomic, assign) NSInteger legacyInkLayerAnimationDidStartCount;
-@property(nonatomic, strong) XCTestExpectation *legacyInkLayerAnimationDidStartExpectation;
+@property(nonatomic, strong, nullable)
+    XCTestExpectation *legacyInkLayerAnimationDidStartExpectation;
 @property(nonatomic, assign) NSInteger legacyInkLayerAnimationDidEndCount;
-@property(nonatomic, strong) XCTestExpectation *legacyInkLayerAnimationDidEndExpectation;
+@property(nonatomic, strong, nullable) XCTestExpectation *legacyInkLayerAnimationDidEndExpectation;
 
-@property(nonatomic, strong) MDCLegacyInkLayer *inkLayer;
+@property(nonatomic, strong, nullable) MDCLegacyInkLayer *inkLayer;
 @end
 
 @implementation MDCLegacyInkLayerTests
@@ -87,8 +94,8 @@
   [self.animationDidStartExpectation fulfill];
 }
 
-- (void)animationDidStop:(CAAnimation *)anim
-              shapeLayer:(CAShapeLayer *)shapeLayer
+- (void)animationDidStop:(nullable CAAnimation *)anim
+              shapeLayer:(nullable CAShapeLayer *)shapeLayer
                 finished:(BOOL)finished {
   [self.inkLayer animationDidStop:anim shapeLayer:shapeLayer finished:finished];
   [self.animationDidStopExpectation fulfill];
@@ -302,3 +309,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

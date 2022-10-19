@@ -14,8 +14,13 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCInkLayer.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCInkLayer.h"
 #import "MDCInkLayerDelegate.h"
+#pragma clang diagnostic pop
+
+NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Fake classes
 
@@ -26,7 +31,7 @@
 
 @implementation CapturingMDCInkLayerSubclass
 
-- (void)addAnimation:(CAAnimation *)anim forKey:(NSString *)key {
+- (void)addAnimation:(CAAnimation *)anim forKey:(nullable NSString *)key {
   if (!self.addedAnimations) {
     self.addedAnimations = [NSMutableArray array];
   }
@@ -130,3 +135,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
