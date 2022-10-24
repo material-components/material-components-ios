@@ -12,12 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCFlexibleHeaderView+ShiftBehavior.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
 #import "MDCFlexibleHeaderShifter.h"
+#pragma clang diagnostic pop
 
-#import "MaterialFlexibleHeader+ShiftBehaviorEnabledWithStatusBar.h"
+#import "MDCFlexibleHeaderView+ShiftBehavior.h"
+#import "MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar.h"
 
 #import <XCTest/XCTest.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface FlexibleHeaderShifterTests : XCTestCase
 @end
@@ -149,3 +154,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

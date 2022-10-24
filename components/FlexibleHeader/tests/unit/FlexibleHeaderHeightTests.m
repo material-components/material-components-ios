@@ -15,10 +15,15 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <XCTest/XCTest.h>
 
-#import "MaterialFlexibleHeader.h"
+#import "MDCFlexibleHeaderView.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
 #import "MDCFlexibleHeaderTopSafeArea.h"
+#pragma clang diagnostic pop
 #import "FlexibleHeaderTopSafeAreaTestsFakeTopSafeAreaDelegate.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface MDCFlexibleHeaderView (UnitTestingPrivateAPIs)
 @property(nonatomic, strong) MDCFlexibleHeaderTopSafeArea *topSafeArea;
@@ -90,3 +95,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

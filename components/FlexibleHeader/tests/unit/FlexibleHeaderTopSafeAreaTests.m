@@ -16,9 +16,14 @@
 
 #import <XCTest/XCTest.h>
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
 #import "MDCFlexibleHeaderTopSafeArea.h"
+#pragma clang diagnostic pop
 #import "FlexibleHeaderTopSafeAreaTestsFakeTopSafeAreaDelegate.h"
 #import "FlexibleHeaderTopSafeAreaTestsFakeViewController.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface FlexibleHeaderTopSafeAreaTests : XCTestCase
 @end
@@ -223,3 +228,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

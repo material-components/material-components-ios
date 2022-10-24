@@ -14,7 +14,12 @@
 
 #import <Foundation/Foundation.h>
 
-#import "../../src/private/MDCFlexibleHeaderTopSafeArea.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCFlexibleHeaderTopSafeAreaDelegate.h"
+#pragma clang diagnostic pop
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface FlexibleHeaderTopSafeAreaTestsFakeTopSafeAreaDelegate
     : NSObject <MDCFlexibleHeaderTopSafeAreaDelegate>
@@ -23,3 +28,5 @@
 @property(nonatomic) CGFloat deviceTopSafeAreaInset;
 @property(nonatomic, weak) id<MDCFlexibleHeaderTopSafeAreaDelegate> forwardingDelegate;
 @end
+
+NS_ASSUME_NONNULL_END

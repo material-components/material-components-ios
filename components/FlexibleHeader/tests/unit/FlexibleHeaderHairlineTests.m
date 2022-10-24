@@ -14,16 +14,21 @@
 
 #import <XCTest/XCTest.h>
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
 #import "MDCFlexibleHeaderHairline.h"
-#import "MaterialFlexibleHeader.h"
+#pragma clang diagnostic pop
+#import "MDCFlexibleHeaderViewController.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface MDCFlexibleHeaderViewController (UnitTesting)
 @property(nonatomic, strong) MDCFlexibleHeaderHairline *hairline;
 @end
 
 @interface FlexibleHeaderHairlineTests : XCTestCase
-@property(nonatomic, strong) MDCFlexibleHeaderHairline *hairline;
-@property(nonatomic, strong) UIView *containerView;
+@property(nonatomic, strong, nullable) MDCFlexibleHeaderHairline *hairline;
+@property(nonatomic, strong, nullable) UIView *containerView;
 @end
 
 @implementation FlexibleHeaderHairlineTests
@@ -205,3 +210,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

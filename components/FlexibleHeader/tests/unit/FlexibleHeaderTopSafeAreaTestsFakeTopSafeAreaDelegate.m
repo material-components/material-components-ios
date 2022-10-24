@@ -14,7 +14,12 @@
 
 #import "FlexibleHeaderTopSafeAreaTestsFakeTopSafeAreaDelegate.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
 #import "MDCFlexibleHeaderTopSafeAreaDelegate.h"
+#pragma clang diagnostic pop
+
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation FlexibleHeaderTopSafeAreaTestsFakeTopSafeAreaDelegate
 
@@ -34,3 +39,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

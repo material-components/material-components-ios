@@ -16,9 +16,14 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCFlexibleHeaderMinMaxHeight.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCFlexibleHeaderMinMaxHeight.h"
 #import "MDCFlexibleHeaderTopSafeArea.h"
+#pragma clang diagnostic pop
 #import "FlexibleHeaderTopSafeAreaTestsFakeTopSafeAreaDelegate.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface FlexibleHeaderMinMaxHeightTests : XCTestCase
 @end
@@ -129,3 +134,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
