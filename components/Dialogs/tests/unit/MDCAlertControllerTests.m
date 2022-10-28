@@ -26,8 +26,6 @@
 #import "../../src/private/MDCDialogShadowedView.h"
 #import "MDCAlertController+ButtonForAction.h"
 #import "MDCAlertControllerView+Private.h"
-#import "UIFont+MaterialScalable.h"
-#import "UIFont+MaterialSimpleEquality.h"
 
 #pragma mark - Subclasses for testing
 
@@ -511,6 +509,7 @@
   self.alert.buttonInkColor = testColor;
   self.alert.titleFont = [UIFont systemFontOfSize:12];
   self.alert.messageFont = [UIFont systemFontOfSize:14];
+  self.alert.titlePinsToTop = YES;
   for (MDCAlertAction *action in self.alert.actions) {
     [[self.alert buttonForAction:action] setTitleFont:[UIFont systemFontOfSize:10]
                                              forState:UIControlStateNormal];
