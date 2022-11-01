@@ -20,6 +20,7 @@
 #import "MaterialShadowElevations.h"
 #import "MaterialShapes.h"
 
+NS_ASSUME_NONNULL_BEGIN
 API_DEPRECATED_BEGIN("Use a branded UIButton instead (go/material-ios-buttons)", ios(12, 12))
 
 /*
@@ -368,3 +369,4 @@ When @c centerVisibleArea is @c NO, this value is @c UIEdgeInsetsZero.
 @end
 
 API_DEPRECATED_END
+NS_ASSUME_NONNULL_END
