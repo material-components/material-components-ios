@@ -20,12 +20,17 @@
 #import "MDCDialogPresentationController.h"
 #import "MDCDialogTransitionController.h"
 #import "UIViewController+MaterialDialogs.h"
-#import "MDCAlertActionManager.h"
 #import "MDCShadowElevations.h"
 
-#import "../../src/private/MDCDialogShadowedView.h"
-#import "MDCAlertController+ButtonForAction.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCAlertActionManager.h"
 #import "MDCAlertControllerView+Private.h"
+#import "MDCDialogShadowedView.h"
+#pragma clang diagnostic pop
+#import "MDCAlertController+ButtonForAction.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Subclasses for testing
 
@@ -861,3 +866,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -12,13 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialDialogs.h"
+#import "MDCButton.h"
+#import "MDCAlertController.h"
+#import "MDCAlertControllerView.h"
+#import "MDCDialogPresentationController.h"
 
-#import "MaterialButtons.h"
 #import "MDCAlertController+ButtonForAction.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "UIViewController+MaterialDialogs.h"
 #import "MDCAlertControllerView+Private.h"
+#pragma clang diagnostic pop
 
 #import <XCTest/XCTest.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 static inline UIImage *TestImage(CGSize size) {
   CGFloat scale = [UIScreen mainScreen].scale;
@@ -277,3 +285,5 @@ static inline UIImage *TestImage(CGSize size) {
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

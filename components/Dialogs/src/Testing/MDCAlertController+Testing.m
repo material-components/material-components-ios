@@ -16,7 +16,12 @@
 #import "MDCAlertController.h"
 #import "MDCAlertControllerView.h"
 #import "MDCAlertController+Testing.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
 #import "MDCAlertControllerView+Private.h"
+#pragma clang diagnostic pop
+
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation MDCAlertController (Testing)
 
@@ -59,3 +64,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

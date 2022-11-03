@@ -14,11 +14,17 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialButtons.h"
-#import "MaterialDialogs.h"
+#import "MDCButton.h"
+#import "MDCAlertController.h"
+#import "MDCAlertControllerView.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
 #import "MDCAlertActionManager.h"
 #import "MDCAlertControllerView+Private.h"
+#pragma clang diagnostic pop
+
+NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Subclasses for testing
 
@@ -80,3 +86,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

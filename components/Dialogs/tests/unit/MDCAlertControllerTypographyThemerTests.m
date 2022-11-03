@@ -12,14 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialDialogs+TypographyThemer.h"
-#import "MaterialDialogs.h"
+#import "MDCButton.h"
+#import "MDCAlertController.h"
+#import "MDCAlertControllerView.h"
+#import "MDCAlertTypographyThemer.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
 #import "MDCAlertActionManager.h"
 #import "MDCAlertControllerView+Private.h"
-#import "MaterialTypographyScheme.h"
+#pragma clang diagnostic pop
+#import "MDCTypographyScheme.h"
 
 #import <XCTest/XCTest.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface MDCAlertControllerTypographyThemerTests : XCTestCase
 
@@ -45,3 +52,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

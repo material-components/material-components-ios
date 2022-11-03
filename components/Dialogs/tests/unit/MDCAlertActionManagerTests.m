@@ -13,11 +13,17 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
-#import "MaterialButtons.h"
+#import "MDCButton.h"
 #import "MDCAlertController+ButtonForAction.h"
-#import "MaterialDialogs.h"
+#import "MDCAlertController.h"
+#import "MDCAlertControllerView.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
 #import "MDCAlertActionManager.h"
 #import "MDCAlertControllerView+Private.h"
+#pragma clang diagnostic pop
+
+NS_ASSUME_NONNULL_BEGIN
 
 /** Category for @c MDCAlertController to expose the @c actionManager property. */
 @interface MDCAlertController (Testing)
@@ -228,3 +234,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

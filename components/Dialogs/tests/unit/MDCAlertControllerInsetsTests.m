@@ -15,13 +15,17 @@
 #import "MDCButton.h"
 #import "MDCAlertController.h"
 #import "MDCAlertControllerView.h"
-
 #import "MDCAlertController+ButtonForAction.h"
 #import "MDCAlertController+Testing.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
 #import "MDCAlertActionManager.h"
 #import "MDCAlertControllerView+Private.h"
+#pragma clang diagnostic pop
 
 #import <XCTest/XCTest.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 static inline UIImage *TestImage(CGSize size) {
   CGFloat scale = [UIScreen mainScreen].scale;
@@ -161,3 +165,5 @@ static NSString *const kMessageLatin = @"Lorem ipsum dolor sit amet, consul doce
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

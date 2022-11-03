@@ -17,9 +17,14 @@
 #import "MDCAlertControllerView.h"
 
 #import "MDCAlertController+ButtonForAction.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
 #import "MDCAlertControllerView+Private.h"
+#pragma clang diagnostic pop
 
 #import <XCTest/XCTest.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 static const CGFloat kFourInchPortraitWidth = 320.0;
 static const CGFloat kFourInchLandscapeWidth = 568.0;
@@ -126,3 +131,5 @@ static const CGFloat kFourInchLandscapeWidth = 568.0;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

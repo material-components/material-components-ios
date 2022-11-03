@@ -12,12 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialDialogs+ColorThemer.h"
-#import "MaterialDialogs.h"
+#import "MDCButton.h"
+#import "MDCAlertColorThemer.h"
+#import "MDCAlertController.h"
+#import "MDCAlertControllerView.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
 #import "MDCAlertActionManager.h"
 #import "MDCAlertControllerView+Private.h"
-#import "MaterialColorScheme.h"
+#pragma clang diagnostic pop
+#import "MDCSemanticColorScheme.h"
 
 #import <XCTest/XCTest.h>
 
@@ -28,6 +33,8 @@
 #define CGFLOAT_EPSILON FLT_EPSILON
 #endif
 #endif
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface MDCAlertControllerColorThemerTests : XCTestCase
 
@@ -72,3 +79,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

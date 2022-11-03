@@ -17,13 +17,18 @@
 #import "MDCAlertController+MaterialTheming.h"
 
 #import "MDCAlertController+Testing.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
 #import "MDCAlertControllerView+Private.h"
 #import "MDCSnapshotTestCase.h"
 #import "UIImage+MDCSnapshot.h"
 #import "UIView+MDCSnapshot.h"
+#pragma clang diagnostic pop
 #import "MDCSemanticColorScheme.h"
 #import "MDCContainerScheme.h"
 #import "MDCTypographyScheme.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 static NSString *const kTitleShortLatin = @"Short Title";
 static NSString *const kTitleLongLatin = @"Lorem ipsum dolor sit amet";
@@ -32,9 +37,9 @@ static NSString *const kMessageMediumLatin =
 static NSString *const kFirstLongAction = @"First Long Long Action";
 
 @interface MDCAlertControllerInsetsTests : MDCSnapshotTestCase
-@property(nonatomic, strong) MDCAlertController *alertController;
+@property(nonatomic, strong, nullable) MDCAlertController *alertController;
 @property(nonatomic, strong) MDCAlertControllerView *alertView;
-@property(nonatomic, strong) MDCContainerScheme *containerScheme2019;
+@property(nonatomic, strong, nullable) MDCContainerScheme *containerScheme2019;
 @property(nonatomic, strong) UIImage *titleIcon;
 @property(nonatomic, strong) UIImage *titleImageFullwidth;
 @property(nonatomic, strong) UIView *accessoryView;
@@ -464,3 +469,5 @@ static NSString *const kFirstLongAction = @"First Long Long Action";
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

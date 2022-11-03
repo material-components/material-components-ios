@@ -12,20 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <CoreGraphics/CoreGraphics.h>
+#import <UIKit/UIKit.h>
+
 #import "MDCAvailability.h"
 #import "MDCButton.h"
 #import "MDCAlertController.h"
 #import "UIFont+MaterialScalable.h"
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCDialogShadowedView.h"
 #import "UIColor+MaterialDynamic.h"
-
-#import <CoreGraphics/CoreGraphics.h>
-#import <UIKit/UIKit.h>
-
-#import "../../src/private/MDCDialogShadowedView.h"
-#import "MDCAlertController+ButtonForAction.h"
-#import "MDCFontScaler.h"
 #import "MDCSnapshotTestCase.h"
 #import "UIView+MDCSnapshot.h"
+#pragma clang diagnostic pop
+
+#import "MDCAlertController+ButtonForAction.h"
+#import "MDCFontScaler.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve(void) {
   static NSDictionary<UIContentSizeCategory, NSNumber *> *scalingCurve;
@@ -438,3 +444,5 @@ static NSDictionary<UIContentSizeCategory, NSNumber *> *CustomScalingCurve(void)
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
