@@ -131,6 +131,16 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
   return self;
 }
 
+- (void)traitCollectionDidChange:(nullable UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+
+  if (self.traitCollection.legibilityWeight != previousTraitCollection.legibilityWeight) {
+    // Layout subviews when bold text setting changes so the label size is recalculated to
+    // fit the text.
+    [self setNeedsLayout];
+  }
+}
+
 - (CGSize)sizeThatFits:(__unused CGSize)size {
   if (self.titleBelowIcon) {
     return [self sizeThatFitsForVerticalLayout];
