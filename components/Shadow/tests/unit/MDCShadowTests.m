@@ -115,9 +115,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)testSettingNewShadowInstanceUsingBuilder {
   // Given
-  MDCShadow *shadow = [[MDCShadowBuilder builderWithOpacity:0.1
-                                                     radius:0.2
-                                                     offset:CGSizeMake(0.3, 0.4)] build];
+  MDCShadow *shadow = [[MDCShadowBuilder builderWithColor:UIColor.whiteColor
+                                                  opacity:0.1
+                                                   radius:0.2
+                                                   offset:CGSizeMake(0.3, 0.4)] build];
 
   // When
   MDCShadowsCollection *shadowsCollection =

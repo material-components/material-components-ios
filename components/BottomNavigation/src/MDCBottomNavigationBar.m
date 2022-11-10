@@ -28,6 +28,7 @@
 #import "MDCRippleTouchController.h"
 #import "MDCRippleTouchControllerDelegate.h"
 #import "MDCRippleView.h"
+#import "MDCShadow.h"
 #import "MDCShadowsCollection.h"
 #import "MDCShadowElevations.h"
 #import "MDCShadowLayer.h"
@@ -255,9 +256,13 @@ static BOOL gEnablePerformantShadow = NO;
 }
 
 - (void)updateShadow {
-  MDCConfigureShadowForView(self,
-                            [self.shadowsCollection shadowForElevation:self.mdc_currentElevation],
-                            self.shadowColor);
+  MDCShadow *shadow = [self.shadowsCollection shadowForElevation:self.mdc_currentElevation];
+  shadow = [[MDCShadowBuilder builderWithColor:self.shadowColor
+                                       opacity:shadow.opacity
+                                        radius:shadow.radius
+                                        offset:shadow.offset
+                                        spread:shadow.spread] build];
+  MDCConfigureShadowForView(self, shadow);
 }
 
 - (void)setShadowColor:(UIColor *)shadowColor {

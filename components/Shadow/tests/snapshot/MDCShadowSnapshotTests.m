@@ -49,7 +49,7 @@ static UIColor *MDCTestDynamicShadowColor(void) {
 @interface MDCShadowTestView : UIView
 @property(nonatomic) CGFloat shadowElevation;
 @property(nonatomic) MDCShadow *customShadow;
-@property(nonatomic, strong, nonnull) UIColor *shadowColor;
+@property(nonatomic, strong, nonnull) UIColor *customShadowColor;
 @property(nonatomic, strong, nullable) CAShapeLayer *shapeLayer;
 @property(nonatomic, nullable) CGPathRef shapePath;
 @property(nonatomic, strong, nullable) UITraitCollection *traitCollectionOverride;
@@ -59,14 +59,6 @@ static UIColor *MDCTestDynamicShadowColor(void) {
 @implementation MDCShadowTestView
 
 @synthesize shapePath = _shapePath;
-
-- (instancetype)initWithFrame:(CGRect)frame {
-  self = [super initWithFrame:frame];
-  if (self) {
-    _shadowColor = MDCShadowColor();
-  }
-  return self;
-}
 
 - (UITraitCollection *)traitCollection {
   return self.traitCollectionOverride ?: [super traitCollection];
@@ -79,16 +71,23 @@ static UIColor *MDCTestDynamicShadowColor(void) {
     _Nonnull CGPathRef shapePath = self.shapePath;
     self.backgroundColor = nil;
     MDCConfigureShadowForViewWithPath(
-        self, [MDCShadowsCollectionDefault() shadowForElevation:self.shadowElevation],
-        self.shadowColor, shapePath);
+        self, [MDCShadowsCollectionDefault() shadowForElevation:self.shadowElevation], shapePath);
   } else if (self.customShadow != nil) {
     self.backgroundColor = UIColor.whiteColor;
-    MDCConfigureShadowForView(self, self.customShadow, self.shadowColor);
+    MDCConfigureShadowForView(self, self.customShadow);
+  } else if (self.customShadowColor != nil) {
+    self.backgroundColor = UIColor.whiteColor;
+    MDCShadow *shadow = [MDCShadowsCollectionDefault() shadowForElevation:self.shadowElevation];
+    shadow = [[MDCShadowBuilder builderWithColor:self.customShadowColor
+                                         opacity:shadow.opacity
+                                          radius:shadow.radius
+                                          offset:shadow.offset
+                                          spread:shadow.spread] build];
+    MDCConfigureShadowForView(self, shadow);
   } else {
     self.backgroundColor = UIColor.whiteColor;
     MDCConfigureShadowForView(
-        self, [MDCShadowsCollectionDefault() shadowForElevation:self.shadowElevation],
-        self.shadowColor);
+        self, [MDCShadowsCollectionDefault() shadowForElevation:self.shadowElevation]);
   }
 }
 
@@ -216,7 +215,7 @@ static UIColor *MDCTestDynamicShadowColor(void) {
   if (@available(iOS 13.0, *)) {
     // Given
     self.view.shadowElevation = 1;
-    self.view.shadowColor = MDCTestDynamicShadowColor();
+    self.view.customShadowColor = MDCTestDynamicShadowColor();
 
     // When
     self.view.traitCollectionOverride =
@@ -233,7 +232,7 @@ static UIColor *MDCTestDynamicShadowColor(void) {
   if (@available(iOS 13.0, *)) {
     // Given
     self.view.shadowElevation = 1;
-    self.view.shadowColor = MDCTestDynamicShadowColor();
+    self.view.customShadowColor = MDCTestDynamicShadowColor();
 
     // When
     self.view.traitCollectionOverride =
@@ -247,10 +246,11 @@ static UIColor *MDCTestDynamicShadowColor(void) {
 
 - (void)testCustomShadowSpread {
   // When
-  self.view.customShadow = [[MDCShadowBuilder builderWithOpacity:0.2
-                                                          radius:2.5
-                                                          offset:CGSizeMake(0, 2)
-                                                          spread:0.45] build];
+  self.view.customShadow = [[MDCShadowBuilder builderWithColor:MDCShadowColor()
+                                                       opacity:0.2
+                                                        radius:2.5
+                                                        offset:CGSizeMake(0, 2)
+                                                        spread:0.45] build];
 
   // Then
   [self generateSnapshotForIOS13AndVerifyForView:self.view];

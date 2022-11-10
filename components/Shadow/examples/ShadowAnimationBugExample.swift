@@ -31,8 +31,7 @@ private final class ShadowedView: UIView {
   override func layoutSubviews() {
     super.layoutSubviews()
     MDCConfigureShadow(
-      for: self, shadow: MDCShadowsCollectionDefault().shadow(forElevation: 12),
-      color: .black)
+      for: self, shadow: MDCShadowsCollectionDefault().shadow(forElevation: 12))
   }
 }
 

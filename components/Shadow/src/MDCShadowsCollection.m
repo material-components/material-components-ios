@@ -127,17 +127,33 @@ MDCShadowsCollection *MDCShadowsCollectionDefault(void) {
   static MDCShadowsCollection *shadowsCollection;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    MDCShadow *shadow = [[MDCShadowBuilder builderWithOpacity:0 radius:0
-                                                       offset:CGSizeMake(0, 0)] build];
+    MDCShadow *shadow = [[MDCShadowBuilder builderWithColor:MDCShadowColor()
+                                                    opacity:0
+                                                     radius:0
+                                                     offset:CGSizeMake(0, 0)] build];
     MDCShadowsCollectionBuilder *shadowsBuilder =
         [MDCShadowsCollectionBuilder builderWithShadow:shadow forElevation:0];
     NSDictionary<NSNumber *, MDCShadow *> *shadowValuesForElevation = @{
-      @1 : [[MDCShadowBuilder builderWithOpacity:0.43 radius:2.5 offset:CGSizeMake(0, 1)] build],
-      @3 : [[MDCShadowBuilder builderWithOpacity:0.4 radius:3.25 offset:CGSizeMake(0, 1.25)] build],
-      @6 : [[MDCShadowBuilder builderWithOpacity:0.34 radius:4.75
-                                          offset:CGSizeMake(0, 2.25)] build],
-      @8 : [[MDCShadowBuilder builderWithOpacity:0.42 radius:6 offset:CGSizeMake(0, 3)] build],
-      @12 : [[MDCShadowBuilder builderWithOpacity:0.4 radius:7.25 offset:CGSizeMake(0, 5)] build],
+      @1 : [[MDCShadowBuilder builderWithColor:MDCShadowColor()
+                                       opacity:0.43
+                                        radius:2.5
+                                        offset:CGSizeMake(0, 1)] build],
+      @3 : [[MDCShadowBuilder builderWithColor:MDCShadowColor()
+                                       opacity:0.4
+                                        radius:3.25
+                                        offset:CGSizeMake(0, 1.25)] build],
+      @6 : [[MDCShadowBuilder builderWithColor:MDCShadowColor()
+                                       opacity:0.34
+                                        radius:4.75
+                                        offset:CGSizeMake(0, 2.25)] build],
+      @8 : [[MDCShadowBuilder builderWithColor:MDCShadowColor()
+                                       opacity:0.42
+                                        radius:6
+                                        offset:CGSizeMake(0, 3)] build],
+      @12 : [[MDCShadowBuilder builderWithColor:MDCShadowColor()
+                                        opacity:0.4
+                                         radius:7.25
+                                         offset:CGSizeMake(0, 5)] build],
     };
     [shadowsBuilder addShadowsForElevations:shadowValuesForElevation];
     shadowsCollection = [shadowsBuilder build];
@@ -145,7 +161,7 @@ MDCShadowsCollection *MDCShadowsCollectionDefault(void) {
   return shadowsCollection;
 }
 
-void MDCConfigureShadowForView(UIView *view, MDCShadow *shadow, UIColor *shadowColor) {
+void MDCConfigureShadowForView(UIView *view, MDCShadow *shadow) {
   // The bezierPathWithRoundedRect API supports both a cornerRadius of 0 (created just a square
   // path) and also rounded corners where the cornerRadius is >0.
   UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:view.bounds
@@ -156,11 +172,11 @@ void MDCConfigureShadowForView(UIView *view, MDCShadow *shadow, UIColor *shadowC
                                       cornerRadius:view.layer.cornerRadius + shadow.spread];
   }
 
-  MDCConfigureShadowForViewWithPath(view, shadow, shadowColor, path.CGPath);
+  MDCConfigureShadowForViewWithPath(view, shadow, path.CGPath);
 }
 
-void MDCConfigureShadowForViewWithPath(UIView *view, MDCShadow *shadow, UIColor *shadowColor,
-                                       CGPathRef path) {
+void MDCConfigureShadowForViewWithPath(UIView *view, MDCShadow *shadow, CGPathRef path) {
+  UIColor *shadowColor = shadow.color;
 #if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(ios 13.0, *)) {
     shadowColor = [shadowColor resolvedColorWithTraitCollection:view.traitCollection];

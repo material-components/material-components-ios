@@ -170,8 +170,13 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (void)updateShadows {
-  MDCConfigureShadowForView(self, [self shadowForState:self.state],
-                            [self shadowColorForState:self.state]);
+  MDCShadow *shadow = [self shadowForState:self.state];
+  shadow = [[MDCShadowBuilder builderWithColor:[self shadowColorForState:self.state]
+                                       opacity:shadow.opacity
+                                        radius:shadow.radius
+                                        offset:shadow.offset
+                                        spread:shadow.spread] build];
+  MDCConfigureShadowForView(self, shadow);
 }
 
 - (void)setEdgeInsetsWithImageAndTitle:(UIEdgeInsets)edgeInsetsWithImageAndTitle {

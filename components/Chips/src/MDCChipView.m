@@ -15,17 +15,22 @@
 #import "MDCChipView.h"
 #import "private/MDCChipView+Private.h"
 
-#import "MaterialElevation.h"
-#import <MDFInternationalization/MDFInternationalization.h>
-
-#import "MaterialInk.h"
-#import "MaterialRipple.h"
-#import "MaterialShadow.h"
-#import "MaterialShadowElevations.h"
-#import "MaterialShapeLibrary.h"
-#import "MaterialShapes.h"
-#import "MaterialTypography.h"
-#import "MaterialMath.h"
+#import "UIView+MaterialElevationResponding.h"
+#import "MDCInkView.h"
+#import "MDCRippleView.h"
+#import "MDCShadow.h"
+#import "MDCShadowsCollection.h"
+#import "MDCShadowElevations.h"
+#import "MDCRoundedCornerTreatment.h"
+#import "MDCRectangleShapeGenerator.h"
+#import "MDCShapeMediator.h"
+#import "MDCShapedShadowLayer.h"
+#import "MDCFontTextStyle.h"
+#import "MDCTypography.h"
+#import "UIFont+MaterialScalable.h"
+#import "UIFont+MaterialTypography.h"
+#import "MDCMath.h"
+#import <MDFInternationalization/MDFInternationalization.h>  // IWYU pragma: keep
 
 static const MDCFontTextStyle kTitleTextStyle = MDCFontTextStyleBody2;
 
@@ -537,13 +542,23 @@ static BOOL gEnablePerformantShadow = NO;
 
 - (void)updateShadow {
   if (_shapedLayer.shapeGenerator == nil) {
-    MDCConfigureShadowForView(self,
-                              [self.shadowsCollection shadowForElevation:self.mdc_currentElevation],
-                              [self shadowColorForState:self.state] ?: MDCShadowColor());
+    MDCShadow *shadow = [self.shadowsCollection shadowForElevation:self.mdc_currentElevation];
+    shadow = [[MDCShadowBuilder
+        builderWithColor:[self shadowColorForState:self.state] ?: MDCShadowColor()
+                 opacity:shadow.opacity
+                  radius:shadow.radius
+                  offset:shadow.offset
+                  spread:shadow.spread] build];
+    MDCConfigureShadowForView(self, shadow);
   } else {
-    MDCConfigureShadowForViewWithPath(
-        self, [self.shadowsCollection shadowForElevation:self.mdc_currentElevation],
-        [self shadowColorForState:self.state] ?: MDCShadowColor(), self.layer.shadowPath);
+    MDCShadow *shadow = [self.shadowsCollection shadowForElevation:self.mdc_currentElevation];
+    shadow = [[MDCShadowBuilder
+        builderWithColor:[self shadowColorForState:self.state] ?: MDCShadowColor()
+                 opacity:shadow.opacity
+                  radius:shadow.radius
+                  offset:shadow.offset
+                  spread:shadow.spread] build];
+    MDCConfigureShadowForViewWithPath(self, shadow, self.layer.shadowPath);
   }
 }
 

@@ -91,7 +91,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCShadowsCollectionBuil
 @end
 
 /**
- Given a view, MDCShadow instance, and a shadow color (e.g. `MDCShadowColor()`), updates the shadow
+ Given a view and an MDCShadow instance, updates the shadow
  properties of `view.layer`:
 
  * shadowColor
@@ -109,12 +109,11 @@ __attribute__((objc_subclassing_restricted)) @interface MDCShadowsCollectionBuil
  Call this function from your `UIView` subclass's `-layoutSubviews` to update `shadowPath`
  whenever the view's bounds change.
  */
-FOUNDATION_EXTERN void MDCConfigureShadowForView(UIView *_Nonnull view, MDCShadow *_Nonnull shadow,
-                                                 UIColor *_Nonnull shadowColor)
-    NS_SWIFT_NAME(MDCConfigureShadow(for:shadow:color:));
+FOUNDATION_EXTERN void MDCConfigureShadowForView(UIView *_Nonnull view, MDCShadow *_Nonnull shadow)
+    NS_SWIFT_NAME(MDCConfigureShadow(for:shadow:));
 
 /**
- Given a view, MDCShadow instance, a shadow color (e.g. `MDCShadowColor()`),  and a `path` in the
+ Given a view, MDCShadow instance,  and a `path` in the
  view's coordinate space representing the shape of the view, updates the shadow properties of
  `view.layer`:
 
@@ -129,9 +128,8 @@ FOUNDATION_EXTERN void MDCConfigureShadowForView(UIView *_Nonnull view, MDCShado
  */
 FOUNDATION_EXTERN void MDCConfigureShadowForViewWithPath(UIView *_Nonnull view,
                                                          MDCShadow *_Nonnull shadow,
-                                                         UIColor *_Nonnull shadowColor,
                                                          CGPathRef _Nonnull path)
-    NS_SWIFT_NAME(MDCConfigureShadow(for:shadow:color:path:));
+    NS_SWIFT_NAME(MDCConfigureShadow(for:shadow:path:));
 
 /**
  Default color for a Material shadow. On iOS >= 13, this is a dynamic color.
