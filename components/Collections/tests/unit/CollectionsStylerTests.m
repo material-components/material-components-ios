@@ -13,10 +13,16 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
+
 #import "MDCCollectionViewLayoutAttributes.h"
 #import "MDCCollectionViewStyling.h"
 #import "MDCCollectionViewStylingDelegate.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
 #import "MDCCollectionViewStyler.h"
+#pragma clang diagnostic pop
+
+NS_ASSUME_NONNULL_BEGIN
 
 static MDCCollectionViewLayoutAttributes* cell00(void) {
   return [MDCCollectionViewLayoutAttributes
@@ -176,3 +182,5 @@ static MDCCollectionViewLayoutAttributes* footer1(void) {
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

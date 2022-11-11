@@ -13,7 +13,13 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
 #import "MDCCollectionStringResources.h"
+#pragma clang diagnostic pop
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface CollectionsLocalizationTests : XCTestCase
 
@@ -38,3 +44,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

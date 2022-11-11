@@ -13,7 +13,13 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
 #import "MDCCollectionInfoBarView.h"
+#pragma clang diagnostic pop
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface MDCCollectionInfoBarViewTests : XCTestCase
 
@@ -54,3 +60,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
