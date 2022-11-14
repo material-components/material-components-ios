@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
   NSMutableDictionary<NSNumber *, UIColor *> *_borderColors;
   NSMutableDictionary<NSNumber *, MDCShadow *> *_shadows;
   NSMutableDictionary<NSNumber *, UIColor *> *_shadowColors;
+  BOOL _customInsetAvailable;
 }
 
 @end
@@ -55,6 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
   _borderColors = [NSMutableDictionary dictionary];
   _shadowColors = [NSMutableDictionary dictionary];
   _shadows = [NSMutableDictionary dictionary];
+  _customInsetAvailable = NO;
 
   if (!_backgroundColors) {
     // _backgroundColors may have already been initialized by setting the backgroundColor setter.
@@ -181,33 +183,44 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setEdgeInsetsWithImageAndTitle:(UIEdgeInsets)edgeInsetsWithImageAndTitle {
   _edgeInsetsWithImageAndTitle = edgeInsetsWithImageAndTitle;
+  _customInsetAvailable = NO;
   [self updateInsets];
   [self updateShadows];
 }
 
 - (void)setEdgeInsetsWithImageOnly:(UIEdgeInsets)edgeInsetsWithImageOnly {
   _edgeInsetsWithImageOnly = edgeInsetsWithImageOnly;
+  _customInsetAvailable = NO;
   [self updateInsets];
   [self updateShadows];
 }
 
 - (void)setEdgeInsetsWithTitleOnly:(UIEdgeInsets)edgeInsetsWithTitleOnly {
   _edgeInsetsWithTitleOnly = edgeInsetsWithTitleOnly;
+  _customInsetAvailable = NO;
   [self updateInsets];
   [self updateShadows];
 }
 
+- (void)setContentEdgeInsets:(UIEdgeInsets)edgeInsets {
+  [super setContentEdgeInsets:edgeInsets];
+  _customInsetAvailable = YES;
+}
+
 - (void)updateInsets {
-  BOOL hasTitle = self.currentTitle.length > 0;
-  BOOL hasImage = self.currentImage.size.width > 0;
-  if (hasImage && hasTitle) {
-    self.contentEdgeInsets = self.edgeInsetsWithImageAndTitle;
-  } else if (hasImage) {
-    self.contentEdgeInsets = self.edgeInsetsWithImageOnly;
-    self.imageEdgeInsets = UIEdgeInsetsZero;
-  } else if (hasTitle) {
-    self.contentEdgeInsets = self.edgeInsetsWithTitleOnly;
-    self.imageEdgeInsets = UIEdgeInsetsZero;
+  if (!_customInsetAvailable) {
+    BOOL hasTitle = self.currentTitle.length > 0;
+    BOOL hasImage = self.currentImage.size.width > 0;
+    if (hasImage && hasTitle) {
+      self.contentEdgeInsets = self.edgeInsetsWithImageAndTitle;
+    } else if (hasImage) {
+      self.contentEdgeInsets = self.edgeInsetsWithImageOnly;
+      self.imageEdgeInsets = UIEdgeInsetsZero;
+    } else if (hasTitle) {
+      self.contentEdgeInsets = self.edgeInsetsWithTitleOnly;
+      self.imageEdgeInsets = UIEdgeInsetsZero;
+    }
+    _customInsetAvailable = NO;
   }
 }
 
