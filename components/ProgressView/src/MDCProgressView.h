@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /** The animation mode when animating backward progress. */
 typedef NS_ENUM(NSInteger, MDCProgressViewBackwardAnimationMode) {
 
@@ -150,3 +152,5 @@ IB_DESIGNABLE
     (MDCProgressView *_Nonnull progressView, UITraitCollection *_Nullable previousTraitCollection);
 
 @end
+
+NS_ASSUME_NONNULL_END

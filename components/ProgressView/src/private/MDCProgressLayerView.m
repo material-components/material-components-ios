@@ -17,7 +17,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /** The duration of each individual layer animation. */
-static const CGFloat kProgressIntervalDuration = 0.65;
+static const CGFloat kProgressIntervalDuration = 0.667;
+
+/** The delay between each individual layer animation. */
+static const CGFloat kProgressIntervalDelay = 0.333;
 
 @interface MDCProgressLayerView () <CAAnimationDelegate>
 
@@ -139,8 +142,9 @@ static const CGFloat kProgressIntervalDuration = 0.65;
   [CATransaction begin];
 
   CABasicAnimation *growAnimation = [CABasicAnimation animationWithKeyPath:@"bounds.size.width"];
-  growAnimation.timingFunction =
-      [[CAMediaTimingFunction alloc] initWithControlPoints:0.83:0.99:0.46:0.99];
+  growAnimation.timingFunction = [[CAMediaTimingFunction alloc] initWithControlPoints:
+                                                                                 0.40:0.0:0.20:1.0];
+
   growAnimation.duration = kProgressIntervalDuration;
 
   CGFloat beginTime = CACurrentMediaTime() + delay;
@@ -189,10 +193,8 @@ static const CGFloat kProgressIntervalDuration = 0.65;
 
   [self bringSublayerToFront:givenLayer];
 
-  // Delay is calculated based on the next layer appearing before the current animation finishes.
-  // This number will likely need to be modified when fine-tuning animation timing.
   [self buildAnimationGroupForLayer:_animatableLayers[_sequenceCounter]
-                              delay:kProgressIntervalDuration * 0.5];
+                              delay:kProgressIntervalDelay];
 }
 
 #pragma mark - CAAnimationDelegate

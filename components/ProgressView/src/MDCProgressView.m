@@ -18,10 +18,14 @@
 
 #import "MaterialPalettes.h"
 #import "MDCProgressGradientView.h"
+#import "MDCProgressLayerView.h"
+
 #import "MaterialProgressViewStrings.h"
 #import "MaterialProgressViewStrings_table.h"
 #import "MaterialMath.h"
 #import <MDFInternationalization/MDFInternationalization.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 static inline UIColor *MDCProgressViewDefaultTintColor(void) {
   return MDCPalette.bluePalette.tint500;
@@ -38,6 +42,7 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
 @interface MDCProgressView ()
 @property(nonatomic, strong) MDCProgressGradientView *progressView;
 @property(nonatomic, strong) MDCProgressGradientView *indeterminateProgressView;
+@property(nonatomic, strong) MDCProgressLayerView *progressLayerView;
 @property(nonatomic, strong) UIView *trackView;
 @property(nonatomic) BOOL animatingHide;
 // A UIProgressView to return the same format for the accessibility value. For example, when
@@ -56,7 +61,7 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
   return self;
 }
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
     [self commonMDCProgressViewInit];
@@ -86,6 +91,10 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
   _indeterminateProgressView.hidden = YES;
   [self addSubview:_indeterminateProgressView];
 
+  _progressLayerView = [[MDCProgressLayerView alloc] initWithFrame:CGRectZero];
+  _progressLayerView.hidden = YES;
+  [self addSubview:_progressLayerView];
+
   _progressView.colors = @[ MDCProgressViewDefaultTintColor(), MDCProgressViewDefaultTintColor() ];
   _indeterminateProgressView.colors =
       @[ MDCProgressViewDefaultTintColor(), MDCProgressViewDefaultTintColor() ];
@@ -93,7 +102,7 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
       [[self class] defaultTrackTintColorForProgressTintColor:MDCProgressViewDefaultTintColor()];
 }
 
-- (void)willMoveToSuperview:(UIView *)superview {
+- (void)willMoveToSuperview:(nullable UIView *)superview {
   [super willMoveToSuperview:superview];
   [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
@@ -106,10 +115,11 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
     [self updateProgressView];
     [self updateIndeterminateProgressView];
     [self updateTrackView];
+    [self updateProgressLayerView];
   }
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+- (void)traitCollectionDidChange:(nullable UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
 
   if (self.progressTintColor) {
@@ -122,7 +132,7 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
   }
 }
 
-- (void)setProgressTintColor:(UIColor *)progressTintColor {
+- (void)setProgressTintColor:(nullable UIColor *)progressTintColor {
   _progressTintColor = progressTintColor;
   _progressTintColors = nil;
   if (progressTintColor != nil) {
@@ -134,18 +144,21 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
   }
 }
 
-- (void)setProgressTintColors:(NSArray<UIColor *> *)progressTintColors {
+- (void)setProgressTintColors:(nullable NSArray<UIColor *> *)progressTintColors {
   _progressTintColors = [progressTintColors copy];
   _progressTintColor = nil;
   self.progressView.colors = _progressTintColors;
   self.indeterminateProgressView.colors = _progressTintColors;
+
+  self.progressLayerView.frame = self.bounds;
+  self.progressLayerView.colors = _progressTintColors;
 }
 
-- (UIColor *)trackTintColor {
+- (nullable UIColor *)trackTintColor {
   return self.trackView.backgroundColor;
 }
 
-- (void)setTrackTintColor:(UIColor *)trackTintColor {
+- (void)setTrackTintColor:(nullable UIColor *)trackTintColor {
   self.trackView.backgroundColor = trackTintColor;
 }
 
@@ -279,7 +292,7 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
   return accessibilityProgressView;
 }
 
-- (NSString *)accessibilityValue {
+- (nullable NSString *)accessibilityValue {
   self.accessibilityProgressView.progress = self.progress;
   return self.accessibilityProgressView.accessibilityValue;
 }
@@ -308,7 +321,7 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
   }
 }
 
-- (NSString *)accessibilityLabel {
+- (nullable NSString *)accessibilityLabel {
   return self.accessibilityProgressView.accessibilityLabel ?: [self defaultAccessibilityLabel];
 }
 
@@ -330,6 +343,7 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
   _animating = NO;
   [self.progressView.shapeLayer removeAllAnimations];
   [self.indeterminateProgressView.shapeLayer removeAllAnimations];
+  [_progressLayerView stopAnimating];
 
   [self setNeedsLayout];
 }
@@ -404,7 +418,42 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
   self.trackView.frame = self.hidden ? CGRectMake(0.0, size.height, size.width, 0.0) : self.bounds;
 }
 
+- (BOOL)isIndeterminateAndMultichromatic {
+  BOOL isIndeterminate = (_mode == MDCProgressViewModeIndeterminate);
+  BOOL isMultichromatic = (_progressTintColor == nil && _progressTintColors != nil);
+
+  return isIndeterminate && isMultichromatic;
+}
+
+- (void)updateProgressLayerView {
+  self.progressLayerView.frame = self.animating ? self.bounds : CGRectZero;
+}
+
 - (void)startAnimatingBar {
+  // Use the new MDCProgressLayerView only for indeterminate multichromatic.
+  // Determinate Monochromatic, Determinate Multichromatic, and Indeterminate Monochromatic
+  // will continue to use MDCProgressGradientView.
+
+  if ([self isIndeterminateAndMultichromatic]) {
+    _progressView.hidden = YES;
+    [_progressView.shapeLayer removeAllAnimations];
+
+    _indeterminateProgressView.hidden = YES;
+    [self.indeterminateProgressView.shapeLayer removeAllAnimations];
+
+    _progressLayerView.frame = self.bounds;
+    _progressLayerView.hidden = NO;
+
+    [_progressLayerView startAnimating];
+    return;
+  } else {
+    _progressLayerView.hidden = YES;
+    [_progressLayerView stopAnimating];
+
+    _indeterminateProgressView.hidden = NO;
+    _progressView.hidden = NO;
+  }
+
   // If the bar isn't indeterminate or the bar is already animating, don't add the animation again.
   if (_mode == MDCProgressViewModeDeterminate || _animating) {
     return;
@@ -472,3 +521,5 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
