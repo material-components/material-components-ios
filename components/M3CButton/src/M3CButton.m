@@ -53,6 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)initCommon {
   self.animationDuration = 0.3f;
+  self.minimumHeight = 44.0f;
   _borderColors = [NSMutableDictionary dictionary];
   _shadowColors = [NSMutableDictionary dictionary];
   _shadows = [NSMutableDictionary dictionary];
@@ -101,6 +102,11 @@ NS_ASSUME_NONNULL_BEGIN
   _shadowColors[@(state)] = color;
   [self updateColors];
   [self updateShadows];
+}
+
+- (void)setMinimumHeight:(CGFloat)minimumHeight {
+  _minimumHeight = minimumHeight;
+  [self setNeedsLayout];
 }
 
 /**
