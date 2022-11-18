@@ -14,8 +14,6 @@
 
 #import "MDCChipView.h"
 
-API_DEPRECATED_BEGIN("Use a branded UIButton instead (go/material-ios-buttons)", ios(12, 12))
-
 @interface MDCChipView (Private)
 
 - (void)startTouchBeganAnimationAtPoint:(CGPoint)point;
@@ -38,4 +36,3 @@ API_DEPRECATED_BEGIN("Use a branded UIButton instead (go/material-ios-buttons)",
 
 @end
 
-API_DEPRECATED_END
