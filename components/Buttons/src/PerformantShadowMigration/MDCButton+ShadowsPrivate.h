@@ -2,8 +2,9 @@
 
 #import "MDCButton.h"
 
-API_DEPRECATED_BEGIN("Use branded UIButton (iOS 13/14) / UIButtonConfiguration (iOS 15+) instead. "
-                     "See go/material-ios-buttons for more details.",
+API_DEPRECATED_BEGIN("🤖👀 Use branded M3CButton instead. "
+                     "See go/material-ios-buttons/gm2-migration for more details. "
+                     "This has go/material-ios-migrations#scriptable-potential 🤖👀.",
                      ios(12, 12))
 
 /**
