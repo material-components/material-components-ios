@@ -13,14 +13,20 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
-#import "../../src/private/MDCAppBarButtonBarBuilder.h"
-#import "MaterialButtonBar.h"
-#import "MaterialButtons.h"
-#import "MaterialInk.h"
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCAppBarButtonBarBuilder.h"
+#pragma clang diagnostic pop
+#import "MDCButtonBar.h"
+#import "MDCButton.h"
+#import "MDCInkView.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface MDCAppBarButtonBarBuilder (UnitTests)
 + (void)configureButton:(MDCButton *)destinationButton
-         fromButtonItem:(UIBarButtonItem *)sourceButtonItem;
+         fromButtonItem:(nullable UIBarButtonItem *)sourceButtonItem;
 
 + (UIEdgeInsets)contentInsetsForButton:(MDCButton *)button
                         layoutPosition:(MDCButtonBarLayoutPosition)layoutPosition
@@ -355,3 +361,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
