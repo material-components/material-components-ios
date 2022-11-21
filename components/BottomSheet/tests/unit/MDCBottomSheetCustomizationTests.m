@@ -12,11 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialBottomSheet.h"
+#import "MDCBottomSheetController.h"
 
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCSheetContainerView.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "UIViewController+MaterialBottomSheet.h"
+#import "MDCSheetContainerView.h"
+#pragma clang diagnostic pop
+#import "MDCBottomSheetPresentationController.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 /** Used to test the elevation @c MDCBottomSheetPresentationController and it's @c sheetView. */
 @interface MDCBottomSheetPresentationController (MDCElevationTesting)
@@ -155,3 +162,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

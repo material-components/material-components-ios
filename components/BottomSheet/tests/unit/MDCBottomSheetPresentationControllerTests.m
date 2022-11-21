@@ -12,14 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MDCSheetState.h"
-#import "MaterialBottomSheet.h"
+#import "MDCBottomSheetPresentationController.h"
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCDraggableView.h"
-#import "../../src/private/MDCSheetContainerView.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCDraggableView.h"
+#import "MDCSheetContainerView.h"
+#pragma clang diagnostic pop
+#import "MDCBottomSheetPresentationControllerDelegate.h"
+#import "MDCSheetState.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface MDCBottomSheetDelegateTest
     : UIViewController <MDCBottomSheetPresentationControllerDelegate>
@@ -50,7 +56,7 @@
 
 // Exposing internal methods for unit testing
 @interface MDCBottomSheetPresentationController (Testing)
-@property(nonatomic, strong) MDCSheetContainerView *sheetView;
+@property(nonatomic, strong, nullable) MDCSheetContainerView *sheetView;
 - (void)updatePreferredSheetHeight;
 @end
 
@@ -96,8 +102,8 @@
 @end
 
 @interface MDCBottomSheetPresentationControllerTests : XCTestCase
-@property(nonatomic, strong) FakeSheetView *sheetView;
-@property(nonatomic, strong) MDCBottomSheetPresentationController *presentationController;
+@property(nonatomic, strong, nullable) FakeSheetView *sheetView;
+@property(nonatomic, strong, nullable) MDCBottomSheetPresentationController *presentationController;
 @property(nonatomic, strong, nullable) MDCBottomSheetDelegateTest *delegateTest;
 @end
 
@@ -529,3 +535,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
