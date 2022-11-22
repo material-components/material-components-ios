@@ -14,7 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
-API_DEPRECATED_BEGIN("Use typography tokens instead. See go/material-ios-tokens for more details.",
+API_DEPRECATED_BEGIN("🤖👀 Use typography tokens instead. "
+                     "See go/material-ios-typography/gm2-migration for more details."
+                     "This has go/material-ios-migrations#scriptable-potential 🤖👀. ",
                      ios(12, 12))
 
 @interface UIFont (MaterialTypographyPrivate)
