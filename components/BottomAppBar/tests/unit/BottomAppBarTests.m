@@ -12,13 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialBottomAppBar.h"
+#import "MDCBottomAppBarView.h"
 
 #import <CoreGraphics/CoreGraphics.h>
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCBottomAppBarLayer.h"
-#import "MaterialNavigationBar.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCBottomAppBarLayer.h"
+#pragma clang diagnostic pop
+#import "MDCFloatingButton.h"
+#import "MDCNavigationBar.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface MDCBottomAppBarLayer (Testing)
 - (UIBezierPath *)drawWithPathToCut:(UIBezierPath *)bottomBarPath
@@ -42,7 +48,7 @@
 @end
 
 @interface BottomAppBarTests : XCTestCase
-@property(nonatomic, strong) MDCBottomAppBarView *bottomAppBar;
+@property(nonatomic, strong, nullable) MDCBottomAppBarView *bottomAppBar;
 @end
 
 @implementation BottomAppBarTests
@@ -240,3 +246,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
