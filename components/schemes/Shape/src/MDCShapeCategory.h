@@ -15,7 +15,9 @@
 #import <Foundation/Foundation.h>
 #import "MaterialShapes.h"
 
-API_DEPRECATED_BEGIN("Use shape tokens (go/material-ios-tokens) instead.", ios(12, 12))
+API_DEPRECATED_BEGIN("🤖👀 Use shape tokens (go/material-ios-tokens) instead. "
+                     "This has go/material-ios-migrations#scriptable-potential 🤖👀",
+                     ios(12, 12))
 
 /**
  This enum consists of the different types of shape corners.

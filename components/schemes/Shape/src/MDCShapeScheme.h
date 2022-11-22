@@ -16,7 +16,9 @@
 #import <UIKit/UIKit.h>
 #import "MDCShapeCategory.h"
 
-API_DEPRECATED_BEGIN("Use shape tokens (go/material-ios-tokens) instead.", ios(12, 12))
+API_DEPRECATED_BEGIN("🤖👀 Use shape tokens (go/material-ios-tokens) instead. "
+                     "This has go/material-ios-migrations#scriptable-potential 🤖👀",
+                     ios(12, 12))
 
 /**
  A simple shape scheme that provides semantic meaning.

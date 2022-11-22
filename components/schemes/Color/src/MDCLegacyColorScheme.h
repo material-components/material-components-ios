@@ -16,9 +16,10 @@
 
 #pragma mark - Soon to be deprecated
 
-API_DEPRECATED_BEGIN(
-    "Use Branding APIs (go/material-ios-branding) or tokens (go/material-ios-tokens) instead.",
-    ios(12, 12))
+API_DEPRECATED_BEGIN("🤖👀 Use go/material-ios-branding APIs instead. "
+                     "See go/material-ios-tokens guidance for more details. "
+                     "This has go/material-ios-migrations#scriptable-potential 🤖👀",
+                     ios(12, 12))
 
 /**
  A color scheme comprised of set of primary and secondary colors. Material design guidelines
