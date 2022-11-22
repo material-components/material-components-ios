@@ -19,12 +19,17 @@
 #import "supplemental/MDCFakeBottomNavigationBar.h"
 #import "MDCBottomNavigationBar.h"
 
-#import "../../src/private/MDCBottomNavigationItemView.h"
-#import "MDCRippleTouchController.h"
-#import "MDCRippleView.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCBottomNavigationItemView.h"
 #import "MDCSnapshotTestCase.h"
 #import "UIImage+MDCSnapshot.h"
 #import "UIView+MDCSnapshot.h"
+#pragma clang diagnostic pop
+#import "MDCRippleTouchController.h"
+#import "MDCRippleView.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 /** Snapshot tests for MDCBottomNavigationBar's @c alignment property. */
 @interface MDCBottomNavigationBarAlignmentSnapshotTests : MDCSnapshotTestCase
@@ -381,3 +386,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

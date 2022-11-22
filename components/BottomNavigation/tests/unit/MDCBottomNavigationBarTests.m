@@ -14,13 +14,17 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCBottomNavigationBar+Private.h"
-#import "../../src/private/MDCBottomNavigationItemView.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCBottomNavigationBar+Private.h"
+#import "MDCBottomNavigationItemView.h"
+#pragma clang diagnostic pop
 #import "MDCAvailability.h"
 #import "MDCBottomNavigationBar.h"
-#import "MDCBottomNavigationBar+Private.h"
 #import "MDCPalettes.h"
 #import "MDCShadowElevations.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 static NSString *const kTestItemTitleText = @"Title";
 
@@ -49,7 +53,7 @@ static NSString *const kTestItemTitleText = @"Title";
 @end
 
 @interface MDCBottomNavigationBarTests : XCTestCase
-@property(nonatomic, strong) MDCBottomNavigationBar *bottomNavBar;
+@property(nonatomic, strong, nullable) MDCBottomNavigationBar *bottomNavBar;
 @end
 
 @implementation MDCBottomNavigationBarTests
@@ -1022,3 +1026,5 @@ Tests the @c itemsHorizontalPadding property
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

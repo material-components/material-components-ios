@@ -15,7 +15,10 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCBottomNavigationItemView.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCBottomNavigationItemView.h"
+#pragma clang diagnostic pop
 
 #import "supplemental/MDCBottomNavigationSnapshotTestMutableTraitCollection.h"
 #import "supplemental/MDCBottomNavigationSnapshotTestUtilities.h"
@@ -27,6 +30,8 @@
 #import "MDCSnapshotTestCase.h"
 #import "UIImage+MDCSnapshot.h"
 #import "UIView+MDCSnapshot.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 static const CGFloat kWidthWide = 1600;
 static const CGFloat kWidthNarrow = 240;
@@ -94,7 +99,7 @@ static const CGFloat kHeightShort = 48;
 - (void)configureBottomNavigation:(MDCFakeBottomNavigationBar *)bottomNavigation
                     withAlignment:(MDCBottomNavigationBarAlignment)alignment
                   titleVisibility:(MDCBottomNavigationBarTitleVisibility)titleVisibility
-                  traitCollection:(UITraitCollection *)traitCollection
+                  traitCollection:(nullable UITraitCollection *)traitCollection
                         allTitles:(NSString *)title {
   bottomNavigation.alignment = alignment;
   bottomNavigation.titleVisibility = titleVisibility;
@@ -499,3 +504,5 @@ static const CGFloat kHeightShort = 48;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

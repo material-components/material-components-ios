@@ -14,10 +14,15 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCBottomNavigationItemView.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCBottomNavigationItemView.h"
+#pragma clang diagnostic pop
 #import "MDCBottomNavigationBar.h"
 #import "MDCRippleTouchController.h"
 #import "MDCRippleView.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface MDCBottomNavigationBar (Testing)
 @property(nonatomic, strong) NSMutableArray<MDCBottomNavigationItemView *> *itemViews;
@@ -114,3 +119,5 @@
   }
 }
 @end
+
+NS_ASSUME_NONNULL_END

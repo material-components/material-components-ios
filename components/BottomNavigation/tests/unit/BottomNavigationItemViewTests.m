@@ -14,9 +14,14 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCBottomNavigationItemView.h"
-#import "MDCBottomNavigationBar.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
 #import "MDCBottomNavigationItemView+Testing.h"
+#import "MDCBottomNavigationItemView.h"
+#pragma clang diagnostic pop
+#import "MDCBottomNavigationBar.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 static NSString *const kTestTitleText = @"title";
 static NSString *const kTestBadgeValue = @"100";
@@ -500,3 +505,5 @@ static UIImage *fakeImage(void) {
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

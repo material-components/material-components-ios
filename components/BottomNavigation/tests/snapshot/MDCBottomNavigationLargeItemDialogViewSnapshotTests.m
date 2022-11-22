@@ -15,9 +15,15 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCBottomNavigationLargeItemDialogView.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCBottomNavigationLargeItemDialogView.h"
+#import "MDCSnapshotTestCase.h"
+#import "UIImage+MDCSnapshot.h"
+#import "UIView+MDCSnapshot.h"
+#pragma clang diagnostic pop
 
-#import "MaterialSnapshot.h"
+NS_ASSUME_NONNULL_BEGIN
 
 static const CGFloat kImageHeight = 75;
 static const CGFloat kImageWidth = 75;
@@ -216,3 +222,5 @@ static const CGFloat kImageWidth = 75;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

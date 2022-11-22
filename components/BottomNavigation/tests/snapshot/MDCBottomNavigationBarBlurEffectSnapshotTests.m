@@ -15,16 +15,24 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCBottomNavigationItemView.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCBottomNavigationItemView.h"
+#pragma clang diagnostic pop
 
 #import "supplemental/MDCBottomNavigationSnapshotTestUtilities.h"
 #import "supplemental/MDCFakeBottomNavigationBar.h"
 #import "MDCBottomNavigationBar.h"
 #import "MDCRippleTouchController.h"
 #import "MDCRippleView.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
 #import "MDCSnapshotTestCase.h"
 #import "UIImage+MDCSnapshot.h"
 #import "UIView+MDCSnapshot.h"
+#pragma clang diagnostic pop
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface MDCBottomNavigationBarBlurEffectSnapshotTests : MDCSnapshotTestCase
 @property(nonatomic, strong) MDCFakeBottomNavigationBar *navigationBar;
@@ -243,3 +251,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

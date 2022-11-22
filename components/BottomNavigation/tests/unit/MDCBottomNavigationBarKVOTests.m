@@ -14,8 +14,13 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCBottomNavigationItemView.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCBottomNavigationItemView.h"
+#pragma clang diagnostic pop
 #import "MDCBottomNavigationBar.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 /** Returns a generated image of the given size. */
 static UIImage *fakeImage(void) {
@@ -34,9 +39,9 @@ static UIImage *fakeImage(void) {
 @interface MDCBottomNavigationBarKVOTests : XCTestCase
 
 /** The Bottom Navigation to use for testing. */
-@property(nonatomic, strong) MDCBottomNavigationBar *bottomNavigationBar;
+@property(nonatomic, strong, nullable) MDCBottomNavigationBar *bottomNavigationBar;
 /** The bar item assigned to the Bottom Navigationbar. */
-@property(nonatomic, strong) UITabBarItem *barItem;
+@property(nonatomic, strong, nullable) UITabBarItem *barItem;
 @end
 
 @implementation MDCBottomNavigationBarKVOTests
@@ -324,3 +329,5 @@ static UIImage *fakeImage(void) {
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

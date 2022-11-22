@@ -12,11 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialSnapshot.h"
-
-#import "../../src/private/MDCBottomNavigationItemView.h"
-#import "MaterialBottomNavigation.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCBottomNavigationItemView.h"
+#import "MDCSnapshotTestCase.h"
+#import "UIImage+MDCSnapshot.h"
+#import "UIView+MDCSnapshot.h"
+#pragma clang diagnostic pop
 #import "supplemental/MDCBottomNavigationSnapshotTestUtilities.h"
+#import "MDCBottomNavigationBar.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 static NSString *const kBadgeTitleEmpty = @"";
 static NSString *const kBadgeTitleSingleLatin = @"8";
@@ -507,3 +513,5 @@ static const CGFloat kItemViewContentHorizontalMargin = 12;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

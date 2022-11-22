@@ -16,10 +16,15 @@
 
 #import <CoreGraphics/CoreGraphics.h>
 
-#import "private/MDCBottomNavigationBar+Private.h"
-#import "private/MDCBottomNavigationLargeItemDialogView.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCBottomNavigationBar+Private.h"
+#import "MDCBottomNavigationLargeItemDialogView.h"
+#pragma clang diagnostic pop
 #import "MDCBottomNavigationBar.h"
 #import "MDCBottomNavigationBarControllerDelegate.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 // A context for Key Value Observing
 static void *const kObservationContext = (void *)&kObservationContext;
@@ -219,19 +224,19 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
   }
 }
 
-- (UIViewController *)childViewControllerForStatusBarStyle {
+- (nullable UIViewController *)childViewControllerForStatusBarStyle {
   return self.selectedViewController;
 }
 
-- (UIViewController *)childViewControllerForStatusBarHidden {
+- (nullable UIViewController *)childViewControllerForStatusBarHidden {
   return self.selectedViewController;
 }
 
-- (UIViewController *)childViewControllerForHomeIndicatorAutoHidden {
+- (nullable UIViewController *)childViewControllerForHomeIndicatorAutoHidden {
   return self.selectedViewController;
 }
 
-- (UIViewController *)childViewControllerForScreenEdgesDeferringSystemGestures {
+- (nullable UIViewController *)childViewControllerForScreenEdgesDeferringSystemGestures {
   return self.selectedViewController;
 }
 
@@ -336,10 +341,10 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
 
 #pragma mark - Key Value Observation Methods
 
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary<NSKeyValueChangeKey, id> *)change
-                       context:(void *)context {
+- (void)observeValueForKeyPath:(nullable NSString *)keyPath
+                      ofObject:(nullable id)object
+                        change:(nullable NSDictionary<NSKeyValueChangeKey, id> *)change
+                       context:(nullable void *)context {
   if (context != kObservationContext) {
     [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     return;
@@ -638,3 +643,5 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

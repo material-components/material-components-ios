@@ -14,7 +14,12 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCBottomNavigationItemView.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCBottomNavigationItemView.h"
+#pragma clang diagnostic pop
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface BottomNavigationItemViewAccessibilityTests : XCTestCase
 
@@ -71,3 +76,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
