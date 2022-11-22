@@ -14,9 +14,11 @@
 
 #import <UIKit/UIKit.h>
 
-API_DEPRECATED_BEGIN("Use UITextField and UITextView within grouped list cells."
-                     "See go/material-ios-text-fields for more details.",
-                     ios(12, 12))
+API_DEPRECATED_BEGIN(
+    "🕘 Schedule time to migrate. "
+    "Use branded UITextField or UITextView instead: go/material-ios-text-fields/gm2-migration. "
+    "This is go/material-ios-migrations#not-scriptable 🕘",
+    ios(12, 12))
 
 static const CGFloat MDCTextInputClearButtonImageBuiltInPadding = 2;
 

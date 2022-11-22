@@ -19,6 +19,7 @@
 
 #import "MDCChipFieldDelegate.h"
 #import "MDCChipViewDeleteButton.h"
+#import "MDCTextField.h"
 #import "MaterialTextFields.h"
 
 NSString *const MDCEmptyTextString = @"";
