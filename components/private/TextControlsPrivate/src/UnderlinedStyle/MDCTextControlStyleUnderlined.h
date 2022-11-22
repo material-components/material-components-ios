@@ -16,9 +16,11 @@
 
 #import "MDCTextControl.h"
 
-API_DEPRECATED_BEGIN("Use a branded UITextField (go/material-ios-text-fields) or branded "
-                     "UITextView (go/material-ios-text-views) instead",
-                     ios(12, 12))
+API_DEPRECATED_BEGIN(
+    "🕘 Schedule time to migrate. "
+    "Use branded UITextField or UITextView instead: go/material-ios-text-fields/gm2-migration. "
+    "This is go/material-ios-migrations#not-scriptable 🕘",
+    ios(12, 12))
 
 /**
 This style object is used by MDCTextControls adopting the Material Underlined style.
