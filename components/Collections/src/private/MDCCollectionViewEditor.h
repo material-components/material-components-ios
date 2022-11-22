@@ -14,9 +14,10 @@
 
 #import "MDCCollectionViewEditing.h"
 
-API_DEPRECATED_BEGIN(
-    "Use branded UICollectionView APIs instead. See go/material-ios-lists for guidance.",
-    ios(11, 12))
+API_DEPRECATED_BEGIN("🕘 Schedule time to migrate. "
+                     "Use branded UITableView or UICollectionView instead: go/material-ios-lists. "
+                     "This is go/material-ios-migrations#not-scriptable 🕘",
+                     ios(11, 12))
 
 /**
  The MDCCollectionViewEditingManager class provides an implementation for a UICollectionView to
