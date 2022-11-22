@@ -16,7 +16,8 @@
 
 #import "MaterialTypographyScheme+Scheming.h"
 
-API_DEPRECATED_BEGIN("Follow go/material-ios-tokens#typescale-tokens to use font tokens instead.",
+API_DEPRECATED_BEGIN("🤖👀 Use Typescale tokens instead (go/material-ios-tokens#typescale-tokens). "
+                     "This has go/material-ios-migrations#scriptable-potential 🤖👀",
                      ios(12, 12))
 
 /**
