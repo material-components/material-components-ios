@@ -17,6 +17,7 @@
 #import "MDCAlertControllerView.h"
 #import "MDCAlertActionManager.h"
 #import "MDCAlertControllerView+Private.h"
+#import "M3CButton.h"
 
 #import "MDCShadowElevations.h"
 #import "MDCFontTextStyle.h"
@@ -109,7 +110,9 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
     self.titleInsets = UIEdgeInsetsMake(24.0f, 24.0f, 20.0f, 24.0f);
     self.contentInsets = UIEdgeInsetsMake(24.0f, 24.0f, 24.0f, 24.0f);
     self.actionsInsets = UIEdgeInsetsMake(8.0f, 8.0f, 8.0f, 8.0f);
+    self.M3CButtonActionsInsets = UIEdgeInsetsMake(24.0f, 24.0f, 24.0f, 24.0f);
     self.actionsHorizontalMargin = 8.0f;
+    self.M3CButtonActionsVerticalMargin = 8.0f;
     self.actionsVerticalMargin = 12.0f;
     self.accessoryViewVerticalInset = 20.0f;
     self.accessoryViewHorizontalInset = 0.0f;
@@ -159,6 +162,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
     // for instance).
     self.messageTextView.backgroundColor = UIColor.clearColor;
     [self.contentScrollView addSubview:self.messageTextView];
+    _M3CButtonEnabled = NO;
 
     [self setNeedsLayout];
   }
@@ -187,7 +191,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   return super.backgroundColor;
 }
 
-- (void)addActionButton:(nonnull MDCButton *)button {
+- (void)addActionButton:(nonnull UIButton *)button {
   if (button.superview == nil) {
     [self.actionsScrollView addSubview:button];
     if (_buttonColor) {
@@ -195,16 +199,20 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
       // reset the title to the default
       [button setTitleColor:_buttonColor forState:UIControlStateNormal];
     }
-    button.enableRippleBehavior = self.enableRippleBehavior;
-    button.inkColor = self.buttonInkColor;
-    // These two lines must be after @c setTitleFont:forState: in order to @c MDCButton to handle
-    // dynamic type correctly.
-    button.titleLabel.adjustsFontForContentSizeCategory = self.adjustsFontForContentSizeCategory;
-    // TODO(#1726): Determine default text color values for Normal and Disabled
-    button.minimumSize =
-        CGSizeMake(MDCDialogActionButtonMinimumWidth, MDCDialogActionButtonMinimumHeight);
-    // Set centerVisibleArea to YES by default.
-    button.centerVisibleArea = YES;
+    if (!self.isM3CButtonEnabled) {
+      MDCButton *castedButton = (MDCButton *)button;
+      castedButton.enableRippleBehavior = self.enableRippleBehavior;
+      castedButton.inkColor = self.buttonInkColor;
+      // These two lines must be after @c setTitleFont:forState: in order to @c MDCButton to handle
+      // dynamic type correctly.
+      castedButton.titleLabel.adjustsFontForContentSizeCategory =
+          self.adjustsFontForContentSizeCategory;
+      // TODO(#1726): Determine default text color values for Normal and Disabled
+      castedButton.minimumSize =
+          CGSizeMake(MDCDialogActionButtonMinimumWidth, MDCDialogActionButtonMinimumHeight);
+      // Set centerVisibleArea to YES by default.
+      castedButton.centerVisibleArea = YES;
+    }
   }
 }
 
@@ -371,36 +379,41 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
 }
 
 - (void)updateButtonFont {
-  for (MDCButton *button in self.actionManager.buttonsInActionOrder) {
-    UIFont *buttonFont;
-    if (button.enableTitleFontForState) {
-      buttonFont = [button titleFontForState:UIControlStateNormal];
-    } else {
-      buttonFont = button.titleLabel.font;
+  if (!self.isM3CButtonEnabled) {
+    for (MDCButton *button in self.actionManager.buttonsInActionOrder) {
+      UIFont *buttonFont;
+      if (button.enableTitleFontForState) {
+        buttonFont = [button titleFontForState:UIControlStateNormal];
+      } else {
+        buttonFont = button.titleLabel.font;
+      }
+      if (button.enableTitleFontForState) {
+        [button setTitleFont:buttonFont forState:UIControlStateNormal];
+      } else {
+        button.titleLabel.font = buttonFont;
+      }
     }
-    if (button.enableTitleFontForState) {
-      [button setTitleFont:buttonFont forState:UIControlStateNormal];
-    } else {
-      button.titleLabel.font = buttonFont;
-    }
-  }
 
-  [self setNeedsLayout];
+    [self setNeedsLayout];
+  }
 }
 
 - (void)setButtonColor:(UIColor *)color {
   _buttonColor = color;
-
-  for (MDCButton *button in self.actionManager.buttonsInActionOrder) {
-    [button setTitleColor:_buttonColor forState:UIControlStateNormal];
+  if (!self.isM3CButtonEnabled) {
+    for (MDCButton *button in self.actionManager.buttonsInActionOrder) {
+      [button setTitleColor:_buttonColor forState:UIControlStateNormal];
+    }
   }
 }
 
 - (void)setButtonInkColor:(UIColor *)color {
   _buttonInkColor = color;
 
-  for (MDCButton *button in self.actionManager.buttonsInActionOrder) {
-    button.inkColor = color;
+  if (!self.isM3CButtonEnabled) {
+    for (MDCButton *button in self.actionManager.buttonsInActionOrder) {
+      button.inkColor = color;
+    }
   }
 }
 
@@ -422,8 +435,10 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   }
   _enableRippleBehavior = enableRippleBehavior;
 
-  for (MDCButton *button in self.actionManager.buttonsInActionOrder) {
-    button.enableRippleBehavior = enableRippleBehavior;
+  if (!self.isM3CButtonEnabled) {
+    for (MDCButton *button in self.actionManager.buttonsInActionOrder) {
+      button.enableRippleBehavior = enableRippleBehavior;
+    }
   }
 }
 
@@ -469,7 +484,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
 
 - (CGSize)actionFittingSizeInHorizontalLayout {
   CGSize size = CGSizeMake([self horizontalSpacing], 0.0f);
-  NSArray<MDCButton *> *buttons = self.actionManager.buttonsInActionOrder;
+  NSArray<UIButton *> *buttons = self.actionManager.buttonsInActionOrder;
   UIEdgeInsets actionsInsets = [self actionsInsetsForButtons:buttons isHorizontalLayout:YES];
   if (0 < buttons.count) {
     CGFloat maxButtonHeight =
@@ -492,13 +507,13 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
 
 - (CGSize)actionButtonsSizeInVerticalLayout {
   CGSize size = CGSizeZero;
-  NSArray<MDCButton *> *buttons = self.actionManager.buttonsInActionOrder;
+  NSArray<UIButton *> *buttons = self.actionManager.buttonsInActionOrder;
   UIEdgeInsets actionsInsets = [self actionsInsetsForButtons:buttons isHorizontalLayout:NO];
   if (0 < buttons.count) {
     size.height = actionsInsets.top + actionsInsets.bottom;
     CGFloat widthInset = actionsInsets.left + actionsInsets.right;
     for (NSUInteger index = 0; index < buttons.count; ++index) {
-      MDCButton *button = buttons[index];
+      UIButton *button = buttons[index];
       CGSize buttonSize = [button sizeThatFits:size];
       CGFloat minButtonHeight =
           MAX(MDCDialogActionButtonMinimumHeight, MDCDialogActionMinTouchTarget);
@@ -506,7 +521,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
       size.height += buttonSize.height;
       size.width = MAX(size.width, buttonSize.width + widthInset);
       if (button != buttons.lastObject) {
-        MDCButton *nextButton = buttons[index + 1];
+        UIButton *nextButton = buttons[index + 1];
         CGFloat verticalMargin = [self actionsVerticalMarginBetweenTopButton:button
                                                                 bottomButton:nextButton];
         size.height += verticalMargin;
@@ -517,9 +532,13 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   return size;
 }
 
-- (UIEdgeInsets)actionsInsetsForButtons:(NSArray<MDCButton *> *)buttons
+- (UIEdgeInsets)actionsInsetsForButtons:(NSArray<UIButton *> *)buttons
                      isHorizontalLayout:(BOOL)isHorizontalLayout {
   UIEdgeInsets actionInsets = self.actionsInsets;
+
+  if (self.isM3CButtonEnabled) {
+    return self.M3CButtonActionsInsets;
+  }
 
   if (buttons.count == 0) {
     return actionInsets;
@@ -527,7 +546,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
 
   if (isHorizontalLayout) {
     CGFloat maxButtonHeight = MDCDialogActionButtonMinimumHeight;
-    for (MDCButton *button in buttons) {
+    for (UIButton *button in buttons) {
       CGSize buttonSize = [button sizeThatFits:CGSizeZero];
       maxButtonHeight = MAX(maxButtonHeight, buttonSize.height);
     }
@@ -538,13 +557,13 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
       actionInsets.bottom -= verticalInsetsAdjustment / 2;
     }
   } else {
-    MDCButton *topButton = buttons.firstObject;
+    UIButton *topButton = buttons.firstObject;
     CGSize topButtonSize = [topButton sizeThatFits:CGSizeZero];
     if (topButtonSize.height < MDCDialogActionMinTouchTarget) {
       CGFloat verticalInsetsAdjustment = MDCDialogActionMinTouchTarget - topButtonSize.height;
       actionInsets.top -= verticalInsetsAdjustment / 2;
     }
-    MDCButton *bottomButton = buttons.lastObject;
+    UIButton *bottomButton = buttons.lastObject;
     CGSize bottomButtonSize = [bottomButton sizeThatFits:CGSizeZero];
     if (bottomButtonSize.height < MDCDialogActionMinTouchTarget) {
       CGFloat verticalInsetsAdjustment = MDCDialogActionMinTouchTarget - bottomButtonSize.height;
@@ -555,18 +574,22 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   return actionInsets;
 }
 
-- (CGFloat)actionsVerticalMarginBetweenTopButton:(MDCButton *)topButton
-                                    bottomButton:(MDCButton *)bottomButton {
-  CGFloat actionsVerticalMargin = self.actionsVerticalMargin;
+- (CGFloat)actionsVerticalMarginBetweenTopButton:(UIButton *)topButton
+                                    bottomButton:(UIButton *)bottomButton {
+  CGFloat actionsVerticalMargin = self.M3CButtonActionsVerticalMargin;
+
   CGSize topButtonSize = [topButton sizeThatFits:CGSizeZero];
-  if (topButtonSize.height < MDCDialogActionMinTouchTarget) {
-    CGFloat verticalInsetsAdjustment = MDCDialogActionMinTouchTarget - topButtonSize.height;
-    actionsVerticalMargin -= verticalInsetsAdjustment / 2;
-  }
   CGSize bottomButtonSize = [bottomButton sizeThatFits:CGSizeZero];
-  if (bottomButtonSize.height < MDCDialogActionMinTouchTarget) {
-    CGFloat verticalInsetsAdjustment = MDCDialogActionMinTouchTarget - bottomButtonSize.height;
-    actionsVerticalMargin -= verticalInsetsAdjustment / 2;
+  if (!self.isM3CButtonEnabled) {
+    actionsVerticalMargin = self.actionsVerticalMargin;
+    if (topButtonSize.height < MDCDialogActionMinTouchTarget) {
+      CGFloat verticalInsetsAdjustment = MDCDialogActionMinTouchTarget - topButtonSize.height;
+      actionsVerticalMargin -= verticalInsetsAdjustment / 2;
+    }
+    if (bottomButtonSize.height < MDCDialogActionMinTouchTarget) {
+      CGFloat verticalInsetsAdjustment = MDCDialogActionMinTouchTarget - bottomButtonSize.height;
+      actionsVerticalMargin -= verticalInsetsAdjustment / 2;
+    }
   }
   return actionsVerticalMargin;
 }
@@ -580,24 +603,34 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
 
 - (CGFloat)widestAction {
   CGFloat widest = 0.0f;
-  for (MDCButton *button in self.actionManager.buttonsInActionOrder) {
-    // For justified alignment, minimumSize is used to control button's visible area.
-    // If user sets a custom value, it is ignored because button's final size is decided
-    // during layout.
-    // We need to reset minimumSize during sizeThatFits: to make sure it doesn't affect the
-    // calculation here.
-    CGSize currentMinimumSize = CGSizeZero;
-    if (self.actionsHorizontalAlignment == MDCContentHorizontalAlignmentJustified) {
-      currentMinimumSize = button.minimumSize;
-      button.minimumSize =
-          CGSizeMake(MDCDialogActionButtonMinimumWidth, MDCDialogActionButtonMinimumHeight);
+
+  if (self.isM3CButtonEnabled) {
+    for (M3CButton *button in self.actionManager.buttonsInActionOrder) {
+      CGSize buttonSize = [button sizeThatFits:CGSizeZero];
+      if (buttonSize.width > widest) {
+        widest = buttonSize.width;
+      }
     }
-    CGSize buttonSize = [button sizeThatFits:CGSizeZero];
-    if (buttonSize.width > widest) {
-      widest = buttonSize.width;
-    }
-    if (self.actionsHorizontalAlignment == MDCContentHorizontalAlignmentJustified) {
-      button.minimumSize = currentMinimumSize;
+  } else {
+    for (MDCButton *button in self.actionManager.buttonsInActionOrder) {
+      // For justified alignment, minimumSize is used to control button's visible area.
+      // If user sets a custom value, it is ignored because button's final size is decided
+      // during layout.
+      // We need to reset minimumSize during sizeThatFits: to make sure it doesn't affect the
+      // calculation here.
+      CGSize currentMinimumSize = CGSizeZero;
+      if (self.actionsHorizontalAlignment == MDCContentHorizontalAlignmentJustified) {
+        currentMinimumSize = button.minimumSize;
+        button.minimumSize =
+            CGSizeMake(MDCDialogActionButtonMinimumWidth, MDCDialogActionButtonMinimumHeight);
+      }
+      CGSize buttonSize = [button sizeThatFits:CGSizeZero];
+      if (buttonSize.width > widest) {
+        widest = buttonSize.width;
+      }
+      if (self.actionsHorizontalAlignment == MDCContentHorizontalAlignmentJustified) {
+        button.minimumSize = currentMinimumSize;
+      }
     }
   }
   return widest;
@@ -909,7 +942,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   self.accessoryView.frame = accessoryViewFrame;
 
   // Actions
-  NSArray<MDCButton *> *buttons = self.actionManager.buttonsInActionOrder;
+  NSArray<UIButton *> *buttons = self.actionManager.buttonsInActionOrder;
   CGSize actionSize = [self calculateActionsSizeThatFitsWidth:boundsSize.width];
 
   CGRect actionsFrame = CGRectZero;
@@ -919,7 +952,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   }
   self.actionsScrollView.contentSize = actionsFrame.size;
 
-  for (MDCButton *button in buttons) {
+  for (UIButton *button in buttons) {
     [button sizeToFit];
     CGRect buttonFrame = button.frame;
     button.frame = CGRectMake(buttonFrame.origin.x, buttonFrame.origin.y,
@@ -966,7 +999,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   self.contentScrollView.frame = contentScrollViewRect;
 }
 
-- (void)layoutHorizontalButtons:(NSArray<MDCButton *> *)buttons actionSize:(CGSize)actionSize {
+- (void)layoutHorizontalButtons:(NSArray<UIButton *> *)buttons actionSize:(CGSize)actionSize {
   UIEdgeInsets actionsInsets = [self actionsInsetsForButtons:buttons isHorizontalLayout:YES];
   CGFloat maxButtonWidth =
       self.actionsScrollView.contentSize.width - (actionsInsets.left + actionsInsets.right);
@@ -984,7 +1017,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
     buttonOrigin.x = self.actionsScrollView.contentSize.width - actionsInsets.right;
   }
   buttonOrigin.y = actionsInsets.top;
-  for (MDCButton *button in buttons) {
+  for (UIButton *button in buttons) {
     CGRect buttonRect = button.frame;
 
     buttonWidth = buttonRect.size.width;
@@ -995,9 +1028,12 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
       } else {
         buttonWidth = maxButtonWidth;
       }
-      // Adjust minimumSize based on maxButtonWidth to increase the visible area of button.
-      button.minimumSize = CGSizeMake(MAX(buttonWidth, MDCDialogActionButtonMinimumWidth),
-                                      button.minimumSize.height);
+      if (!self.isM3CButtonEnabled) {
+        MDCButton *castedButton = (MDCButton *)button;
+        // Adjust minimumSize based on maxButtonWidth to increase the visible area of button.
+        castedButton.minimumSize = CGSizeMake(MAX(buttonWidth, MDCDialogActionButtonMinimumWidth),
+                                              castedButton.minimumSize.height);
+      }
     }
 
     if (self.actionsHorizontalAlignment != MDCContentHorizontalAlignmentLeading) {
@@ -1026,7 +1062,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   }
 }
 
-- (void)layoutVerticalButtons:(NSArray<MDCButton *> *)buttons {
+- (void)layoutVerticalButtons:(NSArray<UIButton *> *)buttons {
   UIEdgeInsets actionsInsets = [self actionsInsetsForButtons:buttons isHorizontalLayout:NO];
   CGFloat maxButtonWidth =
       self.actionsScrollView.contentSize.width - (actionsInsets.left + actionsInsets.right);
@@ -1041,7 +1077,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
     buttonCenter.x = self.actionsScrollView.contentSize.width / 2.0f;
     buttonCenter.y = buttonOrigin.y;
     for (NSUInteger index = 0; index < buttons.count; ++index) {
-      MDCButton *button = buttons[index];
+      UIButton *button = buttons[index];
       CGRect buttonRect = button.bounds;
 
       if (CGRectGetWidth(buttonRect) > maxButtonWidth ||
@@ -1051,9 +1087,13 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
         button.bounds = buttonRect;
         if (self.actionsHorizontalAlignmentInVerticalLayout ==
             MDCContentHorizontalAlignmentJustified) {
-          // Adjust minimumSize based on maxButtonWidth to increase the visible area of button.
-          button.minimumSize = CGSizeMake(MAX(maxButtonWidth, MDCDialogActionButtonMinimumWidth),
-                                          button.minimumSize.height);
+          if (!self.isM3CButtonEnabled) {
+            MDCButton *castedButton = (MDCButton *)button;
+            // Adjust minimumSize based on maxButtonWidth to increase the visible area of button.
+            castedButton.minimumSize =
+                CGSizeMake(MAX(maxButtonWidth, MDCDialogActionButtonMinimumWidth),
+                           castedButton.minimumSize.height);
+          }
         }
       }
 
@@ -1063,7 +1103,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
 
       if (button != buttons.lastObject) {
         buttonCenter.y += multiplier * (buttonRect.size.height / 2.0f);
-        MDCButton *nextButton = buttons[index + 1];
+        UIButton *nextButton = buttons[index + 1];
         CGFloat verticalMargin = [self actionsVerticalMarginBetweenTopButton:button
                                                                 bottomButton:nextButton];
         buttonCenter.y += multiplier * verticalMargin;
@@ -1072,7 +1112,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
 
   } else {  // Leading/Trailing alignment.
     for (NSUInteger index = 0; index < buttons.count; ++index) {
-      MDCButton *button = buttons[index];
+      UIButton *button = buttons[index];
       CGRect buttonRect = button.bounds;
       buttonOrigin.x = actionsInsets.left;
       if (self.actionsHorizontalAlignmentInVerticalLayout ==
@@ -1083,7 +1123,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
       buttonRect.origin = buttonOrigin;
       button.frame = buttonRect;
       if (button != buttons.lastObject) {
-        MDCButton *nextButton = buttons[index + 1];
+        UIButton *nextButton = buttons[index + 1];
         CGFloat verticalMargin = [self actionsVerticalMarginBetweenTopButton:button
                                                                 bottomButton:nextButton];
         buttonOrigin.y += multiplier * (buttonRect.size.height + verticalMargin);
@@ -1104,7 +1144,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
 - (void)setAdjustsFontForContentSizeCategory:(BOOL)adjustsFontForContentSizeCategory {
   _adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
   self.titleLabel.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
-  for (MDCButton *button in self.actionManager.buttonsInActionOrder) {
+  for (UIButton *button in self.actionManager.buttonsInActionOrder) {
     button.titleLabel.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;
   }
   self.messageTextView.adjustsFontForContentSizeCategory = adjustsFontForContentSizeCategory;

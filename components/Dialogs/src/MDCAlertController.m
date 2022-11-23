@@ -19,6 +19,7 @@
 #import "private/MDCAlertControllerView+Private.h"
 #import "private/MaterialDialogsStrings.h"
 #import "private/MaterialDialogsStrings_table.h"
+#import "MDCButton.h"
 #import "MDCAlertControllerDelegate.h"
 #import "MDCAlertControllerView.h"
 #import "MDCDialogPresentationController.h"
@@ -26,6 +27,7 @@
 #import "MDCDialogTransitionController.h"
 #import "UIViewController+MaterialDialogs.h"
 #import "UIView+MaterialElevationResponding.h"
+#import "M3CButton.h"
 #import "MDCShadowElevations.h"
 #import "MDCMath.h"
 
@@ -89,6 +91,12 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 @interface MDCAlertController () <UITextViewDelegate>
 
+/**
+ A flag to determine whether to use `M3CButton` in place of `MDCButton`.
+
+ Defaults to NO, but we eventually want to default it to YES and remove this property altogether.
+ */
+@property(nonatomic) BOOL enableM3CButton;
 @property(nonatomic, nullable, weak) MDCAlertControllerView *alertView;
 @property(nonatomic, strong) MDCDialogTransitionController *transitionController;
 @property(nonatomic, nonnull, strong) MDCAlertActionManager *actionManager;
@@ -179,10 +187,21 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
     _modalTransitionStyleOverride = super.modalTransitionStyle;
     _titlePinsToTop = YES;
 
+    _M3CButtonEnabled = NO;
+    [_actionManager setM3CButtonEnabled:_M3CButtonEnabled];
+
     super.transitioningDelegate = _transitionController;
     super.modalPresentationStyle = UIModalPresentationCustom;
   }
   return self;
+}
+
+- (void)setM3CButtonEnabled:(BOOL)enable {
+  _M3CButtonEnabled = enable;
+  NSAssert([self.actionManager.buttonsInActionOrder count] == 0,
+           @"You should be setting this flag as soon as you create the AlertController.");
+  [self.actionManager setM3CButtonEnabled:_M3CButtonEnabled];
+  [self.alertView setM3CButtonEnabled:_M3CButtonEnabled];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -366,19 +385,40 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 }
 
 - (nullable MDCButton *)buttonForAction:(nonnull MDCAlertAction *)action {
-  MDCButton *button = [self.actionManager buttonForAction:action];
-  if (!button && [self.actionManager hasAction:action]) {
+  UIButton *button = [self.actionManager buttonForAction:action];
+  if (!button && [self.actionManager hasAction:action] && !self.isM3CButtonEnabled) {
     button = [self.actionManager createButtonForAction:action
                                                 target:self
                                               selector:@selector(actionButtonPressed:forEvent:)];
-    [MDCAlertControllerView styleAsTextButton:button];
+    [MDCAlertControllerView styleAsTextButton:(MDCButton *)button];
   }
-  return button;
+  if ([button isKindOfClass:[MDCButton class]]) {
+    return (MDCButton *)button;
+  }
+  return nil;
+}
+
+- (nullable M3CButton *)M3CButtonForAction:(nonnull MDCAlertAction *)action {
+  UIButton *button = [self.actionManager buttonForAction:action];
+  if (!button && [self.actionManager hasAction:action] && self.isM3CButtonEnabled) {
+    button = [self.actionManager createButtonForAction:action
+                                                target:self
+                                              selector:@selector(actionButtonPressed:forEvent:)];
+  }
+  if ([button isKindOfClass:[M3CButton class]]) {
+    return (M3CButton *)button;
+  }
+  return nil;
 }
 
 - (void)addButtonToAlertViewForAction:(MDCAlertAction *)action {
   if (self.alertView) {
-    MDCButton *button = [self buttonForAction:action];
+    UIButton *button;
+    if (!self.isM3CButtonEnabled) {
+      button = [self buttonForAction:action];
+    } else {
+      button = [self M3CButtonForAction:action];
+    }
     [self.alertView addActionButton:button];
     self.preferredContentSize =
         [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
@@ -607,6 +647,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 - (void)loadView {
   self.view = [[MDCAlertControllerView alloc] initWithFrame:CGRectZero];
   self.alertView = (MDCAlertControllerView *)self.view;
+  [self.alertView setM3CButtonEnabled:self.isM3CButtonEnabled];
   // sharing MDCActionManager with with the alert view
   self.alertView.actionManager = self.actionManager;
 }

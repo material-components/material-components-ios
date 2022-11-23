@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #import <XCTest/XCTest.h>
-#import "MDCButton.h"
 #import "MDCAlertController+ButtonForAction.h"
 #import "MDCAlertController.h"
 #import "MDCAlertControllerView.h"
@@ -66,7 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
   [self.actionManager addAction:self.action];
 
   // When
-  MDCButton *button = [self.actionManager buttonForAction:self.action];
+  UIButton *button = [self.actionManager buttonForAction:self.action];
 
   // Then
   XCTAssertNil(button);
@@ -79,10 +78,10 @@ NS_ASSUME_NONNULL_BEGIN
   [self.actionManager addAction:self.action];
 
   // When
-  MDCButton *button = [self.actionManager createButtonForAction:self.action
-                                                         target:self
-                                                       selector:@selector(actionButtonPressed:)];
-  MDCButton *button2 = [self.actionManager buttonForAction:self.action];
+  UIButton *button = [self.actionManager createButtonForAction:self.action
+                                                        target:self
+                                                      selector:@selector(actionButtonPressed:)];
+  UIButton *button2 = [self.actionManager buttonForAction:self.action];
 
   // Then
   XCTAssertNotNil(button);
@@ -102,8 +101,8 @@ NS_ASSUME_NONNULL_BEGIN
 
   // When
   [alert addAction:self.action];
-  MDCButton *button = [alert buttonForAction:self.action];
-  MDCButton *button2 = [alert buttonForAction:action2];
+  UIButton *button = [alert buttonForAction:self.action];
+  UIButton *button2 = [alert buttonForAction:action2];
 
   // Then
   XCTAssertEqual([alert.actions count], 1ul);
@@ -116,7 +115,7 @@ NS_ASSUME_NONNULL_BEGIN
   // Given
   MDCAlertController *alert = [MDCAlertController alertControllerWithTitle:@"title" message:@"msg"];
   [alert addAction:self.action];
-  MDCButton *button = [alert buttonForAction:self.action];
+  UIButton *button = [alert buttonForAction:self.action];
 
   // When (simulating alert presentation)
   MDCAlertControllerView *alertView = (MDCAlertControllerView *)alert.view;
@@ -137,7 +136,7 @@ NS_ASSUME_NONNULL_BEGIN
                                                     handler:^(MDCAlertAction *_Nonnull act){
                                                     }];
   [alert addAction:self.action];
-  MDCButton *button = [alert buttonForAction:self.action];
+  UIButton *button = [alert buttonForAction:self.action];
 
   // When
   MDCAlertControllerView *alertView = (MDCAlertControllerView *)alert.view;
@@ -148,7 +147,7 @@ NS_ASSUME_NONNULL_BEGIN
   XCTAssertNotNil(button);
   XCTAssertNotNil(button.superview);
   XCTAssertEqual([[alertView.actionManager buttonsInActionOrder] count], 2ul);
-  MDCButton *button2 = [alert buttonForAction:action2];
+  UIButton *button2 = [alert buttonForAction:action2];
   XCTAssertNotNil(button2);
   XCTAssertNotNil(button2.superview);
 }
@@ -170,9 +169,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)testButtonForActionShouldReturnNilForSameValueButDifferentActionObject {
   [self.actionManager addAction:self.action];
   MDCAlertAction *clonedAction = [self.action copy];
-  MDCButton *button = [self.actionManager createButtonForAction:self.action
-                                                         target:self
-                                                       selector:@selector(actionButtonPressed:)];
+  UIButton *button = [self.actionManager createButtonForAction:self.action
+                                                        target:self
+                                                      selector:@selector(actionButtonPressed:)];
 
   XCTAssertNotNil(button);
   XCTAssertNil([self.actionManager buttonForAction:clonedAction]);
@@ -184,12 +183,12 @@ NS_ASSUME_NONNULL_BEGIN
   [self.actionManager addAction:self.action];
   [self.actionManager addAction:clonedAction];
 
-  MDCButton *button1 = [self.actionManager createButtonForAction:self.action
-                                                          target:self
-                                                        selector:@selector(actionButtonPressed:)];
-  MDCButton *button2 = [self.actionManager createButtonForAction:clonedAction
-                                                          target:self
-                                                        selector:@selector(actionButtonPressed:)];
+  UIButton *button1 = [self.actionManager createButtonForAction:self.action
+                                                         target:self
+                                                       selector:@selector(actionButtonPressed:)];
+  UIButton *button2 = [self.actionManager createButtonForAction:clonedAction
+                                                         target:self
+                                                       selector:@selector(actionButtonPressed:)];
   XCTAssertNotEqual(button1, button2);
 }
 
@@ -217,11 +216,11 @@ NS_ASSUME_NONNULL_BEGIN
 
   // When
   [alertOne addActions:@[ actionOne, actionTwo ]];
-  MDCButton *buttonOne =
+  UIButton *buttonOne =
       [alertOne.actionManager createButtonForAction:actionOne
                                              target:self
                                            selector:@selector(actionButtonPressed:)];
-  MDCButton *buttonTwo =
+  UIButton *buttonTwo =
       [alertOne.actionManager createButtonForAction:actionTwo
                                              target:self
                                            selector:@selector(actionButtonPressed:)];

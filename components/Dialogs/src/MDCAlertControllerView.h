@@ -67,6 +67,18 @@
 @property(nonatomic, assign) UIEdgeInsets actionsInsets;
 
 /**
+ The edge insets around the actions against the dialog edges and its neighbor,
+ which could be any of the other elements: the message, accessory view, title,
+ title icon or title icon view.
+
+ Since GM3 buttons meet minimum touch area requirements by default, the insets
+ are set directly to Figma spec.
+
+ Default value is UIEdgeInsets(top: 24, leading: 24, bottom: 24, trailing: 24).
+ */
+@property(nonatomic, assign) UIEdgeInsets M3CButtonActionsInsets;
+
+/**
  The horizontal space between the action buttons when the buttons are horizontally aligned, and if
  more than one button is presented.
 
@@ -85,6 +97,16 @@
  Default value is 12.
  */
 @property(nonatomic, assign) CGFloat actionsVerticalMargin;
+
+/**
+ The GM3 vertical space between the action buttons when the buttons are
+ vertically aligned, and if more than one button is presented.
+
+ All GM3 buttons meet minimum touch area by default.
+
+ Default value is 8.
+ */
+@property(nonatomic, assign) CGFloat M3CButtonActionsVerticalMargin;
 
 /**
  The vertical inset between the accessory view and the message, if both are present.

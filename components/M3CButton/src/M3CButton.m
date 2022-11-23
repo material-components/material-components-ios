@@ -271,7 +271,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)layoutSubviews {
   [super layoutSubviews];
+  [self setCapsuleCornersBasedOn:self.frame.size];
   [self updateShadows];
+}
+
+- (void)setCapsuleCornersBasedOn:(CGSize)size {
+  if (self.isCapsuleShape) {
+    self.layer.cornerRadius = size.height / 2;
+    self.layer.cornerCurve = kCACornerCurveCircular;
+  }
 }
 
 - (CGSize)intrinsicContentSize {
@@ -283,10 +291,7 @@ NS_ASSUME_NONNULL_BEGIN
   if (size.height > size.width) {
     size.width = size.height;
   }
-  if (self.isCapsuleShape) {
-    self.layer.cornerRadius = size.height / 2;
-    self.layer.cornerCurve = kCACornerCurveCircular;
-  }
+  [self setCapsuleCornersBasedOn:size];
   return size;
 }
 

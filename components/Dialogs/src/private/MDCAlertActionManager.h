@@ -14,7 +14,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MaterialButtons.h"
-#import "MaterialDialogs.h"
+#import "MDCAlertController.h"
 
 @interface MDCAlertActionManager : NSObject
 
@@ -22,6 +22,14 @@
  List of the actions that were added to the action manager.
  */
 @property(nonatomic, nonnull, strong, readonly) NSArray<MDCAlertAction *> *actions;
+
+/**
+ Sets the flag to use `M3CButton` instead of `MDCButton`, this flag would be
+ eventually removed when `MDCButton` is deleted.
+
+ Defaults to NO
+ */
+@property(nonatomic, assign, getter=isM3CButtonEnabled) BOOL M3CButtonEnabled;
 
 // TODO(b/238930139): Remove usage of this deprecated API.
 #pragma clang diagnostic push
@@ -34,7 +42,7 @@
 
  Note: It is the caller's responsibility to make sure buttons is added to the view hierarchy.
  */
-@property(nonatomic, nonnull, strong, readonly) NSArray<MDCButton *> *buttonsInActionOrder;
+@property(nonatomic, nonnull, strong, readonly) NSArray<UIButton *> *buttonsInActionOrder;
 #pragma clang diagnostic pop
 
 /**
@@ -52,27 +60,24 @@
 
  Note: It is the caller's responsibility to make sure the button is added to the view hierarchy.
  */
-- (nullable MDCButton *)buttonForAction:(nonnull MDCAlertAction *)action;
+- (nullable UIButton *)buttonForAction:(nonnull MDCAlertAction *)action;
 
-// TODO(b/238930139): Remove usage of this deprecated API.
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+// TODO(b/238930139): Remove usage of MDCButton API and replace with M3CButton.
 /**
  Returns the action for the given button.
  */
-- (nullable MDCAlertAction *)actionForButton:(nonnull MDCButton *)button;
-#pragma clang diagnostic pop
+- (nullable MDCAlertAction *)actionForButton:(nonnull UIButton *)button;
 
 /**
- Creates a button for the given action if the action is not yet associated with a button.
- If the action is already associated with a button, then the existing button is returned.
- The given Target and selector are assigned to the button when it's created (or ignored
- if the button is already exists).
+ Creates a button for the given action if the action is not yet associated with
+ a button. If the action is already associated with a button, then the existing
+ button is returned. The given Target and selector are assigned to the button
+ when it's created (or ignored if the button is already exists).
 
  Note: It is the caller's responsibility to make sure the button is added to the view hierarchy.
  */
-- (nullable MDCButton *)createButtonForAction:(nonnull MDCAlertAction *)action
-                                       target:(nullable id)target
-                                     selector:(SEL _Nonnull)selector;
+- (UIButton *)createButtonForAction:(nonnull MDCAlertAction *)action
+                             target:(nullable id)target
+                           selector:(SEL _Nonnull)selector;
 
 @end

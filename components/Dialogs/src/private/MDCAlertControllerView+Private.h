@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #import <UIKit/UIKit.h>
-
 #import "MaterialButtons.h"
 #import "MDCAlertControllerView.h"
 #import "MDCAlertActionManager.h"
@@ -70,9 +69,17 @@
 // TODO(b/238930139): Remove usage of this deprecated API.
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-- (void)addActionButton:(nonnull MDCButton *)button;
+- (void)addActionButton:(nonnull UIButton *)button;
 + (void)styleAsTextButton:(nonnull MDCButton *)button;
 #pragma clang diagnostic pop
+
+/**
+ Sets the flag to use `M3CButton` instead of `MDCButton`, this flag would be
+ eventually removed when `MDCButton` is deleted.
+
+ Defaults to NO
+ */
+@property(nonatomic, assign, getter=isM3CButtonEnabled) BOOL M3CButtonEnabled;
 
 - (CGSize)calculatePreferredContentSizeForBounds:(CGSize)boundsSize;
 

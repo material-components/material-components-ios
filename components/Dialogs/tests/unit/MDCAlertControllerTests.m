@@ -251,7 +251,7 @@ NS_ASSUME_NONNULL_BEGIN
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertEqualObjects(view.titleLabel.font, testFont);
   XCTAssertEqualObjects(view.messageTextView.font, testFont);
-  for (UIButton *button in view.actionManager.buttonsInActionOrder) {
+  for (MDCButton *button in view.actionManager.buttonsInActionOrder) {
     XCTAssertEqualObjects(button.titleLabel.font, testFont);
   }
 }
@@ -270,10 +270,10 @@ NS_ASSUME_NONNULL_BEGIN
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertEqual(view.titleLabel.textColor, testColor);
   XCTAssertEqual(view.messageTextView.textColor, testColor);
-  for (UIButton *button in view.actionManager.buttonsInActionOrder) {
+  for (MDCButton *button in view.actionManager.buttonsInActionOrder) {
     XCTAssertEqual([button titleColorForState:UIControlStateNormal], testColor);
     XCTAssertTrue([button isKindOfClass:[MDCButton class]]);
-    XCTAssertEqual([(MDCButton *)button inkColor], testColor);
+    XCTAssertEqual([button inkColor], testColor);
   }
 }
 
@@ -294,12 +294,12 @@ NS_ASSUME_NONNULL_BEGIN
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertEqual(view.titleLabel.textColor, testColor);
   XCTAssertEqual(view.messageTextView.textColor, testColor);
-  NSArray<MDCButton *> *buttons = view.actionManager.buttonsInActionOrder;
+  NSArray<MDCButton *> *buttons = (NSArray<MDCButton *> *)view.actionManager.buttonsInActionOrder;
   XCTAssertEqual((int)buttons.count, 2);
-  for (UIButton *button in buttons) {
+  for (MDCButton *button in buttons) {
     XCTAssertEqual([button titleColorForState:UIControlStateNormal], testColor);
     XCTAssertTrue([button isKindOfClass:[MDCButton class]]);
-    XCTAssertEqual([(MDCButton *)button inkColor], testColor);
+    XCTAssertEqual([button inkColor], testColor);
   }
 }
 
@@ -320,12 +320,12 @@ NS_ASSUME_NONNULL_BEGIN
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertEqual(view.titleLabel.textColor, testColor);
   XCTAssertEqual(view.messageTextView.textColor, testColor);
-  NSArray<MDCButton *> *buttons = view.actionManager.buttonsInActionOrder;
+  NSArray<MDCButton *> *buttons = (NSArray<MDCButton *> *)view.actionManager.buttonsInActionOrder;
   XCTAssertEqual((int)buttons.count, 2);
-  for (UIButton *button in buttons) {
+  for (MDCButton *button in buttons) {
     XCTAssertEqual([button titleColorForState:UIControlStateNormal], testColor);
     XCTAssertTrue([button isKindOfClass:[MDCButton class]]);
-    XCTAssertEqual([(MDCButton *)button inkColor], testColor);
+    XCTAssertEqual([button inkColor], testColor);
   }
 }
 
@@ -347,12 +347,12 @@ NS_ASSUME_NONNULL_BEGIN
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertEqual(view.titleLabel.textColor, testColor);
   XCTAssertEqual(view.messageTextView.textColor, testColor);
-  NSArray<MDCButton *> *buttons = view.actionManager.buttonsInActionOrder;
+  NSArray<MDCButton *> *buttons = (NSArray<MDCButton *> *)view.actionManager.buttonsInActionOrder;
   XCTAssertEqual((int)buttons.count, 2);
-  for (UIButton *button in buttons) {
+  for (MDCButton *button in buttons) {
     XCTAssertEqual([button titleColorForState:UIControlStateNormal], testColor);
     XCTAssertTrue([button isKindOfClass:[MDCButton class]]);
-    XCTAssertEqual([(MDCButton *)button inkColor], testColor);
+    XCTAssertEqual([button inkColor], testColor);
   }
 }
 
@@ -803,7 +803,7 @@ NS_ASSUME_NONNULL_BEGIN
 
     // Then
     MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
-    for (UIButton *button in view.actionManager.buttonsInActionOrder) {
+    for (MDCButton *button in view.actionManager.buttonsInActionOrder) {
       XCTAssertTrue(button.isPointerInteractionEnabled);
       XCTAssertEqual(button.interactions.count, 1);
     }

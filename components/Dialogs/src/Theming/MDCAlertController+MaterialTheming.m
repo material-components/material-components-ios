@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialButtons.h"
-#import "MaterialButtons+Theming.h"
+#import "MDCButton.h"
+#import "MDCButton+MaterialTheming.h"
 #import "MDCAlertController+ButtonForAction.h"  // TODO(b/126884296): One-off transformation needs fixing in copy.bara.sky
-#import "MaterialDialogs.h"
-#import "MaterialShadowElevations.h"  // ComponentImport
-#import "MaterialColorScheme.h"
-#import "MaterialContainerScheme.h"
-#import "MaterialTypographyScheme.h"
-#import "MaterialTypographyScheme+Scheming.h"
+#import "MDCAlertController.h"
+#import "MDCShadowElevations.h"
+#import "MDCSemanticColorScheme.h"
+#import "MDCContainerScheme.h"
+#import "MDCTypographyScheme.h"
+#import "MDCTypographyScheming.h"
 
 static const CGFloat kCornerRadius = 4;
 
@@ -45,6 +45,9 @@ static const CGFloat kCornerRadius = 4;
   // Buttons
   for (MDCAlertAction *action in self.actions) {
     MDCButton *button = [self buttonForAction:action];
+    if (!button) {
+      continue;
+    }
     // todo: b/117265609: Incorporate dynamic type support in semantic themers
     switch (action.emphasis) {
       case MDCActionEmphasisHigh:

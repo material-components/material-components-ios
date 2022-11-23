@@ -16,22 +16,37 @@
 
 @interface MDCAlertController (ButtonForAction)
 
-// TODO(b/238930139): Remove usage of this deprecated API.
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+// TODO(b/238930139): Remove usage of this deprecated API when M3CButton is officially adopted.
 /**
- Returns an MDCButton associated with the given action. This method might create the button if
- no associated button exists for the action. Buttons returned by this method may not (yet)
- be attached to the view hierarchy at the time the method is called.
+ Returns an MDCButton associated with the given action. This method might create
+ the button if no associated button exists for the action. Buttons returned by
+ this method may not (yet) be attached to the view hierarchy at the time the
+ method is called.
 
- This method is commonly used by themers to style the button associated with the action.
+ If M3CButtons are enabled, this function will return nil.
 
- @param action The action with which the button is associated. Must be an existing action that
- had been previously added through addAction: to the alert.
- @return The button associated with the action, or nil if the action doesn't exist (the action
- must first be added to the alert).
+ This method is commonly used by themers to style the button associated with the
+ action.
+
+ @param action The action with which the button is associated. Must be an
+ existing action that had been previously added through addAction: to the alert.
+ @return The button associated with the action, or nil if the action doesn't
+ exist (the action must first be added to the alert).
  */
 - (nullable MDCButton *)buttonForAction:(nonnull MDCAlertAction *)action;
-#pragma clang diagnostic pop
 
+/**
+ Returns an M3CButton associated with the given action. This method might create
+ the button if no associated button exists for the action. Buttons returned by
+ this method may not (yet) be attached to the view hierarchy at the time the
+ method is called.
+
+ If M3CButtons are not enabled, this function will return nil.
+
+ @param action The action with which the button is associated. Must be an
+ existing action that had been previously added through addAction: to the alert.
+ @return The button associated with the action, or nil if the action doesn't
+ exist (the action must first be added to the alert).
+ */
+- (nullable M3CButton *)M3CButtonForAction:(nonnull MDCAlertAction *)action;
 @end

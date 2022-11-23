@@ -62,7 +62,7 @@ NS_ASSUME_NONNULL_BEGIN
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertFalse(self.alert.enableRippleBehavior);
   XCTAssertFalse(view.enableRippleBehavior);
-  NSArray<MDCButton *> *buttons = view.actionManager.buttonsInActionOrder;
+  NSArray<MDCButton *> *buttons = (NSArray<MDCButton *> *)view.actionManager.buttonsInActionOrder;
   for (MDCButton *button in buttons) {
     XCTAssertFalse(button.enableRippleBehavior);
   }
@@ -79,7 +79,7 @@ NS_ASSUME_NONNULL_BEGIN
   MDCAlertControllerView *view = (MDCAlertControllerView *)self.alert.view;
   XCTAssertTrue(self.alert.enableRippleBehavior);
   XCTAssertTrue(view.enableRippleBehavior);
-  NSArray<MDCButton *> *buttons = view.actionManager.buttonsInActionOrder;
+  NSArray<MDCButton *> *buttons = (NSArray<MDCButton *> *)view.actionManager.buttonsInActionOrder;
   for (MDCButton *button in buttons) {
     XCTAssertTrue(button.enableRippleBehavior);
   }
