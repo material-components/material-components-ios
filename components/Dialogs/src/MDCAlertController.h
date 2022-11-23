@@ -78,7 +78,9 @@
 /** Alert controllers must be created with alertControllerWithTitle:message: */
 - (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
 
-/** A block that is invoked when a link (a URL) in the attributed message text is tapped.
+/**
+ A block that is invoked when a link (a URL) in the attributed message text is
+ tapped.
 
  @param URL The URL of the link that was tapped. May include external or internal URLs.
  @param range The range of characters (in the attributed text) of the link that was tapped.
@@ -91,13 +93,14 @@ API_AVAILABLE(ios(10.0))
 typedef BOOL (^MDCAttributedMessageActionHandler)(NSURL *_Nonnull URL, NSRange range,
                                                   UITextItemInteraction interaction);
 
-/** Sets the flag to use `M3CButton` instead of `MDCButton`, this flag would be
- * eventually removed when `MDCButton` is deleted.
- *
- * Defaults to NO.
- *
- * This function should be called right after creation of the
- * MDCAlertController.
+/**
+ Sets the flag to use `M3CButton` instead of `MDCButton`, this flag would be
+ eventually removed when `MDCButton` is deleted.
+
+ Defaults to NO.
+
+ This function should be called right after creation of the
+ MDCAlertController.
  */
 @property(nonatomic, assign, getter=isM3CButtonEnabled) BOOL M3CButtonEnabled;
 
@@ -171,21 +174,28 @@ typedef BOOL (^MDCAttributedMessageActionHandler)(NSURL *_Nonnull URL, NSRange r
 /** The color applied to the alert's buttons ink effect.*/
 @property(nonatomic, strong, nullable) UIColor *buttonInkColor;
 
-/** The semi-transparent color which is applied to the overlay covering the content
-     behind the Alert (the scrim) when presented by @c MDCDialogPresentationController.*/
+/**
+ The semi-transparent color which is applied to the overlay covering the content
+ behind the Alert (the scrim) when presented by
+ @c MDCDialogPresentationController.
+ */
 @property(nonatomic, strong, nullable) UIColor *scrimColor;
 
 /** The Alert background color.*/
 @property(nonatomic, strong, nullable) UIColor *backgroundColor;
 
-/** The corner radius applied to the Alert Controller view. Defaults to 0 (no round corners) */
+/**
+ The corner radius applied to the Alert Controller view. Defaults to 0
+ (no round corners)
+ */
 @property(nonatomic, assign) CGFloat cornerRadius;
 
 /** The elevation that will be applied to the Alert Controller view. Defaults to 24. */
 @property(nonatomic, assign) MDCShadowElevation elevation;
 
 /**
- The color of the shadow that will be applied to the @c MDCAlertController view. Defaults to black.
+ The color of the shadow that will be applied to the @c MDCAlertController view.
+ Defaults to black.
  */
 @property(nonatomic, copy, nonnull) UIColor *shadowColor;
 
