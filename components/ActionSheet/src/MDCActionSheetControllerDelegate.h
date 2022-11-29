@@ -18,17 +18,21 @@
 
 @class MDCActionSheetController;
 
-API_DEPRECATED_BEGIN(
-    "Use a UIMenu instead. Use UIAlertController in action sheet style for destructive "
-    "confirmations. See go/material-ios-menus for guidance.",
-    ios(12, 12))
+API_DEPRECATED_BEGIN("🕘 Schedule time to migrate. "
+                     "Follow go/material-ios-menus to use UIMenu instead."
+                     "Use UIAlertController in action sheet style for destructive confirmations. "
+                     "This is go/material-ios-migrations#not-scriptable 🕘",
+                     ios(12, 12))
 
 /**
  Defines methods that allows the adopting delegate to respond to messages from an
  @c MDCActionSheetController.
  */
-API_DEPRECATED("Use a UIMenu instead. Use UIAlertController in action sheet style for destructive "
-               "confirmations. See go/material-ios-menus for guidance.",
+API_DEPRECATED("🕘 Schedule time to migrate. "
+               "Follow go/material-ios-menus to use UIMenu instead."
+               "Use UIAlertController in action sheet style for destructive "
+               "confirmations. "
+               "This is go/material-ios-migrations#not-scriptable 🕘",
                ios(12, 12))
 @protocol MDCActionSheetControllerDelegate <NSObject>
 @optional
