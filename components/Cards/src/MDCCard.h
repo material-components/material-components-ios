@@ -21,7 +21,10 @@
 
 @protocol MDCShapeGenerating;
 
-API_DEPRECATED_BEGIN("Use a branded UIView instead.", ios(12, API_TO_BE_DEPRECATED))
+API_DEPRECATED_BEGIN("🤖👀 Use branded UIView instead. "
+                     "See go/material-ios-cards/gm2-migration for more details. "
+                     "This has go/material-ios-migrations#scriptable-potential 🤖👀.",
+                     ios(12, API_TO_BE_DEPRECATED))
 
 // TODO(b/238930139): Remove usage of this deprecated API.
 #pragma clang diagnostic push
@@ -134,16 +137,14 @@ API_DEPRECATED_BEGIN("Use a branded UIView instead.", ios(12, API_TO_BE_DEPRECAT
  */
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-@property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView API_DEPRECATED(
-    "Ripple/Ink will be replaced with more immediate highlighting effects.", ios(12, 12));
+@property(nonatomic, readonly, strong, nonnull) MDCInkView *inkView;
 #pragma clang diagnostic pop
 
 /**
  The rippleView for the card that is initiated on tap. The ripple view is the successor of ink
  view, and can be used by setting `enableRippleBehavior` to YES after initializing the card.
  */
-@property(nonatomic, readonly, strong, nonnull) MDCStatefulRippleView *rippleView API_DEPRECATED(
-    "Ripple/Ink will be replaced with more immediate highlighting effects.", ios(12, 12));
+@property(nonatomic, readonly, strong, nonnull) MDCStatefulRippleView *rippleView;
 
 /**
  By setting this property to YES, you will enable and use inkView's successor rippleView as the
@@ -152,8 +153,7 @@ API_DEPRECATED_BEGIN("Use a branded UIView instead.", ios(12, API_TO_BE_DEPRECAT
 
  Defaults to NO.
  */
-@property(nonatomic, assign) BOOL enableRippleBehavior API_DEPRECATED(
-    "Ripple/Ink will be replaced with more immediate highlighting effects.", ios(12, 12));
+@property(nonatomic, assign) BOOL enableRippleBehavior;
 
 /**
  A block that is invoked when the @c MDCCard receives a call to @c
