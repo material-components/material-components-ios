@@ -14,7 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
-API_DEPRECATED_BEGIN("Use layer.cornerRadius to achieve rounded corners.", ios(12, 12))
+API_DEPRECATED_BEGIN("🤖👀 Use layer.cornerRadius to achieve rounded corners. "
+                     "This has go/material-ios-migrations#scriptable-potential 🤖👀.",
+                     ios(12, 12))
 
 @class MDCPathGenerator;
 
