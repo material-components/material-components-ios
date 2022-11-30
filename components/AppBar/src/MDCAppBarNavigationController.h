@@ -28,14 +28,18 @@
 @protocol MDCAppBarNavigationControllerToBeDeprecatedDelegate;
 
 API_DEPRECATED_BEGIN(
-    "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
+    "🕘 Schedule time to migrate. "
+    "Use branded UINavigationController instead: go/material-ios-top-app-bars/gm2-migration. "
+    "This is go/material-ios-migrations#not-scriptable 🕘",
     ios(11, 12))
 
 /**
  Defines the events that an MDCAppBarNavigationController may send to a delegate.
  */
 API_DEPRECATED(
-    "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
+    "🕘 Schedule time to migrate. "
+    "Use branded UINavigationController instead: go/material-ios-top-app-bars/gm2-migration. "
+    "This is go/material-ios-migrations#not-scriptable 🕘",
     ios(11, 12))
 @protocol
     MDCAppBarNavigationControllerDelegate <UINavigationControllerDelegate,
@@ -107,7 +111,9 @@ API_DEPRECATED(
  for your root view controller and execute your delegate logic on the returned result, if any.
  */
 API_DEPRECATED(
-    "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
+    "🕘 Schedule time to migrate. "
+    "Use branded UINavigationController instead: go/material-ios-top-app-bars/gm2-migration. "
+    "This is go/material-ios-migrations#not-scriptable 🕘",
     ios(11, 12))
 __attribute__((objc_subclassing_restricted))
 @interface MDCAppBarNavigationController : UINavigationController

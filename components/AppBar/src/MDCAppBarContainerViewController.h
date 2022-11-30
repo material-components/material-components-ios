@@ -20,7 +20,9 @@
 @class MDCAppBarViewController;
 
 API_DEPRECATED_BEGIN(
-    "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
+    "🕘 Schedule time to migrate. "
+    "Use branded UINavigationController instead: go/material-ios-top-app-bars/gm2-migration. "
+    "This is go/material-ios-migrations#not-scriptable 🕘",
     ios(11, 12))
 
 /**
@@ -46,7 +48,9 @@ API_DEPRECATED_BEGIN(
     wonderfully subtle ways.
  */
 API_DEPRECATED(
-    "Use a branded UINavigationController instead. See go/material-ios-app-bars for guidance.",
+    "🕘 Schedule time to migrate. "
+    "Use branded UINavigationController instead: go/material-ios-top-app-bars/gm2-migration. "
+    "This is go/material-ios-migrations#not-scriptable 🕘",
     ios(11, 12))
 @interface MDCAppBarContainerViewController : UIViewController
 
