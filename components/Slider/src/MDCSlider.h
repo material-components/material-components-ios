@@ -21,7 +21,10 @@
 // longer import delegates as transitive dependencies.
 #import "MDCSliderDelegate.h"
 
-API_DEPRECATED_BEGIN("Use a branded UISlider instead.", ios(12, 12))
+API_DEPRECATED_BEGIN("🤖👀 Use branded UISlider instead. "
+                     "See go/material-ios-slider/gm2-migration for more details. "
+                     "This has go/material-ios-migrations#scriptable-potential 🤖👀.",
+                     ios(12, 12))
 
 /** The visibility of the track tick marks. */
 typedef NS_ENUM(NSUInteger, MDCSliderTrackTickVisibility) {
