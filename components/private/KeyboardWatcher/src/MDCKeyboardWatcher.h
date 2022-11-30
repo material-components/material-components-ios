@@ -15,7 +15,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-API_DEPRECATED_BEGIN("Use standard Foundation APIs instead.", ios(12, 12))
+API_DEPRECATED_BEGIN("🤖👀 Use standard Foundation APIs instead. "
+                     "This has go/material-ios-migrations#scriptable-potential 🤖👀.",
+                     ios(12, 12))
 
 // These notifications mirror their UIKeyboard* counterparts. They are posted after the keyboard
 // watcher has updated its own internal state, so listeners are safe to query the keyboard watcher
