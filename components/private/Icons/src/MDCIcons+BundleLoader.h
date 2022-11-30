@@ -14,7 +14,9 @@
 
 #import "MDCIcons.h"
 
-API_DEPRECATED_BEGIN("Follow go/material-ios-icons and use UIKit API instead.", ios(12, 12))
+API_DEPRECATED_BEGIN("🤖👀 For image resources, follow go/material-ios-icons. "
+                     "This has go/material-ios-migrations#scriptable-potential 🤖👀",
+                     ios(12, 12))
 
 /**
  The MDCIcons class is designed to be extended by adding individual icon extensions to a project.
