@@ -15,7 +15,10 @@
 #import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIKit.h>
 
-API_DEPRECATED_BEGIN("Use a branded UIPageControl instead.", ios(12, 12))
+API_DEPRECATED_BEGIN("🤖👀 Use a branded UIPageControl instead. "
+                     "See go/material-ios-branding for more info. "
+                     "This has go/material-ios-migrations#scriptable-potential 🤖👀.",
+                     ios(12, 12))
 
 /**
  This shape layer provides a rounded rectangular track on which a page indicator can travel
