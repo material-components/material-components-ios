@@ -16,7 +16,10 @@
 #import <UIKit/UIKit.h>
 
 API_DEPRECATED_BEGIN(
-    "Use default system highlight behavior instead (go/material-ios-touch-response)", ios(12, 12))
+    "🕘 Schedule time to migrate. "
+    "Use default system highlight behavior instead: go/material-ios-touch-response. "
+    "This is go/material-ios-migrations#not-scriptable 🕘",
+    ios(12, 12))
 
 // TODO(b/151929968): Delete import of delegate headers when client code has been migrated to no
 // longer import delegates as transitive dependencies.
