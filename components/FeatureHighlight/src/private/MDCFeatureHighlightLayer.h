@@ -14,7 +14,10 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-API_DEPRECATED_BEGIN("Consider using a modal sheet to explain new features instead.", ios(12, 12))
+API_DEPRECATED_BEGIN("🕘 Schedule time to migrate. "
+                     "Consider using a modal sheet to explain new features instead. "
+                     "This is go/material-ios-migrations#not-scriptable 🕘",
+                     ios(12, 12))
 
 @interface MDCFeatureHighlightLayer : CAShapeLayer
 
