@@ -14,7 +14,9 @@
 
 #import <UIKit/UIKit.h>
 
-API_DEPRECATED_BEGIN("Follow go/material-ios-tabbar-migration to use MDCTabBarView instead.",
+API_DEPRECATED_BEGIN("🤖👀 Use a branded MDCTabBarView instead. "
+                     "See go/material-ios-tabs and go/material-ios-tabbar-migration for more info. "
+                     "This has go/material-ios-migrations#scriptable-potential 🤖👀.",
                      ios(12, 12))
 
 @class MDCTabBarViewController;
