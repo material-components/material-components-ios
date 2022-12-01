@@ -15,7 +15,9 @@
 
 #import "MaterialShapes.h"
 
-API_DEPRECATED_BEGIN("Use cornerRadius instead.", ios(12, 12))
+API_DEPRECATED_BEGIN("🤖👀 Use layer.cornerRadius to achieve rounded corners. "
+                     "This has go/material-ios-migrations#scriptable-potential 🤖👀.",
+                     ios(12, 12))
 
 /**
  A rounded corner treatment.
