@@ -17,6 +17,10 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN("🤖👀 Use UIView's animation APIs instead."
+                     "This has go/material-ios-migrations#scriptable-potential 🤖👀.",
+                     ios(12, 12))
+
 @interface UIView (MDCTimingFunction)
 
 /**
@@ -34,7 +38,8 @@
                                 delay:(NSTimeInterval)delay
                               options:(UIViewAnimationOptions)options
                            animations:(void (^__nonnull)(void))animations
-                           completion:(void (^__nullable)(BOOL finished))completion
-    API_DEPRECATED("Use UIView's animation APIs instead.", ios(12, 12));
+                           completion:(void (^__nullable)(BOOL finished))completion;
 
 @end
+
+API_DEPRECATED_END
