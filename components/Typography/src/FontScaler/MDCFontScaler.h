@@ -14,11 +14,11 @@
 
 #import <UIKit/UIKit.h>
 
-API_DEPRECATED_BEGIN(
-    "🤖👀 Use Typescale tokens instead. "
-    "See go/material-ios-dynamic-type and go/material-ios-tokens#typescale-tokens for more info. "
-    "This has go/material-ios-migrations#scriptable-potential 🤖👀",
-    ios(12, 12))
+API_DEPRECATED_BEGIN("🤖👀 Use Typescale tokens instead. "
+                     "See go/material-ios-dynamic-type#custom-fonts and "
+                     "go/material-ios-tokens#typescale-tokens for more info. "
+                     "This has go/material-ios-migrations#scriptable-potential 🤖👀",
+                     ios(12, 12))
 
 /**
  Set of constants that describe Material's text styles.
@@ -52,7 +52,6 @@ UIKIT_EXTERN MDCTextStyle const MDCTextStyleOverline;
  This interface is similar to UIFontMetrics, but the fonts returned from MDCFontScaler do *not*
  automatically adjust when the device's text size / content size category is changed.
  */
-API_DEPRECATED("Follow go/material-ios-dynamic-type#custom-fonts instead.", ios(11, 12))
 @interface MDCFontScaler : NSObject
 
 /**
