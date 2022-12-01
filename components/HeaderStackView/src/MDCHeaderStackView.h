@@ -40,8 +40,11 @@
  sizeThatFits returns the fitted height for bottom bar if available, otherwise it returns the
  fitted height for topBar. The width will be whatever width was provided.
  */
-API_DEPRECATED_BEGIN("Use native UIKit UINavigation instead. See go/material-ios-app-bars.",
-                     ios(12, 12))
+API_DEPRECATED_BEGIN(
+    "🕘 Schedule time to migrate. "
+    "Use branded UINavigationController instead: go/material-ios-top-app-bars/gm2-migration. "
+    "This is go/material-ios-migrations#not-scriptable 🕘",
+    ios(12, 12))
 IB_DESIGNABLE
 @interface MDCHeaderStackView : UIView
 
