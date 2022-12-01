@@ -37,6 +37,8 @@ static const CGFloat MDCDialogActionButtonMinimumHeight = 36.0f;
 static const CGFloat MDCDialogActionButtonMinimumWidth = 48.0f;
 static const CGFloat MDCDialogActionMinTouchTarget = 48.0f;
 
+static const CGFloat M3CDialogActionMinHeight = 44.0f;
+
 static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
 /** KVO context for this file. */
@@ -194,12 +196,12 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
 - (void)addActionButton:(nonnull UIButton *)button {
   if (button.superview == nil) {
     [self.actionsScrollView addSubview:button];
-    if (_buttonColor) {
-      // We only set if _buttonColor since settingTitleColor to nil doesn't
-      // reset the title to the default
-      [button setTitleColor:_buttonColor forState:UIControlStateNormal];
-    }
     if (!self.isM3CButtonEnabled) {
+      if (_buttonColor) {
+        // We only set if _buttonColor since settingTitleColor to nil doesn't
+        // reset the title to the default
+        [button setTitleColor:_buttonColor forState:UIControlStateNormal];
+      }
       MDCButton *castedButton = (MDCButton *)button;
       castedButton.enableRippleBehavior = self.enableRippleBehavior;
       castedButton.inkColor = self.buttonInkColor;
@@ -458,6 +460,13 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
 
 #pragma mark - Internal
 
+- (CGFloat)buttonHeight {
+  if (self.isM3CButtonEnabled) {
+    return M3CDialogActionMinHeight;
+  }
+  return MAX(MDCDialogActionButtonMinimumHeight, MDCDialogActionMinTouchTarget);
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
                         change:(NSDictionary<NSKeyValueChangeKey, id> *)change
@@ -486,9 +495,9 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   CGSize size = CGSizeMake([self horizontalSpacing], 0.0f);
   NSArray<UIButton *> *buttons = self.actionManager.buttonsInActionOrder;
   UIEdgeInsets actionsInsets = [self actionsInsetsForButtons:buttons isHorizontalLayout:YES];
+
   if (0 < buttons.count) {
-    CGFloat maxButtonHeight =
-        MAX(MDCDialogActionButtonMinimumHeight, MDCDialogActionMinTouchTarget);
+    CGFloat maxButtonHeight = [self buttonHeight];
     for (UIButton *button in buttons) {
       CGSize buttonSize = [button sizeThatFits:size];
       size.width += buttonSize.width;
@@ -515,8 +524,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
     for (NSUInteger index = 0; index < buttons.count; ++index) {
       UIButton *button = buttons[index];
       CGSize buttonSize = [button sizeThatFits:size];
-      CGFloat minButtonHeight =
-          MAX(MDCDialogActionButtonMinimumHeight, MDCDialogActionMinTouchTarget);
+      CGFloat minButtonHeight = [self buttonHeight];
       buttonSize.height = MAX(buttonSize.height, minButtonHeight);
       size.height += buttonSize.height;
       size.width = MAX(size.width, buttonSize.width + widthInset);
