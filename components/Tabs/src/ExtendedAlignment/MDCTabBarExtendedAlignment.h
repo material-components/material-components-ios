@@ -14,9 +14,10 @@
 
 #import "MDCTabBarAlignment.h"
 
-API_DEPRECATED_BEGIN(
-    "MDCTabBar is deprecated. Please use MDCTabBarView instead. See go/material-ios-tabs",
-    ios(12, 12))
+API_DEPRECATED_BEGIN("🤖👀 Use branded MDCTabBarViews instead. "
+                     "See go/material-ios-tabs for more info. "
+                     "This has go/material-ios-migrations#scriptable-potential 🤖👀",
+                     ios(12, 12))
 
 /**
  Alignment options that are not fully supported in MDC-iOS. These should map exactly back to
