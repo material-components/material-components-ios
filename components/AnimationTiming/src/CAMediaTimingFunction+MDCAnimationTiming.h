@@ -17,8 +17,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-API_DEPRECATED_BEGIN("🤖👀 Use UIViewAnimationCurve instead."
-                     "See go/material-ios for more details. "
+API_DEPRECATED_BEGIN("🤖👀 Use UIViewAnimationCurve instead. "
                      "This has go/material-ios-migrations#scriptable-potential 🤖👀.",
                      ios(12, 12))
 
