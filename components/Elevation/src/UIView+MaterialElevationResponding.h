@@ -17,7 +17,7 @@
 
 API_DEPRECATED_BEGIN("🤖👀 Use colors with dynamic providers that handle elevation instead. "
                      "See go/material-ios-color/gm2-migration and "
-                     "go/material-ios-shadow/gm2-migration for more info. "
+                     "go/material-ios-elevation/gm2-migration for more info. "
                      "This has go/material-ios-migrations#scriptable-potential 🤖👀.",
                      ios(12, 12))
 
