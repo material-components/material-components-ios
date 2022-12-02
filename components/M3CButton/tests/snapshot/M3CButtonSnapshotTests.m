@@ -42,7 +42,9 @@ NS_ASSUME_NONNULL_BEGIN
   // Given
   M3CButton *button = [[M3CButton alloc] init];
   [button setTitle:@"Title" forState:UIControlStateNormal];
-  [button setImage:[UIImage systemImageNamed:@"plus"] forState:UIControlStateNormal];
+  [button setImage:[[UIImage systemImageNamed:@"plus"]
+                       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]
+          forState:UIControlStateNormal];
   [self styleButton:button];
   if (button.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
     button.imageEdgeInsets = UIEdgeInsetsMake(0, -16, 0, 0);
