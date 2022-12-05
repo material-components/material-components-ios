@@ -162,7 +162,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)updateImageColorForState:(UIControlState)state {
   UIColor *color = [self tintColorForState:state];
   self.tintColor = color;
-  if (self.currentImage != nil && color != nil) {
+  if (self.currentImage != nil && color != nil &&
+      self.currentImage.renderingMode == UIImageRenderingModeAlwaysTemplate) {
     [self setImage:[self.currentImage imageWithTintColor:color] forState:state];
   }
 }
@@ -260,7 +261,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (void)setImage:(nullable UIImage *)image forState:(UIControlState)state {
-  [super setImage:[image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:state];
+  [super setImage:image forState:state];
   [self updateInsets];
 }
 
