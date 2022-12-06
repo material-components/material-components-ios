@@ -41,6 +41,8 @@ static const CGFloat M3CDialogActionMinHeight = 44.0f;
 
 static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
+static const UIEdgeInsets M3CDialogContentInsets = (UIEdgeInsets){24.0f, 24.0f, 0.0f, 24.0f};
+
 /** KVO context for this file. */
 static char *const kKVOContextMDCAlertControllerViewPrivate =
     "kKVOContextMDCAlertControllerViewPrivate";
@@ -103,6 +105,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
     self.clipsToBounds = YES;
     self.shouldGroupAccessibilityChildren = YES;
     self.titlePinsToTop = YES;
+    _M3CButtonEnabled = NO;
 
     self.orderVerticalActionsByEmphasis = NO;
     self.actionsHorizontalAlignment = MDCContentHorizontalAlignmentTrailing;
@@ -164,7 +167,6 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
     // for instance).
     self.messageTextView.backgroundColor = UIColor.clearColor;
     [self.contentScrollView addSubview:self.messageTextView];
-    _M3CButtonEnabled = NO;
 
     [self setNeedsLayout];
   }
@@ -180,6 +182,14 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   self.titleLabel.text = title;
 
   [self setNeedsLayout];
+}
+
+- (void)setM3CButtonEnabled:(BOOL)M3CButtonEnabled {
+  if (M3CButtonEnabled) {
+    // Bottom content inset is not needed due to the top action inset.
+    self.contentInsets = M3CDialogContentInsets;
+  }
+  _M3CButtonEnabled = M3CButtonEnabled;
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
