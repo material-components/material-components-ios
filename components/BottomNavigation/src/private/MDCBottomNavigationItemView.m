@@ -22,6 +22,8 @@
 #import "MDCRippleTouchController.h"
 #import "MDCRippleView.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 // A number large enough to be larger than any reasonable screen dimension but small enough that
 // CGFloat doesn't lose precision.
 static const CGFloat kMaxSizeDimension = 1000000;
@@ -203,6 +205,7 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
   [super layoutSubviews];
 
   [self.label sizeToFit];
+  [self.iconImageView sizeToFit];
   [_badge sizeToFit];
   [self centerLayoutAnimated:NO];
   [self invalidatePointerInteractions];
@@ -577,7 +580,7 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
   }
 }
 
-- (void)setSelectedItemTintColor:(UIColor *)selectedItemTintColor {
+- (void)setSelectedItemTintColor:(nullable UIColor *)selectedItemTintColor {
   _selectedItemTintColor = selectedItemTintColor;
   _selectedItemTitleColor = selectedItemTintColor;
   if (self.selected) {
@@ -594,7 +597,7 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
   }
 }
 
-- (void)setUnselectedItemTintColor:(UIColor *)unselectedItemTintColor {
+- (void)setUnselectedItemTintColor:(nullable UIColor *)unselectedItemTintColor {
   _unselectedItemTintColor = unselectedItemTintColor;
   if (!self.selected) {
     self.iconImageView.tintColor = self.unselectedItemTintColor;
@@ -602,14 +605,14 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
   }
 }
 
-- (void)setSelectedItemTitleColor:(UIColor *)selectedItemTitleColor {
+- (void)setSelectedItemTitleColor:(nullable UIColor *)selectedItemTitleColor {
   _selectedItemTitleColor = selectedItemTitleColor;
   if (self.selected) {
     self.label.textColor = self.selectedItemTitleColor;
   }
 }
 
-- (void)setImage:(UIImage *)image {
+- (void)setImage:(nullable UIImage *)image {
   _image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 
   // _image updates unselected state
@@ -618,12 +621,11 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
     self.iconImageView.image = _image;
     self.iconImageView.tintColor =
         (self.selected) ? self.selectedItemTintColor : self.unselectedItemTintColor;
-    [self.iconImageView sizeToFit];
     [self setNeedsLayout];
   }
 }
 
-- (void)setSelectedImage:(UIImage *)selectedImage {
+- (void)setSelectedImage:(nullable UIImage *)selectedImage {
   _selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   if (self.selected) {
     self.iconImageView.image = _selectedImage;
@@ -633,7 +635,7 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
   }
 }
 
-- (void)setTitle:(NSString *)title {
+- (void)setTitle:(nullable NSString *)title {
   _title = [title copy];
   self.label.text = _title;
   self.button.accessibilityLabel = [self accessibilityLabelWithTitle:_title];
@@ -645,31 +647,31 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
   [self updateLabelVisibility:NO];
 }
 
-- (void)setItemTitleFont:(UIFont *)itemTitleFont {
+- (void)setItemTitleFont:(nullable UIFont *)itemTitleFont {
   _itemTitleFont = itemTitleFont;
   self.label.font = itemTitleFont;
   [self setNeedsLayout];
 }
 
-- (void)setAccessibilityValue:(NSString *)accessibilityValue {
+- (void)setAccessibilityValue:(nullable NSString *)accessibilityValue {
   [super setAccessibilityValue:accessibilityValue];
   self.button.accessibilityValue = accessibilityValue;
 }
 
-- (NSString *)accessibilityValue {
+- (nullable NSString *)accessibilityValue {
   return self.button.accessibilityValue;
 }
 
-- (void)setAccessibilityHint:(NSString *)accessibilityHint {
+- (void)setAccessibilityHint:(nullable NSString *)accessibilityHint {
   [super setAccessibilityHint:accessibilityHint];
   self.button.accessibilityHint = accessibilityHint;
 }
 
-- (NSString *)accessibilityHint {
+- (nullable NSString *)accessibilityHint {
   return self.button.accessibilityHint;
 }
 
-- (void)setAccessibilityElementIdentifier:(NSString *)accessibilityElementIdentifier {
+- (void)setAccessibilityElementIdentifier:(nullable NSString *)accessibilityElementIdentifier {
   self.button.accessibilityIdentifier = accessibilityElementIdentifier;
 }
 
@@ -678,7 +680,7 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
   [self setNeedsLayout];
 }
 
-- (NSString *)accessibilityElementIdentifier {
+- (nullable NSString *)accessibilityElementIdentifier {
   return self.button.accessibilityIdentifier;
 }
 
@@ -752,7 +754,7 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
 
 #pragma mark - Configuring the ripple appearance
 
-- (void)setRippleColor:(UIColor *)rippleColor {
+- (void)setRippleColor:(nullable UIColor *)rippleColor {
   _rippleColor = rippleColor;
 
   if (!rippleColor) {
@@ -763,7 +765,7 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
 
 #pragma mark - Displaying a value in the badge
 
-- (void)setBadgeText:(NSString *)badgeText {
+- (void)setBadgeText:(nullable NSString *)badgeText {
   _badge.text = badgeText;
   if ([super accessibilityValue] == nil || [self accessibilityValue].length == 0) {
     self.button.accessibilityValue = badgeText;
@@ -776,7 +778,7 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
   [self setNeedsLayout];
 }
 
-- (NSString *)badgeText {
+- (nullable NSString *)badgeText {
   return _badge.text;
 }
 
@@ -828,7 +830,7 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
   return YES;
 }
 
-- (NSString *)largeContentTitle {
+- (nullable NSString *)largeContentTitle {
   if (_largeContentTitle) {
     return _largeContentTitle;
   }
@@ -836,7 +838,7 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
   return self.title;
 }
 
-- (UIImage *)largeContentImage {
+- (nullable UIImage *)largeContentImage {
   if (_largeContentImage) {
     return _largeContentImage;
   }
@@ -1139,3 +1141,5 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

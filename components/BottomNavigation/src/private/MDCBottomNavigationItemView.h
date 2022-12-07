@@ -17,15 +17,16 @@
 #import "MDCBottomNavigationBar.h"
 #import "MaterialRipple.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 __attribute__((objc_subclassing_restricted))
 @interface MDCBottomNavigationItemView : UIView
 
 @property(nonatomic, assign) BOOL titleBelowIcon;
 @property(nonatomic, assign) BOOL selected;
 @property(nonatomic, assign) MDCBottomNavigationBarTitleVisibility titleVisibility;
-@property(nonatomic, strong, nonnull)
-    MDCRippleTouchController *rippleTouchController API_DEPRECATED(
-        "Follow go/material-ios-touch-response for guidance instead.", ios(12, 12));
+@property(nonatomic, strong) MDCRippleTouchController *rippleTouchController API_DEPRECATED(
+    "Follow go/material-ios-touch-response for guidance instead.", ios(12, 12));
 @property(nonatomic, assign) UIOffset titlePositionAdjustment;
 
 @property(nonatomic, copy, nullable) NSString *title;
@@ -40,7 +41,7 @@ __attribute__((objc_subclassing_restricted))
 // Default = YES
 @property(nonatomic, assign) BOOL truncatesTitle;
 
-@property(nonatomic, strong, nonnull) UIButton *button;
+@property(nonatomic, strong) UIButton *button;
 @property(nonatomic, strong, nullable) UIImage *image;
 @property(nonatomic, strong, nullable) UIImage *selectedImage;
 @property(nonatomic, strong) UIImageView *iconImageView;
@@ -110,7 +111,7 @@ __attribute__((objc_subclassing_restricted))
  If this item's associated UITabBarItem has set a non-nil badgeColor, then that value will be used
  for the badge instead of the backgroundColor associated with this appearance object.
  */
-@property(nonatomic, copy, nonnull) MDCBadgeAppearance *badgeAppearance;
+@property(nonatomic, copy) MDCBadgeAppearance *badgeAppearance;
 
 /**
  X-offset for Badge position.
@@ -164,6 +165,8 @@ __attribute__((objc_subclassing_restricted))
 #pragma mark - Unsupported APIs
 
 // Interface builder is not supported.
-- (nullable instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_UNAVAILABLE;
+- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 
 @end
+
+NS_ASSUME_NONNULL_END
