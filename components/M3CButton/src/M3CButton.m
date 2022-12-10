@@ -188,6 +188,13 @@ NS_ASSUME_NONNULL_BEGIN
   MDCConfigureShadowForView(self, shadow);
 }
 
+- (void)setImageEdgeInsetsWithImageAndTitle:(UIEdgeInsets)imageEdgeInsetsWithImageAndTitle {
+  _imageEdgeInsetsWithImageAndTitle = imageEdgeInsetsWithImageAndTitle;
+  _customInsetAvailable = NO;
+  [self updateInsets];
+  [self updateShadows];
+}
+
 - (void)setEdgeInsetsWithImageAndTitle:(UIEdgeInsets)edgeInsetsWithImageAndTitle {
   _edgeInsetsWithImageAndTitle = edgeInsetsWithImageAndTitle;
   _customInsetAvailable = NO;
@@ -220,11 +227,14 @@ NS_ASSUME_NONNULL_BEGIN
     BOOL hasImage = self.currentImage.size.width > 0;
     if (hasImage && hasTitle) {
       self.contentEdgeInsets = self.edgeInsetsWithImageAndTitle;
+      self.imageEdgeInsets = self.imageEdgeInsetsWithImageAndTitle;
     } else if (hasImage) {
       self.contentEdgeInsets = self.edgeInsetsWithImageOnly;
+      // Please add an imageEdgeInsetsWithImageOnly to specify a non zero value.
       self.imageEdgeInsets = UIEdgeInsetsZero;
     } else if (hasTitle) {
       self.contentEdgeInsets = self.edgeInsetsWithTitleOnly;
+      // Please add an imageEdgeInsetsWithTitleOnly to specify a non zero value.
       self.imageEdgeInsets = UIEdgeInsetsZero;
     }
     _customInsetAvailable = NO;

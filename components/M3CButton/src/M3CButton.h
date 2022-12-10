@@ -54,6 +54,11 @@ __attribute__((objc_subclassing_restricted))
 - (void)setShadow:(nullable MDCShadow *)shadow forState:(UIControlState)state;
 
 /**
+ The preferred imageEdgeInsets for a button with an image and title.
+*/
+@property(nonatomic) UIEdgeInsets imageEdgeInsetsWithImageAndTitle;
+
+/**
  The preferred contentEdgeInsets for a button with an image and title.
 */
 @property(nonatomic) UIEdgeInsets edgeInsetsWithImageAndTitle;

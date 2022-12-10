@@ -47,9 +47,9 @@ NS_ASSUME_NONNULL_BEGIN
           forState:UIControlStateNormal];
   [self styleButton:button];
   if (button.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
-    button.imageEdgeInsets = UIEdgeInsetsMake(0, -16, 0, 0);
+    button.imageEdgeInsetsWithImageAndTitle = UIEdgeInsetsMake(0, -16, 0, 0);
   } else {
-    button.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -16);
+    button.imageEdgeInsetsWithImageAndTitle = UIEdgeInsetsMake(0, 0, 0, -16);
   }
   [button sizeToFit];
 
