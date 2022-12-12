@@ -293,17 +293,30 @@ NS_ASSUME_NONNULL_BEGIN
   }
 }
 
-- (CGSize)intrinsicContentSize {
-  [self updateInsets];
-  CGSize size = [super intrinsicContentSize];
+- (CGSize)clampToMinimumnSize:(CGSize)size {
   if (size.height < _minimumHeight) {
     size.height = _minimumHeight;
   }
   if (size.height > size.width) {
     size.width = size.height;
   }
-  [self setCapsuleCornersBasedOn:size];
   return size;
+}
+
+#pragma mark - Overrides
+- (CGSize)intrinsicContentSize {
+  [self updateInsets];
+  CGSize size = [super intrinsicContentSize];
+  CGSize clampToMinimumnSize = [self clampToMinimumnSize:size];
+  [self setCapsuleCornersBasedOn:clampToMinimumnSize];
+  return clampToMinimumnSize;
+}
+
+- (CGSize)sizeThatFits:(CGSize)size {
+  CGSize superSize = [super sizeThatFits:size];
+  CGSize clampToMinimumnSize = [self clampToMinimumnSize:superSize];
+  [self setCapsuleCornersBasedOn:clampToMinimumnSize];
+  return clampToMinimumnSize;
 }
 
 @end
