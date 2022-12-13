@@ -36,15 +36,6 @@ __attribute__((objc_subclassing_restricted))
 - (void)setBorderColor:(nullable UIColor *)borderColor forState:(UIControlState)state;
 
 /**
- Sets the shadow color for a particular control state. Sets the @c shadowColor
- of the layer.
-
- @param shadowColor The shadow color to set.
- @param state The state to set.
-*/
-- (void)setShadowColor:(nullable UIColor *)shadowColor forState:(UIControlState)state;
-
-/**
  Sets the shadow for a particular control state. Sets the @c shadow of the
  layer.
 

@@ -13,7 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
   NSMutableDictionary<NSNumber *, UIColor *> *_tintColors;
   NSMutableDictionary<NSNumber *, UIColor *> *_borderColors;
   NSMutableDictionary<NSNumber *, MDCShadow *> *_shadows;
-  NSMutableDictionary<NSNumber *, UIColor *> *_shadowColors;
   BOOL _customInsetAvailable;
 }
 
@@ -55,7 +54,6 @@ NS_ASSUME_NONNULL_BEGIN
   self.animationDuration = 0.3f;
   self.minimumHeight = 44.0f;
   _borderColors = [NSMutableDictionary dictionary];
-  _shadowColors = [NSMutableDictionary dictionary];
   _shadows = [NSMutableDictionary dictionary];
   _customInsetAvailable = NO;
 
@@ -94,12 +92,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setShadow:(nullable MDCShadow *)shadow forState:(UIControlState)state {
   _shadows[@(state)] = shadow;
-  [self updateColors];
-  [self updateShadows];
-}
-
-- (void)setShadowColor:(nullable UIColor *)color forState:(UIControlState)state {
-  _shadowColors[@(state)] = color;
   [self updateColors];
   [self updateShadows];
 }
@@ -149,16 +141,6 @@ NS_ASSUME_NONNULL_BEGIN
   return _shadows[@(state)] ?: _shadows[@(UIControlStateNormal)];
 }
 
-/**
- * A color used as the button's @c shadowColor for @c state.
- *
- * @param state The state.
- * @return The shadow color.
- */
-- (UIColor *)shadowColorForState:(UIControlState)state {
-  return _shadowColors[@(state)] ?: _shadowColors[@(UIControlStateNormal)];
-}
-
 - (void)updateImageColorForState:(UIControlState)state {
   UIColor *color = [self tintColorForState:state];
   self.tintColor = color;
@@ -180,7 +162,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)updateShadows {
   MDCShadow *shadow = [self shadowForState:self.state];
-  shadow = [[MDCShadowBuilder builderWithColor:[self shadowColorForState:self.state]
+  shadow = [[MDCShadowBuilder builderWithColor:shadow.color
                                        opacity:shadow.opacity
                                         radius:shadow.radius
                                         offset:shadow.offset
