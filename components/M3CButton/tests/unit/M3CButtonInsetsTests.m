@@ -85,6 +85,42 @@ NS_ASSUME_NONNULL_BEGIN
   XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(self.button.contentEdgeInsets, self.edgeInsetsForTitleOnly));
 }
 
+- (void)testEdgeInsetsWithImageAndTitle_removeImage {
+  // Given
+  [self.button setTitle:self.title forState:UIControlStateNormal];
+  [self.button setImage:self.image forState:UIControlStateNormal];
+  [self.button setEdgeInsetsWithImageAndTitle:self.edgeInsetsForImageAndTitle];
+  [self.button setImageEdgeInsetsWithImageAndTitle:self.imageEdgeInsetsForImageAndTitle];
+  [self.button setEdgeInsetsWithImageOnly:self.edgeInsetsForImageOnly];
+  [self.button setEdgeInsetsWithTitleOnly:self.edgeInsetsForTitleOnly];
+
+  // When
+  [self.button setImage:nil forState:UIControlStateNormal];
+
+  // Then
+  XCTAssertTrue(
+      UIEdgeInsetsEqualToEdgeInsets(self.button.contentEdgeInsets, self.edgeInsetsForTitleOnly));
+  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(self.button.imageEdgeInsets, UIEdgeInsetsZero));
+}
+
+- (void)testEdgeInsetsWithImageAndTitle_removeTitle {
+  // Given
+  [self.button setTitle:self.title forState:UIControlStateNormal];
+  [self.button setImage:self.image forState:UIControlStateNormal];
+  [self.button setEdgeInsetsWithImageAndTitle:self.edgeInsetsForImageAndTitle];
+  [self.button setImageEdgeInsetsWithImageAndTitle:self.imageEdgeInsetsForImageAndTitle];
+  [self.button setEdgeInsetsWithImageOnly:self.edgeInsetsForImageOnly];
+  [self.button setEdgeInsetsWithTitleOnly:self.edgeInsetsForTitleOnly];
+
+  // When
+  [self.button setTitle:nil forState:UIControlStateNormal];
+
+  // Then
+  XCTAssertTrue(
+      UIEdgeInsetsEqualToEdgeInsets(self.button.contentEdgeInsets, self.edgeInsetsForImageOnly));
+  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(self.button.imageEdgeInsets, UIEdgeInsetsZero));
+}
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -270,6 +270,11 @@ NS_ASSUME_NONNULL_BEGIN
   [self updateColors];
 }
 
+- (void)setTitle:(nullable NSString *)title forState:(UIControlState)state {
+  [super setTitle:title forState:state];
+  [self updateInsets];
+}
+
 - (void)setImage:(nullable UIImage *)image forState:(UIControlState)state {
   [super setImage:image forState:state];
   [self updateInsets];
