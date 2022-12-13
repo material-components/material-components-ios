@@ -121,6 +121,30 @@ NS_ASSUME_NONNULL_BEGIN
   XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(self.button.imageEdgeInsets, UIEdgeInsetsZero));
 }
 
+- (void)testEdgeInsetsWithImageAndTitle_setSelected {
+  // Given
+  [self.button setTitle:self.title forState:UIControlStateNormal];
+  [self.button setImage:self.image forState:UIControlStateNormal];
+  [self.button setEdgeInsetsWithImageAndTitle:self.edgeInsetsForImageAndTitle];
+  [self.button setImageEdgeInsetsWithImageAndTitle:self.imageEdgeInsetsForImageAndTitle];
+  [self.button setEdgeInsetsWithImageOnly:self.edgeInsetsForImageOnly];
+  [self.button setEdgeInsetsWithTitleOnly:self.edgeInsetsForTitleOnly];
+
+  // We are trying to ensure that we are updating the edges when state changes.
+  // However setting non UIControlStateNormal values to nil just falls back to UIControlStateNormal.
+  [self.button setTitle:nil forState:UIControlStateNormal];
+  [self.button setTitle:@"Selected" forState:UIControlStateSelected];
+  [self.button setSelected:YES];
+
+  // When
+  self.button.selected = NO;
+
+  // Then
+  XCTAssertTrue(
+      UIEdgeInsetsEqualToEdgeInsets(self.button.contentEdgeInsets, self.edgeInsetsForImageOnly));
+  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(self.button.imageEdgeInsets, UIEdgeInsetsZero));
+}
+
 @end
 
 NS_ASSUME_NONNULL_END

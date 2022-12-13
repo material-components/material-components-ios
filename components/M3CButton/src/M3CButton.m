@@ -268,6 +268,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setSelected:(BOOL)selected {
   [super setSelected:selected];
   [self updateColors];
+  [self updateInsets];
 }
 
 - (void)setTitle:(nullable NSString *)title forState:(UIControlState)state {
