@@ -21,6 +21,11 @@ public class NavigationRailItemView: UIControl {
 
   weak var item: UITabBarItem?
 
+  private let itemViewTitleFontSize: CGFloat = 12
+  private let badgeSizeNormal = CGSize(width: 16, height: 16)
+  private let badgeCornerRadiusNormal: CGFloat = 8
+  private let itemSpacing: CGFloat = 4
+
   private var titleColors = [UIControl.State.RawValue: UIColor]()
 
   private var imageTintColors = [UIControl.State.RawValue: UIColor]()
@@ -44,11 +49,17 @@ public class NavigationRailItemView: UIControl {
     }
   }
 
-  private let imageView: UIImageView = {
-    let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+  private let iconImageView: UIImageView = {
+    let imageView = UIImageView()
     imageView.contentMode = .scaleAspectFit
     imageView.clipsToBounds = true
-    imageView.clipsToBounds = false
+    return imageView
+  }()
+
+  private let imageView: UIImageView = {
+    let imageView = UIImageView()
+    imageView.contentMode = .scaleAspectFit
+    imageView.clipsToBounds = true
     return imageView
   }()
 
@@ -58,14 +69,7 @@ public class NavigationRailItemView: UIControl {
     return label
   }()
 
-  let badge: MDCBadgeView = {
-    let badge = MDCBadgeView()
-    badge.translatesAutoresizingMaskIntoConstraints = false
-    return badge
-  }()
-
-  private var badgeWidthConstraint: NSLayoutConstraint?
-  private var badgeHeightConstraint: NSLayoutConstraint?
+  let badge: MDCBadgeView = MDCBadgeView()
 
   var badgeText: String? {
     didSet {
@@ -74,24 +78,10 @@ public class NavigationRailItemView: UIControl {
     }
   }
 
-  private var isBadgeSmall: Bool = false {
-    didSet {
-      if isBadgeSmall {
-        badgeWidthConstraint?.constant = 6
-        badgeHeightConstraint?.constant = 6
-        badge.layer.cornerRadius = 3
-      } else {
-        badgeWidthConstraint?.constant = 16
-        badgeHeightConstraint?.constant = 16
-        badge.layer.cornerRadius = 8
-      }
-    }
-  }
-
   private lazy var stackView: UIStackView = {
     let stack = UIStackView()
     stack.axis = .vertical
-    stack.spacing = 4.0
+    stack.spacing = itemSpacing
     stack.alignment = .center
     stack.distribution = .fillProportionally
     stack.translatesAutoresizingMaskIntoConstraints = false
@@ -129,18 +119,20 @@ public class NavigationRailItemView: UIControl {
     self.translatesAutoresizingMaskIntoConstraints = false
     self.heightAnchor.constraint(equalToConstant: 56).isActive = true
 
+    label.textAlignment = .center
+    label.font = UIFont.systemFont(ofSize: itemViewTitleFontSize)
+
     stackView.addArrangedSubview(imageView)
     stackView.addArrangedSubview(label)
 
-    imageView.addSubview(badge)
-    badgeWidthConstraint = badge.widthAnchor.constraint(equalToConstant: 16)
-    badgeHeightConstraint = badge.heightAnchor.constraint(equalToConstant: 16)
-    badgeWidthConstraint?.isActive = true
-    badgeHeightConstraint?.isActive = true
-    badge.layer.cornerRadius = 8
+    stackView.addSubview(badge)
+    badge.layer.cornerRadius = badgeCornerRadiusNormal
+    badge.translatesAutoresizingMaskIntoConstraints = false
 
+    let badgeOffsetY = -badgeSizeNormal.height / 2
     badge.centerXAnchor.constraint(equalTo: imageView.trailingAnchor).isActive = true
-    badge.centerYAnchor.constraint(equalTo: imageView.topAnchor).isActive = true
+    badge.centerYAnchor.constraint(equalTo: imageView.centerYAnchor, constant: badgeOffsetY)
+      .isActive = true
   }
 
   convenience init(item: UITabBarItem) {
@@ -161,13 +153,26 @@ public class NavigationRailItemView: UIControl {
   public override func layoutSubviews() {
     super.layoutSubviews()
 
-    configureItem()
+    guard let item = item else { return }
+    labelText = item.title
+    setItemImage(item.image, for: .normal)
+    setItemImage(item.selectedImage, for: .selected)
+    accessibilityValue = item.accessibilityValue
+    accessibilityHint = item.accessibilityHint
+    isAccessibilityElement = item.isAccessibilityElement
+    tag = item.tag
+    if let badgeColor = item.badgeColor {
+      badge.backgroundColor = badgeColor
+    }
+    badge.text = item.badgeValue
+    badge.isHidden = badge.text == nil
+    badge.sizeToFit()
+    accessibilityLabel = item.accessibilityLabel
+    accessibilityIdentifier = item.accessibilityIdentifier
+    activeIndicator.center = imageView.center
   }
 
-  func setItemImage(
-    _ image: UIImage?,
-    for state: UIControl.State
-  ) {
+  func setItemImage(_ image: UIImage?, for state: UIControl.State) {
     images[state.rawValue] = image
     let selectedState = isSelected ? UIControl.State.selected : .normal
     if state == selectedState {
@@ -179,10 +184,7 @@ public class NavigationRailItemView: UIControl {
     images[state.rawValue]
   }
 
-  func setTitleColor(
-    _ color: UIColor?,
-    for state: UIControl.State
-  ) {
+  func setTitleColor(_ color: UIColor?, for state: UIControl.State) {
     titleColors[state.rawValue] = color
     let selectedState = isSelected ? UIControl.State.selected : .normal
     if state == selectedState {
@@ -194,10 +196,7 @@ public class NavigationRailItemView: UIControl {
     return titleColors[state.rawValue]
   }
 
-  func setImageTintColor(
-    _ color: UIColor?,
-    for state: UIControl.State
-  ) {
+  func setImageTintColor(_ color: UIColor?, for state: UIControl.State) {
     imageTintColors[state.rawValue] = color
     let selectedState = isSelected ? UIControl.State.selected : .normal
     if state == selectedState {
@@ -234,24 +233,5 @@ public class NavigationRailItemView: UIControl {
       }
     }
     CATransaction.commit()
-  }
-
-  private func configureItem() {
-    guard let item = item else { return }
-    labelText = item.title
-    setItemImage(item.image, for: .normal)
-    setItemImage(item.selectedImage, for: .selected)
-    accessibilityValue = item.accessibilityValue
-    accessibilityHint = item.accessibilityHint
-    isAccessibilityElement = item.isAccessibilityElement
-    tag = item.tag
-    if let badgeColor = item.badgeColor {
-      badge.backgroundColor = badgeColor
-    }
-    badge.text = item.badgeValue
-    badge.isHidden = badge.text == nil
-    accessibilityLabel = item.accessibilityLabel
-    accessibilityIdentifier = item.accessibilityIdentifier
-    activeIndicator.center = imageView.center
   }
 }

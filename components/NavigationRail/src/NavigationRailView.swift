@@ -15,7 +15,7 @@
 import Combine
 import UIKit
 import MaterialComponents.MaterialBadges_Appearance 
-import MaterialComponents.MaterialRipple
+import MaterialComponents.MaterialM3CButton
 
 @available(iOS 13.0, *)
 @objc(MDCNavigationRailItemAlignment)
@@ -53,6 +53,12 @@ public class NavigationRailView: UIView {
       applyDefaultConfiguration(configuration: configuration)
     }
   }
+
+  /// The rail's menu button. Default to have no functionality.
+  public var menuButton = M3CButton()
+
+  /// The rail's FAB button. Default to have no functionality.
+  public var fabButton = M3CButton()
 
   /// The items displayed by the navigation rail.
   ///
@@ -187,31 +193,6 @@ public class NavigationRailView: UIView {
     }
   }
 
-  lazy private var menuButton: UIButton = {
-    let button = UIButton()
-    button.setImage(UIImage(systemName: "sidebar.leading"), for: .normal)
-    button.heightAnchor.constraint(equalToConstant: 44).isActive = true
-    button.widthAnchor.constraint(equalToConstant: 44).isActive = true
-    button.isHidden = true
-    button.addTarget(self, action: #selector(didTapMenuButton(sender:)), for: .touchUpInside)
-    topButtonsStackView.insertArrangedSubview(button, at: 0)
-    return button
-  }()
-
-  private var buttonRippleTouchController: MDCRippleTouchController?
-  lazy internal var fabButton: UIButton = {
-    let button = UIButton()
-    button.heightAnchor.constraint(equalToConstant: 56).isActive = true
-    button.widthAnchor.constraint(equalToConstant: 56).isActive = true
-    button.layer.cornerRadius = 16
-    button.clipsToBounds = true
-    button.isHidden = true
-    button.addTarget(self, action: #selector(didTapFABButton(sender:)), for: .touchUpInside)
-    buttonRippleTouchController = MDCRippleTouchController(view: button)
-    topButtonsStackView.addArrangedSubview(button)
-    return button
-  }()
-
   lazy private var topButtonsStackView: UIStackView = {
     let stack = UIStackView()
     stack.axis = .vertical
@@ -246,6 +227,16 @@ public class NavigationRailView: UIView {
 
   public override init(frame: CGRect) {
     super.init(frame: frame)
+    // Menu button initialization.
+    menuButton.setImage(UIImage(systemName: "sidebar.leading"), for: .normal)
+    menuButton.isHidden = true
+    menuButton.addTarget(self, action: #selector(didTapMenuButton(sender:)), for: .touchUpInside)
+    topButtonsStackView.insertArrangedSubview(menuButton, at: 0)
+
+    // FAB initialization.
+    fabButton.isHidden = true
+    fabButton.addTarget(self, action: #selector(didTapFABButton(sender:)), for: .touchUpInside)
+    topButtonsStackView.addArrangedSubview(fabButton)
 
     self.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     addInteraction(UILargeContentViewerInteraction(delegate: self))
@@ -274,8 +265,6 @@ public class NavigationRailView: UIView {
     let configuration = configuration ?? NavigationRailConfiguration.railConfiguration()
     isMenuButtonVisible = configuration.isMenuButtonVisible
     isFloatingActionButtonVisible = configuration.isFloatingActionButtonVisible
-    fabButton.tintColor = configuration.floatingActionButtonTintColor
-    fabButton.backgroundColor = configuration.floatingActionButtonBackgroundColor
     fabButton.setImage(configuration.floatingActionButtonImage, for: .normal)
     itemsAlignment = configuration.itemsAlignment
 
@@ -289,12 +278,8 @@ public class NavigationRailView: UIView {
         itemView.setImageTintColor(itemProperties.tintColor, for: .normal)
         itemView.setImageTintColor(itemProperties.selectedTintColor, for: .selected)
         itemView.hideLabel = itemProperties.isTitleHidden
-        let badgeAppearance = MDCBadgeAppearance()
-        badgeAppearance.backgroundColor = itemProperties.badgeColor
-        badgeAppearance.textColor = itemProperties.badgeTextColor
-        badgeAppearance.font = itemProperties.badgeTextFont
-        itemView.badge.appearance = badgeAppearance
-        itemView.activeIndicator.backgroundColor = itemProperties.activeIndicatorColor
+        itemView.badge.appearance = itemProperties.badgeAppearance
+        itemView.activeIndicator.backgroundColor = itemProperties.selectionIndicatorColor
       }
     }
     setNeedsLayout()

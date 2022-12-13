@@ -1,4 +1,5 @@
 import XCTest
+import MaterialComponents.MaterialBadges_Appearance 
 
 @testable import MaterialComponents.MaterialNavigationRail
 
@@ -269,8 +270,6 @@ class NavigationRailTests: XCTestCase {
       // Then
       XCTAssertFalse(navigationRail.isMenuButtonVisible)
       XCTAssertFalse(navigationRail.isFloatingActionButtonVisible)
-      XCTAssertEqual(navigationRail.fabButton.tintColor, .label)
-      XCTAssertEqual(navigationRail.fabButton.backgroundColor, .cyan)
       XCTAssertEqual(navigationRail.fabButton.image(for: .normal), .init(systemName: "pencil"))
       XCTAssertEqual(navigationRail.itemsAlignment, .center)
       let firstItem =
@@ -302,8 +301,6 @@ class NavigationRailTests: XCTestCase {
       // Then
       XCTAssertFalse(navigationRail.isMenuButtonVisible)
       XCTAssertFalse(navigationRail.isFloatingActionButtonVisible)
-      XCTAssertEqual(navigationRail.fabButton.tintColor, .label)
-      XCTAssertEqual(navigationRail.fabButton.backgroundColor, .cyan)
       XCTAssertEqual(navigationRail.fabButton.image(for: .normal), .init(systemName: "pencil"))
       XCTAssertEqual(navigationRail.itemsAlignment, .center)
       let firstItem =
@@ -335,8 +332,6 @@ class NavigationRailTests: XCTestCase {
       // Then
       XCTAssertFalse(navigationRail.isMenuButtonVisible)
       XCTAssertFalse(navigationRail.isFloatingActionButtonVisible)
-      XCTAssertEqual(navigationRail.fabButton.tintColor, .label)
-      XCTAssertEqual(navigationRail.fabButton.backgroundColor, .cyan)
       XCTAssertEqual(navigationRail.fabButton.image(for: .normal), .init(systemName: "pencil"))
       XCTAssertEqual(navigationRail.itemsAlignment, .center)
       let firstItem =
@@ -349,10 +344,10 @@ class NavigationRailTests: XCTestCase {
       XCTAssertEqual(firstItem?.imageTintColor(for: .normal), .label)
       XCTAssertEqual(firstItem?.imageTintColor(for: .selected), .systemIndigo)
       XCTAssertFalse(firstItem!.hideLabel)
-      XCTAssertEqual(firstItem?.badge.appearance.textColor, .white)
-      XCTAssertEqual(firstItem?.badge.appearance.font, .systemFont(ofSize: 11))
+      XCTAssertEqual(firstItem?.badge.appearance.textColor, nil)
+      XCTAssertEqual(firstItem?.badge.appearance.font, nil)
       XCTAssertEqual(
-        firstItem?.badge.appearance.backgroundColor?.cgColor, UIColor.systemRed.cgColor)
+        firstItem?.badge.appearance.backgroundColor?.cgColor, nil)
     }
   }
 
@@ -372,8 +367,6 @@ class NavigationRailTests: XCTestCase {
       let config = NavigationRailConfiguration.railConfiguration()
       config.isMenuButtonVisible = true
       config.isFloatingActionButtonVisible = true
-      config.floatingActionButtonTintColor = .green
-      config.floatingActionButtonBackgroundColor = .yellow
       config.floatingActionButtonImage = .init(systemName: "heart")!
       config.itemsAlignment = .bottom
       config.itemProperties.titleNumberOflines = 5
@@ -383,16 +376,16 @@ class NavigationRailTests: XCTestCase {
       config.itemProperties.tintColor = .green
       config.itemProperties.selectedTintColor = .white
       config.itemProperties.isTitleHidden = true
-      config.itemProperties.badgeColor = .blue
-      config.itemProperties.badgeTextColor = .red
-      config.itemProperties.badgeTextFont = .systemFont(ofSize: 34)
+      let testAppearance = MDCBadgeAppearance()
+      testAppearance.backgroundColor = .blue
+      testAppearance.textColor = .red
+      testAppearance.font = .systemFont(ofSize: 34)
+      config.itemProperties.badgeAppearance = testAppearance
       navigationRail.configuration = config
 
       // Then
       XCTAssertTrue(navigationRail.isMenuButtonVisible)
       XCTAssertTrue(navigationRail.isFloatingActionButtonVisible)
-      XCTAssertEqual(navigationRail.fabButton.tintColor, .green)
-      XCTAssertEqual(navigationRail.fabButton.backgroundColor, .yellow)
       XCTAssertEqual(navigationRail.fabButton.image(for: .normal), .init(systemName: "heart"))
       XCTAssertEqual(navigationRail.itemsAlignment, .bottom)
       let firstItem =
