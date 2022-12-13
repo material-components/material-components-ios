@@ -73,11 +73,11 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
 @end
 
-@interface M3CButtonTests : XCTestCase
+@interface M3CButtonUIControlStatePropertyTests : XCTestCase
 @property(nonatomic, strong, nullable) M3CButton *button;
 @end
 
-@implementation M3CButtonTests
+@implementation M3CButtonUIControlStatePropertyTests
 
 - (void)setUp {
   [super setUp];
