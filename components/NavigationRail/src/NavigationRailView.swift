@@ -41,6 +41,9 @@ public enum NavigationRailItemAlignment: Int {
 /// needs of your interface. Tapping an item selects and highlights that item, and you use the
 /// selection of the item to enable the corresponding mode for your app.
 public class NavigationRailView: UIView {
+  private let menuFabStackTopMargin = 46.0
+  private let menuFabSpacing = 16.0
+  private let itemSpacing = 4.0
 
   /// The navigation rail’s delegate object.
   ///
@@ -78,7 +81,7 @@ public class NavigationRailView: UIView {
       cancellables.forEach { $0.cancel() }
       items?.forEach { item in
         let itemView = NavigationRailItemView(item: item)
-        itemView.hideLabel = isTextHidden
+        itemView.hideLabel = isTextHidden || (itemView.label.text?.isEmpty ?? false)
         itemView.addTarget(self, action: #selector(itemTapped(sender:)), for: .touchUpInside)
         itemsStackView.addArrangedSubview(itemView)
         publisherAndSinkWithSetNeedsLayout(for: \.title, tabBarItem: item) {
@@ -196,12 +199,15 @@ public class NavigationRailView: UIView {
   lazy private var topButtonsStackView: UIStackView = {
     let stack = UIStackView()
     stack.axis = .vertical
-    stack.spacing = 22.0
+    stack.spacing = menuFabSpacing
     stack.alignment = .center
     stack.distribution = .fillProportionally
     stack.translatesAutoresizingMaskIntoConstraints = false
     addSubview(stack)
-    stack.topAnchor.constraint(equalTo: self.topAnchor, constant: 38).isActive = true  // 38
+    stack.topAnchor.constraint(
+      equalTo: self.topAnchor,
+      constant: menuFabStackTopMargin
+    ).isActive = true
     stack.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
     stack.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
     return stack
@@ -210,7 +216,7 @@ public class NavigationRailView: UIView {
   lazy internal var itemsStackView: UIStackView = {
     let stack = UIStackView()
     stack.axis = .vertical
-    stack.spacing = 12.0
+    stack.spacing = itemSpacing
     stack.alignment = .center
     stack.distribution = .fillProportionally
     stack.translatesAutoresizingMaskIntoConstraints = false
@@ -277,7 +283,7 @@ public class NavigationRailView: UIView {
         itemView.setTitleColor(itemProperties.selectedTitleColor, for: .selected)
         itemView.setImageTintColor(itemProperties.tintColor, for: .normal)
         itemView.setImageTintColor(itemProperties.selectedTintColor, for: .selected)
-        itemView.hideLabel = itemProperties.isTitleHidden
+        itemView.hideLabel = itemProperties.isTitleHidden || (itemView.labelText?.isEmpty ?? false)
         itemView.badge.appearance = itemProperties.badgeAppearance
         itemView.activeIndicator.backgroundColor = itemProperties.selectionIndicatorColor
       }

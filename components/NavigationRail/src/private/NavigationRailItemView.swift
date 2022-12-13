@@ -21,10 +21,13 @@ public class NavigationRailItemView: UIControl {
 
   weak var item: UITabBarItem?
 
-  private let itemViewTitleFontSize: CGFloat = 12
   private let badgeSizeNormal = CGSize(width: 16, height: 16)
   private let badgeCornerRadiusNormal: CGFloat = 8
+  private let iconSizeDimension: CGFloat = 14
   private let itemSpacing: CGFloat = 4
+  private let itemViewTitleFontSize: CGFloat = 12
+  private let activeIndicatorSizeWithLabel: CGFloat = 32
+  private let activeIndicatorSizeWithoutLabel: CGFloat = 56
 
   private var titleColors = [UIControl.State.RawValue: UIColor]()
 
@@ -45,7 +48,7 @@ public class NavigationRailItemView: UIControl {
   var hideLabel: Bool {
     didSet {
       label.isHidden = hideLabel
-      activeIndicator.frame.size.height = hideLabel ? 56 : 32
+      activeIndicator.frame.size.height = indicatorHeight
     }
   }
 
@@ -62,6 +65,10 @@ public class NavigationRailItemView: UIControl {
     imageView.clipsToBounds = true
     return imageView
   }()
+
+  private var indicatorHeight: CGFloat {
+    return hideLabel ? activeIndicatorSizeWithoutLabel : activeIndicatorSizeWithLabel
+  }
 
   let label: UILabel = {
     let label = UILabel()
@@ -95,7 +102,6 @@ public class NavigationRailItemView: UIControl {
   }()
 
   lazy var activeIndicator: UIView = {
-    let indicatorHeight: CGFloat = hideLabel ? 56 : 32
     let view = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: indicatorHeight))
     view.layer.cornerRadius = indicatorHeight / 2
     view.center = imageView.center
@@ -119,6 +125,8 @@ public class NavigationRailItemView: UIControl {
     self.translatesAutoresizingMaskIntoConstraints = false
     self.heightAnchor.constraint(equalToConstant: 56).isActive = true
 
+    imageView.heightAnchor.constraint(equalToConstant: iconSizeDimension).isActive = true
+
     label.textAlignment = .center
     label.font = UIFont.systemFont(ofSize: itemViewTitleFontSize)
 
@@ -126,6 +134,7 @@ public class NavigationRailItemView: UIControl {
     stackView.addArrangedSubview(label)
 
     stackView.addSubview(badge)
+    imageView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
     badge.layer.cornerRadius = badgeCornerRadiusNormal
     badge.translatesAutoresizingMaskIntoConstraints = false
 
@@ -217,19 +226,18 @@ public class NavigationRailItemView: UIControl {
   private func animateActiveIndicator(selected: Bool, animated: Bool = true) {
     CATransaction.begin()
     CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(controlPoints: 0.2, 0, 0, 1))
-    let indicatorHeight: CGFloat = hideLabel ? 56 : 32
-
     if selected {
-      UIView.animate(withDuration: animated ? 0.5 : 0) {
-        self.activeIndicator.frame = CGRect(
-          x: self.imageView.center.x - 28, y: self.imageView.center.y - indicatorHeight / 2,
-          width: 56, height: indicatorHeight)
-      }
-    } else {
       UIView.animate(withDuration: animated ? 0.1 : 0) {
         self.activeIndicator.frame = CGRect(
-          x: self.imageView.center.x, y: self.imageView.center.y - indicatorHeight / 2, width: 0,
-          height: indicatorHeight)
+          x: self.imageView.center.x - 28, y: self.imageView.center.y - self.indicatorHeight / 2,
+          width: 56, height: self.indicatorHeight)
+      }
+    } else {
+      UIView.animate(withDuration: animated ? 0.0333 : 0) {
+        self.activeIndicator.frame = CGRect(
+          x: self.imageView.center.x, y: self.imageView.center.y - self.indicatorHeight / 2,
+          width: 0,
+          height: self.indicatorHeight)
       }
     }
     CATransaction.commit()
