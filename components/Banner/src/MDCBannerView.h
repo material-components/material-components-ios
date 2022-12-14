@@ -14,9 +14,12 @@
 
 #import "MDCMinimumOS.h"  // IWYU pragma: keep
 
-#import <MaterialComponents/MaterialButtons.h>
-#import <MaterialComponents/MaterialElevation.h>
 #import <UIKit/UIKit.h>
+#import "MaterialButtons.h"  // ComponentImport
+#import "MaterialElevation.h"  // ComponentImport
+#import "M3CButton.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 /**
  @c MDCBannerViewLayoutStyle specifies the layout style of an MDCBannerView.
@@ -87,6 +90,27 @@ __attribute__((objc_subclassing_restricted)) @interface MDCBannerView
 #pragma clang diagnostic pop
 
 /**
+ A leading button that displays on a @c MDCBannerView.
+ This @c leadingButton is displayed on the leading edge of the view. If it does
+ not fit on the same row as @c trailingButton, it will be placed above
+ @c trailingButton. While nonnull, these buttons are only added to the view when
+ you use 'initForM3'.
+ */
+@property(nonatomic, readonly, strong, nonnull) M3CButton *leadingM3CButton;
+
+/**
+ A trailing button that displays on a @c MDCBannerView.
+ This @c trailingButton is displayed on the trailing edge of the view. If it
+ does not fit on the same row as @c leadingButton, it will be placed shows below
+ @c leadingButton.
+
+ Set @c hidden to @c YES on @c trailingButton if only one button is desired on
+ @c MDCBannerView. While nonnull, these buttons are only added to the view when
+ you use 'initForM3'.
+ */
+@property(nonatomic, readonly, strong, nonnull) M3CButton *trailingM3CButton;
+
+/**
  A Boolean value that controls whether the divider of the banner is visible.
 
  The default value is @c NO.
@@ -116,4 +140,22 @@ __attribute__((objc_subclassing_restricted)) @interface MDCBannerView
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
     (MDCBannerView *_Nonnull bannerView, UITraitCollection *_Nullable previousTraitCollection);
 
+/**
+ This flag is set when `M3CButton` is used instead of `MDCButton`. This flag
+ will be eventually removed when `MDCButton` is deleted.
+
+ Defaults to NO.
+ */
+@property(nonatomic, readonly) BOOL isM3CButtonEnabled;
+
+/** Initializes the @c MDCBannerView to be compatible with M3. This
+ * means using @c M3CButton instead of @c MDCButton for @c leadingButton and
+ * @c trailingButton.
+ * This method should be deleted once MDCButton usage for @c MDCBannerView is
+ * removed.
+ */
+- (instancetype)initForM3;
+
 @end
+
+NS_ASSUME_NONNULL_END
