@@ -14,15 +14,21 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCActionSheetHeaderView.h"
-#import "../../src/private/MDCActionSheetItemTableViewCell.h"
-#import "MaterialActionSheet.h"
-#import "MaterialActionSheet+Theming.h"
-#import "MaterialAvailability.h"
-#import "MaterialShadowElevations.h"
-#import "MaterialColorScheme.h"
-#import "MaterialContainerScheme.h"
-#import "MaterialTypographyScheme.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCActionSheetHeaderView.h"
+#import "MDCActionSheetItemTableViewCell.h"
+#pragma clang diagnostic pop
+#import "MDCActionSheetAction.h"
+#import "MDCActionSheetController.h"
+#import "MDCActionSheetController+MaterialTheming.h"
+#import "MDCAvailability.h"
+#import "MDCShadowElevations.h"
+#import "MDCSemanticColorScheme.h"
+#import "MDCContainerScheme.h"
+#import "MDCTypographyScheme.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 static const CGFloat kHighAlpha = (CGFloat)0.87;
 static const CGFloat kMediumAlpha = (CGFloat)0.6;
@@ -44,9 +50,9 @@ static const CGFloat kMediumAlpha = (CGFloat)0.6;
 @end
 
 @interface MDCActionSheetControllerThemingTests : XCTestCase
-@property(nonatomic, strong) MDCActionSheetController *actionSheet;
-@property(nonatomic, strong) MDCSemanticColorScheme *colorScheme;
-@property(nonatomic, strong) MDCContainerScheme *containerScheme;
+@property(nonatomic, strong, nullable) MDCActionSheetController *actionSheet;
+@property(nonatomic, strong, nullable) MDCSemanticColorScheme *colorScheme;
+@property(nonatomic, strong, nullable) MDCContainerScheme *containerScheme;
 @end
 
 @implementation MDCActionSheetControllerThemingTests
@@ -165,3 +171,5 @@ static const CGFloat kMediumAlpha = (CGFloat)0.6;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

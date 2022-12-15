@@ -14,11 +14,19 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCActionSheetHeaderView.h"
-#import "MaterialActionSheet.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCActionSheetHeaderView.h"
+#pragma clang diagnostic pop
+#import "MDCActionSheetAction.h"
+#import "MDCActionSheetController.h"
 #import "ActionSheetTestHelpers.h"
-#import "MaterialBottomSheet.h"
-#import "MaterialShadowElevations.h"
+#import "MDCBottomSheetPresentationController.h"
+#import "MDCBottomSheetTransitionController.h"
+#import "UIViewController+MaterialBottomSheet.h"
+#import "MDCShadowElevations.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 static const CGFloat kSafeAreaAmount = 20;
 static const CGFloat kDefaultDividerOpacity = (CGFloat)0.12;
@@ -33,7 +41,7 @@ static const CGFloat kDefaultDividerOpacity = (CGFloat)0.12;
 @end
 
 @interface MDCActionSheetControllerTests : XCTestCase
-@property(nonatomic, strong) MDCActionSheetController *actionSheet;
+@property(nonatomic, strong, nullable) MDCActionSheetController *actionSheet;
 @end
 
 @interface MDCFakeView : UIView
@@ -282,8 +290,8 @@ static const CGFloat kDefaultDividerOpacity = (CGFloat)0.12;
 #pragma mark - Opening height
 
 - (CGRect)setUpActionSheetWithHeight:(CGFloat)height
-                            andTitle:(NSString *)title
-                          andMessage:(NSString *)message {
+                            andTitle:(nullable NSString *)title
+                          andMessage:(nullable NSString *)message {
   // Given
   CGRect viewRect = CGRectMake(0, 0, 200, height);
   self.actionSheet.view.bounds = viewRect;
@@ -624,3 +632,5 @@ static const CGFloat kDefaultDividerOpacity = (CGFloat)0.12;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

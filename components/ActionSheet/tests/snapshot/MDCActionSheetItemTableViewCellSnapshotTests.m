@@ -12,10 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialSnapshot.h"
+#import "MDCActionSheetAction.h"
 
-#import "../../src/private/MDCActionSheetItemTableViewCell.h"
-#import "MaterialActionSheet.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCActionSheetItemTableViewCell.h"
+#import "MDCSnapshotTestCase.h"
+#import "UIImage+MDCSnapshot.h"
+#import "UIView+MDCSnapshot.h"
+#pragma clang diagnostic pop
+
+NS_ASSUME_NONNULL_BEGIN
 
 /** Snapshot tests for @c MDCActionSheetItemTableViewCell. */
 @interface MDCActionSheetItemTableViewCellSnapshotTests : MDCSnapshotTestCase
@@ -125,3 +132,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

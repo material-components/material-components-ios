@@ -14,9 +14,15 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCActionSheetItemTableViewCell.h"
-#import "MaterialActionSheet.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCActionSheetItemTableViewCell.h"
+#pragma clang diagnostic pop
+#import "MDCActionSheetAction.h"
+#import "MDCActionSheetController.h"
 #import "ActionSheetTestHelpers.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface MDCActionSheetItemTableViewCell (Testing)
 @property(nonatomic, strong) UILabel *actionLabel;
@@ -24,7 +30,7 @@
 @end
 
 @interface MDCActionSheetItemTableViewCellTests : XCTestCase
-@property(nonatomic, strong) MDCActionSheetController *actionSheet;
+@property(nonatomic, strong, nullable) MDCActionSheetController *actionSheet;
 @end
 
 @implementation MDCActionSheetItemTableViewCellTests
@@ -375,3 +381,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

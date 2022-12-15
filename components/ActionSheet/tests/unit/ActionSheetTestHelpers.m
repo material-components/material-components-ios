@@ -16,8 +16,14 @@
 
 #import <CoreImage/CoreImage.h>
 
-#import "../../src/private/MDCActionSheetItemTableViewCell.h"
-#import "MaterialActionSheet.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCActionSheetItemTableViewCell.h"
+#pragma clang diagnostic pop
+#import "MDCActionSheetAction.h"
+#import "MDCActionSheetController.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation ActionSheetTestHelpers
 
@@ -78,3 +84,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

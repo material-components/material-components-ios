@@ -14,10 +14,16 @@
 
 #import <XCTest/XCTest.h>
 
-#import "../../src/private/MDCActionSheetItemTableViewCell.h"
-#import "MaterialActionSheet.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wprivate-header"
+#import "MDCActionSheetItemTableViewCell.h"
+#pragma clang diagnostic pop
+#import "MDCActionSheetController.h"
 #import "ActionSheetTestHelpers.h"
-#import "MaterialRipple.h"
+#import "MDCRippleTouchController.h"
+#import "MDCRippleView.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface MDCActionSheetController (TestingRipple)
 @property(nonatomic, strong) UITableView *tableView;
@@ -84,3 +90,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
