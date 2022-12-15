@@ -22,18 +22,48 @@ public class NavigationRailItemView: UIControl {
   weak var item: UITabBarItem?
 
   private let badgeSizeNormal = CGSize(width: 16, height: 16)
-  private let badgeCornerRadiusNormal: CGFloat = 8
-  private let iconSizeDimension: CGFloat = 14
-  private let itemSpacing: CGFloat = 4
-  private let itemViewTitleFontSize: CGFloat = 12
-  private let activeIndicatorSizeWithLabel: CGFloat = 32
-  private let activeIndicatorSizeWithoutLabel: CGFloat = 56
+  private let badgeCornerRadiusNormal = 8.0
+  private let iconSizeDimension = 14.0
+  private let itemHeight = 56.0
+  private let itemLabelBottomPadding = 4.0
+  private let itemViewTitleFontSize = 12.0
 
   private var titleColors = [UIControl.State.RawValue: UIColor]()
 
   private var imageTintColors = [UIControl.State.RawValue: UIColor]()
 
   private var images = [UIControl.State.RawValue: UIImage]()
+
+  private let imageView: UIImageView = {
+    let imageView = UIImageView()
+    imageView.contentMode = .scaleAspectFit
+    imageView.clipsToBounds = true
+    return imageView
+  }()
+
+  private let containerView = UIView()
+
+  public let badge: MDCBadgeView = MDCBadgeView()
+
+  public var badgeText: String? {
+    didSet {
+      badge.isHidden = badgeText == nil
+      badge.text = badgeText
+    }
+  }
+
+  private var _selectionIndicatorSize = CGSize(width: 56, height: 32)
+  public var selectionIndicatorSize: CGSize {
+    set {
+      _selectionIndicatorSize = newValue
+    }
+    get {
+      if hideLabel {
+        return CGSize(width: _selectionIndicatorSize.width, height: frame.size.height)
+      }
+      return _selectionIndicatorSize
+    }
+  }
 
   public override var isSelected: Bool {
     didSet {
@@ -45,70 +75,20 @@ public class NavigationRailItemView: UIControl {
     }
   }
 
-  var hideLabel: Bool {
+  public var hideLabel: Bool {
     didSet {
       label.isHidden = hideLabel
-      activeIndicator.frame.size.height = indicatorHeight
+      activeIndicator.frame.size.height = selectionIndicatorSize.height
     }
   }
 
-  private let iconImageView: UIImageView = {
-    let imageView = UIImageView()
-    imageView.contentMode = .scaleAspectFit
-    imageView.clipsToBounds = true
-    return imageView
-  }()
-
-  private let imageView: UIImageView = {
-    let imageView = UIImageView()
-    imageView.contentMode = .scaleAspectFit
-    imageView.clipsToBounds = true
-    return imageView
-  }()
-
-  private var indicatorHeight: CGFloat {
-    return hideLabel ? activeIndicatorSizeWithoutLabel : activeIndicatorSizeWithLabel
-  }
-
-  let label: UILabel = {
+  public let label: UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     return label
   }()
 
-  let badge: MDCBadgeView = MDCBadgeView()
-
-  var badgeText: String? {
-    didSet {
-      badge.isHidden = badgeText == nil
-      badge.text = badgeText
-    }
-  }
-
-  private lazy var stackView: UIStackView = {
-    let stack = UIStackView()
-    stack.axis = .vertical
-    stack.spacing = itemSpacing
-    stack.alignment = .center
-    stack.distribution = .fillProportionally
-    stack.translatesAutoresizingMaskIntoConstraints = false
-    addSubview(stack)
-    stack.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-    stack.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-    stack.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-    stack.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-    stack.isUserInteractionEnabled = false
-    return stack
-  }()
-
-  lazy var activeIndicator: UIView = {
-    let view = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: indicatorHeight))
-    view.layer.cornerRadius = indicatorHeight / 2
-    view.center = imageView.center
-    view.isUserInteractionEnabled = false
-    insertSubview(view, at: 0)
-    return view
-  }()
+  lazy var activeIndicator = UIView()
 
   var labelText: String? {
     didSet {
@@ -120,26 +100,46 @@ public class NavigationRailItemView: UIControl {
 
   override init(frame: CGRect) {
     hideLabel = false
-    super.init(frame: .zero)
+    super.init(frame: frame)
 
     self.translatesAutoresizingMaskIntoConstraints = false
-    self.heightAnchor.constraint(equalToConstant: 56).isActive = true
-
-    imageView.heightAnchor.constraint(equalToConstant: iconSizeDimension).isActive = true
+    self.heightAnchor.constraint(equalToConstant: itemHeight).isActive = true
 
     label.textAlignment = .center
     label.font = UIFont.systemFont(ofSize: itemViewTitleFontSize)
+    activeIndicator.isUserInteractionEnabled = false
 
-    stackView.addArrangedSubview(imageView)
-    stackView.addArrangedSubview(label)
+    containerView.isUserInteractionEnabled = false
+    containerView.translatesAutoresizingMaskIntoConstraints = false
+    addSubview(containerView)
+    containerView.addSubview(activeIndicator)
+    containerView.addSubview(imageView)
+    containerView.addSubview(label)
+    containerView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+    containerView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+    containerView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+    containerView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
 
-    stackView.addSubview(badge)
-    imageView.widthAnchor.constraint(equalTo: stackView.widthAnchor).isActive = true
+    activeIndicator.alpha = 0
+
+    label.bottomAnchor.constraint(
+      equalTo: containerView.bottomAnchor, constant: -itemLabelBottomPadding
+    ).isActive = true
+    label.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
+
+    imageView.translatesAutoresizingMaskIntoConstraints = false
+    imageView.heightAnchor.constraint(equalToConstant: iconSizeDimension).isActive = true
+    imageView.centerXAnchor.constraint(equalTo: activeIndicator.centerXAnchor).isActive = true
+    imageView.centerYAnchor.constraint(equalTo: activeIndicator.centerYAnchor).isActive = true
+    containerView.addSubview(badge)
+
     badge.layer.cornerRadius = badgeCornerRadiusNormal
     badge.translatesAutoresizingMaskIntoConstraints = false
 
     let badgeOffsetY = -badgeSizeNormal.height / 2
-    badge.centerXAnchor.constraint(equalTo: imageView.trailingAnchor).isActive = true
+    let badgeOffsetX = -badgeSizeNormal.width / 2
+    badge.centerXAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -badgeOffsetX)
+      .isActive = true
     badge.centerYAnchor.constraint(equalTo: imageView.centerYAnchor, constant: badgeOffsetY)
       .isActive = true
   }
@@ -159,26 +159,20 @@ public class NavigationRailItemView: UIControl {
     fatalError("init(coder:) has not been implemented")
   }
 
+  private func selectionIndicatorFrame() -> CGRect {
+    let x = floor(CGRectGetMidX(bounds))
+    return CGRect(
+      x: x - selectionIndicatorSize.width * 0.5, y: 0,
+      width: selectionIndicatorSize.width,
+      height: selectionIndicatorSize.height)
+  }
+
   public override func layoutSubviews() {
     super.layoutSubviews()
-
-    guard let item = item else { return }
-    labelText = item.title
-    setItemImage(item.image, for: .normal)
-    setItemImage(item.selectedImage, for: .selected)
-    accessibilityValue = item.accessibilityValue
-    accessibilityHint = item.accessibilityHint
-    isAccessibilityElement = item.isAccessibilityElement
-    tag = item.tag
-    if let badgeColor = item.badgeColor {
-      badge.backgroundColor = badgeColor
-    }
-    badge.text = item.badgeValue
-    badge.isHidden = badge.text == nil
-    badge.sizeToFit()
-    accessibilityLabel = item.accessibilityLabel
-    accessibilityIdentifier = item.accessibilityIdentifier
-    activeIndicator.center = imageView.center
+    activeIndicator.frame = selectionIndicatorFrame()
+    activeIndicator.layer.cornerRadius =
+      min(_selectionIndicatorSize.height, _selectionIndicatorSize.width) / 2
+    imageView.frame.size = CGSize(width: containerView.frame.size.width, height: iconSizeDimension)
   }
 
   func setItemImage(_ image: UIImage?, for state: UIControl.State) {
@@ -220,24 +214,20 @@ public class NavigationRailItemView: UIControl {
   func select(isSelected: Bool, animated: Bool = false) {
     guard self.isSelected != isSelected else { return }
     self.isSelected = isSelected
+
     animateActiveIndicator(selected: isSelected, animated: animated)
   }
 
   private func animateActiveIndicator(selected: Bool, animated: Bool = true) {
     CATransaction.begin()
     CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(controlPoints: 0.2, 0, 0, 1))
-    if selected {
-      UIView.animate(withDuration: animated ? 0.1 : 0) {
-        self.activeIndicator.frame = CGRect(
-          x: self.imageView.center.x - 28, y: self.imageView.center.y - self.indicatorHeight / 2,
-          width: 56, height: self.indicatorHeight)
-      }
-    } else {
-      UIView.animate(withDuration: animated ? 0.0333 : 0) {
-        self.activeIndicator.frame = CGRect(
-          x: self.imageView.center.x, y: self.imageView.center.y - self.indicatorHeight / 2,
-          width: 0,
-          height: self.indicatorHeight)
+    UIView.animate(withDuration: animated ? 0.1 : 0) {
+      if selected {
+        self.activeIndicator.transform = CGAffineTransformIdentity
+        self.activeIndicator.alpha = 1.0
+      } else {
+        self.activeIndicator.transform = CGAffineTransformMakeScale(0.25, 1)
+        self.activeIndicator.alpha = 0
       }
     }
     CATransaction.commit()

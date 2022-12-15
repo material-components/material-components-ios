@@ -44,6 +44,7 @@ public class NavigationRailView: UIView {
   private let menuFabStackTopMargin = 46.0
   private let menuFabSpacing = 16.0
   private let itemSpacing = 4.0
+  private let itemsStackViewHorizontalPadding = 5.0
 
   /// The navigation rail’s delegate object.
   ///
@@ -54,6 +55,22 @@ public class NavigationRailView: UIView {
   @objc public var configuration: NavigationRailConfiguration? = nil {
     didSet {
       applyDefaultConfiguration(configuration: configuration)
+    }
+  }
+
+  /// The size of the selection indicator.
+  ///
+  /// Defaults to (56, 32)
+  @objc public var selectionIndicatorSize: CGSize = CGSize(width: 56, height: 32) {
+    didSet {
+      guard selectionIndicatorSize != oldValue else {
+        return
+      }
+      itemsStackView.arrangedSubviews.forEach {
+        if let itemView = $0 as? NavigationRailItemView {
+          itemView.selectionIndicatorSize = selectionIndicatorSize
+        }
+      }
     }
   }
 
@@ -84,6 +101,8 @@ public class NavigationRailView: UIView {
         itemView.hideLabel = isTextHidden || (itemView.label.text?.isEmpty ?? false)
         itemView.addTarget(self, action: #selector(itemTapped(sender:)), for: .touchUpInside)
         itemsStackView.addArrangedSubview(itemView)
+        itemView.leadingAnchor.constraint(equalTo: itemsStackView.leadingAnchor).isActive = true
+        itemView.trailingAnchor.constraint(equalTo: itemsStackView.trailingAnchor).isActive = true
         publisherAndSinkWithSetNeedsLayout(for: \.title, tabBarItem: item) {
           itemView.labelText = $0
         }.store(in: &cancellables)
@@ -221,8 +240,12 @@ public class NavigationRailView: UIView {
     stack.distribution = .fillProportionally
     stack.translatesAutoresizingMaskIntoConstraints = false
     addSubview(stack)
-    stack.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-    stack.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+    stack.leadingAnchor.constraint(
+      equalTo: self.leadingAnchor, constant: itemsStackViewHorizontalPadding
+    ).isActive = true
+    stack.trailingAnchor.constraint(
+      equalTo: self.trailingAnchor, constant: -itemsStackViewHorizontalPadding
+    ).isActive = true
     itemStackViewAlignmentConstraints.append(
       stack.centerYAnchor.constraint(equalTo: self.centerYAnchor))
     itemStackViewAlignmentConstraints.forEach { $0.isActive = true }

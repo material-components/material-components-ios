@@ -58,6 +58,18 @@ public class NavigationRailViewController: UIViewController {
     }
   }
 
+  /// The size of the selection indicator.
+  ///
+  /// Defaults to (56, 32)
+  @objc public var selectionIndicatorSize: CGSize = CGSize(width: 56, height: 32) {
+    didSet {
+      guard selectionIndicatorSize != oldValue else {
+        return
+      }
+      navigationRail.selectionIndicatorSize = selectionIndicatorSize
+    }
+  }
+
   /// The view controller associated with the currently selected item.
   @objc public var selectedViewController: UIViewController? {
     didSet {
@@ -181,7 +193,7 @@ public class NavigationRailViewController: UIViewController {
     onscreenConstraints.append(navigationRail.bottomAnchor.constraint(equalTo: view.bottomAnchor))
     onscreenConstraints.append(navigationRail.leadingAnchor.constraint(equalTo: view.leadingAnchor))
     onscreenConstraints.append(
-      navigationRail.trailingAnchor.constraint(equalTo: contentView.leadingAnchor))
+      contentView.leadingAnchor.constraint(equalTo: navigationRail.trailingAnchor))
     onscreenConstraints.append(contentView.topAnchor.constraint(equalTo: view.topAnchor))
     onscreenConstraints.append(contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor))
     onscreenConstraints.append(contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor))
