@@ -55,6 +55,8 @@ public class NavigationRailConfiguration: NSObject {
       self.selectionIndicatorColor = selectionIndicatorColor
     }
 
+    // MARK: Item properties
+
     /// The badge appearance of the rail's item.
     @objc public var badgeAppearance: MDCBadgeAppearance
     /// number of lines for the rail's item's title.
@@ -74,6 +76,8 @@ public class NavigationRailConfiguration: NSObject {
     /// The color of the active indicator of the rail's item.
     @objc public var selectionIndicatorColor: UIColor
   }
+
+  // MARK: Navigation rail properties
 
   /// Properties for configuring each of the rail's items.
   @objc public var itemProperties: ItemProperties
