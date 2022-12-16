@@ -191,7 +191,8 @@ public class NavigationRailViewController: UIViewController {
     onscreenConstraints.append(navigationRail.widthAnchor.constraint(equalToConstant: 80))
     onscreenConstraints.append(navigationRail.topAnchor.constraint(equalTo: view.topAnchor))
     onscreenConstraints.append(navigationRail.bottomAnchor.constraint(equalTo: view.bottomAnchor))
-    onscreenConstraints.append(navigationRail.leadingAnchor.constraint(equalTo: view.leadingAnchor))
+    onscreenConstraints.append(
+      navigationRail.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor))
     onscreenConstraints.append(
       contentView.leadingAnchor.constraint(equalTo: navigationRail.trailingAnchor))
     onscreenConstraints.append(contentView.topAnchor.constraint(equalTo: view.topAnchor))
