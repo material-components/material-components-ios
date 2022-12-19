@@ -23,8 +23,8 @@ public class NavigationRailItemView: UIControl {
 
   private let badgeSizeNormal = CGSize(width: 16, height: 16)
   private let badgeCornerRadiusNormal = 8.0
-  private let iconSizeDimension = 14.0
-  private let itemHeight = 56.0
+  private let iconSizeDimension = 15.0
+  private let itemHeight = 65.0
   private let itemLabelBottomPadding = 4.0
   private let itemViewTitleFontSize = 12.0
 
@@ -122,8 +122,8 @@ public class NavigationRailItemView: UIControl {
 
     activeIndicator.alpha = 0
 
-    label.bottomAnchor.constraint(
-      equalTo: containerView.bottomAnchor, constant: -itemLabelBottomPadding
+    label.topAnchor.constraint(
+      equalTo: activeIndicator.bottomAnchor, constant: itemLabelBottomPadding
     ).isActive = true
     label.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
 
