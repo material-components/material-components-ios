@@ -15,6 +15,7 @@
 #import <XCTest/XCTest.h>
 
 #import "M3CButton.h"
+#import "MDCShadow.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -70,8 +71,17 @@ static NSString *controlStateDescription(UIControlState controlState) {
 
 - (nullable UIColor *)backgroundColorForState:(UIControlState)state;
 - (nullable UIColor *)borderColorForState:(UIControlState)state;
+- (nullable MDCShadow *)shadowForState:(UIControlState)state;
 - (nullable UIColor *)tintColorForState:(UIControlState)state;
 
+@end
+
+@interface MDCShadow (testing)
+- (instancetype)initWithColor:(UIColor *)color
+                      opacity:(CGFloat)opacity
+                       radius:(CGFloat)radius
+                       offset:(CGSize)offset
+                       spread:(CGFloat)spread;
 @end
 
 @interface M3CButtonUIControlStatePropertyTests : XCTestCase
@@ -90,6 +100,23 @@ static NSString *controlStateDescription(UIControlState controlState) {
   self.button = nil;
 
   [super tearDown];
+}
+
+- (void)testShadowColorForState {
+  for (NSUInteger state = 0; state <= kNumUIControlStates; ++state) {
+    // Given
+    MDCShadow *shadow = [[MDCShadow alloc] initWithColor:randomColor()
+                                                 opacity:10
+                                                  radius:10
+                                                  offset:CGSizeZero
+                                                  spread:10];
+    // When
+    [self.button setShadow:shadow forState:state];
+
+    // Then
+    XCTAssertEqualObjects([self.button shadowForState:state], shadow, @"for control state:%@ ",
+                          controlStateDescription(state));
+  }
 }
 
 - (void)testBorderColorForState {
