@@ -448,7 +448,25 @@ NS_ASSUME_NONNULL_BEGIN
   self.attributedAlert.messageAccessibilityLabel = nil;
 
   // Then
-  XCTAssertEqualObjects(view.messageTextView.accessibilityLabel, message.string);
+  XCTAssertNotEqualObjects(view.messageTextView.accessibilityValue, @"");
+  XCTAssertEqualObjects(view.messageTextView.accessibilityLabel, message.accessibilityLabel);
+}
+
+- (void)testAlertControllerMessageAccessibilityLabelWhenAttributedMessageWithLinkIsSet {
+  // Given
+  NSURL *URL = [NSURL URLWithString:@"https://google.com:"];
+  NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Foo. "
+                                                                attributes:@{
+                                                                  NSLinkAttributeName : URL,
+                                                                }];
+  // When
+  self.attributedAlert.attributedMessage = message;
+  MDCAlertControllerView *view = (MDCAlertControllerView *)self.attributedAlert.view;
+  self.attributedAlert.messageAccessibilityLabel = nil;
+
+  // Then
+  XCTAssertNotEqualObjects(view.messageTextView.accessibilityValue, @"");
+  XCTAssertEqualObjects(view.messageTextView.accessibilityLabel, message.accessibilityLabel);
 }
 
 - (void)testAlertControllerSetTitleAccessibilityLabelWhenTitleIsSetWhenViewIsNotLoaded {

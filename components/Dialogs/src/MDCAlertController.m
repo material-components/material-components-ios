@@ -812,12 +812,19 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
   self.alertView.titleLabel.accessibilityLabel = self.titleAccessibilityLabel ?: self.title;
   self.alertView.messageTextView.accessibilityLabel =
-      self.messageAccessibilityLabel ?: self.message ?: self.attributedMessage.string;
+      self.messageAccessibilityLabel ?: self.message;
   // Set messageTextView's accessibilityValue to the empty string to resolve b/158732017.
-  // MessageTextView acts as a label and should not have an accessibilityValue.
-  // Setting the accessibilityValue to nil causes VoiceOver to use the default value, which is the
-  // text of the message, so the value must be set to the empty string instead.
-  self.alertView.messageTextView.accessibilityValue = @"";
+  // For a plain string, the MessageTextView acts as a label and should not have an
+  // accessibilityValue. Setting the accessibilityValue to nil causes VoiceOver to use the default
+  // value, which is the text of the message, so the value must be set to the empty string instead.
+  // This is not the case for attributed strings as disabling the accessibilityValue will not call
+  // out attribute traits, e.g (embedded links).
+  if ([self shouldUseAttributedStringForMessageA11Y]) {
+    self.alertView.messageTextView.accessibilityLabel = self.attributedMessage.accessibilityLabel;
+  } else {
+    self.alertView.messageTextView.accessibilityValue = @"";
+  }
+
   self.alertView.messageTextView.delegate = self;
 
   self.alertView.titleIconImageView.accessibilityLabel = self.imageAccessibilityLabel;
@@ -903,6 +910,16 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
     return YES;
   }
   return NO;
+}
+
+#pragma mark - Private
+
+/// Returns YES if the attributed message should be used as an accessibility label of the alert
+/// message.
+/// This happens when the attributed message was explicitly provided without a custom accessibility
+/// label.
+- (BOOL)shouldUseAttributedStringForMessageA11Y {
+  return !(self.messageAccessibilityLabel || self.message) && self.attributedMessage;
 }
 
 @end
