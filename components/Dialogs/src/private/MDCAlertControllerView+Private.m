@@ -287,6 +287,10 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
 
   if (self.titleIconImageView == nil) {
     self.titleIconImageView = [[UIImageView alloc] initWithImage:titleIcon];
+    self.titleIconImageView.adjustsImageSizeForAccessibilityContentSizeCategory = YES;
+    UIFont *titleFont = _titleFont ?: self.titleLabel.font;
+    self.titleIconImageView.preferredSymbolConfiguration =
+        [UIImageSymbolConfiguration configurationWithFont:titleFont];
     self.titleIconImageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.titleView addSubview:self.titleIconImageView];
   } else {
@@ -712,16 +716,6 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   return CGSizeZero;
 }
 
-// Returns the size of the title view or the original size of the title icon image.
-- (CGSize)titleIconImageSize {
-  if (self.titleIconView != nil) {
-    return self.titleIconView.frame.size;
-  } else if (self.titleIcon != nil) {
-    return self.titleIcon.size;
-  }
-  return CGSizeZero;
-}
-
 - (CGRect)titleFrameWithTitleSize:(CGSize)titleSize {
   CGFloat leftInset = self.titleInsets.left;
   CGFloat titleTop =
@@ -747,7 +741,11 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
  @param boundsSize is the total bounds without any internal margins or padding.
 */
 - (CGRect)titleIconFrameWithTitleSize:(CGSize)titleSize boundsSize:(CGSize)boundsSize {
-  CGSize titleIconViewSize = [self titleIconImageSize];
+  CGSize titleIconViewSize = [self.titleIconImageView sizeThatFits:CGSizeZero];
+  if (self.titleIconView != nil) {
+    // If titileIconsView is set, use its frame.
+    titleIconViewSize = self.titleIconView.frame.size;
+  }
   CGFloat leftInset = self.titleIconInsets.left;
   CGFloat topInset = self.titleIconInsets.top;
   CGFloat titleIconHeight = titleIconViewSize.height;
