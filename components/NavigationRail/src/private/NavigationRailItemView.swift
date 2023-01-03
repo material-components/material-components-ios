@@ -23,7 +23,7 @@ public class NavigationRailItemView: UIControl {
 
   private let badgeSizeNormal = CGSize(width: 16, height: 16)
   private let badgeCornerRadiusNormal = 8.0
-  private let iconSizeDimension = 15.0
+  private let iconSizeDimension = 24.0
   private let itemHeight = 65.0
   private let itemLabelBottomPadding = 4.0
   private let itemViewTitleFontSize = 12.0
