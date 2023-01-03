@@ -16,6 +16,10 @@
 
 @class MDCBottomSheetPresentationController;
 
+NS_ASSUME_NONNULL_BEGIN
+
+typedef NS_ENUM(NSUInteger, MDCSheetState);
+
 /**
  Delegate for MDCBottomSheetPresentationController.
  */
@@ -27,8 +31,7 @@
 
  @param bottomSheet The MDCBottomSheetPresentationController being presented.
  */
-- (void)prepareForBottomSheetPresentation:
-    (nonnull MDCBottomSheetPresentationController *)bottomSheet;
+- (void)prepareForBottomSheetPresentation:(MDCBottomSheetPresentationController *)bottomSheet;
 
 /**
  Invoked immediately after @c dismissViewControllerAnimated:completed: is passed to the
@@ -39,7 +42,7 @@
  @param bottomSheet The @c MDCBottomSheetPresentationController that was dismissed.
  */
 - (void)bottomSheetPresentationControllerDidDismissBottomSheet:
-    (nonnull MDCBottomSheetPresentationController *)bottomSheet;
+    (MDCBottomSheetPresentationController *)bottomSheet;
 
 /**
  Informs the delegate that the bottom sheet has completed animating offscreen. As with
@@ -49,7 +52,7 @@
  @param bottomSheet The @c MDCBottomSheetPresentationController that was dismissed.
  */
 - (void)bottomSheetPresentationControllerDismissalAnimationCompleted:
-    (nonnull MDCBottomSheetPresentationController *)bottomSheet;
+    (MDCBottomSheetPresentationController *)bottomSheet;
 
 /**
  Called when the state of the bottom sheet changes.
@@ -59,7 +62,7 @@
  @param bottomSheet The MDCBottomSheetPresentationController that its state changed.
  @param sheetState The state the sheet changed to.
  */
-- (void)bottomSheetWillChangeState:(nonnull MDCBottomSheetPresentationController *)bottomSheet
+- (void)bottomSheetWillChangeState:(MDCBottomSheetPresentationController *)bottomSheet
                         sheetState:(MDCSheetState)sheetState;
 
 /**
@@ -68,6 +71,8 @@
  @param bottomSheet The MDCBottomSheetPresentationController that its Y offset changed.
  @param yOffset The Y offset the bottom sheet changed to.
  */
-- (void)bottomSheetDidChangeYOffset:(nonnull MDCBottomSheetPresentationController *)bottomSheet
+- (void)bottomSheetDidChangeYOffset:(MDCBottomSheetPresentationController *)bottomSheet
                             yOffset:(CGFloat)yOffset;
 @end
+
+NS_ASSUME_NONNULL_END

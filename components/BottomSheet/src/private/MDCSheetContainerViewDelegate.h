@@ -16,12 +16,18 @@
 
 @class MDCSheetContainerView;
 
+typedef NS_ENUM(NSUInteger, MDCSheetState);
+
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol MDCSheetContainerViewDelegate <NSObject>
 
-- (void)sheetContainerViewDidHide:(nonnull MDCSheetContainerView *)containerView;
-- (void)sheetContainerViewWillChangeState:(nonnull MDCSheetContainerView *)containerView
+- (void)sheetContainerViewDidHide:(MDCSheetContainerView *)containerView;
+- (void)sheetContainerViewWillChangeState:(MDCSheetContainerView *)containerView
                                sheetState:(MDCSheetState)sheetState;
-- (void)sheetContainerViewDidChangeYOffset:(nonnull MDCSheetContainerView *)containerView
+- (void)sheetContainerViewDidChangeYOffset:(MDCSheetContainerView *)containerView
                                    yOffset:(CGFloat)yOffset;
 
 @end
+
+NS_ASSUME_NONNULL_END
