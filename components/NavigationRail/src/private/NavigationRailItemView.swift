@@ -129,7 +129,7 @@ public class NavigationRailItemView: UIControl {
 
     imageView.translatesAutoresizingMaskIntoConstraints = false
     imageView.heightAnchor.constraint(equalToConstant: iconSizeDimension).isActive = true
-    imageView.centerXAnchor.constraint(equalTo: activeIndicator.centerXAnchor).isActive = true
+    imageView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor).isActive = true
     imageView.centerYAnchor.constraint(equalTo: activeIndicator.centerYAnchor).isActive = true
     containerView.addSubview(badge)
 

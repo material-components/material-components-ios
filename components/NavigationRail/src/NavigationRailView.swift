@@ -343,6 +343,9 @@ public class NavigationRailView: UIView {
     itemsStackView.arrangedSubviews.forEach {
       if let itemView = $0 as? NavigationRailItemView {
         itemView.select(isSelected: selectedItem == itemView.item, animated: animated)
+        if selectedItem == itemView.item {
+          itemView.setNeedsLayout()
+        }
       }
     }
   }
