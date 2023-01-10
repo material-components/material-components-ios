@@ -335,8 +335,8 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
     preferredSize.width = containerSize.width;
   }
 
-  return CGRectMake(0, MAX(0.0f, containerSize.height - preferredSize.height), preferredSize.height,
-                    preferredSize.width);
+  return CGRectMake(0, MAX(0.0f, containerSize.height - preferredSize.height), preferredSize.width,
+                    preferredSize.height);
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size
