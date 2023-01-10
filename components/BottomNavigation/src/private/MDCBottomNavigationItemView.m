@@ -207,7 +207,6 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
   [self.label sizeToFit];
   [self.iconImageView sizeToFit];
   [_badge sizeToFit];
-  [self centerLayoutAnimated:NO];
   [self invalidatePointerInteractions];
 
   // TODO(b/244765238): Remove branching layout logic after GM3 migrations
@@ -216,6 +215,7 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
     _selectionIndicator.layer.cornerRadius = _selectionIndicator.bounds.size.height / 2;
     _selectionIndicator.hidden = !_showsSelectionIndicator;
   }
+  [self centerLayoutAnimated:NO];
 }
 
 - (void)calculateVerticalLayoutInBounds:(CGRect)contentBounds
@@ -703,6 +703,7 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
 - (void)setTitleBelowIcon:(BOOL)titleBelowIcon {
   _titleBelowIcon = titleBelowIcon;
   self.label.numberOfLines = [self renderedTitleNumberOfLines];
+  [self setNeedsLayout];
 }
 
 #pragma mark - Configuring the selection appearance
