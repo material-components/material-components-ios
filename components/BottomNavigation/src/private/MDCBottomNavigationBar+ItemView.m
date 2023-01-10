@@ -35,6 +35,7 @@
 - (void)configureAppearanceForItemView:(MDCBottomNavigationItemView *)itemView {
   itemView.badgeAppearance = self.itemBadgeAppearance;
   itemView.selectionIndicatorSize = self.selectionIndicatorSize;
+  itemView.showsSelectionIndicator = self.showsSelectionIndicator;
 
   // TODO(b/234850214): Delete once everyone has migrated to itemBadgeAppearance.
   [self configureBadgeForItemViewLegacy:itemView];
