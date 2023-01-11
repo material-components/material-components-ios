@@ -83,6 +83,9 @@ static const CGFloat kMinimumVisibleProportion = 0.25;
 // KVO contexts
 static char *const kKVOContextMDCFlexibleHeaderView = "kKVOContextMDCFlexibleHeaderView";
 
+NSString *_Nonnull const MDCFlexibleHeaderViewAccessibilityIdentifier =
+    @"MDCFlexibleHeaderViewAccessibilityIdentifier";
+
 @interface MDCFlexibleHeaderView () <MDCStatusBarShifterDelegate,
                                      MDCFlexibleHeaderTopSafeAreaDelegate,
                                      MDCFlexibleHeaderMinMaxHeightDelegate>
@@ -261,6 +264,8 @@ static char *const kKVOContextMDCFlexibleHeaderView = "kKVOContextMDCFlexibleHea
 }
 
 - (void)commonMDCFlexibleHeaderViewInit {
+  self.accessibilityIdentifier = MDCFlexibleHeaderViewAccessibilityIdentifier;
+
   _topSafeArea = [[MDCFlexibleHeaderTopSafeArea alloc] init];
   _topSafeArea.topSafeAreaDelegate = self;
 

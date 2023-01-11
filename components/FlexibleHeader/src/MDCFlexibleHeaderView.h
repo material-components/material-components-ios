@@ -21,6 +21,8 @@
 #import "MDCFlexibleHeaderViewDelegate.h"
 #import "MaterialShadowElevations.h"
 
+FOUNDATION_EXPORT NSString *_Nonnull const MDCFlexibleHeaderViewAccessibilityIdentifier;
+
 typedef void (^MDCFlexibleHeaderChangeContentInsetsBlock)(void);
 typedef void (^MDCFlexibleHeaderShadowIntensityChangeBlock)(__kindof CALayer *_Nonnull shadowLayer,
                                                             CGFloat intensity);
