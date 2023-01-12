@@ -22,7 +22,7 @@
 static const NSTimeInterval kDefaultOpacityTransitionDuration = 0.2;
 
 // The default duration of the dialog scale-up or scale-down animation
-static const NSTimeInterval kDefaultScaleTransitionDuration = 0;
+static const NSTimeInterval kDefaultScaleTransitionDuration = 0.2;
 
 // The default starting X and Y scale of the presented dialog
 static const CGFloat kDefaultInitialScaleFactor = 1.0;
@@ -117,10 +117,15 @@ static const CGFloat kDefaultInitialScaleFactor = 1.0;
       presenting
           ? CGAffineTransformMakeScale(self.dialogInitialScaleFactor, self.dialogInitialScaleFactor)
           : CGAffineTransformIdentity;
-  CGAffineTransform endingTransform = CGAffineTransformIdentity;
+  CGAffineTransform endingTransform =
+      presenting ? CGAffineTransformIdentity
+                 : CGAffineTransformMakeScale(self.dialogInitialScaleFactor,
+                                              self.dialogInitialScaleFactor);
   dialogView.transform = startingTransform;
   presentationController.dialogTransform = startingTransform;
-  UIViewAnimationOptions scaleAnimationOptions = options | UIViewAnimationOptionCurveEaseOut;
+  UIViewAnimationOptions defaultAnimationOptions =
+      presenting ? UIViewAnimationOptionCurveEaseOut : UIViewAnimationOptionCurveLinear;
+  UIViewAnimationOptions scaleAnimationOptions = options | defaultAnimationOptions;
   [UIView animateWithDuration:self.scaleAnimationDuration
                         delay:0
                       options:scaleAnimationOptions
