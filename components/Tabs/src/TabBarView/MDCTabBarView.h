@@ -14,7 +14,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialAvailability.h"
+#import "MDCAvailability.h"
 
 @protocol MDCTabBarViewDelegate;
 @protocol MDCTabBarViewIndicatorTemplate;
@@ -85,7 +85,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
 @property(nonnull, nonatomic, copy) UIColor *bottomDividerColor;
 
 /**
- If YES, all ripple behavior will be disabled and a simple highlight effect will be used instead.
+ If YES, all ripple behavior will be disabled.
 
  Default value is NO.
  */
