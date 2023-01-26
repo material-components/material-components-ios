@@ -56,7 +56,7 @@
 @property(class, nonnull, nonatomic, readonly, strong) MDCSnackbarManager *defaultManager;
 
 /**
- Determines the Snackbar alignment to the screen.
+ Determines the Snackbar alignment to the screen horizontally.
 
  If called within an animation block, the change will be animated.
 
@@ -66,7 +66,7 @@
 
  @note The setter must be called from the main thread.
  */
-@property(nonatomic, assign) MDCSnackbarAlignment alignment;
+@property(nonatomic, assign) MDCSnackbarHorizontalAlignment horizontalAlignment;
 
 /**
  Determines the Snackbar's leading margin to the safe area of the screen.

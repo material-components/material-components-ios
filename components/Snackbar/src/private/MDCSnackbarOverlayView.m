@@ -70,13 +70,14 @@ static const CGFloat kMaximumHeightLegacy = 80;
 
 /**
  The layout constraint which determines how far the Snackbar is from the leading edge of the screen.
- It is active when the alignment of the parent overlay view is MDCSnackbarAlignmentLeading.
+ It is active when the alignment of the parent overlay view is
+ MDCSnackbarHorizontalAlignmentLeading.
  */
 @property(nonatomic) NSLayoutConstraint *snackbarViewLeadingConstraint;
 
 /**
  The layout constraint used to center the Snackbar.
- It is active when the alignment of the parent overlay view is MDCSnackbarAlignmentCenter.
+ It is active when the alignment of the parent overlay view is MDCSnackbarHorizontalAlignmentCenter.
  */
 @property(nonatomic) NSLayoutConstraint *snackbarViewCenterConstraint;
 
@@ -317,7 +318,8 @@ static const CGFloat kMaximumHeightLegacy = 80;
                                          attribute:NSLayoutAttributeCenterX
                                         multiplier:1.0
                                           constant:0];
-        self.snackbarViewCenterConstraint.active = self.alignment == MDCSnackbarAlignmentCenter;
+        self.snackbarViewCenterConstraint.active =
+            self.horizontalAlignment == MDCSnackbarHorizontalAlignmentCenter;
 
         self.snackbarViewLeadingConstraint =
             [NSLayoutConstraint constraintWithItem:snackbarView
@@ -327,7 +329,8 @@ static const CGFloat kMaximumHeightLegacy = 80;
                                          attribute:NSLayoutAttributeLeading
                                         multiplier:1.0
                                           constant:self.leadingMargin];
-        self.snackbarViewLeadingConstraint.active = self.alignment == MDCSnackbarAlignmentLeading;
+        self.snackbarViewLeadingConstraint.active =
+            self.horizontalAlignment == MDCSnackbarHorizontalAlignmentLeading;
 
         // If not full width, ensure that it doesn't get any larger than our own width.
         [container
@@ -712,11 +715,11 @@ static const CGFloat kMaximumHeightLegacy = 80;
   }
 }
 
-- (void)setAlignment:(MDCSnackbarAlignment)alignment {
-  if (_alignment != alignment) {
-    _alignment = alignment;
+- (void)setHorizontalAlignment:(MDCSnackbarHorizontalAlignment)horizontalAlignment {
+  if (_horizontalAlignment != horizontalAlignment) {
+    _horizontalAlignment = horizontalAlignment;
 
-    [self activateSnackbarViewConstraintsForAlignment:alignment];
+    [self activateSnackbarViewConstraintsForHorizontalAlignment:horizontalAlignment];
 
     [self triggerSnackbarLayoutChange];
 
@@ -734,13 +737,14 @@ static const CGFloat kMaximumHeightLegacy = 80;
   }
 }
 
-- (void)activateSnackbarViewConstraintsForAlignment:(MDCSnackbarAlignment)alignment {
-  switch (alignment) {
-    case MDCSnackbarAlignmentCenter:
+- (void)activateSnackbarViewConstraintsForHorizontalAlignment:
+    (MDCSnackbarHorizontalAlignment)horizontalAlignment {
+  switch (horizontalAlignment) {
+    case MDCSnackbarHorizontalAlignmentCenter:
       self.snackbarViewLeadingConstraint.active = NO;
       self.snackbarViewCenterConstraint.active = YES;
       break;
-    case MDCSnackbarAlignmentLeading:
+    case MDCSnackbarHorizontalAlignmentLeading:
       self.snackbarViewLeadingConstraint.active = YES;
       self.snackbarViewCenterConstraint.active = NO;
       break;

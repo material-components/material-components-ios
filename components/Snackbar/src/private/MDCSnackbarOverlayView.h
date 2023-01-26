@@ -62,14 +62,13 @@ OBJC_EXTERN NSTimeInterval const MDCSnackbarLegacyTransitionDuration;
 @property(nonatomic) CGFloat bottomOffset;
 
 /**
- Determines whether the Snackbar is presented in the center of the of the screen or (on iPad only)
- the leading edge of the screen.
+ Determines whether the horizontal alignment of the Snackbar on the screen (iPad only).
 
  If called within an animation block, the change will be animated.
 
  @note This method must be called from the main thread.
 */
-@property(nonatomic) MDCSnackbarAlignment alignment;
+@property(nonatomic) MDCSnackbarHorizontalAlignment horizontalAlignment;
 
 /**
  Determines the Snackbar's leading margin to the safe area of the screen.

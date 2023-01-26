@@ -97,7 +97,7 @@
   FakeMDCSnackbarManagerDelegate *delegate = [[FakeMDCSnackbarManagerDelegate alloc] init];
 
   // When
-  MDCSnackbarManager.defaultManager.alignment = MDCSnackbarAlignmentLeading;
+  MDCSnackbarManager.defaultManager.horizontalAlignment = MDCSnackbarHorizontalAlignmentLeading;
   MDCSnackbarManager.defaultManager.buttonFont = [UIFont systemFontOfSize:72];
   MDCSnackbarManager.defaultManager.delegate = delegate;
   MDCSnackbarManager.defaultManager.messageFont = [UIFont systemFontOfSize:66];
@@ -109,7 +109,8 @@
                                                 forState:UIControlStateDisabled];
 
   // Then
-  XCTAssertEqual(manager.alignment, MDCSnackbarManager.defaultManager.alignment);
+  XCTAssertEqual(manager.horizontalAlignment,
+                 MDCSnackbarManager.defaultManager.horizontalAlignment);
   XCTAssertEqualObjects(manager.buttonFont, MDCSnackbarManager.defaultManager.buttonFont);
   XCTAssertEqual(manager.delegate, MDCSnackbarManager.defaultManager.delegate);
   XCTAssertEqualObjects(manager.messageFont, MDCSnackbarManager.defaultManager.messageFont);
@@ -133,8 +134,8 @@
   FakeMDCSnackbarManagerDelegate *delegate2 = [[FakeMDCSnackbarManagerDelegate alloc] init];
 
   // When
-  manager1.alignment = MDCSnackbarAlignmentLeading;
-  manager2.alignment = MDCSnackbarAlignmentCenter;
+  manager1.horizontalAlignment = MDCSnackbarHorizontalAlignmentLeading;
+  manager2.horizontalAlignment = MDCSnackbarHorizontalAlignmentCenter;
   manager1.buttonFont = [UIFont systemFontOfSize:72];
   manager2.buttonFont = [UIFont systemFontOfSize:41];
   manager1.delegate = delegate1;
@@ -153,7 +154,7 @@
   [manager2 setButtonTitleColor:UIColor.magentaColor forState:UIControlStateDisabled];
 
   // Then
-  XCTAssertNotEqual(manager1.alignment, manager2.alignment);
+  XCTAssertNotEqual(manager1.horizontalAlignment, manager2.horizontalAlignment);
   XCTAssertNotEqual(manager1.buttonFont, manager2.buttonFont);
   XCTAssertNotEqual(manager1.delegate, manager2.delegate);
   XCTAssertNotEqual(manager1.messageFont, manager2.messageFont);

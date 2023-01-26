@@ -681,14 +681,14 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   self.internalManager.overlayView.bottomOffset = offset;
 }
 
-- (void)setAlignment:(MDCSnackbarAlignment)alignment {
-  NSAssert([NSThread isMainThread], @"setAlignment must be called on main thread.");
+- (void)setHorizontalAlignment:(MDCSnackbarHorizontalAlignment)horizontalAlignment {
+  NSAssert([NSThread isMainThread], @"setHorizontalAlignment must be called on main thread.");
 
-  self.internalManager.overlayView.alignment = alignment;
+  self.internalManager.overlayView.horizontalAlignment = horizontalAlignment;
 }
 
-- (MDCSnackbarAlignment)alignment {
-  return self.internalManager.overlayView.alignment;
+- (MDCSnackbarHorizontalAlignment)horizontalAlignment {
+  return self.internalManager.overlayView.horizontalAlignment;
 }
 
 #pragma mark - Suspension
