@@ -392,10 +392,10 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
                               forAxis:UILayoutConstraintAxisHorizontal];
 
     _label.accessibilityIdentifier = MDCSnackbarMessageTitleAutomationIdentifier;
+
     if (!_enableDismissalAccessibilityAffordance) {
       // For UIAccessibility purposes, the label is the primary 'button' for dismissing the
-      // Snackbar, so we'll make sure the label is treated like a button.
-      _label.accessibilityTraits = UIAccessibilityTraitButton;
+      // Snackbar, so we'll make sure the label is identified with a dismissal hint.
       _label.accessibilityHint = dismissalAccessibilityHint;
     }
 

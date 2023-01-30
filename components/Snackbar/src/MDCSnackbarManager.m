@@ -256,7 +256,13 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
                 UIAccessibilityPostNotification(self.manager.focusAccessibilityNotification,
                                                 snackbarView);
               } else {
-                snackbarView.accessibilityElementsHidden = YES;
+                // If VoiceOver is running (and the snackbar does not allow focus), hide
+                // accessibility elements. If VoiceOver is not running, hide elements based on what
+                // the snackbar manager's `accessibilityElementsHidden` property is set to. This
+                // check is performed to account for VoiceControl activation of the snackbar's
+                // dismiss action.
+                snackbarView.accessibilityElementsHidden =
+                    [self isVoiceOverRunning] || self.accessibilityElementsHidden;
                 UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification,
                                                 message.voiceNotificationText);
               }

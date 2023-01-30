@@ -505,7 +505,7 @@ static const int64_t kDispatchTimeWait = (int64_t)((CGFloat)0.2 * NSEC_PER_SEC);
   XCTAssertFalse(self.manager.internalManager.currentSnackbar.accessibilityElementsHidden);
 }
 
-- (void)testAccessibilityElementsUpdateWhenVoiceOverStatusChanges {
+- (void)testAccessibilityElementsVisibleWhenVoiceOverStatusEnabled {
   // Given
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
   action.title = @"Tap Me";
@@ -521,8 +521,7 @@ static const int64_t kDispatchTimeWait = (int64_t)((CGFloat)0.2 * NSEC_PER_SEC);
     });
   });
   [self waitForExpectationsWithTimeout:3 handler:nil];
-  XCTAssertTrue(self.manager.internalManager.currentSnackbar.accessibilityElementsHidden);
-
+  XCTAssertFalse(self.manager.internalManager.currentSnackbar.accessibilityElementsHidden);
   // When
   self.manager.internalManager.isVoiceOverRunningOverride = YES;
   [[NSNotificationCenter defaultCenter]
