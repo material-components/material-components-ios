@@ -655,6 +655,16 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   });
 }
 
+- (CGFloat)topMargin {
+  return self.internalManager.overlayView.topMargin;
+}
+
+- (void)setTopMargin:(CGFloat)topMargin {
+  NSAssert([NSThread isMainThread], @"setTopMargin must be called on main thread.");
+
+  self.internalManager.overlayView.topMargin = topMargin;
+}
+
 - (CGFloat)leadingMargin {
   return self.internalManager.overlayView.leadingMargin;
 }
@@ -689,6 +699,16 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 
 - (MDCSnackbarHorizontalAlignment)horizontalAlignment {
   return self.internalManager.overlayView.horizontalAlignment;
+}
+
+- (void)setVerticalAlignment:(MDCSnackbarVerticalAlignment)verticalAlignment {
+  NSAssert([NSThread isMainThread], @"setVerticalAlignment must be called on main thread.");
+
+  self.internalManager.overlayView.verticalAlignment = verticalAlignment;
+}
+
+- (MDCSnackbarVerticalAlignment)verticalAlignment {
+  return self.internalManager.overlayView.verticalAlignment;
 }
 
 #pragma mark - Suspension

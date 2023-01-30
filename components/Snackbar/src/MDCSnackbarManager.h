@@ -69,6 +69,20 @@
 @property(nonatomic, assign) MDCSnackbarHorizontalAlignment horizontalAlignment;
 
 /**
+ Determines the Snackbar alignment to the screen vertically.
+
+ @note The setter must be called from the main thread.
+ */
+@property(nonatomic, assign) MDCSnackbarVerticalAlignment verticalAlignment;
+
+/**
+ Determines the Snackbar's top margin to the safe area of the screen.
+
+ Defaults to 8.
+ */
+@property(nonatomic, assign) CGFloat topMargin;
+
+/**
  Determines the Snackbar's leading margin to the safe area of the screen.
 
  Defaults to 8 when the traitCollection horizontal size class is compact.
@@ -128,7 +142,8 @@
 - (void)dismissAndCallCompletionBlocksWithCategory:(nullable NSString *)category;
 
 /**
- How far from the bottom of the screen messages are displayed.
+ How far from the bottom of the screen messages are displayed when @c verticalAlignment is @c
+ MDCSnackbarHorizontalAlignmentBottom.
 
  If called within an animation block, the change will be animated.
 

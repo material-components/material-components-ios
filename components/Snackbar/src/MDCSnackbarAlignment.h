@@ -28,3 +28,18 @@ typedef NS_ENUM(NSInteger, MDCSnackbarHorizontalAlignment) {
    */
   MDCSnackbarHorizontalAlignmentLeading = 1,
 };
+
+/**
+ States used to configure Snackbar's vertical alignment.
+ */
+typedef NS_ENUM(NSInteger, MDCSnackbarVerticalAlignment) {
+  /**
+   Snackbar is positioned on the bottom of the screen vertically.
+   */
+  MDCSnackbarVerticalAlignmentBottom = 0,
+
+  /**
+   Snackbar is positioned on the top of the screen vertically.
+   */
+  MDCSnackbarVerticalAlignmentTop = 1,
+};

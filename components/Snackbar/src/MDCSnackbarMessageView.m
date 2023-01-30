@@ -1018,7 +1018,6 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
     return 0;
   }
   return self.window.safeAreaInsets.bottom;
-  return 0;
 }
 
 - (UIEdgeInsets)safeContentMargin {
