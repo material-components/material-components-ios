@@ -54,16 +54,13 @@ static const CGFloat kDefaultActiveIndicatorWidth = 60;
 
 @interface MDCBottomNavigationBar () <MDCRippleTouchControllerDelegate>
 
-@property(nonatomic, assign) BOOL itemsDistributed;
-@property(nonatomic, assign) CGFloat maxLandscapeClusterContainerWidth;
 @property(nonatomic, strong) NSMutableArray<MDCBottomNavigationItemView *> *itemViews;
 @property(nonatomic, readonly) UIEdgeInsets mdc_safeAreaInsets;
 @property(nonatomic, strong) UIView *barView;
-@property(nonatomic, assign) CGRect itemLayoutFrame;
 @property(nonatomic, strong) UIVisualEffectView *blurEffectView;
-@property(nonatomic, strong) UIView *itemsLayoutView;
+@property(nonatomic, strong) UIStackView *itemsLayoutView;
 @property(nonatomic, strong) UILayoutGuide *barItemsLayoutGuide NS_AVAILABLE_IOS(9_0);
-
+@property(nonatomic, strong) NSLayoutConstraint *itemsLayoutViewHeightConstraint;
 
 #if MDC_AVAILABLE_SDK_IOS(13_0)
 /**
@@ -111,7 +108,6 @@ static BOOL gEnablePerformantShadow = NO;
   _selectedItemTitleColor = _selectedItemTintColor;
   _titleVisibility = MDCBottomNavigationBarTitleVisibilitySelected;
   _alignment = MDCBottomNavigationBarAlignmentJustified;
-  _itemsDistributed = YES;
   _barTintColor = [UIColor whiteColor];
   _truncatesLongTitles = YES;
   _titlesNumberOfLines = 1;
@@ -148,12 +144,13 @@ static BOOL gEnablePerformantShadow = NO;
   _barView.backgroundColor = _barTintColor;
   [self addSubview:_barView];
 
-  _itemsLayoutView = [[UIView alloc] initWithFrame:CGRectZero];
-  // By default, the autoresizing mask pins the itemsLayoutView to the top and bottom of the bar.
-  // However, if the `barItemsLayoutGuide` has a constraint moving the position of the view, those
-  // can override the autoresizing mask.
-  _itemsLayoutView.autoresizingMask =
-      (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin);
+  _itemsLayoutView = [[UIStackView alloc] initWithFrame:CGRectZero];
+  _itemsLayoutView.layoutMarginsRelativeArrangement = YES;
+  _itemsLayoutView.spacing = kDefaultItemHorizontalPadding;
+  _itemsLayoutView.alignment = UIStackViewAlignmentCenter;
+  _itemsLayoutView.distribution = UIStackViewDistributionFillEqually;
+  _itemsLayoutView.translatesAutoresizingMaskIntoConstraints = NO;
+  _itemsLayoutView.axis = UILayoutConstraintAxisHorizontal;
   _itemsLayoutView.clipsToBounds = NO;
   [_barView addSubview:_itemsLayoutView];
 
@@ -162,7 +159,12 @@ static BOOL gEnablePerformantShadow = NO;
   self.shadowColor = gEnablePerformantShadow ? MDCShadowColor() : UIColor.blackColor;
   _itemViews = [NSMutableArray array];
   _itemTitleFont = [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleCaption];
-
+  [_itemsLayoutView.leadingAnchor constraintEqualToAnchor:_barView.leadingAnchor].active = YES;
+  [_itemsLayoutView.trailingAnchor constraintEqualToAnchor:_barView.trailingAnchor].active = YES;
+  [_itemsLayoutView.topAnchor constraintEqualToAnchor:_barView.topAnchor].active = YES;
+  _itemsLayoutViewHeightConstraint =
+      [_itemsLayoutView.heightAnchor constraintEqualToConstant:[self calculateBarHeight]];
+  _itemsLayoutViewHeightConstraint.active = YES;
   _barItemsLayoutGuide = [[UILayoutGuide alloc] init];
   _barItemsLayoutGuide.identifier = @"MDCBottomNavigationBarItemsLayoutGuide";
   [_itemsLayoutView addLayoutGuide:_barItemsLayoutGuide];
@@ -183,15 +185,20 @@ static BOOL gEnablePerformantShadow = NO;
     self.blurEffectView.frame = standardBounds;
   }
   self.barView.frame = standardBounds;
+
   self.layer.shadowColor = self.shadowColor.CGColor;
 
-  CGSize size = standardBounds.size;
-  if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular) {
-    [self layoutLandscapeModeWithBottomNavSize:size containerWidth:size.width];
-  } else {
-    [self sizeItemsLayoutViewItemsDistributed:YES withBottomNavSize:size containerWidth:size.width];
+  for (NSUInteger i = 0; i < self.itemViews.count; i++) {
+    MDCBottomNavigationItemView *itemView = self.itemViews[i];
+    [self configureTitleStateForItemView:itemView];
   }
-  [self layoutItemViews];
+
+  UIUserInterfaceLayoutDirection layoutDirection = self.effectiveUserInterfaceLayoutDirection;
+  if (layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
+    _itemsLayoutView.semanticContentAttribute = UISemanticContentAttributeForceLeftToRight;
+  } else {
+    _itemsLayoutView.semanticContentAttribute = UISemanticContentAttributeForceRightToLeft;
+  }
 
   if (gEnablePerformantShadow) {
     [self updateShadow];
@@ -208,6 +215,25 @@ static BOOL gEnablePerformantShadow = NO;
   CGFloat itemWidth = [self widthForItemsWhenCenteredWithAvailableWidth:CGFLOAT_MAX height:height];
   CGSize size = CGSizeMake(itemWidth * self.items.count, height);
   return size;
+}
+
+- (CGFloat)widthForItemsWhenCenteredWithAvailableWidth:(CGFloat)availableWidth
+                                                height:(CGFloat)barHeight {
+  CGFloat maxItemWidth = kPreferredItemWidth;
+  for (UIView *itemView in self.itemViews) {
+    maxItemWidth =
+        MAX(maxItemWidth, [itemView sizeThatFits:CGSizeMake(availableWidth, barHeight)].width +
+                              self.itemsHorizontalPadding * 2);
+  }
+  maxItemWidth = MIN(kMaxItemWidth, maxItemWidth);
+  CGFloat totalWidth = maxItemWidth * self.items.count;
+  if (totalWidth > availableWidth) {
+    maxItemWidth = availableWidth / self.items.count;
+  }
+  if (maxItemWidth < kMinItemWidth) {
+    maxItemWidth = kMinItemWidth;
+  }
+  return maxItemWidth;
 }
 
 - (NSLayoutYAxisAnchor *)barItemsBottomAnchor {
@@ -273,16 +299,24 @@ static BOOL gEnablePerformantShadow = NO;
 
 - (BOOL)isTitleBelowIcon {
   switch (self.alignment) {
+    case MDCBottomNavigationBarAlignmentCentered:
     case MDCBottomNavigationBarAlignmentJustified:
       return YES;
       break;
     case MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles:
       return self.traitCollection.horizontalSizeClass != UIUserInterfaceSizeClassRegular;
       break;
-    case MDCBottomNavigationBarAlignmentCentered:
-      return YES;
-      break;
   }
+}
+
+- (void)setBarHeight:(CGFloat)barHeight {
+  _barHeight = barHeight;
+  _itemsLayoutViewHeightConstraint.constant = [self calculateBarHeight];
+}
+
+- (void)setBarHeightWithoutTitles:(CGFloat)barHeightWithoutTitles {
+  _barHeightWithoutTitles = barHeightWithoutTitles;
+  _itemsLayoutViewHeightConstraint.constant = [self calculateBarHeight];
 }
 
 - (CGFloat)calculateBarHeight {
@@ -302,100 +336,6 @@ static BOOL gEnablePerformantShadow = NO;
     height = self.barHeight;
   }
   return height;
-}
-
-- (void)layoutLandscapeModeWithBottomNavSize:(CGSize)bottomNavSize
-                              containerWidth:(CGFloat)containerWidth {
-  switch (self.alignment) {
-    case MDCBottomNavigationBarAlignmentJustified:
-      [self sizeItemsLayoutViewItemsDistributed:YES
-                              withBottomNavSize:bottomNavSize
-                                 containerWidth:containerWidth];
-      break;
-    case MDCBottomNavigationBarAlignmentJustifiedAdjacentTitles:
-      [self sizeItemsLayoutViewItemsDistributed:YES
-                              withBottomNavSize:bottomNavSize
-                                 containerWidth:containerWidth];
-      break;
-    case MDCBottomNavigationBarAlignmentCentered:
-      [self sizeItemsLayoutViewItemsDistributed:NO
-                              withBottomNavSize:bottomNavSize
-                                 containerWidth:containerWidth];
-      break;
-  }
-}
-
-- (CGFloat)widthForItemsWhenCenteredWithAvailableWidth:(CGFloat)availableWidth
-                                                height:(CGFloat)barHeight {
-  CGFloat maxItemWidth = kPreferredItemWidth;
-  for (UIView *itemView in self.itemViews) {
-    maxItemWidth =
-        MAX(maxItemWidth, [itemView sizeThatFits:CGSizeMake(availableWidth, barHeight)].width +
-                              self.itemsHorizontalPadding * 2);
-  }
-  maxItemWidth = MIN(kMaxItemWidth, maxItemWidth);
-  CGFloat totalWidth = maxItemWidth * self.items.count;
-  if (totalWidth > availableWidth) {
-    maxItemWidth = availableWidth / self.items.count;
-  }
-  if (maxItemWidth < kMinItemWidth) {
-    maxItemWidth = kMinItemWidth;
-  }
-  return maxItemWidth;
-}
-
-- (void)sizeItemsLayoutViewItemsDistributed:(BOOL)itemsDistributed
-                          withBottomNavSize:(CGSize)bottomNavSize
-                             containerWidth:(CGFloat)containerWidth {
-  CGFloat barHeight = [self calculateBarHeight];
-  UIEdgeInsets insets = self.mdc_safeAreaInsets;
-  CGFloat bottomNavWidthInset = bottomNavSize.width - insets.left - insets.right;
-  if (itemsDistributed) {
-    self.itemsLayoutView.frame = CGRectMake(insets.left, 0, bottomNavWidthInset, barHeight);
-    self.itemLayoutFrame = CGRectMake(0, 0, CGRectGetWidth(self.itemsLayoutView.frame), barHeight);
-  } else {
-    CGFloat maxItemWidth = [self widthForItemsWhenCenteredWithAvailableWidth:bottomNavWidthInset
-                                                                      height:barHeight];
-    CGFloat layoutFrameWidth = maxItemWidth * self.items.count;
-    layoutFrameWidth = MIN(bottomNavWidthInset, layoutFrameWidth);
-    containerWidth = MIN(bottomNavWidthInset, MAX(containerWidth, layoutFrameWidth));
-    CGFloat clusteredOffsetX = floor((bottomNavSize.width - containerWidth) / 2);
-    self.itemsLayoutView.frame = CGRectMake(clusteredOffsetX, 0, containerWidth, barHeight);
-    CGFloat itemLayoutFrameOffsetX = floor((containerWidth - layoutFrameWidth) / 2);
-    self.itemLayoutFrame = CGRectMake(itemLayoutFrameOffsetX, 0, layoutFrameWidth, barHeight);
-  }
-}
-
-- (void)layoutItemViews {
-  UIUserInterfaceLayoutDirection layoutDirection = self.effectiveUserInterfaceLayoutDirection;
-  NSInteger numItems = self.items.count;
-  if (numItems == 0) {
-    return;
-  }
-
-  CGFloat navBarHeight;
-
-  if ([self shouldUseAnchoredLayout]) {
-    navBarHeight = [self calculateBarHeight];
-  } else {
-    navBarHeight = CGRectGetHeight(self.itemsLayoutView.bounds);
-  }
-
-  CGFloat itemWidth = CGRectGetWidth(self.itemLayoutFrame) / numItems;
-  for (NSUInteger i = 0; i < self.itemViews.count; i++) {
-    MDCBottomNavigationItemView *itemView = self.itemViews[i];
-    [self configureTitleStateForItemView:itemView];
-    if (layoutDirection == UIUserInterfaceLayoutDirectionLeftToRight) {
-      itemView.frame = CGRectMake(
-          floor(CGRectGetMinX(self.itemLayoutFrame) + i * itemWidth + self.itemsHorizontalPadding),
-          0, floor(itemWidth - 2 * self.itemsHorizontalPadding), navBarHeight);
-    } else {
-      itemView.frame =
-          CGRectMake(floor(CGRectGetMaxX(self.itemLayoutFrame) - (i + 1) * itemWidth +
-                           self.itemsHorizontalPadding),
-                     0, floor(itemWidth - 2 * self.itemsHorizontalPadding), navBarHeight);
-    }
-  }
 }
 
 - (void)dealloc {
@@ -560,6 +500,7 @@ static BOOL gEnablePerformantShadow = NO;
   if (self.traitCollectionDidChangeBlock) {
     self.traitCollectionDidChangeBlock(self, previousTraitCollection);
   }
+  _itemsLayoutViewHeightConstraint.constant = [self calculateBarHeight];
 }
 
 #pragma mark - Touch handlers
@@ -622,7 +563,9 @@ static BOOL gEnablePerformantShadow = NO;
               forControlEvents:UIControlEventTouchUpInside];
 
     [self.itemViews addObject:itemView];
-    [self.itemsLayoutView addSubview:itemView];
+    [self.itemsLayoutView addArrangedSubview:itemView];
+    itemView.translatesAutoresizingMaskIntoConstraints = NO;
+    [itemView.heightAnchor constraintEqualToAnchor:self.itemsLayoutView.heightAnchor].active = YES;
   }
 
   self.selectedItem = nil;
@@ -794,6 +737,7 @@ static BOOL gEnablePerformantShadow = NO;
   }
   [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
+  _itemsLayoutViewHeightConstraint.constant = [self calculateBarHeight];
 }
 
 - (void)setShowsSelectionIndicator:(BOOL)showsSelectionIndicator {
