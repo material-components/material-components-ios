@@ -50,6 +50,12 @@ API_AVAILABLE(ios(12.0))
 @property(nonatomic, strong, readonly, nonnull) MDCBottomNavigationBar *navigationBar;
 
 /**
+ Configures whether the navigation bar should use vertical layout in landscape mode.
+ Default is NO.
+ */
+@property(nonatomic, assign) BOOL useVerticalLayoutInLandscapeMode;
+
+/**
  An array of view controllers to display when their corresponding tab bar item is selected in the
  navigation bar.  When this property is set, the navigation bar's @c items property will be set to
  an array composed of the @c tabBarItem property of each view controller in this array.

@@ -38,6 +38,19 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarTitleVisibility) {
   MDCBottomNavigationBarTitleVisibilityNever = 2
 };
 
+/** Alignment mode of items in vertical layout mode.  */
+typedef NS_ENUM(NSInteger, MDCNavigationBarItemsVerticalAlignment) {
+
+  // Default behavior is to have the items align to the center.
+  MDCNavigationBarItemsVerticalAlignmentCenter = 0,
+
+  // Items are aligned to the top of the bar.
+  MDCNavigationBarItemsVerticalAlignmentTop = 1,
+
+  // Items are aligned to the bottom of the bar.
+  MDCNavigationBarItemsVerticalAlignmentBottom = 2
+};
+
 /**
  States used to configure bottom navigation in landscape mode with respect to how items are spaced
  and item title orientation. Titles will be shown or hidden depending on title hide state.
@@ -83,6 +96,15 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  Default is MDCBottomNavigationBarAlignmentJustified.
  */
 @property(nonatomic, assign) MDCBottomNavigationBarAlignment alignment UI_APPEARANCE_SELECTOR;
+
+/**
+ Configures whether the navigation bar will be in vertical layout in landscape mode.
+
+ @note To configure the items spacing in vertical layout see @c itemsAlignmentInVerticalMode below.
+
+ Defaults to @c NO.
+ */
+@property(nonatomic, assign) BOOL useVerticalLayoutInLandscapeMode;
 
 /**
  An array of UITabBarItems that is used to populate bottom navigation bar content. It is strongly
@@ -173,6 +195,12 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
  @note: The amount of horizontal space between the bar items will be double this value.
  */
 @property(nonatomic, assign) CGFloat itemsHorizontalPadding;
+
+/**
+ Configures the items alignment in vertical layout mode.
+Default is @c MDCNavigationBarItemsVerticalAlignmentTop.
+ */
+@property(nonatomic, assign) MDCNavigationBarItemsVerticalAlignment itemsAlignmentInVerticalMode;
 
 /**
  NSLayoutAnchor for the bottom of the bar items.

@@ -45,4 +45,23 @@
 @property(nonatomic, assign) CGSize selectionIndicatorSize;
 @property(nonatomic, strong, nonnull) UIColor *selectionIndicatorColor;
 
+// Helper functions
+
+/**
+ * Activate all constraints passed into this function.
+ * @param constraints NSMutableArray The array of constraints to activate.
+ */
+- (void)activateConstraints:(NSMutableArray<NSLayoutConstraint *> *)constraints;
+
+/**
+ * Deactivate all constraints passed into this function.
+ * @param constraints NSMutableArray The array of constraints to deactivate.
+ */
+- (void)deactivateConstraints:(NSMutableArray<NSLayoutConstraint *> *)constraints;
+
+/**
+ * Returns a boolean that is true when the orientation is in landscape.
+ */
+- (BOOL)isOrientationLandscape;
+
 @end
