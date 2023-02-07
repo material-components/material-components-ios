@@ -223,6 +223,16 @@ NS_ASSUME_NONNULL_BEGIN
   }
 }
 
+- (void)setTextCanWrap:(BOOL)textCanWrap {
+  if (_textCanWrap != textCanWrap) {
+    self.titleLabel.lineBreakMode =
+        textCanWrap ? NSLineBreakByWordWrapping : NSLineBreakByTruncatingMiddle;
+    self.titleLabel.numberOfLines = textCanWrap ? 0 : 1;
+
+    _textCanWrap = textCanWrap;
+  }
+}
+
 #pragma mark - UIButton
 - (void)setEnabled:(BOOL)enabled {
   [super setEnabled:enabled];
@@ -281,7 +291,7 @@ NS_ASSUME_NONNULL_BEGIN
   }
 }
 
-- (CGSize)clampToMinimumnSize:(CGSize)size {
+- (CGSize)clampToMinimumSize:(CGSize)size {
   if (size.height < _minimumHeight) {
     size.height = _minimumHeight;
   }
@@ -291,20 +301,45 @@ NS_ASSUME_NONNULL_BEGIN
   return size;
 }
 
+- (CGSize)sizeBasedOnLabel {
+  CGFloat textWidth = self.titleLabel.preferredMaxLayoutWidth;
+  if (textWidth <= 0) {
+    self.titleLabel.preferredMaxLayoutWidth = self.frame.size.width - self.contentEdgeInsets.left -
+                                              self.contentEdgeInsets.right -
+                                              self.imageView.frame.size.width;
+  }
+  CGSize titleLabelSize = self.titleLabel.intrinsicContentSize;
+  self.titleLabel.preferredMaxLayoutWidth = textWidth;
+  return CGSizeMake(
+      titleLabelSize.width + self.contentEdgeInsets.left + self.contentEdgeInsets.right +
+          self.imageView.frame.size.width,
+      titleLabelSize.height + self.contentEdgeInsets.top + self.contentEdgeInsets.bottom);
+}
+
 #pragma mark - Overrides
 - (CGSize)intrinsicContentSize {
   [self updateInsets];
-  CGSize size = [super intrinsicContentSize];
-  CGSize clampToMinimumnSize = [self clampToMinimumnSize:size];
-  [self setCapsuleCornersBasedOn:clampToMinimumnSize];
-  return clampToMinimumnSize;
+  CGSize size;
+  if ([self textCanWrap]) {
+    size = [self sizeBasedOnLabel];
+  } else {
+    size = [super intrinsicContentSize];
+  }
+  CGSize clampToMinimumSize = [self clampToMinimumSize:size];
+  [self setCapsuleCornersBasedOn:clampToMinimumSize];
+  return clampToMinimumSize;
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-  CGSize superSize = [super sizeThatFits:size];
-  CGSize clampToMinimumnSize = [self clampToMinimumnSize:superSize];
-  [self setCapsuleCornersBasedOn:clampToMinimumnSize];
-  return clampToMinimumnSize;
+  CGSize newSize;
+  if ([self textCanWrap]) {
+    newSize = [self sizeBasedOnLabel];
+  } else {
+    newSize = [super sizeThatFits:size];
+  }
+  CGSize clampToMinimumSize = [self clampToMinimumSize:newSize];
+  [self setCapsuleCornersBasedOn:clampToMinimumSize];
+  return clampToMinimumSize;
 }
 
 @end

@@ -79,6 +79,15 @@ __attribute__((objc_subclassing_restricted))
 */
 @property(nonatomic) NSTimeInterval animationDuration;
 
+/**
+ Should the button's label be rendered on multiple lines. If you set this
+ property to YES, make sure that your button has either its
+ @c titleLabel.preferredMaxLayoutWidth property set, or that the button's frame
+ width is set as desired.
+ Otherwise, the button will not be able to calculate a multiline layout.
+ */
+@property(nonatomic) BOOL textCanWrap;
+
 @end
 
 NS_ASSUME_NONNULL_END
