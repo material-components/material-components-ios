@@ -506,13 +506,16 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
  @c scrollIndicatorInsets.
  */
 - (void)updateNavigationBarInsets {
-  UIEdgeInsets currentSafeAreaInsets = UIEdgeInsetsZero;
+  UIEdgeInsets currentSafeAreaInsets = self.view.safeAreaInsets;
   CGFloat navigationBarHeight =
       self.isNavigationBarHidden ? 0 : CGRectGetHeight(self.navigationBar.frame);
-  currentSafeAreaInsets = self.view.safeAreaInsets;
-  UIEdgeInsets additionalSafeAreaInsets =
-      UIEdgeInsetsMake(0, 0, navigationBarHeight - currentSafeAreaInsets.bottom, 0);
-  self.selectedViewController.additionalSafeAreaInsets = additionalSafeAreaInsets;
+  CGFloat leftInsetAdjustment = [self shouldUseVerticalLayout]
+                                    ? [self barWidthForVerticalLayout] - currentSafeAreaInsets.left
+                                    : 0;
+  CGFloat bottomInsetAdjustment =
+      [self shouldUseVerticalLayout] ? 0 : navigationBarHeight - currentSafeAreaInsets.bottom;
+  self.selectedViewController.additionalSafeAreaInsets =
+      UIEdgeInsetsMake(0, leftInsetAdjustment, bottomInsetAdjustment, 0);
 }
 
 /**
@@ -610,8 +613,7 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
   [self.navigationBarVerticalLayoutConstraints
       addObject:[self.content.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor]];
   [self.navigationBarVerticalLayoutConstraints
-      addObject:[self.content.leadingAnchor
-                    constraintEqualToAnchor:self.navigationBar.trailingAnchor]];
+      addObject:[self.content.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor]];
   [self.navigationBarHorizontalLayoutConstraints
       addObject:[self.content.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor]];
   [self.navigationBarHorizontalLayoutConstraints
