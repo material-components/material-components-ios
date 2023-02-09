@@ -101,6 +101,9 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
 /** The constraint for the @c navigationBar's width in a vertical layout. */
 @property(nonatomic, strong) NSLayoutConstraint *navigationBarVerticalWidthConstraint;
 
+/** A Boolean variable that indicates whether the view is currently in landscape mode. */
+@property(nonatomic) BOOL isCurrentlyLandscape;
+
 @end
 
 @implementation MDCBottomNavigationBarController
@@ -125,6 +128,7 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
                      forKeyPath:NSStringFromSelector(@selector(items))
                         options:NSKeyValueObservingOptionNew
                         context:kObservationContext];
+    self.isCurrentlyLandscape = [self isStatusBarOrientationLandscape];
   }
 
   return self;
@@ -147,6 +151,12 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
   if (self.isLongPressPopUpViewEnabled && !self.isNavigationBarLongPressRecognizerRegistered) {
     [self.navigationBar addGestureRecognizer:self.navigationBarLongPressRecognizer];
   }
+}
+
+- (BOOL)isStatusBarOrientationLandscape {
+  UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+  return orientation == UIInterfaceOrientationLandscapeLeft ||
+         orientation == UIInterfaceOrientationLandscapeRight;
 }
 
 - (void)viewSafeAreaInsetsDidChange {
@@ -219,7 +229,7 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
 }
 
 - (BOOL)shouldUseVerticalLayout {
-  return self.useVerticalLayoutInLandscapeMode && [self.navigationBar isOrientationLandscape];
+  return self.useVerticalLayoutInLandscapeMode && self.isCurrentlyLandscape;
 }
 
 - (void)setUseVerticalLayoutInLandscapeMode:(BOOL)useVerticalLayoutInLandscapeMode {
@@ -295,8 +305,7 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
   _navigationBarHidden = hidden;
 
   MDCBottomNavigationBar *navigationBar = self.navigationBar;
-  self.navigationBarItemsBottomAnchorConstraint.active =
-      !hidden && ![self.navigationBar isOrientationLandscape];
+  self.navigationBarItemsBottomAnchorConstraint.active = !hidden && ![self shouldUseVerticalLayout];
   self.navigationBarBottomAnchorConstraint.constant =
       hidden ? CGRectGetHeight(navigationBar.frame) : 0;
 
@@ -548,6 +557,24 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
 
 - (void)traitCollectionDidChange:(nullable UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
+  self.isCurrentlyLandscape = [self isStatusBarOrientationLandscape];
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size
+       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+  [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+
+  if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+    self.isCurrentlyLandscape = [self isStatusBarOrientationLandscape];
+  }
+}
+
+- (void)setIsCurrentlyLandscape:(BOOL)isCurrentlyLandscape {
+  if (_isCurrentlyLandscape == isCurrentlyLandscape) {
+    return;
+  }
+  _isCurrentlyLandscape = isCurrentlyLandscape;
+  self.navigationBar.isCurrentlyLandscape = isCurrentlyLandscape;
   [self loadConstraintsBasedOnOrientation];
 }
 
@@ -563,12 +590,12 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
 
 - (void)loadConstraintsBasedOnOrientation {
   if ([self shouldUseVerticalLayout]) {
-    [self.navigationBar deactivateConstraints:self.navigationBarHorizontalLayoutConstraints];
+    [NSLayoutConstraint deactivateConstraints:self.navigationBarHorizontalLayoutConstraints];
     self.navigationBarVerticalWidthConstraint.constant = [self barWidthForVerticalLayout];
-    [self.navigationBar activateConstraints:self.navigationBarVerticalLayoutConstraints];
+    [NSLayoutConstraint activateConstraints:self.navigationBarVerticalLayoutConstraints];
   } else {
-    [self.navigationBar deactivateConstraints:self.navigationBarVerticalLayoutConstraints];
-    [self.navigationBar activateConstraints:self.navigationBarHorizontalLayoutConstraints];
+    [NSLayoutConstraint deactivateConstraints:self.navigationBarVerticalLayoutConstraints];
+    [NSLayoutConstraint activateConstraints:self.navigationBarHorizontalLayoutConstraints];
   }
 }
 

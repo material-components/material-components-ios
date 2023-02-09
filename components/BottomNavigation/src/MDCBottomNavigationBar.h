@@ -107,6 +107,12 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 @property(nonatomic, assign) BOOL useVerticalLayoutInLandscapeMode;
 
 /**
+ A status flag that is set to tell the navigation bar that it is in landscape
+ orientation. This is set by MDCBottomNavigationBarController.
+ */
+@property(nonatomic, assign) BOOL isCurrentlyLandscape;
+
+/**
  An array of UITabBarItems that is used to populate bottom navigation bar content. It is strongly
  recommended the array contain at least three items and no more than five items -- appearance may
  degrade outside of this range.

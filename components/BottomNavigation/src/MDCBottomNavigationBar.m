@@ -205,6 +205,14 @@ static BOOL gEnablePerformantShadow = NO;
   [self loadConstraintsBasedOnOrientation];
 }
 
+- (void)setIsCurrentlyLandscape:(BOOL)isCurrentlyLandscape {
+  if (_isCurrentlyLandscape == isCurrentlyLandscape) {
+    return;
+  }
+  _isCurrentlyLandscape = isCurrentlyLandscape;
+  [self loadConstraintsBasedOnOrientation];
+}
+
 - (void)layoutSubviews {
   [super layoutSubviews];
 
@@ -375,6 +383,9 @@ static BOOL gEnablePerformantShadow = NO;
 }
 
 - (void)setUseVerticalLayoutInLandscapeMode:(BOOL)useVerticalLayoutInLandscapeMode {
+  if (_useVerticalLayoutInLandscapeMode == useVerticalLayoutInLandscapeMode) {
+    return;
+  }
   _useVerticalLayoutInLandscapeMode = useVerticalLayoutInLandscapeMode;
   [self loadConstraintsBasedOnOrientation];
 }
@@ -403,7 +414,7 @@ static BOOL gEnablePerformantShadow = NO;
 }
 
 - (BOOL)shouldUseVerticalLayout {
-  return self.useVerticalLayoutInLandscapeMode && [self isOrientationLandscape];
+  return self.useVerticalLayoutInLandscapeMode && self.isCurrentlyLandscape;
 }
 
 - (void)loadConstraintsBasedOnOrientation {
@@ -413,50 +424,30 @@ static BOOL gEnablePerformantShadow = NO;
     [self activateHorizontalLayoutConstraints];
   }
 }
-
-- (BOOL)isOrientationLandscape {
-  UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-  return orientation == UIInterfaceOrientationLandscapeLeft ||
-         orientation == UIInterfaceOrientationLandscapeRight;
-}
-
 - (void)activateVerticalLayoutConstraints {
   _itemsLayoutViewBottomAnchorConstraint.active = NO;
-  _itemsLayoutViewAlignmentConstraint.active = YES;
-  self.itemsLayoutView.axis = UILayoutConstraintAxisVertical;
-  [self deactivateConstraints:self.itemsLayoutViewHorizontalConstraints];
+  [NSLayoutConstraint deactivateConstraints:self.itemsLayoutViewHorizontalConstraints];
   for (NSLayoutConstraint *constraint in self.itemViewHeightConstraints) {
     constraint.constant = kBarHeightStackedTitle;
   }
-  [self activateConstraints:self.itemViewWidthConstraints];
-  [self activateConstraints:self.itemsLayoutViewVerticalConstraints];
+  _itemsLayoutViewAlignmentConstraint.active = YES;
+  self.itemsLayoutView.axis = UILayoutConstraintAxisVertical;
+  [NSLayoutConstraint activateConstraints:self.itemViewWidthConstraints];
+  [NSLayoutConstraint activateConstraints:self.itemsLayoutViewVerticalConstraints];
 }
 
 - (void)activateHorizontalLayoutConstraints {
   _itemsLayoutViewAlignmentConstraint.active = NO;
-  self.itemsLayoutView.axis = UILayoutConstraintAxisHorizontal;
-  [self deactivateConstraints:self.itemViewWidthConstraints];
-  [self deactivateConstraints:self.itemsLayoutViewVerticalConstraints];
+  [NSLayoutConstraint deactivateConstraints:self.itemViewWidthConstraints];
+  [NSLayoutConstraint deactivateConstraints:self.itemsLayoutViewVerticalConstraints];
   CGFloat barHeight = [self calculateBarHeight];
   _itemsLayoutViewHeightConstraint.constant = barHeight;
+  self.itemsLayoutView.axis = UILayoutConstraintAxisHorizontal;
   _itemsLayoutViewBottomAnchorConstraint.active = YES;
   for (NSLayoutConstraint *constraint in self.itemViewHeightConstraints) {
     constraint.constant = barHeight;
   }
-  [self activateConstraints:self.itemsLayoutViewHorizontalConstraints];
-}
-
-// TODO(loading): Remove these two functions and all corresponding interface exposures.
-- (void)activateConstraints:(NSMutableArray<NSLayoutConstraint *> *)constraints {
-  for (NSLayoutConstraint *constraint in constraints) {
-    constraint.active = YES;
-  }
-}
-
-- (void)deactivateConstraints:(NSMutableArray<NSLayoutConstraint *> *)constraints {
-  for (NSLayoutConstraint *constraint in constraints) {
-    constraint.active = NO;
-  }
+  [NSLayoutConstraint activateConstraints:self.itemsLayoutViewHorizontalConstraints];
 }
 
 - (void)dealloc {
@@ -702,7 +693,7 @@ static BOOL gEnablePerformantShadow = NO;
   }
 
   self.selectedItem = nil;
-  [self activateConstraints:self.itemViewHeightConstraints];
+  [NSLayoutConstraint activateConstraints:self.itemViewHeightConstraints];
   [self loadConstraintsBasedOnOrientation];
   [self addObserversToTabBarItems];
   [self invalidateIntrinsicContentSize];
