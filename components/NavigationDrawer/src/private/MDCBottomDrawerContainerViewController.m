@@ -1166,17 +1166,13 @@ NSString *const kMDCBottomDrawerScrollViewAccessibilityIdentifier =
 @implementation MDCBottomDrawerContainerViewController (LayoutValues)
 
 - (CGRect)presentingViewBounds {
-  UIViewController *rootPresentingViewController = self.originalPresentingViewController;
-  while (rootPresentingViewController.presentingViewController != nil) {
-    rootPresentingViewController = rootPresentingViewController.presentingViewController;
-  }
   if ([self shouldUseMaximumDrawerHeight]) {
-    CGRect originalBounds = CGRectStandardize(rootPresentingViewController.view.bounds);
+    CGRect originalBounds = CGRectStandardize(self.originalPresentingViewController.view.bounds);
     return CGRectMake(originalBounds.origin.x,
                       originalBounds.size.height - self.maximumDrawerHeight,
                       originalBounds.size.width, self.maximumDrawerHeight);
   }
-  return CGRectStandardize(rootPresentingViewController.view.bounds);
+  return CGRectStandardize(self.originalPresentingViewController.view.bounds);
 }
 
 - (CGFloat)presentingViewYOffset {
