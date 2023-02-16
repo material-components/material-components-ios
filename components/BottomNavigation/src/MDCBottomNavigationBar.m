@@ -124,7 +124,7 @@ static BOOL gEnablePerformantShadow = NO;
   _titlesNumberOfLines = 1;
   _mdc_overrideBaseElevation = -1;
   _rippleEnabled = YES;
-  _useVerticalLayoutInLandscapeMode = NO;
+  _enableVerticalLayout = NO;
   _itemsAlignmentInVerticalMode = MDCNavigationBarItemsVerticalAlignmentCenter;
   _itemBadgeAppearance = [[MDCBadgeAppearance alloc] init];
 
@@ -202,15 +202,8 @@ static BOOL gEnablePerformantShadow = NO;
   _itemsLayoutViewBottomAnchorConstraint =
       [_barItemsLayoutGuide.bottomAnchor constraintEqualToAnchor:_itemsLayoutView.bottomAnchor];
 
-  [self loadConstraintsBasedOnOrientation];
-}
-
-- (void)setIsCurrentlyLandscape:(BOOL)isCurrentlyLandscape {
-  if (_isCurrentlyLandscape == isCurrentlyLandscape) {
-    return;
-  }
-  _isCurrentlyLandscape = isCurrentlyLandscape;
-  [self loadConstraintsBasedOnOrientation];
+  self.enableVerticalLayout = NO;
+  [self loadConstraints];
 }
 
 - (void)layoutSubviews {
@@ -250,7 +243,7 @@ static BOOL gEnablePerformantShadow = NO;
   CGFloat height = [self calculateBarHeight];
   CGFloat itemWidth = [self widthForItemsWhenCenteredWithAvailableWidth:CGFLOAT_MAX height:height];
   CGSize size = CGSizeMake(itemWidth * self.items.count, height);
-  if ([self shouldUseVerticalLayout]) {
+  if (self.enableVerticalLayout) {
     size.width = kDefaultVerticalLayoutWidth;
   }
   return size;
@@ -296,7 +289,7 @@ static BOOL gEnablePerformantShadow = NO;
     }
   }
 
-  if ([self shouldUseVerticalLayout]) {
+  if (self.enableVerticalLayout) {
     width = kDefaultVerticalLayoutWidth;
   }
 
@@ -382,12 +375,14 @@ static BOOL gEnablePerformantShadow = NO;
   return height;
 }
 
-- (void)setUseVerticalLayoutInLandscapeMode:(BOOL)useVerticalLayoutInLandscapeMode {
-  if (_useVerticalLayoutInLandscapeMode == useVerticalLayoutInLandscapeMode) {
+- (void)setEnableVerticalLayout:(BOOL)enableVerticalLayout {
+  if (_enableVerticalLayout == enableVerticalLayout) {
     return;
   }
-  _useVerticalLayoutInLandscapeMode = useVerticalLayoutInLandscapeMode;
-  [self loadConstraintsBasedOnOrientation];
+  _enableVerticalLayout = enableVerticalLayout;
+  if (_enableVerticalLayout) {
+    [self loadConstraints];
+  }
 }
 
 - (void)setItemsAlignmentInVerticalMode:
@@ -410,15 +405,11 @@ static BOOL gEnablePerformantShadow = NO;
                                                         constant:-kDefaultVerticalPadding];
       break;
   }
-  [self loadConstraintsBasedOnOrientation];
+  [self loadConstraints];
 }
 
-- (BOOL)shouldUseVerticalLayout {
-  return self.useVerticalLayoutInLandscapeMode && self.isCurrentlyLandscape;
-}
-
-- (void)loadConstraintsBasedOnOrientation {
-  if ([self shouldUseVerticalLayout]) {
+- (void)loadConstraints {
+  if (self.enableVerticalLayout) {
     [self activateVerticalLayoutConstraints];
   } else {
     [self activateHorizontalLayoutConstraints];
@@ -612,7 +603,6 @@ static BOOL gEnablePerformantShadow = NO;
   if (self.traitCollectionDidChangeBlock) {
     self.traitCollectionDidChangeBlock(self, previousTraitCollection);
   }
-  [self loadConstraintsBasedOnOrientation];
 }
 
 #pragma mark - Touch handlers
@@ -694,7 +684,7 @@ static BOOL gEnablePerformantShadow = NO;
 
   self.selectedItem = nil;
   [NSLayoutConstraint activateConstraints:self.itemViewHeightConstraints];
-  [self loadConstraintsBasedOnOrientation];
+  [self loadConstraints];
   [self addObserversToTabBarItems];
   [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];

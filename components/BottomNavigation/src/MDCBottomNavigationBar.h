@@ -98,19 +98,13 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 @property(nonatomic, assign) MDCBottomNavigationBarAlignment alignment UI_APPEARANCE_SELECTOR;
 
 /**
- Configures whether the navigation bar will be in vertical layout in landscape mode.
+ Configures whether the navigation bar will be in vertical layout.
 
  @note To configure the items spacing in vertical layout see @c itemsAlignmentInVerticalMode below.
 
  Defaults to @c NO.
  */
-@property(nonatomic, assign) BOOL useVerticalLayoutInLandscapeMode;
-
-/**
- A status flag that is set to tell the navigation bar that it is in landscape
- orientation. This is set by MDCBottomNavigationBarController.
- */
-@property(nonatomic, assign) BOOL isCurrentlyLandscape;
+@property(nonatomic, assign) BOOL enableVerticalLayout;
 
 /**
  An array of UITabBarItems that is used to populate bottom navigation bar content. It is strongly
