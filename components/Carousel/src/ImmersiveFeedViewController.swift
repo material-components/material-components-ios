@@ -15,7 +15,7 @@
 import UIKit
 import MaterialComponents.MaterialM3CButton
 
-@available(iOS 14.0, *)
+@available(iOS 13.0, *)
 @objc(MDCImmersiveFeedViewController)
 public class ImmersiveFeedViewController: UIViewController, UICollectionViewDelegateFlowLayout {
   private let defaultNumberOfSections = 0
@@ -66,7 +66,7 @@ public class ImmersiveFeedViewController: UIViewController, UICollectionViewDele
   }
 }
 
-@available(iOS 14.0, *)
+@available(iOS 13.0, *)
 extension ImmersiveFeedViewController: UICollectionViewDataSource {
   public func numberOfSections(in collectionView: UICollectionView) -> Int {
     return self.dataSource?.numberOfSections?(in: collectionView) ?? defaultNumberOfSections
@@ -88,7 +88,7 @@ extension ImmersiveFeedViewController: UICollectionViewDataSource {
   }
 }
 
-@available(iOS 14.0, *)
+@available(iOS 13.0, *)
 extension ImmersiveFeedViewController {
   public func register(_ cellClass: AnyClass?, forCellWithReuseIdentifier identifier: String) {
     collectionView.register(cellClass, forCellWithReuseIdentifier: identifier)

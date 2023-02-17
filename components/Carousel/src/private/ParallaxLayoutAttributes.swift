@@ -21,10 +21,10 @@ class ParallaxLayoutAttributes: UICollectionViewLayoutAttributes {
   public var relativeIndexOffset: Double = 0.0
 
   override func isEqual(_ object: Any?) -> Bool {
-    if let attributes = object as? ParallaxLayoutAttributes {
-      if attributes.relativeIndexOffset == relativeIndexOffset {
-        return super.isEqual(object)
-      }
+    if let attributes = object as? ParallaxLayoutAttributes,
+      attributes.relativeIndexOffset == relativeIndexOffset
+    {
+      return super.isEqual(object)
     }
     return false
   }
