@@ -35,6 +35,8 @@
 #import "UIFont+MaterialTypography.h"
 #import "MDCMath.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 // KVO context
 static char *const kKVOContextMDCBottomNavigationBar = "kKVOContextMDCBottomNavigationBar";
 
@@ -105,7 +107,7 @@ static BOOL gEnablePerformantShadow = NO;
   return self;
 }
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
     [self commonMDCBottomNavigationBarInit];
@@ -515,10 +517,10 @@ static BOOL gEnablePerformantShadow = NO;
   }
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary<NSKeyValueChangeKey, id> *)change
-                       context:(void *)context {
+- (void)observeValueForKeyPath:(nullable NSString *)keyPath
+                      ofObject:(nullable id)object
+                        change:(nullable NSDictionary<NSKeyValueChangeKey, id> *)change
+                       context:(nullable void *)context {
   if (context == kKVOContextMDCBottomNavigationBar) {
     if (!object) {
       return;
@@ -580,7 +582,7 @@ static BOOL gEnablePerformantShadow = NO;
   return self.safeAreaInsets;
 }
 
-- (UIView *)viewForItem:(UITabBarItem *)item {
+- (nullable UIView *)viewForItem:(UITabBarItem *)item {
   NSUInteger itemIndex = [_items indexOfObject:item];
   if (itemIndex == NSNotFound) {
     return nil;
@@ -592,7 +594,7 @@ static BOOL gEnablePerformantShadow = NO;
   return _itemViews[itemIndex];
 }
 
-- (UITabBarItem *)tabBarItemForPoint:(CGPoint)point {
+- (nullable UITabBarItem *)tabBarItemForPoint:(CGPoint)point {
   for (NSUInteger i = 0; (i < self.itemViews.count) && (i < self.items.count); i++) {
     UIView *itemView = self.itemViews[i];
     BOOL isPointInView = CGRectContainsPoint(itemView.frame, point);
@@ -616,7 +618,7 @@ static BOOL gEnablePerformantShadow = NO;
   return nil;
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+- (void)traitCollectionDidChange:(nullable UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
 
   if (self.traitCollectionDidChangeBlock) {
@@ -679,6 +681,8 @@ static BOOL gEnablePerformantShadow = NO;
     itemView.displayTitleInVerticalLayout = self.displayItemTitlesInVerticalLayout;
     itemView.enableVerticalLayout = self.enableVerticalLayout;
 
+    itemView.selectionIndicatorColor = self.selectionIndicatorColor;
+    itemView.selectionIndicatorSize = self.selectionIndicatorSize;
     [self configureTitleStateForItemView:itemView];
     [self configureItemView:itemView withItem:items[i]];
 
@@ -711,7 +715,7 @@ static BOOL gEnablePerformantShadow = NO;
   [self setNeedsLayout];
 }
 
-- (void)setSelectedItem:(UITabBarItem *)selectedItem {
+- (void)setSelectedItem:(nullable UITabBarItem *)selectedItem {
   [self setSelectedItem:selectedItem animated:NO];
 }
 
@@ -822,16 +826,16 @@ static BOOL gEnablePerformantShadow = NO;
   [self setNeedsLayout];
 }
 
-- (void)setBarTintColor:(UIColor *)barTintColor {
+- (void)setBarTintColor:(nullable UIColor *)barTintColor {
   _barTintColor = barTintColor;
   self.barView.backgroundColor = barTintColor;
 }
 
-- (void)setBackgroundColor:(UIColor *)backgroundColor {
+- (void)setBackgroundColor:(nullable UIColor *)backgroundColor {
   self.barView.backgroundColor = backgroundColor;
 }
 
-- (UIColor *)backgroundColor {
+- (nullable UIColor *)backgroundColor {
   return self.barView.backgroundColor;
 }
 
@@ -923,7 +927,7 @@ static BOOL gEnablePerformantShadow = NO;
   return _shadowsCollection;
 }
 
-- (void)setShadowsCollection:(MDCShadowsCollection *)shadowsCollection {
+- (void)setShadowsCollection:(nullable MDCShadowsCollection *)shadowsCollection {
   _shadowsCollection = shadowsCollection;
 
   [self updateShadow];
@@ -950,9 +954,9 @@ static BOOL gEnablePerformantShadow = NO;
 #pragma mark - UILargeContentViewerInteractionDelegate
 
 #if MDC_AVAILABLE_SDK_IOS(13_0)
-- (id<UILargeContentViewerItem>)largeContentViewerInteraction:
-                                    (UILargeContentViewerInteraction *)interaction
-                                                  itemAtPoint:(CGPoint)point
+- (nullable id<UILargeContentViewerItem>)largeContentViewerInteraction:
+                                             (UILargeContentViewerInteraction *)interaction
+                                                           itemAtPoint:(CGPoint)point
     NS_AVAILABLE_IOS(13_0) {
   MDCBottomNavigationItemView *lastItemView =
       (MDCBottomNavigationItemView *)self.lastLargeContentViewerItem;
@@ -988,7 +992,7 @@ static BOOL gEnablePerformantShadow = NO;
 }
 
 - (void)largeContentViewerInteraction:(UILargeContentViewerInteraction *)interaction
-                         didEndOnItem:(id<UILargeContentViewerItem>)item
+                         didEndOnItem:(nullable id<UILargeContentViewerItem>)item
                               atPoint:(CGPoint)point NS_AVAILABLE_IOS(13_0) {
   if (self.lastLargeContentViewerItem) {
     MDCBottomNavigationItemView *lastItemView =
@@ -1005,8 +1009,8 @@ static BOOL gEnablePerformantShadow = NO;
 #ifdef __IPHONE_13_4
 #pragma mark - UIPointerInteractionDelegate
 
-- (UIPointerStyle *)pointerInteraction:(UIPointerInteraction *)interaction
-                        styleForRegion:(UIPointerRegion *)region API_AVAILABLE(ios(13.4)) {
+- (nullable UIPointerStyle *)pointerInteraction:(UIPointerInteraction *)interaction
+                                 styleForRegion:(UIPointerRegion *)region API_AVAILABLE(ios(13.4)) {
   MDCBottomNavigationItemView *bottomNavigationView = interaction.view;
   if (![bottomNavigationView isKindOfClass:[MDCBottomNavigationItemView class]]) {
     return nil;
@@ -1033,7 +1037,7 @@ static BOOL gEnablePerformantShadow = NO;
 
 #pragma mark - Configuring the ripple appearance
 
-- (void)setRippleColor:(UIColor *)rippleColor {
+- (void)setRippleColor:(nullable UIColor *)rippleColor {
   _rippleColor = rippleColor;
 
   for (NSUInteger i = 0; i < self.items.count; ++i) {
@@ -1063,7 +1067,7 @@ static BOOL gEnablePerformantShadow = NO;
 }
 
 // TODO(featherless): Delete once everyone has migrated to itemBadgeAppearance.
-- (void)setItemBadgeBackgroundColor:(UIColor *)itemBadgeBackgroundColor {
+- (void)setItemBadgeBackgroundColor:(nullable UIColor *)itemBadgeBackgroundColor {
   _itemBadgeBackgroundColor = itemBadgeBackgroundColor;
 
   for (NSUInteger i = 0; i < self.items.count; ++i) {
@@ -1077,7 +1081,7 @@ static BOOL gEnablePerformantShadow = NO;
 }
 
 // TODO(featherless): Delete once everyone has migrated to itemBadgeAppearance.
-- (void)setItemBadgeTextColor:(UIColor *)itemBadgeTextColor {
+- (void)setItemBadgeTextColor:(nullable UIColor *)itemBadgeTextColor {
   _itemBadgeTextColor = itemBadgeTextColor;
 
   for (MDCBottomNavigationItemView *itemView in self.itemViews) {
@@ -1086,7 +1090,7 @@ static BOOL gEnablePerformantShadow = NO;
 }
 
 // TODO(featherless): Delete once everyone has migrated to itemBadgeAppearance.
-- (void)setItemBadgeTextFont:(UIFont *)itemBadgeTextFont {
+- (void)setItemBadgeTextFont:(nullable UIFont *)itemBadgeTextFont {
   _itemBadgeTextFont = itemBadgeTextFont;
 
   for (MDCBottomNavigationItemView *itemView in self.itemViews) {
@@ -1118,4 +1122,7 @@ static BOOL gEnablePerformantShadow = NO;
     itemView.titleBelowIcon = self.isTitleBelowIcon;
   }
 }
+
 @end
+
+NS_ASSUME_NONNULL_END

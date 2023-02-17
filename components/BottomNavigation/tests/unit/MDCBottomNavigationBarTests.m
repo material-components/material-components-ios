@@ -710,6 +710,68 @@ static NSString *const kTestItemTitleText = @"Title";
                  barHeight);
 }
 
+- (void)testSettingSelectionIndicatorColor {
+  // Given
+  UIColor *testColor = UIColor.greenColor;
+  UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:@"Title" image:nil tag:0];
+
+  // When
+  self.bottomNavBar.items = @[ item ];
+  self.bottomNavBar.selectionIndicatorColor = testColor;
+
+  // Then
+  XCTAssertEqualObjects(self.bottomNavBar.itemViews.firstObject.selectionIndicatorColor,
+                        UIColor.greenColor);
+}
+
+- (void)testSettingSelectionIndicatorColorBeforeSettingItems {
+  // Given
+  UIColor *testColor = UIColor.greenColor;
+  UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:@"Title" image:nil tag:0];
+
+  // When
+  self.bottomNavBar.selectionIndicatorColor = testColor;
+  self.bottomNavBar.items = @[ item ];
+
+  // Then
+  XCTAssertEqualObjects(self.bottomNavBar.itemViews.firstObject.selectionIndicatorColor,
+                        UIColor.greenColor);
+}
+
+- (void)testSettingSelectionIndicatorSize {
+  // Given
+  CGSize testSize = CGSizeMake(20, 20);
+  UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:@"Title" image:nil tag:0];
+
+  // When
+  self.bottomNavBar.items = @[ item ];
+  self.bottomNavBar.selectionIndicatorSize = testSize;
+
+  // Then
+  XCTAssertTrue(
+      CGSizeEqualToSize(self.bottomNavBar.itemViews.firstObject.selectionIndicatorSize, testSize),
+      @"%@ not equal to %@",
+      NSStringFromCGSize(self.bottomNavBar.itemViews.firstObject.selectionIndicatorSize),
+      NSStringFromCGSize(testSize));
+}
+
+- (void)testSettingSelectionIndicatorSizeBeforeSettingItems {
+  // Given
+  CGSize testSize = CGSizeMake(20, 20);
+  UITabBarItem *item = [[UITabBarItem alloc] initWithTitle:@"Title" image:nil tag:0];
+
+  // When
+  self.bottomNavBar.selectionIndicatorSize = testSize;
+  self.bottomNavBar.items = @[ item ];
+
+  // Then
+  XCTAssertTrue(
+      CGSizeEqualToSize(self.bottomNavBar.itemViews.firstObject.selectionIndicatorSize, testSize),
+      @"%@ not equal to %@",
+      NSStringFromCGSize(self.bottomNavBar.itemViews.firstObject.selectionIndicatorSize),
+      NSStringFromCGSize(testSize));
+}
+
 #pragma mark - UILargeContentViewerItem
 
 #if MDC_AVAILABLE_SDK_IOS(13_0)
