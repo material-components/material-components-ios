@@ -54,6 +54,7 @@ static const CGFloat kDefaultActiveIndicatorWidth = 60;
 // Vertical layout
 static const CGFloat kDefaultVerticalLayoutWidth = 80;
 static const CGFloat kDefaultVerticalPadding = 45;
+static const CGFloat kDefaultItemSpacingInVerticalLayoutOniPad = 10;
 
 @interface MDCBottomNavigationBar () <MDCRippleTouchControllerDelegate>
 
@@ -124,7 +125,6 @@ static BOOL gEnablePerformantShadow = NO;
   _titlesNumberOfLines = 1;
   _mdc_overrideBaseElevation = -1;
   _rippleEnabled = YES;
-  _enableVerticalLayout = NO;
   _itemsAlignmentInVerticalMode = MDCNavigationBarItemsVerticalAlignmentCenter;
   _itemBadgeAppearance = [[MDCBadgeAppearance alloc] init];
 
@@ -202,7 +202,8 @@ static BOOL gEnablePerformantShadow = NO;
   _itemsLayoutViewBottomAnchorConstraint =
       [_barItemsLayoutGuide.bottomAnchor constraintEqualToAnchor:_itemsLayoutView.bottomAnchor];
 
-  self.enableVerticalLayout = NO;
+  _enableVerticalLayout = NO;
+  _displayItemTitlesInVerticalLayout = NO;
   [self loadConstraints];
 }
 
@@ -380,8 +381,21 @@ static BOOL gEnablePerformantShadow = NO;
     return;
   }
   _enableVerticalLayout = enableVerticalLayout;
+  for (MDCBottomNavigationItemView *item in self.itemViews) {
+    item.enableVerticalLayout = enableVerticalLayout;
+  }
   if (_enableVerticalLayout) {
     [self loadConstraints];
+  }
+}
+
+- (void)setdisplayItemTitlesInVerticalLayout:(BOOL)displayItemTitlesInVerticalLayout {
+  if (_displayItemTitlesInVerticalLayout == displayItemTitlesInVerticalLayout) {
+    return;
+  }
+  _displayItemTitlesInVerticalLayout = displayItemTitlesInVerticalLayout;
+  for (MDCBottomNavigationItemView *item in self.itemViews) {
+    item.displayTitleInVerticalLayout = _displayItemTitlesInVerticalLayout;
   }
 }
 
@@ -423,6 +437,10 @@ static BOOL gEnablePerformantShadow = NO;
   }
   _itemsLayoutViewAlignmentConstraint.active = YES;
   self.itemsLayoutView.axis = UILayoutConstraintAxisVertical;
+
+  if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+    self.itemsLayoutView.spacing = kDefaultItemSpacingInVerticalLayoutOniPad;
+  }
   [NSLayoutConstraint activateConstraints:self.itemViewWidthConstraints];
   [NSLayoutConstraint activateConstraints:self.itemsLayoutViewVerticalConstraints];
 }
@@ -434,6 +452,7 @@ static BOOL gEnablePerformantShadow = NO;
   CGFloat barHeight = [self calculateBarHeight];
   _itemsLayoutViewHeightConstraint.constant = barHeight;
   self.itemsLayoutView.axis = UILayoutConstraintAxisHorizontal;
+  self.itemsLayoutView.spacing = kDefaultItemHorizontalPadding;
   _itemsLayoutViewBottomAnchorConstraint.active = YES;
   for (NSLayoutConstraint *constraint in self.itemViewHeightConstraints) {
     constraint.constant = barHeight;
@@ -657,6 +676,8 @@ static BOOL gEnablePerformantShadow = NO;
 
     itemView.rippleTouchController.delegate = self;
     itemView.selected = NO;
+    itemView.displayTitleInVerticalLayout = self.displayItemTitlesInVerticalLayout;
+    itemView.enableVerticalLayout = self.enableVerticalLayout;
 
     [self configureTitleStateForItemView:itemView];
     [self configureItemView:itemView withItem:items[i]];

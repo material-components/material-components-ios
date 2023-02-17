@@ -51,9 +51,17 @@ API_AVAILABLE(ios(12.0))
 
 /**
  Configures whether the navigation bar should use vertical layout.
- Default is NO.
+
+ Default @c NO.
  */
 @property(nonatomic, assign) BOOL enableVerticalLayout;
+
+/**
+ Configures whether the navigation bar should show labels in vertical layout.
+
+ Default @c NO.
+ */
+@property(nonatomic, assign) BOOL displayItemTitlesInVerticalLayout;
 
 /**
  An array of view controllers to display when their corresponding tab bar item is selected in the

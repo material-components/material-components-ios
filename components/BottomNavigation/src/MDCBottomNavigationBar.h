@@ -107,6 +107,13 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 @property(nonatomic, assign) BOOL enableVerticalLayout;
 
 /**
+ Configures whether the navigation bar will show titles in vertical layout mode.
+
+ Defaults to @c NO.
+ */
+@property(nonatomic, assign) BOOL displayItemTitlesInVerticalLayout;
+
+/**
  An array of UITabBarItems that is used to populate bottom navigation bar content. It is strongly
  recommended the array contain at least three items and no more than five items -- appearance may
  degrade outside of this range.

@@ -55,6 +55,14 @@ __attribute__((objc_subclassing_restricted))
 /** The @c accessibilityIdentifier of the accessibility element for this view. */
 @property(nonatomic, copy, nullable) NSString *accessibilityElementIdentifier;
 
+#pragma mark - Vertical layout flags
+
+/** The flag to enable vertical layout mode. */
+@property(nonatomic) BOOL enableVerticalLayout;
+
+/** The flag to enable displaying titles vertical layout mode. */
+@property(nonatomic) BOOL displayTitleInVerticalLayout;
+
 /**
  Returns a rect that is the union of all visible content views, inset by
  kMDCButtonNavigationItemViewPointerEffectHoverRectInset. This rect will never be larger than the

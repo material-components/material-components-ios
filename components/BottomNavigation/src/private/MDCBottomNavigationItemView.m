@@ -67,6 +67,8 @@ static const NSTimeInterval kMDCBottomNavigationItemViewLabelFadeOutAnimationDur
 // These values were chosen to achieve visual parity with UITabBar's highlight effect.
 const CGSize MDCButtonNavigationItemViewPointerEffectHighlightRectInset = {-24, -12};
 
+static const CGFloat kLabelYPosAdjustmentInVerticalLayout = 4;
+
 #if TARGET_IPHONE_SIMULATOR
 UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coefficient.
 #endif
@@ -87,6 +89,8 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
+    _displayTitleInVerticalLayout = NO;
+    _enableVerticalLayout = NO;
     _titleBelowIcon = YES;
     _truncatesTitle = YES;
     _titleNumberOfLines = kDefaultTitleNumberOfLines;
@@ -825,6 +829,16 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
   return _badgeAppearance.font;
 }
 
+- (void)setEnableVerticalLayout:(BOOL)enableVerticalLayout {
+  _enableVerticalLayout = enableVerticalLayout;
+  [self setNeedsLayout];
+}
+
+- (void)setDisplayTitleInVerticalLayout:(BOOL)displayTitleInVerticalLayout {
+  _displayTitleInVerticalLayout = displayTitleInVerticalLayout;
+  [self setNeedsLayout];
+}
+
 #pragma mark - UILargeContentViewerItem
 
 - (BOOL)showsLargeContentViewer {
@@ -1075,6 +1089,9 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
 
   CGFloat labelX = [self labelXForRTLState:isRTL isHorizontalLayout:NO];
   CGFloat labelY = [self labelYForHorizontalLayoutState:NO];
+  if (self.enableVerticalLayout) {
+    labelY -= kLabelYPosAdjustmentInVerticalLayout;
+  }
   CGSize labelSize = [self labelSize];
   CGRect labelFrame = CGRectIntegral(CGRectMake(labelX, labelY, labelSize.width, labelSize.height));
   _label.frame = labelFrame;
@@ -1100,6 +1117,9 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
 
   CGFloat labelX = [self labelXForHorizontalLayoutWithRTLState:isRTL];
   CGFloat labelY = [self labelYForHorizontalLayout];
+  if (self.enableVerticalLayout) {
+    labelY -= kLabelYPosAdjustmentInVerticalLayout;
+  }
   CGSize labelSize = [self labelSize];
   CGRect labelFrame = CGRectIntegral(CGRectMake(labelX, labelY, labelSize.width, labelSize.height));
   _label.frame = labelFrame;
@@ -1137,8 +1157,9 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
 - (BOOL)isTitleHiddenInAnchoredLayout {
   UITraitCollection *traitCollection = self.traitCollection;
 
-  return traitCollection.verticalSizeClass == UIUserInterfaceSizeClassCompact ||
-         _titleVisibility == MDCBottomNavigationBarTitleVisibilityNever;
+  return (traitCollection.verticalSizeClass == UIUserInterfaceSizeClassCompact ||
+          _titleVisibility == MDCBottomNavigationBarTitleVisibilityNever) &&
+         !(self.displayTitleInVerticalLayout && self.enableVerticalLayout);
 }
 
 @end

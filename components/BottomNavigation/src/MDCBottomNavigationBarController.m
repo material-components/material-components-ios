@@ -125,7 +125,8 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
                      forKeyPath:NSStringFromSelector(@selector(items))
                         options:NSKeyValueObservingOptionNew
                         context:kObservationContext];
-    self.navigationBar.enableVerticalLayout = self.enableVerticalLayout;
+    _enableVerticalLayout = NO;
+    _displayItemTitlesInVerticalLayout = NO;
   }
 
   return self;
@@ -234,6 +235,14 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
   if (_enableVerticalLayout) {
     [self loadConstraintsBasedOnRule];
   }
+}
+
+- (void)setdisplayItemTitlesInVerticalLayout:(BOOL)displayItemTitlesInVerticalLayout {
+  if (_displayItemTitlesInVerticalLayout == displayItemTitlesInVerticalLayout) {
+    return;
+  }
+  _displayItemTitlesInVerticalLayout = displayItemTitlesInVerticalLayout;
+  self.navigationBar.displayItemTitlesInVerticalLayout = displayItemTitlesInVerticalLayout;
 }
 
 - (void)setViewControllers:(NSArray<UIViewController *> *)viewControllers {
