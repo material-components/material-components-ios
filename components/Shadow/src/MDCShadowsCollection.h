@@ -128,7 +128,7 @@ FOUNDATION_EXTERN void MDCConfigureShadowForView(UIView *_Nonnull view, MDCShado
  */
 FOUNDATION_EXTERN void MDCConfigureShadowForViewWithPath(UIView *_Nonnull view,
                                                          MDCShadow *_Nonnull shadow,
-                                                         CGPathRef _Nonnull path)
+                                                         CGPathRef _Nullable path)
     NS_SWIFT_NAME(MDCConfigureShadow(for:shadow:path:));
 
 /**

@@ -175,7 +175,7 @@ void MDCConfigureShadowForView(UIView *view, MDCShadow *shadow) {
   MDCConfigureShadowForViewWithPath(view, shadow, path.CGPath);
 }
 
-void MDCConfigureShadowForViewWithPath(UIView *view, MDCShadow *shadow, CGPathRef path) {
+void MDCConfigureShadowForViewWithPath(UIView *view, MDCShadow *shadow, CGPathRef _Nullable path) {
   UIColor *shadowColor = shadow.color;
 #if MDC_AVAILABLE_SDK_IOS(13_0)
   if (@available(ios 13.0, *)) {
