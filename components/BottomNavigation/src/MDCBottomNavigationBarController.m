@@ -237,7 +237,7 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
   }
 }
 
-- (void)setdisplayItemTitlesInVerticalLayout:(BOOL)displayItemTitlesInVerticalLayout {
+- (void)setDisplayItemTitlesInVerticalLayout:(BOOL)displayItemTitlesInVerticalLayout {
   if (_displayItemTitlesInVerticalLayout == displayItemTitlesInVerticalLayout) {
     return;
   }

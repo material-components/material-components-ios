@@ -837,6 +837,7 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
 - (void)setDisplayTitleInVerticalLayout:(BOOL)displayTitleInVerticalLayout {
   _displayTitleInVerticalLayout = displayTitleInVerticalLayout;
   [self setNeedsLayout];
+  [self layoutIfNeeded];
 }
 
 #pragma mark - UILargeContentViewerItem

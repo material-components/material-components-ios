@@ -56,7 +56,8 @@ static const CGFloat kDefaultActiveIndicatorWidth = 60;
 // Vertical layout
 static const CGFloat kDefaultVerticalLayoutWidth = 80;
 static const CGFloat kDefaultVerticalPadding = 45;
-static const CGFloat kDefaultItemSpacingInVerticalLayoutOniPad = 10;
+static const CGFloat kDefaultItemSpacingInVerticalLayoutOniPad = 15;
+static const CGFloat kDefaultItemSpacingInVerticalLayout = 8;
 
 @interface MDCBottomNavigationBar () <MDCRippleTouchControllerDelegate>
 
@@ -391,7 +392,7 @@ static BOOL gEnablePerformantShadow = NO;
   }
 }
 
-- (void)setdisplayItemTitlesInVerticalLayout:(BOOL)displayItemTitlesInVerticalLayout {
+- (void)setDisplayItemTitlesInVerticalLayout:(BOOL)displayItemTitlesInVerticalLayout {
   if (_displayItemTitlesInVerticalLayout == displayItemTitlesInVerticalLayout) {
     return;
   }
@@ -442,6 +443,8 @@ static BOOL gEnablePerformantShadow = NO;
 
   if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
     self.itemsLayoutView.spacing = kDefaultItemSpacingInVerticalLayoutOniPad;
+  } else if (self.displayItemTitlesInVerticalLayout) {
+    self.itemsLayoutView.spacing = kDefaultItemSpacingInVerticalLayout;
   }
   [NSLayoutConstraint activateConstraints:self.itemViewWidthConstraints];
   [NSLayoutConstraint activateConstraints:self.itemsLayoutViewVerticalConstraints];
