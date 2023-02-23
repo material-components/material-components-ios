@@ -232,9 +232,7 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
   }
   _enableVerticalLayout = enableVerticalLayout;
   self.navigationBar.enableVerticalLayout = enableVerticalLayout;
-  if (_enableVerticalLayout) {
-    [self loadConstraintsBasedOnRule];
-  }
+  [self loadConstraintsBasedOnRule];
 }
 
 - (void)setDisplayItemTitlesInVerticalLayout:(BOOL)displayItemTitlesInVerticalLayout {
@@ -559,15 +557,6 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
 - (void)traitCollectionDidChange:(nullable UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
   [self loadConstraintsBasedOnRule];
-}
-
-- (void)viewWillTransitionToSize:(CGSize)size
-       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-  [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-
-  if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-    [self loadConstraintsBasedOnRule];
-  }
 }
 
 /**

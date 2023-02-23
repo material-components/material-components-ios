@@ -387,9 +387,7 @@ static BOOL gEnablePerformantShadow = NO;
   for (MDCBottomNavigationItemView *item in self.itemViews) {
     item.enableVerticalLayout = enableVerticalLayout;
   }
-  if (_enableVerticalLayout) {
-    [self loadConstraints];
-  }
+  [self loadConstraints];
 }
 
 - (void)setDisplayItemTitlesInVerticalLayout:(BOOL)displayItemTitlesInVerticalLayout {
