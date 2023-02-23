@@ -16,36 +16,27 @@ import Foundation
 import UIKit
 import MaterialComponents.MaterialCarousel
 
-@available(iOS 14.0, *)
-class ImmersiveFeedTypicalUse_Component: UIViewController, UICollectionViewDataSource {
+@available(iOS 13.0, *)
+class ImmersiveFeedTypicalUse_Component: UIViewController, ImmersiveFeedViewControllerDataSource {
   private let cellID = "cell"
   private var verticalCarousel = ImmersiveFeedViewController()
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    verticalCarousel.register(ImmersiveFeedCell.self, forCellWithReuseIdentifier: cellID)
+    verticalCarousel.register(TestImmersiveFeedCell.self, forCellWithReuseIdentifier: cellID)
     verticalCarousel.dataSource = self
     self.view?.addSubview(verticalCarousel.view)
     self.addChild(verticalCarousel)
   }
 
-  public func numberOfSections(in collectionView: UICollectionView) -> Int {
-    return 1
-  }
-
-  public func collectionView(
-    _ collectionView: UICollectionView, numberOfItemsInSection section: Int
-  ) -> Int {
+  @objc func numberOfItems() -> Int {
     return 3
   }
 
-  public func collectionView(
-    _ collectionView: UICollectionView,
+  @objc func immersiveFeedViewController(
     cellForItemAt indexPath: IndexPath
   ) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(
-      withReuseIdentifier: cellID, for: indexPath)
-
+    let cell = verticalCarousel.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath)
     switch indexPath.row {
     case 1:
       cell.backgroundColor = .blue
@@ -54,15 +45,14 @@ class ImmersiveFeedTypicalUse_Component: UIViewController, UICollectionViewDataS
     default:
       cell.backgroundColor = .yellow
     }
-
     return cell
   }
 }
 
-@available(iOS 14.0, *)
+@available(iOS 13.0, *)
 extension ImmersiveFeedTypicalUse_Component {
   /// Provides a testing cell for the example.
-  private class ImmersiveFeedCell: UICollectionViewCell {
+  private class TestImmersiveFeedCell: UICollectionViewCell {
     private let defaultCornerRadius = 32.0
 
     override init(frame: CGRect) {
@@ -77,7 +67,7 @@ extension ImmersiveFeedTypicalUse_Component {
   }
 }
 
-@available(iOS 14.0, *)
+@available(iOS 13.0, *)
 extension ImmersiveFeedTypicalUse_Component {
   @objc class func catalogMetadata() -> [String: Any] {
     return [
