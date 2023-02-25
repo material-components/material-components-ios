@@ -14,8 +14,16 @@
 
 import UIKit
 
-class ParallaxFlowLayout: UICollectionViewFlowLayout {
-  public override init() {
+@objc(MDCParallaxFlowLayout)
+public class ParallaxFlowLayout: UICollectionViewFlowLayout {
+  /// A variable that determines the size that the parallax flow layout will use.
+  public var cellSize = CGSize.zero {
+    didSet {
+      itemSize = cellSize
+    }
+  }
+
+  override public init() {
     super.init()
     minimumInteritemSpacing = 0
     minimumLineSpacing = 0
@@ -26,15 +34,15 @@ class ParallaxFlowLayout: UICollectionViewFlowLayout {
     fatalError("init(coder:) has not been implemented")
   }
 
-  override class var layoutAttributesClass: AnyClass {
+  override public class var layoutAttributesClass: AnyClass {
     return ParallaxLayoutAttributes.self
   }
 
-  override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+  override public func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
     return true
   }
 
-  override func layoutAttributesForElements(
+  override public func layoutAttributesForElements(
     in rect: CGRect
   ) -> [UICollectionViewLayoutAttributes]? {
     guard let layoutAttributes = super.layoutAttributesForElements(in: rect) else {
@@ -55,7 +63,7 @@ class ParallaxFlowLayout: UICollectionViewFlowLayout {
     return layoutAttributes
   }
 
-  override func layoutAttributesForItem(
+  override public func layoutAttributesForItem(
     at indexPath: IndexPath
   ) -> UICollectionViewLayoutAttributes? {
     let layoutAttributes = super.layoutAttributesForItem(at: indexPath)
