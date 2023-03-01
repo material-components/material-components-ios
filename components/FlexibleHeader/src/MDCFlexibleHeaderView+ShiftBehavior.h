@@ -17,6 +17,8 @@
 
 #pragma mark - Shift behavior-specific APIs
 
+API_DEPRECATED_BEGIN("Use a branded UINavigationController instead.", ios(12, API_TO_BE_DEPRECATED))
+
 /** Header's y position never changes in reaction to scroll events. */
 FOUNDATION_EXTERN const MDCFlexibleHeaderShiftBehavior MDCFlexibleHeaderShiftBehaviorDisabled;
 
@@ -179,3 +181,5 @@ typedef NS_ENUM(NSInteger, MDCFlexibleHeaderContentImportance) {
                                   targetContentOffset:(inout nonnull CGPoint *)targetContentOffset;
 
 @end
+
+API_DEPRECATED_END

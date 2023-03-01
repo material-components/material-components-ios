@@ -21,6 +21,8 @@
 #import "MDCFlexibleHeaderViewDelegate.h"
 #import "MaterialShadowElevations.h"
 
+API_DEPRECATED_BEGIN("Use a branded UINavigationController instead.", ios(12, API_TO_BE_DEPRECATED))
+
 FOUNDATION_EXPORT NSString *_Nonnull const MDCFlexibleHeaderViewAccessibilityIdentifier;
 
 typedef void (^MDCFlexibleHeaderChangeContentInsetsBlock)(void);
@@ -461,3 +463,5 @@ __deprecated_msg("Please register views directly to the flexible header.");
 
 @end
 // clang-format on
+
+API_DEPRECATED_END

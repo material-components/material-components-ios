@@ -15,6 +15,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+API_DEPRECATED_BEGIN("Use a branded UINavigationController instead.", ios(12, API_TO_BE_DEPRECATED))
+
 /**
  A hairline is a narrow line shown at the bottom edge of a Flexible Header.
 
@@ -58,3 +60,5 @@ __attribute__((objc_subclassing_restricted)) @interface MDCFlexibleHeaderHairlin
 - (nonnull instancetype)init NS_UNAVAILABLE;
 
 @end
+
+API_DEPRECATED_END

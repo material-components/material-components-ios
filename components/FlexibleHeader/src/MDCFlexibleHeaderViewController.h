@@ -23,6 +23,8 @@
 @protocol MDCFlexibleHeaderViewLayoutDelegate;
 @protocol MDCFlexibleHeaderSafeAreaDelegate;
 
+API_DEPRECATED_BEGIN("Use a branded UINavigationController instead.", ios(12, API_TO_BE_DEPRECATED))
+
 /**
  The MDCFlexibleHeaderViewController controller is a simple UIViewController-oriented interface
  for the flexible header view.
@@ -242,3 +244,5 @@ API_UNAVAILABLE(tvos, watchos)
 @property(nonatomic) BOOL useAdditionalSafeAreaInsetsForWebKitScrollViews;
 
 @end
+
+API_DEPRECATED_END

@@ -14,6 +14,8 @@
 
 #import <Foundation/Foundation.h>
 
+API_DEPRECATED_BEGIN("Use a branded UINavigationController instead.", ios(12, API_TO_BE_DEPRECATED))
+
 /**
  The possible translation (shift) behaviors of a flexible header view.
 
@@ -21,3 +23,5 @@
  @c MDCFlexibleHeaderScrollPhaseShifting scroll phase.
  */
 typedef NSInteger MDCFlexibleHeaderShiftBehavior NS_TYPED_EXTENSIBLE_ENUM;
+
+API_DEPRECATED_END

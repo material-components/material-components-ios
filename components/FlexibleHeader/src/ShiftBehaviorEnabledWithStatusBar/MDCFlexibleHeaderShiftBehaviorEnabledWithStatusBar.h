@@ -15,6 +15,9 @@
 
 #import "MaterialFlexibleHeader+ShiftBehavior.h"
 
+API_DEPRECATED_BEGIN("Use a branded UINavigationController instead.",
+                     ios(12, API_TO_BE_DEPRECATED))
+
 /**
  When fully-collapsed, the header translates vertically in reaction to scroll
  events along with the status bar.
@@ -24,3 +27,5 @@
  */
 FOUNDATION_EXTERN const MDCFlexibleHeaderShiftBehavior
     MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
+
+API_DEPRECATED_END

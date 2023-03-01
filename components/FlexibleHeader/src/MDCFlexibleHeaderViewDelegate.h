@@ -16,6 +16,8 @@
 
 @class MDCFlexibleHeaderView;
 
+API_DEPRECATED_BEGIN("Use a branded UINavigationController instead.", ios(12, API_TO_BE_DEPRECATED))
+
 /**
  The MDCFlexibleHeaderViewDelegate protocol allows a delegate to respond to changes in the header
  view's state.
@@ -41,3 +43,5 @@
 - (void)flexibleHeaderViewFrameDidChange:(nonnull MDCFlexibleHeaderView *)headerView;
 
 @end
+
+API_DEPRECATED_END

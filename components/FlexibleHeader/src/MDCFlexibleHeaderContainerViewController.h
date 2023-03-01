@@ -16,6 +16,8 @@
 
 @class MDCFlexibleHeaderViewController;
 
+API_DEPRECATED_BEGIN("Use a branded UINavigationController instead.", ios(12, API_TO_BE_DEPRECATED))
+
 /**
  The MDCFlexibleHeaderContainerViewController controller is a straightforward container of a
  content view controller and a MDCFlexibleHeaderViewController.
@@ -79,3 +81,5 @@
      UITraitCollection *_Nullable previousTraitCollection);
 
 @end
+
+API_DEPRECATED_END
