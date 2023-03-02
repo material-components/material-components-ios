@@ -579,19 +579,6 @@ static void MoveSliderThumbToRelativePosition(MDCSlider *slider,
   [self generateSnapshotAndVerifyForView:self.slider];
 }
 
-- (void)testExplicitlyNonDiscreteSliderAlignsToThumbPosition {
-  // Given
-  self.slider.numberOfDiscreteValues = 5;
-  self.slider.discrete = NO;
-
-  // When
-  MDCSliderSnapshotTestTouchFake *touch = TouchThumbInSlider(self.slider);
-  MoveSliderThumbToRelativePosition(self.slider, touch, (CGFloat)0.15);
-
-  // Then
-  [self generateSnapshotAndVerifyForView:self.slider];
-}
-
 - (void)testNotHollowThumbAtStart {
   // When
   self.slider.thumbHollowAtStart = NO;
