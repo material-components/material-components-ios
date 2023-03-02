@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
@@ -143,6 +144,26 @@ NS_ASSUME_NONNULL_BEGIN
   XCTAssertTrue(
       UIEdgeInsetsEqualToEdgeInsets(self.button.contentEdgeInsets, self.edgeInsetsForImageOnly));
   XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(self.button.imageEdgeInsets, UIEdgeInsetsZero));
+}
+
+- (void)testEdgeInsetsWithImageAndTitle_attributedTitleOnly {
+  // Given
+  [self.button setTitle:nil forState:UIControlStateNormal];
+  [self.button setImage:self.image forState:UIControlStateNormal];
+  [self.button setEdgeInsetsWithImageAndTitle:self.edgeInsetsForImageAndTitle];
+  [self.button setImageEdgeInsetsWithImageAndTitle:self.imageEdgeInsetsForImageAndTitle];
+  [self.button setEdgeInsetsWithImageOnly:self.edgeInsetsForImageOnly];
+  [self.button setEdgeInsetsWithTitleOnly:self.edgeInsetsForTitleOnly];
+
+  // When
+  NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:@"Attributed title"];
+  [self.button setAttributedTitle:attrString forState:UIControlStateNormal];
+
+  // Then
+  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(self.button.contentEdgeInsets,
+                                              self.edgeInsetsForImageAndTitle));
+  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(self.button.imageEdgeInsets,
+                                              self.imageEdgeInsetsForImageAndTitle));
 }
 
 @end

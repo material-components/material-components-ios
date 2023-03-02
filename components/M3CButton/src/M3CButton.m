@@ -205,7 +205,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)updateInsets {
   if (!_customInsetAvailable) {
-    BOOL hasTitle = self.currentTitle.length > 0;
+    BOOL hasTitle = self.currentTitle.length > 0 || self.currentAttributedTitle.length > 0;
     BOOL hasImage = self.currentImage.size.width > 0;
     if (hasImage && hasTitle) {
       self.contentEdgeInsets = self.edgeInsetsWithImageAndTitle;
@@ -265,6 +265,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setTitle:(nullable NSString *)title forState:(UIControlState)state {
   [super setTitle:title forState:state];
+  [self updateInsets];
+}
+
+- (void)setAttributedTitle:(nullable NSAttributedString *)title forState:(UIControlState)state {
+  [super setAttributedTitle:title forState:state];
   [self updateInsets];
 }
 
