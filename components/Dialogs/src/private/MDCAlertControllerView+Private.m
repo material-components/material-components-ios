@@ -1228,10 +1228,13 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   if (!position) {
     return NO;
   }
+  BOOL isRTL =
+      self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
 
-  UITextRange *range = [self.tokenizer rangeEnclosingPosition:position
-                                              withGranularity:UITextGranularityCharacter
-                                                  inDirection:UITextLayoutDirectionLeft];
+  UITextRange *range = [self.tokenizer
+      rangeEnclosingPosition:position
+             withGranularity:UITextGranularityCharacter
+                 inDirection:isRTL ? UITextLayoutDirectionRight : UITextLayoutDirectionLeft];
   if (!range) {
     return NO;
   }
