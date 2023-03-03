@@ -1157,10 +1157,12 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
 // checked because selection state is not a condition for label visibility in GM3.
 - (BOOL)isTitleHiddenInAnchoredLayout {
   UITraitCollection *traitCollection = self.traitCollection;
+  if (self.enableVerticalLayout) {
+    return !self.displayTitleInVerticalLayout;
+  }
 
   return (traitCollection.verticalSizeClass == UIUserInterfaceSizeClassCompact ||
-          _titleVisibility == MDCBottomNavigationBarTitleVisibilityNever) &&
-         !(self.displayTitleInVerticalLayout && self.enableVerticalLayout);
+          _titleVisibility == MDCBottomNavigationBarTitleVisibilityNever);
 }
 
 @end
