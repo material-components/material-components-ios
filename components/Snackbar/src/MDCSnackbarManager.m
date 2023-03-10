@@ -101,7 +101,15 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
  */
 @property(nonatomic, weak) id<MDCSnackbarManagerDelegate> delegate;
 
-- (instancetype)initWithSnackbarManager:(__weak MDCSnackbarManager *)manager;
+/**
+ Creates a MDCSnackbarManagerInternal associated with a given scene.
+
+ @param manager The manager that MDCSnackbarManagerInternal wraps.
+ @param windowScene An optional WindowScene to show snackbars on. If this is omitted, we will make a
+ good-effort guess of which window to show a snackbar on (see "bestGuessWindow").
+ */
+- (instancetype)initWithSnackbarManager:(__weak MDCSnackbarManager *)manager
+                            windowScene:(nullable UIWindowScene *)windowScene;
 
 @end
 
@@ -121,12 +129,16 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 
 @end
 
-@implementation MDCSnackbarManagerInternal
+@implementation MDCSnackbarManagerInternal {
+  UIWindowScene *_windowScene;
+}
 
-- (instancetype)initWithSnackbarManager:(MDCSnackbarManager *__weak)manager {
+- (instancetype)initWithSnackbarManager:(MDCSnackbarManager *__weak)manager
+                            windowScene:(nullable UIWindowScene *)windowScene {
   self = [super init];
   if (self) {
     _manager = manager;
+    _windowScene = windowScene;
     _pendingMessages = [[NSMutableArray alloc] init];
     _suspensionTokens = [NSMutableDictionary dictionary];
 
@@ -416,9 +428,16 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 - (UIWindow *)bestGuessWindow {
   UIApplication *application = [UIApplication mdc_safeSharedApplication];
 
+  NSArray<UIWindow *> *windows;
+  if (_windowScene != nil) {
+    windows = _windowScene.windows;
+  } else {
+    windows = [UIApplication mdc_safeSharedApplication].windows;
+  }
+
   // Check all of the windows in existence for an overlay window, because that's what we prefer to
   // present in.
-  for (UIWindow *window in application.windows) {
+  for (UIWindow *window in windows) {
     if ([window isKindOfClass:[MDCOverlayWindow class]]) {
       return window;
     }
@@ -427,22 +446,27 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   // Next see if the application's delegate declares a window. That's a good indicator of it being
   // the 'main' window for an application.
   if ([application.delegate respondsToSelector:@selector(window)]) {
-    id potentialWindow = application.delegate.window;
-    if (potentialWindow != nil) {
+    UIWindow *potentialWindow = application.delegate.window;
+    BOOL belongsToRightScene = (_windowScene == nil || potentialWindow.windowScene == _windowScene);
+    if (potentialWindow != nil && belongsToRightScene) {
       return potentialWindow;
     }
   }
 
   // Check for the key window in the list of windows. This allows to find the correct window
   // in apps with multi-window support.
-  for (UIWindow *window in [UIApplication mdc_safeSharedApplication].windows) {
+  for (UIWindow *window in windows) {
     if (window.isKeyWindow) {
       return window;
     }
   }
 
   // Default to the key window, since we couldn't find anything better.
-  return [[UIApplication mdc_safeSharedApplication] keyWindow];
+  if (_windowScene) {
+    return [_windowScene keyWindow];
+  } else {
+    return [[UIApplication mdc_safeSharedApplication] keyWindow];
+  }
 }
 
 - (void)deactivateOverlay:(UIView *)overlay {
@@ -598,10 +622,11 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   return defaultManager;
 }
 
-- (instancetype)init {
+- (instancetype)initWithWindowScene:(nullable UIWindowScene *)windowScene {
   self = [super init];
   if (self) {
-    _internalManager = [[MDCSnackbarManagerInternal alloc] initWithSnackbarManager:self];
+    _internalManager = [[MDCSnackbarManagerInternal alloc] initWithSnackbarManager:self
+                                                                       windowScene:windowScene];
     _uppercaseButtonTitle = YES;
     _disabledButtonAlpha = (CGFloat)0.12;
     _messageElevation = MDCShadowElevationSnackbar;
@@ -611,6 +636,10 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
     _enableDismissalAccessibilityAffordance = NO;
   }
   return self;
+}
+
+- (instancetype)init {
+  return [self initWithWindowScene:nil];
 }
 
 - (void)setDelegate:(id<MDCSnackbarManagerDelegate>)delegate {
