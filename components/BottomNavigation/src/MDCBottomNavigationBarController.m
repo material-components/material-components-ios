@@ -312,7 +312,7 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
   void (^completionBlock)(BOOL) = ^(BOOL finished) {
     // Update the end hidden state of the navigation bar if it was not interrupted (the end state
     // matches the current state). Otherwise an already scheduled animation will take care of this.
-    if (finished && !hidden != !self.navigationBarItemsBottomAnchorConstraint.active) {
+    if (finished) {
       navigationBar.hidden = hidden;
     }
   };
