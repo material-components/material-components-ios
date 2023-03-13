@@ -35,7 +35,6 @@ static const CGFloat kViewOffsetToCenter = 20;
                      @"\nA floating action button (FAB) represents the primary action of a screen.",
     @"primaryDemo" : @YES,
     @"presentable" : @YES,
-    @"thresholdPercentage" : @1.5,
   };
 }
 
@@ -48,7 +47,7 @@ static const CGFloat kViewOffsetToCenter = 20;
     @"breadcrumbs" : @[ @"Buttons", @"Shaped Buttons" ],
     @"primaryDemo" : @NO,
     @"presentable" : @YES,
-    @"thresholdPercentage" : @1.5,
+    @"snapshotDelay" : @5.0,
   };
 }
 
