@@ -43,6 +43,28 @@
 @interface MDCSnackbarManager : NSObject <MDCElevationOverriding>
 #pragma clang diagnostic pop
 
+NS_ASSUME_NONNULL_BEGIN
+
+/**
+ Initializes a snackbar manager.
+
+ If windowScene is null then there is no guarantee that the window that presents a snackbar will
+ belong to a given scene.
+
+ @param windowScene The scene that is searched for an appropriate window when presenting a snackbar.
+ @return An initialized MDCSnackbarManager object.
+ */
+- (instancetype)initWithWindowScene:(nullable UIWindowScene *)windowScene NS_DESIGNATED_INITIALIZER;
+
+/**
+ Convenience initializer.
+
+ @return An initialized MDCSnackbarManager object.
+ */
+- (instancetype)init;
+
+NS_ASSUME_NONNULL_END
+
 /**
  The default shared instance of MDCSnackbarManager.
 
