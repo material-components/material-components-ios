@@ -94,6 +94,9 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
 @property(nonatomic, strong, nonnull)
     NSMutableArray<NSLayoutConstraint *> *navigationBarVerticalLayoutConstraints;
 
+/** The constraint between the leading edge of @c navigationBar and its superview. */
+@property(nonatomic, strong, nullable) NSLayoutConstraint *navigationBarLeadingAnchorConstraint;
+
 /** The constraints for the @c navigationBar in a horizontal layout. */
 @property(nonatomic, strong, nonnull)
     NSMutableArray<NSLayoutConstraint *> *navigationBarHorizontalLayoutConstraints;
@@ -149,12 +152,6 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
   if (self.isLongPressPopUpViewEnabled && !self.isNavigationBarLongPressRecognizerRegistered) {
     [self.navigationBar addGestureRecognizer:self.navigationBarLongPressRecognizer];
   }
-}
-
-- (BOOL)isStatusBarOrientationLandscape {
-  UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-  return orientation == UIInterfaceOrientationLandscapeLeft ||
-         orientation == UIInterfaceOrientationLandscapeRight;
 }
 
 - (void)viewSafeAreaInsetsDidChange {
@@ -305,9 +302,20 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
   _navigationBarHidden = hidden;
 
   MDCBottomNavigationBar *navigationBar = self.navigationBar;
-  self.navigationBarItemsBottomAnchorConstraint.active = !hidden && !self.enableVerticalLayout;
-  self.navigationBarBottomAnchorConstraint.constant =
-      hidden ? CGRectGetHeight(navigationBar.frame) : 0;
+  self.navigationBarItemsBottomAnchorConstraint.active =
+      !hidden && !navigationBar.enableVerticalLayout;
+  if (!navigationBar.enableVerticalLayout) {
+    // Height is not used for animations.
+    CGFloat height = CGRectGetHeight(navigationBar.frame);
+    self.navigationBarBottomAnchorConstraint.constant = hidden ? height : 0;
+    self.navigationBarLeadingAnchorConstraint.constant = 0;
+  } else {
+    self.navigationBarBottomAnchorConstraint.constant = 0;
+    self.navigationBarLeadingAnchorConstraint.constant =
+        hidden ? -[self barWidthForVerticalLayout] : 0;
+    self.navigationBarVerticalWidthConstraint.constant =
+        !hidden ? [self barWidthForVerticalLayout] : 0;
+  }
 
   void (^completionBlock)(BOOL) = ^(BOOL finished) {
     // Update the end hidden state of the navigation bar if it was not interrupted (the end state
@@ -594,7 +602,9 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
 
 - (void)loadConstraintsForNavigationBar {
   self.navigationBar.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.navigationBar.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = YES;
+  self.navigationBarLeadingAnchorConstraint =
+      [self.navigationBar.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor];
+  self.navigationBarLeadingAnchorConstraint.active = YES;
   self.navigationBarBottomAnchorConstraint =
       [self.navigationBar.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor];
   self.navigationBarBottomAnchorConstraint.active = YES;
