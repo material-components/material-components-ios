@@ -669,8 +669,13 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
     }
   }
 
-  [self.actionButton setTitleFont:finalButtonFont forState:UIControlStateNormal];
-  [self.actionButton setTitleFont:finalButtonFont forState:UIControlStateHighlighted];
+  if ([self.actionButton isKindOfClass:[MDCButton class]]) {
+    MDCButton *button = (MDCButton *)self.actionButton;
+    [button setTitleFont:finalButtonFont forState:UIControlStateNormal];
+    [button setTitleFont:finalButtonFont forState:UIControlStateHighlighted];
+  } else {
+    self.actionButton.titleLabel.font = finalButtonFont;
+  }
 
   [self setNeedsLayout];
 }
@@ -680,7 +685,9 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
 }
 
 - (NSArray<MDCButton *> *)actionButtons {
-  return self.actionButton ? @[ self.actionButton ] : @[];
+  return self.actionButton && [self.actionButton isKindOfClass:[MDCButton class]]
+             ? @[ self.actionButton ]
+             : @[];
 }
 
 #pragma mark - Constraints and layout

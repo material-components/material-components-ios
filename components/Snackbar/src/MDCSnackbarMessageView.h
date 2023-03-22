@@ -60,14 +60,10 @@
  */
 @property(nonatomic, strong, nullable) UIFont *buttonFont UI_APPEARANCE_SELECTOR;
 
-// TODO(b/238930139): Remove usage of this deprecated API.
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 /**
  The action button for the snackbar, if `message.action` is set.
  */
-@property(nonatomic, strong, nullable) MDCButton *actionButton;
-#pragma clang diagnostic pop
+@property(nonatomic, strong, nullable) UIButton *actionButton;
 
 // TODO(b/238930139): Remove usage of this deprecated API.
 #pragma clang diagnostic push

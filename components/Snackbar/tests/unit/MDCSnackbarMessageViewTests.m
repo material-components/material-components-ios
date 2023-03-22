@@ -392,10 +392,12 @@ static const int64_t kDispatchTimeWait = (int64_t)((CGFloat)0.2 * NSEC_PER_SEC);
   [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
-  MDCButton *actionButton = self.manager.internalManager.currentSnackbar.actionButton;
-  XCTAssertFalse(actionButton.uppercaseTitle);
-  XCTAssertEqual(actionButton.disabledAlpha, 0.5);
-  XCTAssertEqualObjects(UIColor.redColor, actionButton.inkColor);
+  UIButton *actionButton = self.manager.internalManager.currentSnackbar.actionButton;
+  XCTAssertTrue([actionButton isKindOfClass:[MDCButton class]]);
+  MDCButton *button = (MDCButton *)actionButton;
+  XCTAssertFalse(button.uppercaseTitle);
+  XCTAssertEqual(button.disabledAlpha, 0.5);
+  XCTAssertEqualObjects(UIColor.redColor, button.inkColor);
 }
 
 - (void)testTraitCollectionDidChangeCalledWhenTraitCollectionChanges {
@@ -722,7 +724,7 @@ static const int64_t kDispatchTimeWait = (int64_t)((CGFloat)0.2 * NSEC_PER_SEC);
   [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
-  MDCButton *actionButton = self.manager.internalManager.currentSnackbar.actionButton;
+  UIButton *actionButton = self.manager.internalManager.currentSnackbar.actionButton;
   NSArray *actionButtons = self.manager.internalManager.currentSnackbar.actionButtons;
   XCTAssertEqual(actionButtons.count, 1.0);
   XCTAssertEqual(actionButtons.firstObject, actionButton);
@@ -738,7 +740,7 @@ static const int64_t kDispatchTimeWait = (int64_t)((CGFloat)0.2 * NSEC_PER_SEC);
   [self waitForExpectationsWithTimeout:3 handler:nil];
 
   // Then
-  MDCButton *actionButton = self.manager.internalManager.currentSnackbar.actionButton;
+  UIButton *actionButton = self.manager.internalManager.currentSnackbar.actionButton;
   NSArray *actionButtons = self.manager.internalManager.currentSnackbar.actionButtons;
   XCTAssertNil(actionButton);
   XCTAssertEqual(actionButtons.count, 0);

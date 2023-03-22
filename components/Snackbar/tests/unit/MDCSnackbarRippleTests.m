@@ -74,10 +74,12 @@
 
   // Then
   [self waitForExpectationsWithTimeout:1 handler:nil];
-  MDCButton *actionButton = self.manager.internalManager.currentSnackbar.actionButton;
+  UIButton *actionButton = self.manager.internalManager.currentSnackbar.actionButton;
 
-  XCTAssertFalse(actionButton.enableRippleBehavior);
-  XCTAssertEqual(actionButton.inkStyle, MDCInkStyleBounded);
+  XCTAssertTrue([actionButton isKindOfClass:[MDCButton class]]);
+  MDCButton *button = (MDCButton *)actionButton;
+  XCTAssertFalse(button.enableRippleBehavior);
+  XCTAssertEqual(button.inkStyle, MDCInkStyleBounded);
 }
 
 /**
@@ -94,9 +96,11 @@
 
   // Then
   [self waitForExpectationsWithTimeout:1 handler:nil];
-  MDCButton *actionButton = self.manager.internalManager.currentSnackbar.actionButton;
-  XCTAssertTrue(actionButton.enableRippleBehavior);
-  XCTAssertEqual(actionButton.inkStyle, MDCInkStyleBounded);
+  UIButton *actionButton = self.manager.internalManager.currentSnackbar.actionButton;
+  XCTAssertTrue([actionButton isKindOfClass:[MDCButton class]]);
+  MDCButton *button = (MDCButton *)actionButton;
+  XCTAssertTrue(button.enableRippleBehavior);
+  XCTAssertEqual(button.inkStyle, MDCInkStyleBounded);
 }
 
 @end

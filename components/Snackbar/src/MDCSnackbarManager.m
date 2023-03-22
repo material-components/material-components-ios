@@ -878,7 +878,11 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 - (void)setUppercaseButtonTitle:(BOOL)uppercaseButtonTitle {
   _uppercaseButtonTitle = uppercaseButtonTitle;
   [self runSnackbarUpdatesOnMainThread:^{
-    self.internalManager.currentSnackbar.actionButton.uppercaseTitle = uppercaseButtonTitle;
+    UIButton *currentButton = self.internalManager.currentSnackbar.actionButton;
+    if ([currentButton isKindOfClass:[MDCButton class]]) {
+      MDCButton *button = (MDCButton *)currentButton;
+      button.uppercaseTitle = uppercaseButtonTitle;
+    }
   }];
 }
 
@@ -890,7 +894,11 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   _disabledButtonAlpha = disabledButtonAlpha;
 
   [self runSnackbarUpdatesOnMainThread:^{
-    self.internalManager.currentSnackbar.actionButton.disabledAlpha = disabledButtonAlpha;
+    UIButton *currentButton = self.internalManager.currentSnackbar.actionButton;
+    if ([currentButton isKindOfClass:[MDCButton class]]) {
+      MDCButton *button = (MDCButton *)currentButton;
+      button.disabledAlpha = disabledButtonAlpha;
+    }
   }];
 }
 
@@ -902,7 +910,11 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   _buttonInkColor = buttonInkColor;
 
   [self runSnackbarUpdatesOnMainThread:^{
-    self.internalManager.currentSnackbar.actionButton.inkColor = buttonInkColor;
+    UIButton *currentButton = self.internalManager.currentSnackbar.actionButton;
+    if ([currentButton isKindOfClass:[MDCButton class]]) {
+      MDCButton *button = (MDCButton *)currentButton;
+      button.inkColor = buttonInkColor;
+    }
   }];
 }
 
