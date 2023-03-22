@@ -686,7 +686,7 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
 
 - (NSArray<MDCButton *> *)actionButtons {
   return self.actionButton && [self.actionButton isKindOfClass:[MDCButton class]]
-             ? @[ self.actionButton ]
+             ? @[ (MDCButton *)self.actionButton ]
              : @[];
 }
 
