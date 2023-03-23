@@ -65,17 +65,6 @@
  */
 @property(nonatomic, strong, nullable) UIButton *actionButton;
 
-// TODO(b/238930139): Remove usage of this deprecated API.
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-/**
- Deprecated. Please use `actionButton` instead. Returns an array with `actionButton` if
- `actionButton` is not nil, otherewise returns an empty array.
- */
-@property(nonatomic, strong, nullable, readonly)
-    NSArray<MDCButton *> *actionButtons __deprecated_msg("Please use `actionButton` instead`.");
-#pragma clang diagnostic pop
-
 /**
  The elevation of the snackbar view.
  */

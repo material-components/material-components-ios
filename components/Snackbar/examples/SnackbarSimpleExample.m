@@ -15,7 +15,6 @@
 #import <UIKit/UIKit.h>
 
 #import "supplemental/SnackbarExampleSupplemental.h"
-#import "MDCButton.h"
 #import "MDCCollectionViewController.h"
 #import "MDCPalettes.h"
 #import "MDCSnackbarManager.h"
@@ -184,10 +183,9 @@
       ^(MDCSnackbarMessage *snackbarMessage, MDCSnackbarMessageView *messageView) {
         messageView.backgroundColor = UIColor.blueColor;
         messageView.messageTextColor = UIColor.whiteColor;
-        for (MDCButton *button in messageView.actionButtons) {
-          [button setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
-          [button setTitleColor:UIColor.whiteColor forState:UIControlStateHighlighted];
-        }
+        UIButton *button = messageView.actionButton;
+        [button setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
+        [button setTitleColor:UIColor.whiteColor forState:UIControlStateHighlighted];
       };
   [MDCSnackbarManager.defaultManager showMessage:message];
 }

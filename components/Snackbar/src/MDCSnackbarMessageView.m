@@ -684,12 +684,6 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
   return self.message.action != nil;
 }
 
-- (NSArray<MDCButton *> *)actionButtons {
-  return self.actionButton && [self.actionButton isKindOfClass:[MDCButton class]]
-             ? @[ (MDCButton *)self.actionButton ]
-             : @[];
-}
-
 #pragma mark - Constraints and layout
 
 - (NSInteger)numberOfLines {

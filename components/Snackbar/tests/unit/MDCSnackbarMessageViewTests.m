@@ -709,41 +709,4 @@ static const int64_t kDispatchTimeWait = (int64_t)((CGFloat)0.2 * NSEC_PER_SEC);
   MDCSnackbarMessage.usesLegacySnackbar = NO;
 }
 
-- (void)testLegacyActionButtonsMatchesActionButton {
-  // Given
-  MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
-  action.title = @"Tap Me";
-  self.message.action = action;
-
-  // When
-  [self.manager showMessage:self.message];
-  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
-  dispatch_async(dispatch_get_main_queue(), ^{
-    [expectation fulfill];
-  });
-  [self waitForExpectationsWithTimeout:3 handler:nil];
-
-  // Then
-  UIButton *actionButton = self.manager.internalManager.currentSnackbar.actionButton;
-  NSArray *actionButtons = self.manager.internalManager.currentSnackbar.actionButtons;
-  XCTAssertEqual(actionButtons.count, 1.0);
-  XCTAssertEqual(actionButtons.firstObject, actionButton);
-}
-
-- (void)testLegacyActionButtonsReturnsEmptyArrayWhenNil {
-  // When
-  [self.manager showMessage:self.message];
-  XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
-  dispatch_async(dispatch_get_main_queue(), ^{
-    [expectation fulfill];
-  });
-  [self waitForExpectationsWithTimeout:3 handler:nil];
-
-  // Then
-  UIButton *actionButton = self.manager.internalManager.currentSnackbar.actionButton;
-  NSArray *actionButtons = self.manager.internalManager.currentSnackbar.actionButtons;
-  XCTAssertNil(actionButton);
-  XCTAssertEqual(actionButtons.count, 0);
-}
-
 @end
