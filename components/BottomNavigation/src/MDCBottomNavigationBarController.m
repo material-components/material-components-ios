@@ -104,6 +104,9 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
 /** The constraint for the @c navigationBar's width in a vertical layout. */
 @property(nonatomic, strong) NSLayoutConstraint *navigationBarVerticalWidthConstraint;
 
+/** The constraints for the @c contentView. */
+@property(nonatomic, strong) NSMutableArray<NSLayoutConstraint *> *contentViewConstraints;
+
 @end
 
 @implementation MDCBottomNavigationBarController
@@ -117,6 +120,8 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
     _dismissingLargeItemView = NO;
     _navigationBarVerticalLayoutConstraints = [NSMutableArray array];
     _navigationBarHorizontalLayoutConstraints = [NSMutableArray array];
+    _contentViewConstraints = [NSMutableArray array];
+    _contentInsets = UIEdgeInsetsZero;
 
     if (@available(iOS 13.0, *)) {
       _longPressPopUpViewEnabled = NO;
@@ -624,18 +629,36 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
       addObject:self.navigationBarItemsBottomAnchorConstraint];
 }
 
+- (void)setContentInsets:(UIEdgeInsets)contentInsets {
+  if (UIEdgeInsetsEqualToEdgeInsets(_contentInsets, contentInsets)) {
+    return;
+  }
+
+  _contentInsets = contentInsets;
+  for (NSLayoutConstraint *constraint in self.contentViewConstraints) {
+    constraint.active = NO;
+  }
+  [self.contentViewConstraints removeAllObjects];
+  [self loadConstraintsForContentContainerView];
+}
+
 - (void)loadConstraintsForContentContainerView {
   self.content.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.content.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
-  [self.content.topAnchor constraintEqualToAnchor:self.view.topAnchor].active = YES;
-  [self.navigationBarVerticalLayoutConstraints
-      addObject:[self.content.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor]];
-  [self.navigationBarVerticalLayoutConstraints
-      addObject:[self.content.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor]];
-  [self.navigationBarHorizontalLayoutConstraints
-      addObject:[self.content.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor]];
-  [self.navigationBarHorizontalLayoutConstraints
-      addObject:[self.view.bottomAnchor constraintEqualToAnchor:self.content.bottomAnchor]];
+  [self.contentViewConstraints
+      addObject:[self.content.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor
+                                                            constant:self.contentInsets.right]];
+  [self.contentViewConstraints
+      addObject:[self.content.topAnchor constraintEqualToAnchor:self.view.topAnchor
+                                                       constant:self.contentInsets.top]];
+  [self.contentViewConstraints
+      addObject:[self.content.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor
+                                                          constant:self.contentInsets.bottom]];
+  [self.contentViewConstraints
+      addObject:[self.content.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor
+                                                           constant:self.contentInsets.left]];
+  for (NSLayoutConstraint *constraint in self.contentViewConstraints) {
+    constraint.active = YES;
+  }
 }
 
 /**

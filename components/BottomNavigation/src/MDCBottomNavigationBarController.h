@@ -17,6 +17,8 @@
 #import <MaterialComponents/MaterialBottomNavigation.h>
 #import "MDCMinimumOS.h"  // IWYU pragma: keep
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol MDCBottomNavigationBarControllerDelegate;
 @protocol MDCBottomNavigationBarDelegate;
 
@@ -62,6 +64,13 @@ API_AVAILABLE(ios(12.0))
  Default @c NO.
  */
 @property(nonatomic, assign) BOOL displayItemTitlesInVerticalLayout;
+
+/**
+ Insets applied to the content.
+
+ Defaults to @c UIEdgeInsetsZero.
+ */
+@property(nonatomic, assign) UIEdgeInsets contentInsets;
 
 /**
  An array of view controllers to display when their corresponding tab bar item is selected in the
@@ -114,3 +123,5 @@ API_AVAILABLE(ios(12.0))
               didSelectItem:(nonnull UITabBarItem *)item NS_REQUIRES_SUPER;
 
 @end
+
+NS_ASSUME_NONNULL_END
