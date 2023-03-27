@@ -635,6 +635,7 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
     _focusAccessibilityNotification = UIAccessibilityLayoutChangedNotification;
     _shouldShowMessageWhenVoiceOverIsRunning = YES;
     _enableDismissalAccessibilityAffordance = NO;
+    _usesGM3Shapes = NO;
   }
   return self;
 }

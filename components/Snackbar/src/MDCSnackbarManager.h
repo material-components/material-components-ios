@@ -215,44 +215,86 @@ NS_ASSUME_NONNULL_END
 
 /**
  The color for the background of the Snackbar message view.
+
+ If using the MDCSnackbarMessageView GM3 branding API, setting this property will have no effect.
+ Instead, customize background color in the MDCSnackbarManagerDelegate method
+ `snackbarManager:willPresentSnackbarWithMessageView:` after calling the branding API. See
+ go/material-ios-snackbar for details on using GM3 branding APIs.
  */
 @property(nonatomic, strong, nullable) UIColor *snackbarMessageViewBackgroundColor;
 
 /**
  The color for the shadow color for the Snackbar message view.
+
+ If using the MDCSnackbarMessageView GM3 branding API, setting this property will have no effect.
+ Instead, customize shadow color in the MDCSnackbarManagerDelegate method
+ `snackbarManager:willPresentSnackbarWithMessageView:` after calling the branding API. See
+ go/material-ios-snackbar for details on using GM3 branding APIs.
  */
 @property(nonatomic, strong, nullable) UIColor *snackbarMessageViewShadowColor;
 
-/** The elevation for the Snackbar message view. */
+/**
+ The elevation for the Snackbar message view.
+
+ If `usesGM3Shapes` is true, setting this property will have no effect. Instead, customize elevation
+ in the MDCSnackbarManagerDelegate method `snackbarManager:willPresentSnackbarWithMessageView:`
+ after calling the branding API. See go/material-ios-snackbar and go/material-ios-elevation for
+ details on using GM3 branding APIs.
+ */
 @property(nonatomic, assign) MDCShadowElevation messageElevation;
 
 /**
  The font for the message text in the Snackbar message view.
+
+ If using the MDCSnackbarMessageView GM3 branding API, setting this property will have no effect.
+ Instead, customize message font in the MDCSnackbarManagerDelegate method
+ `snackbarManager:willPresentSnackbarWithMessageView:` after calling the branding API. See
+ go/material-ios-snackbar for details on using GM3 branding APIs.
  */
 @property(nonatomic, strong, nullable) UIFont *messageFont;
 
 /**
  The color for the message text in the Snackbar message view.
+
+ If using the MDCSnackbarMessageView GM3 branding API, setting this property will have no effect.
+ Instead, customize message text color in the MDCSnackbarManagerDelegate method
+ `snackbarManager:willPresentSnackbarWithMessageView:` after calling the branding API. See
+ go/material-ios-snackbar for details on using GM3 branding APIs.
  */
 @property(nonatomic, strong, nullable) UIColor *messageTextColor;
 
 /**
  The font for the button text in the Snackbar message view.
+
+ If using the MDCSnackbarMessageView GM3 branding API, setting this property will have no effect.
+ Instead, customize button font in the MDCSnackbarManagerDelegate method
+ `snackbarManager:willPresentSnackbarWithMessageView:` after calling the branding API. See
+ go/material-ios-snackbar for details on using GM3 branding APIs.
  */
 @property(nonatomic, strong, nullable) UIFont *buttonFont;
 
 /**
  If true, converts button titles to uppercase. Defaults to MDCButton's default (YES).
+
+ If using the MDCSnackbarMessageView GM3 branding API, setting this property will have no effect and
+ button titles will not be converted to uppercase. See go/material-ios-snackbar for details on using
+ GM3 branding APIs.
  */
 @property(nonatomic, assign) BOOL uppercaseButtonTitle;
 
 /**
  Alpha of disabled buttons. Defaults to the MDCButton's default (0.12).
+
+ If using the MDCSnackbarMessageView GM3 branding API, setting this property will have no effect.
+ See go/material-ios-snackbar for details on using GM3 branding APIs.
  */
 @property(nonatomic) CGFloat disabledButtonAlpha;
 
 /**
  The color for the ink view in the Snackbar message view's buttons.
+
+ If using the MDCSnackbarMessageView GM3 branding API, setting this property will have no effect.
+ See go/material-ios-snackbar for details on using GM3 branding APIs.
  */
 @property(nonatomic, strong, nullable) UIColor *buttonInkColor;
 
@@ -292,10 +334,25 @@ NS_ASSUME_NONNULL_END
 /**
  Sets the button title color for a particular control state.
 
+ If using the MDCSnackbarMessageView GM3 branding API, setting this value will have no effect.
+ Instead, customize button title color in the MDCSnackbarManagerDelegate method
+ `snackbarManager:willPresentSnackbarWithMessageView:` after calling the branding API. See
+ go/material-ios-snackbar for details on using GM3 branding APIs.
+
  @param titleColor The title color.
  @param state The control state.
  */
 - (void)setButtonTitleColor:(nullable UIColor *)titleColor forState:(UIControlState)state;
+
+/**
+ If enabled, snackbars will use GM3 shape styling for buttons, shadows, etc.
+
+ Note that enabling this BOOL is insufficient to style snackbars for GM3; see
+ go/material-ios-snackbar for details on how to use the GM3 branding APIs.
+
+ Defaults to NO.
+ */
+@property(nonatomic, assign) BOOL usesGM3Shapes;
 
 /**
  If enabled, accessibilityViewIsModal will be enabled for all non-transient snackbar views by

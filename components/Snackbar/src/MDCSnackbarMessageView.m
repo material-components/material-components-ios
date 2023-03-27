@@ -19,6 +19,7 @@
 #import "MDCButton.h"
 #import "MDCFlatButton.h"
 #import "UIView+MaterialElevationResponding.h"
+#import "M3CButton.h"
 #import "MDCShadowElevations.h"
 #import "MDCShadowLayer.h"
 #import "MDCSnackbarManager.h"
@@ -216,6 +217,7 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
   BOOL _shouldDismissOnOverlayTap;
 
   BOOL _isMultilineText;
+  CGFloat _cornerRadius;
 }
 
 @synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
@@ -254,12 +256,10 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
     _traitCollectionDidChangeBlock = manager.traitCollectionDidChangeBlockForMessageView;
     _mdc_elevationDidChangeBlock = manager.mdc_elevationDidChangeBlockForMessageView;
     self.backgroundColor = _snackbarMessageViewBackgroundColor;
-    if (MDCSnackbarMessage.usesLegacySnackbar) {
-      self.layer.cornerRadius = kLegacyCornerRadius;
-    } else {
-      self.layer.cornerRadius = kCornerRadius;
-    }
-    _elevation = manager.messageElevation;
+    _cornerRadius = MDCSnackbarMessage.usesLegacySnackbar ? kLegacyCornerRadius : kCornerRadius;
+    self.layer.cornerRadius = _cornerRadius;
+
+    _elevation = manager.usesGM3Shapes ? MDCShadowElevationNone : manager.messageElevation;
     [(MDCShadowLayer *)self.layer setElevation:_elevation];
 
     _anchoredToScreenBottom = YES;
@@ -272,8 +272,7 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
 
     [_containerView setTranslatesAutoresizingMaskIntoConstraints:NO];
     _containerView.backgroundColor = [UIColor clearColor];
-    _containerView.layer.cornerRadius =
-        MDCSnackbarMessage.usesLegacySnackbar ? kLegacyCornerRadius : kCornerRadius;
+    _containerView.layer.cornerRadius = _cornerRadius;
     _containerView.layer.masksToBounds = YES;
 
     // Listen for taps on the background of the view.
@@ -420,46 +419,62 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
                                     withManager:(MDCSnackbarManager *)manager {
   // Add button to the view. We'll use this opportunity to determine how much space a button will
   // need, to inform the layout direction.
-  if (message.action) {
-    MDCButton *button = [[MDCSnackbarMessageViewButton alloc] init];
-    [button setTitleColor:_buttonTitleColors[@(UIControlStateNormal)]
-                 forState:UIControlStateNormal];
-    [button setTitleColor:_buttonTitleColors[@(UIControlStateHighlighted)]
-                 forState:UIControlStateHighlighted];
+  if (!message.action) {
+    return;
+  }
+
+  UIButton *button;
+  if (manager.usesGM3Shapes) {
+    M3CButton *actionButton = [[M3CButton alloc] init];
+    [actionButton setTitleColor:_buttonTitleColors[@(UIControlStateNormal)]
+                       forState:UIControlStateNormal];
+    [actionButton setTitleColor:_buttonTitleColors[@(UIControlStateHighlighted)]
+                       forState:UIControlStateHighlighted];
+    actionButton.translatesAutoresizingMaskIntoConstraints = NO;
+    button = actionButton;
+  } else {
+    MDCButton *actionButton = [[MDCSnackbarMessageViewButton alloc] init];
+    [actionButton setTitleColor:_buttonTitleColors[@(UIControlStateNormal)]
+                       forState:UIControlStateNormal];
+    [actionButton setTitleColor:_buttonTitleColors[@(UIControlStateHighlighted)]
+                       forState:UIControlStateHighlighted];
 
     // TODO: Eventually remove this if statement, buttonTextColor is deprecated.
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
     if (message.buttonTextColor) {
-      [button setTitleColor:message.buttonTextColor forState:UIControlStateNormal];
+      [actionButton setTitleColor:message.buttonTextColor forState:UIControlStateNormal];
     }
 #pragma clang diagnostic pop
 
-    button.enableRippleBehavior = message.enableRippleBehavior;
-    [_buttonContainer addSubview:button];
-
-    // Set up the button's accessibility values.
-    button.accessibilityIdentifier = message.action.accessibilityIdentifier;
-    button.accessibilityHint = message.action.accessibilityHint;
-
-    [button setTitle:message.action.title forState:UIControlStateNormal];
-    [button setTitle:message.action.title forState:UIControlStateHighlighted];
-
-    [button addTarget:self
-                  action:@selector(handleButtonTapped:)
-        forControlEvents:UIControlEventTouchUpInside];
-
-    button.uppercaseTitle = manager.uppercaseButtonTitle;
-    button.disabledAlpha = manager.disabledButtonAlpha;
-    button.titleLabel.adjustsFontForContentSizeCategory = !MDCSnackbarMessage.usesLegacySnackbar;
-    button.titleLabel.adjustsFontSizeToFitWidth = !MDCSnackbarMessage.usesLegacySnackbar;
+    actionButton.enableRippleBehavior = message.enableRippleBehavior;
+    actionButton.uppercaseTitle = manager.uppercaseButtonTitle;
+    actionButton.disabledAlpha = manager.disabledButtonAlpha;
     if (manager.buttonInkColor) {
-      button.inkColor = manager.buttonInkColor;
+      actionButton.inkColor = manager.buttonInkColor;
     }
-
-    self.actionButton = button;
-    [self updateButtonFont];
+    button = actionButton;
   }
+
+  [_buttonContainer addSubview:button];
+
+  // Set up the button's accessibility values.
+  button.accessibilityIdentifier = message.action.accessibilityIdentifier;
+  button.accessibilityHint = message.action.accessibilityHint;
+
+  [button setTitle:message.action.title forState:UIControlStateNormal];
+  [button setTitle:message.action.title forState:UIControlStateHighlighted];
+
+  [button addTarget:self
+                action:@selector(handleButtonTapped:)
+      forControlEvents:UIControlEventTouchUpInside];
+
+  BOOL adjustsFont = manager.usesGM3Shapes || !MDCSnackbarMessage.usesLegacySnackbar;
+  button.titleLabel.adjustsFontForContentSizeCategory = adjustsFont;
+  button.titleLabel.adjustsFontSizeToFitWidth = adjustsFont;
+
+  self.actionButton = button;
+  [self updateButtonFont];
 }
 
 - (void)dismissWithAction:(MDCSnackbarMessageAction *)action userInitiated:(BOOL)userInitiated {
@@ -677,6 +692,17 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
     self.actionButton.titleLabel.font = finalButtonFont;
   }
 
+  [self setNeedsLayout];
+}
+
+- (CGFloat)cornerRadius {
+  return _cornerRadius;
+}
+
+- (void)setCornerRadius:(CGFloat)cornerRadius {
+  _cornerRadius = cornerRadius;
+  self.layer.cornerRadius = _cornerRadius;
+  _containerView.layer.cornerRadius = _cornerRadius;
   [self setNeedsLayout];
 }
 
@@ -978,10 +1004,8 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
   }
 
   // As our layout changes, make sure that the shadow path is kept up-to-date.
-  UIBezierPath *path = [UIBezierPath
-      bezierPathWithRoundedRect:self.bounds
-                   cornerRadius:MDCSnackbarMessage.usesLegacySnackbar ? kLegacyCornerRadius
-                                                                      : kCornerRadius];
+  UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:self.bounds
+                                                  cornerRadius:_cornerRadius];
   self.layer.shadowPath = path.CGPath;
   self.layer.shadowColor = self.snackbarMessageViewShadowColor.CGColor;
   [self invalidateIntrinsicContentSize];
