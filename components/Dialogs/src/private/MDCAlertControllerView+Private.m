@@ -162,6 +162,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
     self.messageTextView.font = [MDCTypography body1Font];
     self.messageTextView.adjustsFontForContentSizeCategory = self.adjustsFontForContentSizeCategory;
     self.messageTextView.textColor = [UIColor colorWithWhite:0 alpha:MDCDialogMessageOpacity];
+    self.messageTextView.accessibilityRespondsToUserInteraction = YES;
     // The messageTextView is a private API, and therefore it needs to inherit its background
     // color from the alert's background so it can be themed (necessary for dark mode support,
     // for instance).
