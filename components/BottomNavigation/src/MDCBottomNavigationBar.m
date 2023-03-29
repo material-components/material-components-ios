@@ -152,8 +152,6 @@ static BOOL gEnablePerformantShadow = NO;
   }
 
   _barView = [[UIView alloc] init];
-  _barView.autoresizingMask =
-      (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin);
   _barView.clipsToBounds = YES;
   _barView.backgroundColor = _barTintColor;
   [self addSubview:_barView];
@@ -210,12 +208,28 @@ static BOOL gEnablePerformantShadow = NO;
   [self loadConstraints];
 }
 
+- (CGFloat)barWidthForVerticalLayout {
+  UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+  UIWindow *window = UIApplication.sharedApplication.windows.firstObject;
+  CGFloat widthPlusSafeArea = kDefaultVerticalLayoutWidth;
+  if (orientation == UIInterfaceOrientationLandscapeLeft) {
+    widthPlusSafeArea += window.safeAreaInsets.left;
+  } else if (orientation == UIInterfaceOrientationLandscapeRight) {
+    widthPlusSafeArea += window.safeAreaInsets.right;
+  }
+  return widthPlusSafeArea;
+}
+
 - (void)layoutSubviews {
   [super layoutSubviews];
 
   CGRect standardBounds = CGRectStandardize(self.bounds);
   if (self.blurEffectView) {
     self.blurEffectView.frame = standardBounds;
+  }
+
+  if (self.enableVerticalLayout) {
+    standardBounds.size.width = [self barWidthForVerticalLayout];
   }
   self.barView.frame = standardBounds;
 
@@ -244,13 +258,14 @@ static BOOL gEnablePerformantShadow = NO;
 }
 
 - (CGSize)intrinsicContentSize {
-  CGFloat height = [self calculateBarHeight];
-  CGFloat itemWidth = [self widthForItemsWhenCenteredWithAvailableWidth:CGFLOAT_MAX height:height];
-  CGSize size = CGSizeMake(itemWidth * self.items.count, height);
   if (self.enableVerticalLayout) {
-    size.width = kDefaultVerticalLayoutWidth;
+    return CGSizeMake([self barWidthForVerticalLayout], UIViewNoIntrinsicMetric);
+  } else {
+    CGFloat height = [self calculateBarHeight];
+    CGFloat itemWidth = [self widthForItemsWhenCenteredWithAvailableWidth:CGFLOAT_MAX
+                                                                   height:height];
+    return CGSizeMake(itemWidth * self.items.count, height);
   }
-  return size;
 }
 
 - (CGFloat)widthForItemsWhenCenteredWithAvailableWidth:(CGFloat)availableWidth

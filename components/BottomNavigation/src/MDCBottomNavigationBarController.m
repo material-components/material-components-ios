@@ -35,7 +35,6 @@ static const NSTimeInterval kLongPressMinimumPressDuration = 0.2;
 static const NSTimeInterval kNavigationBarHideShowAnimationDuration = 0.3;
 static const NSUInteger kLongPressNumberOfTouchesRequired = 1;
 static NSString *const kSelectedViewControllerRestorationKey = @"selectedViewController";
-static const CGFloat kVerticalBarWidth = 80;
 
 /**
  The transform of the large item view when it is in a transitional state (appearing or
@@ -100,9 +99,6 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
 /** The constraints for the @c navigationBar in a horizontal layout. */
 @property(nonatomic, strong, nonnull)
     NSMutableArray<NSLayoutConstraint *> *navigationBarHorizontalLayoutConstraints;
-
-/** The constraint for the @c navigationBar's width in a vertical layout. */
-@property(nonatomic, strong) NSLayoutConstraint *navigationBarVerticalWidthConstraint;
 
 /** The constraints for the @c contentView. */
 @property(nonatomic, strong) NSMutableArray<NSLayoutConstraint *> *contentViewConstraints;
@@ -316,10 +312,8 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
     self.navigationBarLeadingAnchorConstraint.constant = 0;
   } else {
     self.navigationBarBottomAnchorConstraint.constant = 0;
-    self.navigationBarLeadingAnchorConstraint.constant =
-        hidden ? -[self barWidthForVerticalLayout] : 0;
-    self.navigationBarVerticalWidthConstraint.constant =
-        !hidden ? [self barWidthForVerticalLayout] : 0;
+    CGFloat width = CGRectGetWidth(navigationBar.frame);
+    self.navigationBarLeadingAnchorConstraint.constant = hidden ? -width : 0;
   }
 
   void (^completionBlock)(BOOL) = ^(BOOL finished) {
@@ -529,10 +523,13 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
  */
 - (void)updateNavigationBarInsets {
   UIEdgeInsets currentSafeAreaInsets = self.view.safeAreaInsets;
+
   CGFloat navigationBarHeight =
       self.isNavigationBarHidden ? 0 : CGRectGetHeight(self.navigationBar.frame);
   CGFloat leftInsetAdjustment =
-      self.enableVerticalLayout ? [self barWidthForVerticalLayout] - currentSafeAreaInsets.left : 0;
+      self.enableVerticalLayout
+          ? CGRectGetWidth(self.navigationBar.frame) - currentSafeAreaInsets.left
+          : 0;
   CGFloat bottomInsetAdjustment =
       self.enableVerticalLayout ? 0 : navigationBarHeight - currentSafeAreaInsets.bottom;
   self.selectedViewController.additionalSafeAreaInsets =
@@ -585,24 +582,11 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
 - (void)loadConstraintsBasedOnRule {
   if (self.enableVerticalLayout) {
     [NSLayoutConstraint deactivateConstraints:self.navigationBarHorizontalLayoutConstraints];
-    self.navigationBarVerticalWidthConstraint.constant = [self barWidthForVerticalLayout];
     [NSLayoutConstraint activateConstraints:self.navigationBarVerticalLayoutConstraints];
   } else {
     [NSLayoutConstraint deactivateConstraints:self.navigationBarVerticalLayoutConstraints];
     [NSLayoutConstraint activateConstraints:self.navigationBarHorizontalLayoutConstraints];
   }
-}
-
-- (CGFloat)barWidthForVerticalLayout {
-  UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-  UIWindow *window = UIApplication.sharedApplication.windows.firstObject;
-  CGFloat widthPlusSafeArea = kVerticalBarWidth;
-  if (orientation == UIInterfaceOrientationLandscapeLeft) {
-    widthPlusSafeArea += window.safeAreaInsets.left;
-  } else if (orientation == UIInterfaceOrientationLandscapeRight) {
-    widthPlusSafeArea += window.safeAreaInsets.right;
-  }
-  return widthPlusSafeArea;
 }
 
 - (void)loadConstraintsForNavigationBar {
@@ -618,9 +602,6 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
 
   [self.navigationBarVerticalLayoutConstraints
       addObject:[self.navigationBar.topAnchor constraintEqualToAnchor:self.view.topAnchor]];
-  self.navigationBarVerticalWidthConstraint =
-      [self.navigationBar.widthAnchor constraintEqualToConstant:[self barWidthForVerticalLayout]];
-  [self.navigationBarVerticalLayoutConstraints addObject:self.navigationBarVerticalWidthConstraint];
 
   [self.navigationBarHorizontalLayoutConstraints
       addObject:[self.view.trailingAnchor
