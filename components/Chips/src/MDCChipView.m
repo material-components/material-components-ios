@@ -137,6 +137,7 @@ static inline CGSize CGSizeShrinkWithInsets(CGSize size, UIEdgeInsets edgeInsets
   NSMutableDictionary<NSNumber *, NSNumber *> *_elevations;
   NSMutableDictionary<NSNumber *, UIColor *> *_inkColors;
   NSMutableDictionary<NSNumber *, UIColor *> *_shadowColors;
+  NSMutableDictionary<NSNumber *, UIColor *> *_tintColors;
   NSMutableDictionary<NSNumber *, UIColor *> *_titleColors;
 
   UIFont *_titleFont;
@@ -198,6 +199,8 @@ static BOOL gEnablePerformantShadow = NO;
         @(MDCShadowElevationRaisedButtonPressed);
 
     _inkColors = [NSMutableDictionary dictionary];
+
+    _tintColors = [NSMutableDictionary dictionary];
 
     UIColor *titleColor = [UIColor colorWithWhite:MDCChipTitleColorWhite alpha:1];
     _titleColors = [NSMutableDictionary dictionary];
@@ -382,6 +385,12 @@ static BOOL gEnablePerformantShadow = NO;
     [self.rippleView removeFromSuperview];
     [self insertSubview:self.inkView belowSubview:self.imageView];
   }
+}
+
+- (void)setDisableInkAndRippleBehavior:(BOOL)disableInkAndRippleBehavior {
+  _disableInkAndRippleBehavior = disableInkAndRippleBehavior;
+  [self.inkView removeFromSuperview];
+  [self.rippleView removeFromSuperview];
 }
 
 #pragma mark - Dynamic Type Support
@@ -621,6 +630,12 @@ static BOOL gEnablePerformantShadow = NO;
   self.layer.shadowColor = [self shadowColorForState:self.state].CGColor;
 }
 
+- (nullable UIColor *)tintColorForState:(UIControlState)state {
+  UIColor *tintColor = _tintColors[@(state)];
+
+  return tintColor;
+}
+
 - (nullable UIFont *)titleFont {
   return _titleFont;
 }
@@ -643,6 +658,11 @@ static BOOL gEnablePerformantShadow = NO;
   _titleColors[@(state)] = titleColor;
 
   [self updateTitleColor];
+}
+
+- (void)setTintColor:(nullable UIColor *)tintColor forState:(UIControlState)state {
+  _tintColors[@(state)] = tintColor;
+  [self updateTintColor];
 }
 
 - (void)setContentHorizontalAlignment:(UIControlContentHorizontalAlignment)alignment {
@@ -676,6 +696,15 @@ static BOOL gEnablePerformantShadow = NO;
     return [UIFont mdc_standardFontForMaterialTextStyle:kTitleTextStyle];
   }
   return [MDCTypography buttonFont];
+}
+
+- (void)updateTintColor {
+  UIColor *tintColor = [self tintColorForState:self.state];
+
+  if (tintColor != nil) {
+    self.imageView.tintColor = tintColor;
+    self.accessoryView.tintColor = tintColor;
+  }
 }
 
 - (void)updateTitleColor {
@@ -719,6 +748,7 @@ static BOOL gEnablePerformantShadow = NO;
   [self updateTitleFont];
   [self updateTitleColor];
   [self updateAccessibility];
+  [self updateTintColor];
 }
 
 #pragma mark - Key-value observing
@@ -809,12 +839,20 @@ static BOOL gEnablePerformantShadow = NO;
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
+  if (!self.isEnabled) {
+    return;
+  }
+
   [super setHighlighted:highlighted];
 
   [self updateState];
 }
 
 - (void)setSelected:(BOOL)selected {
+  if (!self.isEnabled) {
+    return;
+  }
+
   [super setSelected:selected];
 
   [self updateState];
@@ -1083,6 +1121,11 @@ static BOOL gEnablePerformantShadow = NO;
   if (!self.enabled) {
     return;
   }
+
+  if (self.disableInkAndRippleBehavior) {
+    return;
+  }
+
   CGSize size = [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
   CGFloat widthDiff = 24;  // Difference between unselected and selected frame widths.
   CGFloat maxRadius =
@@ -1097,6 +1140,10 @@ static BOOL gEnablePerformantShadow = NO;
 }
 
 - (void)startTouchEndedAnimationAtPoint:(CGPoint)point {
+  if (self.disableInkAndRippleBehavior) {
+    return;
+  }
+
   if (self.enableRippleBehavior) {
     [_rippleView beginRippleTouchUpAnimated:YES completion:nil];
   } else {

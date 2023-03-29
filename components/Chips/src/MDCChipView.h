@@ -21,6 +21,7 @@
 #import "MaterialShapes.h"
 
 NS_ASSUME_NONNULL_BEGIN
+
 /*
  A Material chip.
 
@@ -167,6 +168,13 @@ When @c centerVisibleArea is @c NO, this value is @c UIEdgeInsetsZero.
 @property(nonatomic, copy, nullable) void (^traitCollectionDidChangeBlock)
     (MDCChipView *_Nonnull chip, UITraitCollection *_Nullable previousTraitCollection);
 
+/**
+ Determines if the chip provides touch feedback in the form of Ripple or Ink.
+
+ The default value is @c NO.
+*/
+@property(nonatomic, assign) BOOL disableInkAndRippleBehavior;
+
 /*
  A color used as the chip's @c backgroundColor for @c state.
 
@@ -308,6 +316,15 @@ When @c centerVisibleArea is @c NO, this value is @c UIEdgeInsetsZero.
  */
 - (void)setShadowColor:(nullable UIColor *)shadowColor
               forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
+
+/*
+ Sets the tint color for a particular control state.
+
+ @param titleColor The tint color.
+ @param state The control state.
+ */
+- (void)setTintColor:(nullable UIColor *)tintColor
+            forState:(UIControlState)state UI_APPEARANCE_SELECTOR;
 
 /*
  Returns the title color for a particular control state.
