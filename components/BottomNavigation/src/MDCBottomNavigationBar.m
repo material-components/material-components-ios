@@ -228,9 +228,6 @@ static BOOL gEnablePerformantShadow = NO;
     self.blurEffectView.frame = standardBounds;
   }
 
-  if (self.enableVerticalLayout) {
-    standardBounds.size.width = [self barWidthForVerticalLayout];
-  }
   self.barView.frame = standardBounds;
 
   self.layer.shadowColor = self.shadowColor.CGColor;
@@ -403,6 +400,7 @@ static BOOL gEnablePerformantShadow = NO;
     item.enableVerticalLayout = enableVerticalLayout;
   }
   [self loadConstraints];
+  [self invalidateIntrinsicContentSize];
 }
 
 - (void)setDisplayItemTitlesInVerticalLayout:(BOOL)displayItemTitlesInVerticalLayout {
