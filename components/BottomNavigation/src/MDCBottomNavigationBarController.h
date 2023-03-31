@@ -44,6 +44,33 @@ API_AVAILABLE(ios(12.0))
 @interface MDCBottomNavigationBarController : UIViewController <MDCBottomNavigationBarDelegate>
 
 /**
+  States used to configure bottom navigation bar's layout mode.
+  */
+typedef NS_ENUM(NSInteger, MDCBottomNavigationBarLayoutMode) {
+
+  // Default behavior is to have the controller be in automatic layout mode.
+  // Automatic mode uses size classes and view size to determine when to use
+  // vertical layout vs. horizontal layout.
+  // Example: on a plus sized iPhone, rotating to landscape will trigger
+  // vertical layout, rotating to portrait will trigger horizontal layout.
+  MDCBottomNavigationBarLayoutModeAutomatic = 0,
+
+  // The controller will always use vertical layout mode.
+  MDCBottomNavigationBarLayoutModeVertical = 1,
+
+  // The controller will always use horizontal layout mode.
+  MDCBottomNavigationBarLayoutModeHorizontal = 2
+};
+
+/**
+ Configures the layout mode of the bottom navigation bar.
+
+ Default is MDCBottomNavigationBarLayoutModeHorizontal. This will become
+ MDCBottomNavigationBarLayoutModeAutomatic in the near future.
+ */
+@property(nonatomic, assign) MDCBottomNavigationBarLayoutMode layoutMode;
+
+/**
  The bottom navigation bar that hosts the tab bar items.
  @warning This controller sets itself as the navigation bar's delegate.  If you would like to
  observe changes to the navigation bar, conform to @c MDCBottomNavigationBarControllerDelegate

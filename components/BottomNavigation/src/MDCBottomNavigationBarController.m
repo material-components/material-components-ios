@@ -32,7 +32,7 @@ static const CGFloat kLargeItemViewHeight = 210;
 static const CGFloat kLargeItemViewWidth = 210;
 static const NSTimeInterval kLargeItemViewAnimationDuration = 0.1;
 static const NSTimeInterval kLongPressMinimumPressDuration = 0.2;
-static const NSTimeInterval kNavigationBarHideShowAnimationDuration = 0.3;
+static const NSTimeInterval kNavigationBarHideShowAnimationDuration = 0.1;
 static const NSUInteger kLongPressNumberOfTouchesRequired = 1;
 static NSString *const kSelectedViewControllerRestorationKey = @"selectedViewController";
 
@@ -130,6 +130,8 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
                         options:NSKeyValueObservingOptionNew
                         context:kObservationContext];
     _enableVerticalLayout = NO;
+    // TODO(b/276340214): Change this to automatic once bug is resolved.
+    _layoutMode = MDCBottomNavigationBarLayoutModeHorizontal;
     _displayItemTitlesInVerticalLayout = NO;
   }
 
@@ -153,6 +155,25 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
   if (self.isLongPressPopUpViewEnabled && !self.isNavigationBarLongPressRecognizerRegistered) {
     [self.navigationBar addGestureRecognizer:self.navigationBarLongPressRecognizer];
   }
+
+  // The start up check for should use vertical layout is different from the check used
+  // while the view is transitioning to a new size.
+  BOOL shouldUseVerticalLayout = [self shouldUseVerticalLayout];
+  if (shouldUseVerticalLayout != self.enableVerticalLayout &&
+      self.layoutMode == MDCBottomNavigationBarLayoutModeAutomatic) {
+    self.enableVerticalLayout = shouldUseVerticalLayout;
+  }
+}
+
+- (BOOL)shouldUseVerticalLayout {
+  BOOL allSizeClassesRegular =
+      self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular &&
+      self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular;
+  BOOL shouldUseVerticalLayout =
+      self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassCompact ||
+      allSizeClassesRegular;
+
+  return shouldUseVerticalLayout;
 }
 
 - (void)viewSafeAreaInsetsDidChange {
@@ -164,6 +185,102 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
   [super viewDidLayoutSubviews];
 
   [self updateNavigationBarInsets];
+}
+
+- (void)hideNavigationBarHelper:(BOOL)hidden {
+  MDCBottomNavigationBar *navigationBar = self.navigationBar;
+  self.navigationBarItemsBottomAnchorConstraint.active =
+      !hidden && !navigationBar.enableVerticalLayout;
+  if (!navigationBar.enableVerticalLayout) {
+    CGFloat height = CGRectGetHeight(navigationBar.frame);
+    self.navigationBarBottomAnchorConstraint.constant = hidden ? height : 0;
+    self.navigationBarLeadingAnchorConstraint.constant = 0;
+  } else {
+    CGFloat width = CGRectGetWidth(navigationBar.frame);
+    self.navigationBarBottomAnchorConstraint.constant = 0;
+    self.navigationBarLeadingAnchorConstraint.constant = hidden ? -width : 0;
+  }
+}
+
+- (void)setLayoutMode:(MDCBottomNavigationBarLayoutMode)layoutMode {
+  if (_layoutMode == layoutMode) {
+    return;
+  }
+  _layoutMode = layoutMode;
+  if (_layoutMode == MDCBottomNavigationBarLayoutModeVertical) {
+    self.enableVerticalLayout = YES;
+  } else if (_layoutMode == MDCBottomNavigationBarLayoutModeHorizontal) {
+    self.enableVerticalLayout = NO;
+  } else {
+    BOOL shouldUseVerticalLayout = [self shouldUseVerticalLayout];
+    if (self.enableVerticalLayout != shouldUseVerticalLayout) {
+      self.enableVerticalLayout = shouldUseVerticalLayout;
+    }
+  }
+}
+
+- (BOOL)useVerticalLayoutAfterTransitioningToSize:(CGSize)size {
+  BOOL allSizeClassesRegular =
+      self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular &&
+      self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular;
+  // This is calculated with the future view size and current size classes to determine if
+  // vertical layout should be used.
+  BOOL shouldUseVerticalLayout =
+      (size.width > size.height &&
+       self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular) ||
+      allSizeClassesRegular;
+  return shouldUseVerticalLayout;
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size
+       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+  [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+  if (self.layoutMode != MDCBottomNavigationBarLayoutModeAutomatic) {
+    return;
+  }
+  BOOL shouldUseVerticalLayout = [self useVerticalLayoutAfterTransitioningToSize:size];
+  if (shouldUseVerticalLayout == self.enableVerticalLayout) {
+    return;
+  }
+  [self enableVerticalLayout:shouldUseVerticalLayout withTransitionCoordinator:coordinator];
+}
+
+- (void)enableVerticalLayout:(BOOL)enableVerticalLayout
+    withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+  // The setter is not used here since the setter also sets the navigationBar's enableVerticalLayout
+  // flag and we set that here manually to control animations.
+  _enableVerticalLayout = enableVerticalLayout;
+  [coordinator
+      animateAlongsideTransition:^(
+          id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
+        [UIView animateWithDuration:kNavigationBarHideShowAnimationDuration
+            animations:^{
+              [self hideNavigationBarHelper:YES];
+              [self.view layoutIfNeeded];
+              [self updateNavigationBarInsets];
+            }
+            completion:^(BOOL finished) {
+              self.navigationBar.enableVerticalLayout = self.enableVerticalLayout;
+              [self loadConstraintsBasedOnRule];
+              [self hideNavigationBarHelper:YES];
+              [self.view layoutIfNeeded];
+              [self updateNavigationBarInsets];
+            }];
+      }
+      completion:^(id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
+        [self.navigationBar invalidateIntrinsicContentSize];
+        [self hideNavigationBarHelper:NO];
+        void (^lastAnimations)(void) = ^{
+          [self.view layoutIfNeeded];
+          [self updateNavigationBarInsets];
+        };
+
+        [UIView animateWithDuration:kNavigationBarHideShowAnimationDuration
+                              delay:0
+                            options:UIViewAnimationOptionCurveEaseOut
+                         animations:lastAnimations
+                         completion:nil];
+      }];
 }
 
 - (void)setSelectedViewController:(nullable UIViewController *)selectedViewController {
@@ -303,18 +420,7 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
   _navigationBarHidden = hidden;
 
   MDCBottomNavigationBar *navigationBar = self.navigationBar;
-  self.navigationBarItemsBottomAnchorConstraint.active =
-      !hidden && !navigationBar.enableVerticalLayout;
-  if (!navigationBar.enableVerticalLayout) {
-    // Height is not used for animations.
-    CGFloat height = CGRectGetHeight(navigationBar.frame);
-    self.navigationBarBottomAnchorConstraint.constant = hidden ? height : 0;
-    self.navigationBarLeadingAnchorConstraint.constant = 0;
-  } else {
-    self.navigationBarBottomAnchorConstraint.constant = 0;
-    CGFloat width = CGRectGetWidth(navigationBar.frame);
-    self.navigationBarLeadingAnchorConstraint.constant = hidden ? -width : 0;
-  }
+  [self hideNavigationBarHelper:hidden];
 
   void (^completionBlock)(BOOL) = ^(BOOL finished) {
     // Update the end hidden state of the navigation bar if it was not interrupted (the end state
@@ -562,11 +668,6 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
   [self setNeedsStatusBarAppearanceUpdate];
   [self setNeedsUpdateOfHomeIndicatorAutoHidden];
   [self setNeedsUpdateOfScreenEdgesDeferringSystemGestures];
-}
-
-- (void)traitCollectionDidChange:(nullable UITraitCollection *)previousTraitCollection {
-  [super traitCollectionDidChange:previousTraitCollection];
-  [self loadConstraintsBasedOnRule];
 }
 
 /**
