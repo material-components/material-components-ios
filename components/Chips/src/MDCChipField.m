@@ -377,11 +377,20 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
 }
 
 - (void)addClearButtonToChip:(MDCChipView *)chip {
-  MDCChipViewDeleteButton *clearButton = [[MDCChipViewDeleteButton alloc] init];
-  chip.accessoryView = clearButton;
-  [clearButton addTarget:self
-                  action:@selector(deleteChip:)
-        forControlEvents:UIControlEventTouchUpInside];
+  if (self.deleteButtonImage) {
+    UIButton *clearButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 12, 12)];
+    [clearButton setImage:self.deleteButtonImage forState:UIControlStateNormal];
+    chip.accessoryView = clearButton;
+    [clearButton addTarget:self
+                    action:@selector(deleteChip:)
+          forControlEvents:UIControlEventTouchUpInside];
+  } else {
+    MDCChipViewDeleteButton *clearButton = [[MDCChipViewDeleteButton alloc] init];
+    chip.accessoryView = clearButton;
+    [clearButton addTarget:self
+                    action:@selector(deleteChip:)
+          forControlEvents:UIControlEventTouchUpInside];
+  }
 }
 
 - (void)deleteChip:(id)sender {

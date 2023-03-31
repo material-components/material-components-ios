@@ -137,6 +137,12 @@ typedef NS_OPTIONS(NSUInteger, MDCChipFieldDelimiter) {
 @property(nonatomic, assign) UIEdgeInsets contentEdgeInsets;
 
 /**
+ The image used in the MDCChipViewDeleteButton.
+ Defaults to a bezier-drawn image declared in `MDCChipViewDeleteButton`.
+ */
+@property(nonatomic, nullable, strong) UIImage *deleteButtonImage;
+
+/**
  Adds a chip to the chip field.
 
  @param chip The chip to add to the field.
