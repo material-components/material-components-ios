@@ -238,15 +238,10 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
   if (self.layoutMode != MDCBottomNavigationBarLayoutModeAutomatic) {
     return;
   }
-  BOOL shouldUseVerticalLayout = [self useVerticalLayoutAfterTransitioningToSize:size];
-  if (shouldUseVerticalLayout == self.enableVerticalLayout) {
+  BOOL enableVerticalLayout = [self useVerticalLayoutAfterTransitioningToSize:size];
+  if (enableVerticalLayout == self.enableVerticalLayout) {
     return;
   }
-  [self enableVerticalLayout:shouldUseVerticalLayout withTransitionCoordinator:coordinator];
-}
-
-- (void)enableVerticalLayout:(BOOL)enableVerticalLayout
-    withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
   // The setter is not used here since the setter also sets the navigationBar's enableVerticalLayout
   // flag and we set that here manually to control animations.
   _enableVerticalLayout = enableVerticalLayout;
@@ -280,6 +275,11 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
                             options:UIViewAnimationOptionCurveEaseOut
                          animations:lastAnimations
                          completion:nil];
+
+        if ([self.delegate
+                respondsToSelector:@selector(bottomNavigationBarControllerDidUpdateLayout)]) {
+          [self.delegate bottomNavigationBarControllerDidUpdateLayout];
+        }
       }];
 }
 
