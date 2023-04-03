@@ -16,7 +16,6 @@ import UIKit
 
 class ParallaxLayoutVerticalAttributes: UICollectionViewLayoutAttributes {
   private let heightWhenShrunk = 16.0
-  private let spaceWhenShrunk = 10.0
 
   public var relativeIndexOffset: Double = 0.0
 
@@ -66,7 +65,7 @@ class ParallaxLayoutVerticalAttributes: UICollectionViewLayoutAttributes {
 
       if relativeIndexOffset > 0 {
         // Going to disappear at top
-        let yWhenShrunk = yAtRest - spaceWhenShrunk - heightWhenShrunk
+        let yWhenShrunk = yAtRest - heightWhenShrunk
 
         heightRangeInterpolator = RangeInterpolator(
           from: [0.0, 1.0], to: [heightAtRest, heightWhenShrunk])
