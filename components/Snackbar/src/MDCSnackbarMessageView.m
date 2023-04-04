@@ -1238,11 +1238,16 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
 }
 
 - (BOOL)shouldUseVerticalLayout {
-  return !MDCSnackbarMessage.usesLegacySnackbar &&
-         UIContentSizeCategoryIsAccessibilityCategory(
-             self.traitCollection.preferredContentSizeCategory) &&
-         self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular &&
-         self.label.font.pointSize > kMinimumAccessibiltyFontSize;
+  if (MDCSnackbarMessage.usesLegacySnackbar) {
+    return false;
+  }
+  BOOL actionIsLong = self.actionButton != nil &&
+                      self.actionButton.intrinsicContentSize.width > self.maximumWidth * 0.4;
+  BOOL textIsLarge = UIContentSizeCategoryIsAccessibilityCategory(
+                         self.traitCollection.preferredContentSizeCategory) &&
+                     self.traitCollection.verticalSizeClass == UIUserInterfaceSizeClassRegular &&
+                     self.label.font.pointSize > kMinimumAccessibiltyFontSize;
+  return actionIsLong || textIsLarge;
 }
 
 #pragma mark - Elevation
