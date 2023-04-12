@@ -197,9 +197,10 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 }
 
 - (void)setM3CButtonEnabled:(BOOL)enable {
+  if (_M3CButtonEnabled == enable) {
+    return;
+  }
   _M3CButtonEnabled = enable;
-  NSAssert([self.actionManager.buttonsInActionOrder count] == 0,
-           @"You should be setting this flag as soon as you create the AlertController.");
   [self.actionManager setM3CButtonEnabled:_M3CButtonEnabled];
   [self.alertView setM3CButtonEnabled:_M3CButtonEnabled];
 }
