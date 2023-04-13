@@ -103,6 +103,9 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
 /** The constraints for the @c contentView. */
 @property(nonatomic, strong) NSMutableArray<NSLayoutConstraint *> *contentViewConstraints;
 
+/** The haptics generator. */
+@property(nonatomic, strong) UIImpactFeedbackGenerator *hapticsGenerator;
+
 @end
 
 @implementation MDCBottomNavigationBarController
@@ -110,6 +113,8 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
 - (instancetype)init {
   self = [super init];
   if (self) {
+    _hapticsGenerator =
+        [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleMedium];
     _navigationBar = [[MDCBottomNavigationBar alloc] init];
     _content = [[UIView alloc] init];
     _selectedIndex = NSNotFound;
@@ -464,6 +469,9 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
   // Update selected view controller
   UIViewController *selectedViewController = [self.viewControllers objectAtIndex:index];
   self.selectedViewController = selectedViewController;
+
+  // Play haptics pattern if haptics are supported.
+  [self.hapticsGenerator impactOccurred];
 
   // Notify the delegate.
   if ([self.delegate respondsToSelector:@selector(bottomNavigationBarController:
