@@ -305,6 +305,9 @@ NS_ASSUME_NONNULL_END
  tapping on the message label won't dismiss the snackbar.
 
  Defaults to @c NO.
+
+ If using the MDCSnackbarMessageView GM3 branding API, setting this value will have no effect; the
+ affordance will be enabled.
  */
 @property(nonatomic, assign) BOOL enableDismissalAccessibilityAffordance;
 
