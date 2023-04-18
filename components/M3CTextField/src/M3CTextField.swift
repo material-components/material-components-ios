@@ -84,11 +84,11 @@ extension M3CTextField {
     verticalStackView.spacing = 6.0
 
     NSLayoutConstraint.activate([
-      titleLabel.leadingAnchor.constraint(equalTo: verticalStackView.leadingAnchor, constant: 6),
+      titleLabel.leadingAnchor.constraint(equalTo: verticalStackView.leadingAnchor, constant: 6.0),
       textField.leadingAnchor.constraint(equalTo: verticalStackView.leadingAnchor),
       textField.trailingAnchor.constraint(equalTo: verticalStackView.trailingAnchor),
       bottomLabelsHorizontalStack.leadingAnchor.constraint(
-        equalTo: verticalStackView.leadingAnchor, constant: 6),
+        equalTo: verticalStackView.leadingAnchor, constant: 6.0),
       verticalStackView.topAnchor.constraint(equalTo: topAnchor),
       verticalStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
       verticalStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
@@ -117,6 +117,19 @@ extension M3CTextField {
         left: (leftView?.bounds.size.width ?? M3CInsetTextField.horizontalPaddingValue),
         bottom: M3CInsetTextField.verticalPaddingValue,
         right: (rightView?.bounds.size.width ?? M3CInsetTextField.horizontalPaddingValue)
+      )
+    }
+
+    override func caretRect(for position: UITextPosition) -> CGRect {
+      let caretRect = super.caretRect(for: position)
+
+      guard let font else { return caretRect }
+
+      return CGRect(
+        x: caretRect.origin.x,
+        y: caretRect.origin.y,
+        width: caretRect.size.width,
+        height: font.lineHeight
       )
     }
 
