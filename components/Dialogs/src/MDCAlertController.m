@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "MDCAlertController.h"
+#import <UIKit/UIKit.h>
 #import "MDCAlertController+Customize.h"
 
 #import "private/MDCAlertActionManager.h"
@@ -30,6 +31,8 @@
 #import "M3CButton.h"
 #import "MDCShadowElevations.h"
 #import "MDCMath.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 // The Bundle for string resources.
 static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
@@ -62,7 +65,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 #pragma mark - NSCopying
 
-- (id)copyWithZone:(__unused NSZone *)zone {
+- (id)copyWithZone:(__unused NSZone *_Nullable)zone {
   MDCAlertAction *action = [[self class] actionWithTitle:self.title
                                                 emphasis:self.emphasis
                                                  handler:self.tapHandler];
@@ -205,7 +208,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   [self.alertView setM3CButtonEnabled:_M3CButtonEnabled];
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+- (void)traitCollectionDidChange:(nullable UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
   if (self.traitCollectionDidChangeBlock) {
     self.traitCollectionDidChangeBlock(self, previousTraitCollection);
@@ -219,7 +222,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 /* Disable setter. Always use internal transition controller */
 - (void)setTransitioningDelegate:
-    (__unused id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
+    (__unused __nullable id<UIViewControllerTransitioningDelegate>)transitioningDelegate {
   NSAssert(NO, @"MDCAlertController.transitioningDelegate cannot be changed.");
   return;
 }
@@ -230,7 +233,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   return;
 }
 
-- (void)setTitle:(NSString *)title {
+- (void)setTitle:(nullable NSString *)title {
   _alertTitle = [title copy];
   if (self.alertView) {
     self.alertView.titleLabel.text = title;
@@ -239,7 +242,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 }
 
-- (NSString *)title {
+- (nullable NSString *)title {
   return _alertTitle;
 }
 
@@ -250,28 +253,28 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 }
 
-- (void)setTitleAccessibilityLabel:(NSString *)titleAccessibilityLabel {
+- (void)setTitleAccessibilityLabel:(nullable NSString *)titleAccessibilityLabel {
   _titleAccessibilityLabel = [titleAccessibilityLabel copy];
   if (self.alertView && titleAccessibilityLabel) {
     self.alertView.titleLabel.accessibilityLabel = titleAccessibilityLabel;
   }
 }
 
-- (void)setMessage:(NSString *)message {
+- (void)setMessage:(nullable NSString *)message {
   _message = [message copy];
   if (self.alertView) {
     [self messageDidChange];
   }
 }
 
-- (void)setAttributedMessage:(NSAttributedString *)attributedMessage {
+- (void)setAttributedMessage:(nullable NSAttributedString *)attributedMessage {
   _attributedMessage = [attributedMessage copy];
   if (self.alertView) {
     [self messageDidChange];
   }
 }
 
-- (void)setAttributedLinkColor:(UIColor *)attributedLinkColor {
+- (void)setAttributedLinkColor:(nullable UIColor *)attributedLinkColor {
   if ([_attributedLinkColor isEqual:attributedLinkColor]) {
     return;
   }
@@ -291,14 +294,14 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
       [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
 }
 
-- (void)setMessageAccessibilityLabel:(NSString *)messageAccessibilityLabel {
+- (void)setMessageAccessibilityLabel:(nullable NSString *)messageAccessibilityLabel {
   _messageAccessibilityLabel = [messageAccessibilityLabel copy];
   if (self.alertView && messageAccessibilityLabel) {
     self.alertView.messageTextView.accessibilityLabel = messageAccessibilityLabel;
   }
 }
 
-- (void)setImageAccessibilityLabel:(NSString *)imageAccessibilityLabel {
+- (void)setImageAccessibilityLabel:(nullable NSString *)imageAccessibilityLabel {
   if ([_imageAccessibilityLabel isEqual:imageAccessibilityLabel]) {
     return;
   }
@@ -310,7 +313,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 }
 
-- (NSString *)imageAccessibilityLabel {
+- (nullable NSString *)imageAccessibilityLabel {
   if (_imageAccessibilityLabel) {
     return _imageAccessibilityLabel;
   }
@@ -322,7 +325,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
              : self.alertView.titleIconView.accessibilityLabel;
 }
 
-- (void)setAccessoryView:(UIView *)accessoryView {
+- (void)setAccessoryView:(nullable UIView *)accessoryView {
   if (_accessoryView == accessoryView) {
     return;
   }
@@ -364,6 +367,14 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 
 - (CGFloat)presentationInitialScaleFactor {
   return [self dialogTransitionController].dialogInitialScaleFactor;
+}
+
+- (void)setDialogEdgeInsets:(UIEdgeInsets)dialogEdgeInsets {
+  [self dialogTransitionController].dialogEdgeInsets = dialogEdgeInsets;
+}
+
+- (UIEdgeInsets)dialogEdgeInsets {
+  return [self dialogTransitionController].dialogEdgeInsets;
 }
 
 - (void)setPresentationInitialScaleFactor:(CGFloat)presentationInitialScaleFactor {
@@ -451,28 +462,28 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   self.alertView.orderVerticalActionsByEmphasis = orderVerticalActionsByEmphasis;
 }
 
-- (void)setTitleFont:(UIFont *)titleFont {
+- (void)setTitleFont:(nullable UIFont *)titleFont {
   _titleFont = titleFont;
   if (self.alertView) {
     self.alertView.titleFont = titleFont;
   }
 }
 
-- (void)setMessageFont:(UIFont *)messageFont {
+- (void)setMessageFont:(nullable UIFont *)messageFont {
   _messageFont = messageFont;
   if (self.alertView) {
     self.alertView.messageFont = messageFont;
   }
 }
 
-- (void)setTitleColor:(UIColor *)titleColor {
+- (void)setTitleColor:(nullable UIColor *)titleColor {
   _titleColor = titleColor;
   if (self.alertView) {
     self.alertView.titleColor = titleColor;
   }
 }
 
-- (void)setMessageColor:(UIColor *)messageColor {
+- (void)setMessageColor:(nullable UIColor *)messageColor {
   _messageColor = messageColor;
   if (self.alertView) {
     self.alertView.messageColor = messageColor;
@@ -480,7 +491,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 }
 
 // b/117717380: Will be deprecated
-- (void)setButtonTitleColor:(UIColor *)buttonColor {
+- (void)setButtonTitleColor:(nullable UIColor *)buttonColor {
   _buttonTitleColor = buttonColor;
   if (self.alertView) {
     self.alertView.buttonColor = buttonColor;
@@ -507,7 +518,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 }
 
-- (void)setTitleIcon:(UIImage *)titleIcon {
+- (void)setTitleIcon:(nullable UIImage *)titleIcon {
   _titleIcon = titleIcon;
   if (self.alertView) {
     self.alertView.titleIcon = titleIcon;
@@ -516,7 +527,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 }
 
-- (void)setTitleIconView:(UIView *)titleIconView {
+- (void)setTitleIconView:(nullable UIView *)titleIconView {
   _titleIconView = titleIconView;
   if (self.alertView) {
     self.alertView.titleIconView = titleIconView;
@@ -525,14 +536,14 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 }
 
-- (void)setTitleIconTintColor:(UIColor *)titleIconTintColor {
+- (void)setTitleIconTintColor:(nullable UIColor *)titleIconTintColor {
   _titleIconTintColor = titleIconTintColor;
   if (self.alertView) {
     self.alertView.titleIconTintColor = titleIconTintColor;
   }
 }
 
-- (UIImageView *)titleIconImageView {
+- (nullable UIImageView *)titleIconImageView {
   return self.alertView.titleIconImageView;
 }
 
@@ -544,12 +555,12 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 }
 
-- (void)setScrimColor:(UIColor *)scrimColor {
+- (void)setScrimColor:(nullable UIColor *)scrimColor {
   _scrimColor = scrimColor;
   self.mdc_dialogPresentationController.scrimColor = scrimColor;
 }
 
-- (void)setBackgroundColor:(UIColor *)backgroundColor {
+- (void)setBackgroundColor:(nullable UIColor *)backgroundColor {
   _backgroundColor = backgroundColor;
   if (self.alertView) {
     self.alertView.backgroundColor = backgroundColor;
@@ -924,3 +935,5 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

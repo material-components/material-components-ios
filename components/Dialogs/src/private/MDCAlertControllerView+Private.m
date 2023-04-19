@@ -26,6 +26,8 @@
 #import "MDCMath.h"
 #import <MDFInternationalization/MDFInternationalization.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 // https://material.io/go/design-dialogs#dialogs-specs
 static const MDCFontTextStyle kTitleTextStyle = MDCFontTextStyleTitle;
 static const MDCFontTextStyle kMessageTextStyle = MDCFontTextStyleBody1;
@@ -193,14 +195,14 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   _M3CButtonEnabled = M3CButtonEnabled;
 }
 
-- (void)setBackgroundColor:(UIColor *)backgroundColor {
+- (void)setBackgroundColor:(UIColor *_Nullable)backgroundColor {
   super.backgroundColor = backgroundColor;
   self.titleView.backgroundColor = backgroundColor;
   self.contentScrollView.backgroundColor = backgroundColor;
   self.actionsScrollView.backgroundColor = backgroundColor;
 }
 
-- (UIColor *)backgroundColor {
+- (UIColor *_Nullable)backgroundColor {
   return super.backgroundColor;
 }
 
@@ -240,7 +242,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   [button setElevation:MDCShadowElevationNone forState:UIControlStateNormal];
 }
 
-- (void)setTitleFont:(UIFont *)font {
+- (void)setTitleFont:(UIFont *_Nullable)font {
   _titleFont = font;
 
   [self updateTitleFont];
@@ -260,7 +262,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   return [MDCTypography titleFont];
 }
 
-- (void)setTitleColor:(UIColor *)titleColor {
+- (void)setTitleColor:(UIColor *_Nullable)titleColor {
   _titleColor = titleColor;
 
   _titleLabel.textColor = titleColor;
@@ -274,11 +276,11 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   self.titleLabel.textAlignment = titleAlignment;
 }
 
-- (UIImage *)titleIcon {
+- (UIImage *_Nullable)titleIcon {
   return self.titleIconImageView.image;
 }
 
-- (void)setTitleIcon:(UIImage *)titleIcon {
+- (void)setTitleIcon:(UIImage *_Nullable)titleIcon {
   if (titleIcon == nil) {
     [self.titleIconImageView removeFromSuperview];
     self.titleIconImageView = nil;
@@ -302,7 +304,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   [self setNeedsLayout];
 }
 
-- (void)setTitleIconTintColor:(UIColor *)titleIconTintColor {
+- (void)setTitleIconTintColor:(UIColor *_Nullable)titleIconTintColor {
   _titleIconTintColor = titleIconTintColor;
   self.titleIconImageView.tintColor = titleIconTintColor;
 }
@@ -312,7 +314,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   [self setNeedsLayout];
 }
 
-- (void)setTitleIconView:(UIView *)titleIconView {
+- (void)setTitleIconView:(UIView *_Nullable)titleIconView {
   if (titleIconView != nil && self.titleIconImageView != nil) {
     NSLog(@"Warning: unintended use of the API. The following APIs are not expected to be used"
            "together: 'setTitleIconView:' and `setTitleIcon:` API. Please set either, but not "
@@ -343,7 +345,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   [self setNeedsLayout];
 }
 
-- (void)setMessageFont:(UIFont *)messageFont {
+- (void)setMessageFont:(UIFont *_Nullable)messageFont {
   _messageFont = messageFont;
 
   [self updateMessageFont];
@@ -363,7 +365,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   return [MDCTypography body1Font];
 }
 
-- (void)setMessageColor:(UIColor *)messageColor {
+- (void)setMessageColor:(UIColor *_Nullable)messageColor {
   _messageColor = messageColor;
 
   _messageTextView.textColor = messageColor;
@@ -377,7 +379,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   self.messageTextView.textAlignment = messageAlignment;
 }
 
-- (void)setAccessoryView:(UIView *)accessoryView {
+- (void)setAccessoryView:(UIView *_Nullable)accessoryView {
   if (_accessoryView == accessoryView) {
     return;
   }
@@ -415,7 +417,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   }
 }
 
-- (void)setButtonColor:(UIColor *)color {
+- (void)setButtonColor:(UIColor *_Nullable)color {
   _buttonColor = color;
   if (!self.isM3CButtonEnabled) {
     for (MDCButton *button in self.actionManager.buttonsInActionOrder) {
@@ -424,7 +426,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   }
 }
 
-- (void)setButtonInkColor:(UIColor *)color {
+- (void)setButtonInkColor:(UIColor *_Nullable)color {
   _buttonInkColor = color;
 
   if (!self.isM3CButtonEnabled) {
@@ -482,10 +484,10 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   return MAX(MDCDialogActionButtonMinimumHeight, MDCDialogActionMinTouchTarget);
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary<NSKeyValueChangeKey, id> *)change
-                       context:(void *)context {
+- (void)observeValueForKeyPath:(nullable NSString *)keyPath
+                      ofObject:(nullable id)object
+                        change:(nullable NSDictionary<NSKeyValueChangeKey, id> *)change
+                       context:(nullable void *)context {
   if (context == kKVOContextMDCAlertControllerViewPrivate) {
     if (UIAccessibilityIsVoiceOverRunning() && (object == self.contentScrollView)) {
       // For some reason, VoiceOver sets a contentOffset with negative x and y values on
@@ -1182,7 +1184,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
 
 #pragma mark - UITextView
 
-- (void)setAttributedText:(NSAttributedString *)attributedText {
+- (void)setAttributedText:(NSAttributedString *_Nullable)attributedText {
   if ([self.attributedText isEqual:attributedText]) {
     return;
   }
@@ -1191,7 +1193,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   [self updateTopInsetAndTextContainerInset:self.textContainerInset];
 }
 
-- (void)setFont:(UIFont *)font {
+- (void)setFont:(UIFont *_Nullable)font {
   if ([self.font isEqual:font]) {
     return;
   }
@@ -1200,7 +1202,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   [self updateTopInsetAndTextContainerInset:self.textContainerInset];
 }
 
-- (void)setText:(NSString *)text {
+- (void)setText:(NSString *_Nullable)text {
   if ([self.text isEqual:text]) {
     return;
   }
@@ -1216,7 +1218,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
 #pragma mark - UIView
 
 // Disabling text selection when selectable is YES, while allowing gestures for inlined links.
-- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+- (BOOL)pointInside:(CGPoint)point withEvent:(nullable UIEvent *)event {
   if (UIAccessibilityIsVoiceOverRunning()) {
     return [super pointInside:point withEvent:event];
   }
@@ -1270,3 +1272,5 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

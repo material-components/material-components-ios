@@ -19,6 +19,8 @@
 #import "MDCDialogPresentationControllerDelegate.h"
 #import "MaterialShadowElevations.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class MDCDialogPresentationController;
 @protocol MDCDialogPresentationControllerDelegate;
 
@@ -110,6 +112,13 @@
 @property(nonatomic, assign) CGAffineTransform dialogTransform;
 
 /**
+ The spacing between the dialog and the @c safeArea of the presenting view controller.
+
+ Defaults to {24, 20, 24, 20}.
+ */
+@property(nonatomic, assign) UIEdgeInsets dialogEdgeInsets;
+
+/**
  Returns the size of the specified child view controller's content.
 
  The size is initially based on container.preferredSize. Width is will have a minimum of 280 and a
@@ -140,3 +149,5 @@
      UITraitCollection *_Nullable previousTraitCollection);
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  MDCDialogTransitionController setup a custom transition and animationed presentation and dismissal
  for material-styled alerts, simple dialogs and confirmation dialogs.
@@ -56,4 +58,13 @@
  */
 @property(nonatomic, assign) CGFloat dialogInitialScaleFactor;
 
+/**
+ The spacing between the dialog and the @c safeArea of the presenting view controller.
+
+ Defaults to {24, 20, 24, 20}.
+ */
+@property(nonatomic, assign) UIEdgeInsets dialogEdgeInsets;
+
 @end
+
+NS_ASSUME_NONNULL_END

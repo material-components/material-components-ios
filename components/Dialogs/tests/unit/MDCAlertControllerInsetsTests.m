@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <UIKit/UIKit.h>
 #import "MDCButton.h"
+#import "MDCAlertController+ButtonForAction.h"
 #import "MDCAlertController.h"
 #import "MDCAlertControllerView.h"
-#import "MDCAlertController+ButtonForAction.h"
 #import "MDCAlertController+Testing.h"
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wprivate-header"
@@ -162,6 +163,29 @@ static NSString *const kMessageLatin = @"Lorem ipsum dolor sit amet, consul doce
       CGRectMake(CGRectGetWidth(contentRect) - CGRectGetWidth(visibleButtonFrame) - 10.0f, 10.0f,
                  CGRectGetWidth(visibleButtonFrame), CGRectGetHeight(visibleButtonFrame));
   XCTAssertTrue(CGRectEqualToRect(visibleButtonFrame, buttonFrame));
+}
+
+- (void)testAlertDefaultInsets {
+  // Given
+  UIEdgeInsets testInsets = UIEdgeInsetsMake(24, 20, 24, 20);
+
+  // Then
+  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(self.alert.dialogEdgeInsets, testInsets),
+                @"%@ is not equal to %@", NSStringFromUIEdgeInsets(self.alert.dialogEdgeInsets),
+                NSStringFromUIEdgeInsets(testInsets));
+}
+
+- (void)testAlertCustomInsets {
+  // Given
+  UIEdgeInsets testInsets = UIEdgeInsetsMake(50, 50, 50, 50);
+
+  // When
+  self.alert.dialogEdgeInsets = testInsets;
+
+  // Then
+  XCTAssertTrue(UIEdgeInsetsEqualToEdgeInsets(self.alert.dialogEdgeInsets, testInsets),
+                @"%@ is not equal to %@", NSStringFromUIEdgeInsets(self.alert.dialogEdgeInsets),
+                NSStringFromUIEdgeInsets(testInsets));
 }
 
 @end

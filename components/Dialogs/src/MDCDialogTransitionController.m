@@ -13,10 +13,16 @@
 // limitations under the License.
 
 #import "MDCDialogTransitionController.h"
+#import <UIKit/UIKit.h>
 
 #import "MDCDialogPresentationController.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation MDCDialogTransitionController
+
+// The default edge insets of the dialog.
+static const UIEdgeInsets MDCDialogEdgeInsets = {24, 20, 24, 20};
 
 // The default duration of the dialog fade-in or fade-out animation
 static const NSTimeInterval kDefaultOpacityTransitionDuration = 0.2;
@@ -33,6 +39,7 @@ static const CGFloat kDefaultInitialScaleFactor = 1.0;
     _opacityAnimationDuration = kDefaultOpacityTransitionDuration;
     _scaleAnimationDuration = kDefaultScaleTransitionDuration;
     _dialogInitialScaleFactor = kDefaultInitialScaleFactor;
+    _dialogEdgeInsets = MDCDialogEdgeInsets;
   }
   return self;
 }
@@ -40,7 +47,7 @@ static const CGFloat kDefaultInitialScaleFactor = 1.0;
 #pragma mark - UIViewControllerAnimatedTransitioning
 
 - (NSTimeInterval)transitionDuration:
-    (__unused id<UIViewControllerContextTransitioning>)transitionContext {
+    (__unused __nullable id<UIViewControllerContextTransitioning>)transitionContext {
   return MAX(self.opacityAnimationDuration, self.scaleAnimationDuration);
 }
 
@@ -112,6 +119,7 @@ static const CGFloat kDefaultInitialScaleFactor = 1.0;
     presentationController =
         (MDCDialogPresentationController *)animatingViewController.presentationController;
   }
+  presentationController.dialogEdgeInsets = self.dialogEdgeInsets;
 
   CGAffineTransform startingTransform =
       presenting
@@ -140,24 +148,26 @@ static const CGFloat kDefaultInitialScaleFactor = 1.0;
 
 #pragma mark - UIViewControllerTransitioningDelegate
 
-- (UIPresentationController *)
+- (nullable UIPresentationController *)
     presentationControllerForPresentedViewController:(UIViewController *)presented
-                            presentingViewController:(UIViewController *)presenting
+                            presentingViewController:(nullable UIViewController *)presenting
                                 sourceViewController:(__unused UIViewController *)source {
   return [[MDCDialogPresentationController alloc] initWithPresentedViewController:presented
                                                          presentingViewController:presenting];
 }
 
-- (id<UIViewControllerAnimatedTransitioning>)
+- (nullable id<UIViewControllerAnimatedTransitioning>)
     animationControllerForPresentedController:(__unused UIViewController *)presented
                          presentingController:(__unused UIViewController *)presenting
                              sourceController:(__unused UIViewController *)source {
   return self;
 }
 
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:
+- (nullable id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:
     (__unused UIViewController *)dismissed {
   return self;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
