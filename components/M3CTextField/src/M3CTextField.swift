@@ -6,7 +6,7 @@ import UIKit
 public final class M3CTextField: UIView {
   /// A text field that represents the primary source of user input and interaction for
   /// this component.
-  public private(set) lazy var textField: UITextField = {
+  public private(set) lazy var textContainer: UITextField = {
     let textField = M3CInsetTextField()
     textField.translatesAutoresizingMaskIntoConstraints = false
     textField.adjustsFontForContentSizeCategory = true
@@ -70,7 +70,7 @@ extension M3CTextField {
 
     let subviews = [
       titleLabel,
-      textField,
+      textContainer,
       bottomLabelsHorizontalStack,
     ]
 
@@ -85,15 +85,15 @@ extension M3CTextField {
 
     NSLayoutConstraint.activate([
       titleLabel.leadingAnchor.constraint(equalTo: verticalStackView.leadingAnchor, constant: 6.0),
-      textField.leadingAnchor.constraint(equalTo: verticalStackView.leadingAnchor),
-      textField.trailingAnchor.constraint(equalTo: verticalStackView.trailingAnchor),
+      textContainer.leadingAnchor.constraint(equalTo: verticalStackView.leadingAnchor),
+      textContainer.trailingAnchor.constraint(equalTo: verticalStackView.trailingAnchor),
       bottomLabelsHorizontalStack.leadingAnchor.constraint(
         equalTo: verticalStackView.leadingAnchor, constant: 6.0),
       verticalStackView.topAnchor.constraint(equalTo: topAnchor),
       verticalStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
       verticalStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
       verticalStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-      textField.heightAnchor.constraint(greaterThanOrEqualToConstant: 44.0),
+      textContainer.heightAnchor.constraint(greaterThanOrEqualToConstant: 44.0),
     ])
   }
 }
