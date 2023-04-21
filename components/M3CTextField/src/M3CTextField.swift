@@ -123,11 +123,19 @@ extension M3CTextField {
     override func caretRect(for position: UITextPosition) -> CGRect {
       let caretRect = super.caretRect(for: position)
 
-      guard let font else { return caretRect }
+      // Only modify caretRect if the caret height is larger than the font's line height.
+      guard
+        let font,
+        caretRect.size.height > font.lineHeight
+      else {
+        return caretRect
+      }
+
+      let yOffset = (caretRect.size.height - font.lineHeight) * 0.5
 
       return CGRect(
         x: caretRect.origin.x,
-        y: caretRect.origin.y,
+        y: caretRect.origin.y + yOffset,
         width: caretRect.size.width,
         height: font.lineHeight
       )
