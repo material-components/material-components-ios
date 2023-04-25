@@ -115,6 +115,7 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
   if (self) {
     _hapticsGenerator =
         [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleMedium];
+    _enableHaptics = NO;
     _navigationBar = [[MDCBottomNavigationBar alloc] init];
     _content = [[UIView alloc] init];
     _selectedIndex = NSNotFound;
@@ -470,8 +471,10 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
   UIViewController *selectedViewController = [self.viewControllers objectAtIndex:index];
   self.selectedViewController = selectedViewController;
 
-  // Play haptics pattern if haptics are supported.
-  [self.hapticsGenerator impactOccurred];
+  // Play haptics pattern if haptics are supported and enabled.
+  if (self.enableHaptics) {
+    [self.hapticsGenerator impactOccurred];
+  }
 
   // Notify the delegate.
   if ([self.delegate respondsToSelector:@selector(bottomNavigationBarController:

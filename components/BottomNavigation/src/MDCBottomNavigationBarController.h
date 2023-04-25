@@ -93,6 +93,13 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarLayoutMode) {
 @property(nonatomic, assign) BOOL displayItemTitlesInVerticalLayout;
 
 /**
+ Configures whether the navigation bar should play haptics on selection change.
+
+ Default @c NO.
+ */
+@property(nonatomic, assign) BOOL enableHaptics;
+
+/**
  Insets applied to the content.
 
  Defaults to @c UIEdgeInsetsZero.
