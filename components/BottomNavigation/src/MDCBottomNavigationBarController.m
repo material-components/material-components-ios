@@ -106,6 +106,13 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
 /** The haptics generator. */
 @property(nonatomic, strong) UIImpactFeedbackGenerator *hapticsGenerator;
 
+/**
+ Configures whether the navigation bar should use vertical layout.
+
+ Default @c NO.
+ */
+@property(nonatomic, assign) BOOL enableVerticalLayout;
+
 @end
 
 @implementation MDCBottomNavigationBarController

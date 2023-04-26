@@ -79,13 +79,6 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarLayoutMode) {
 @property(nonatomic, strong, readonly, nonnull) MDCBottomNavigationBar *navigationBar;
 
 /**
- Configures whether the navigation bar should use vertical layout.
-
- Default @c NO.
- */
-@property(nonatomic, assign) BOOL enableVerticalLayout;
-
-/**
  Configures whether the navigation bar should show labels in vertical layout.
 
  Default @c NO.
