@@ -218,6 +218,8 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
 
   BOOL _isMultilineText;
   CGFloat _cornerRadius;
+
+  BOOL _usesGM3Shapes;
 }
 
 @synthesize mdc_overrideBaseElevation = _mdc_overrideBaseElevation;
@@ -259,7 +261,8 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
     _cornerRadius = MDCSnackbarMessage.usesLegacySnackbar ? kLegacyCornerRadius : kCornerRadius;
     self.layer.cornerRadius = _cornerRadius;
 
-    _elevation = manager.usesGM3Shapes ? MDCShadowElevationNone : manager.messageElevation;
+    _usesGM3Shapes = manager.usesGM3Shapes;
+    _elevation = _usesGM3Shapes ? MDCShadowElevationNone : manager.messageElevation;
     [(MDCShadowLayer *)self.layer setElevation:_elevation];
 
     _anchoredToScreenBottom = YES;
@@ -424,7 +427,7 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
   }
 
   UIButton *button;
-  if (manager.usesGM3Shapes) {
+  if (_usesGM3Shapes) {
     M3CButton *actionButton = [[M3CButton alloc] init];
     [actionButton setTitleColor:_buttonTitleColors[@(UIControlStateNormal)]
                        forState:UIControlStateNormal];
@@ -469,7 +472,7 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
                 action:@selector(handleButtonTapped:)
       forControlEvents:UIControlEventTouchUpInside];
 
-  BOOL adjustsFont = manager.usesGM3Shapes || !MDCSnackbarMessage.usesLegacySnackbar;
+  BOOL adjustsFont = _usesGM3Shapes || !MDCSnackbarMessage.usesLegacySnackbar;
   button.titleLabel.adjustsFontForContentSizeCategory = adjustsFont;
   button.titleLabel.adjustsFontSizeToFitWidth = adjustsFont;
 
@@ -756,12 +759,18 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
 
 - (void)updatePreferredMaxLayoutWidth {
   if (!MDCSnackbarMessage.usesLegacySnackbar) {
+    UIEdgeInsets safeContentMargin = self.safeContentMargin;
     CGFloat availableWidth =
-        self.bounds.size.width - self.safeContentMargin.left - self.safeContentMargin.right;
+        self.bounds.size.width - safeContentMargin.left - safeContentMargin.right;
     BOOL shouldUseHorizontalLayout = ![self shouldUseVerticalLayout];
     // Account for the action button if present and the layout is horizontal.
     if (shouldUseHorizontalLayout && self.actionButton) {
       availableWidth = availableWidth - [self actionButtonWidth] - kTitleButtonPadding;
+    } else if (_usesGM3Shapes) {
+      // If the text spans the width of the snackbar (either because it's using vertical layout or
+      // because there's no action), the left and right margins should match, so we'll replace the
+      // `right` margin with the `left` margin.
+      availableWidth = availableWidth + safeContentMargin.right - safeContentMargin.left;
     }
     self.label.preferredMaxLayoutWidth = availableWidth;
   }
@@ -811,6 +820,10 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
 - (NSArray *)containerViewConstraints {
   UIEdgeInsets safeContentMargin = self.safeContentMargin;
   CGFloat contentSafeBottomInset = kBorderWidth + self.contentSafeBottomInset;
+  // In GM3, we want the text's leading/trailing padding to be equal if it spans the full width of
+  // the snackbar, so we're using the `left` margin here, instead of the `right` margin.
+  CGFloat fullWidthTextTrailingMargin =
+      _usesGM3Shapes ? safeContentMargin.left : safeContentMargin.right;
   BOOL hasButtons = self.actionButton != nil;
 
   NSMutableArray *constraints = [NSMutableArray array];
@@ -870,7 +883,7 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
 
           // Pin the trailing edge of the contentView to its superview.
           [self.contentView.trailingAnchor constraintEqualToAnchor:self.containerView.trailingAnchor
-                                                          constant:-self.safeContentMargin.right],
+                                                          constant:-fullWidthTextTrailingMargin],
 
           // Make the leading edge of the button container less than the size of the view.
           [self.buttonContainer.leadingAnchor
@@ -924,7 +937,7 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
       [self.contentView.bottomAnchor constraintEqualToAnchor:self.containerView.bottomAnchor
                                                     constant:-self.safeContentMargin.bottom],
       [self.contentView.trailingAnchor constraintEqualToAnchor:self.containerView.trailingAnchor
-                                                      constant:-self.safeContentMargin.right]
+                                                      constant:-fullWidthTextTrailingMargin]
     ]];
   }
 
