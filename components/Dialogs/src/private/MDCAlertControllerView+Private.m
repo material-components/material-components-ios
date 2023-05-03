@@ -621,8 +621,10 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
 
 - (CGFloat)horizontalSpacing {
   NSUInteger count = self.actionManager.buttonsInActionOrder.count;
-  CGFloat spacing = self.actionsInsets.left + self.actionsInsets.right +
-                    (count - 1) * self.actionsHorizontalMargin;
+  UIEdgeInsets insetsToUse =
+      self.isM3CButtonEnabled ? self.M3CButtonActionsInsets : self.actionsInsets;
+  CGFloat spacing =
+      insetsToUse.left + insetsToUse.right + (count - 1) * self.actionsHorizontalMargin;
   return spacing;
 }
 
