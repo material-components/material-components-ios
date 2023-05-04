@@ -18,15 +18,27 @@ public final class M3CTextField: UIView {
   }()
 
   /// A label with a top leading position that represents title text for a text field.
-  public let titleLabel = UILabel()
+  public let titleLabel: UILabel = {
+    let titleLabel = UILabel()
+    titleLabel.adjustsFontForContentSizeCategory = true
+    return titleLabel
+  }()
 
   /// A label with a bottom leading position that represents supporting and error text for
   /// a text field.
-  public let supportingLabel = UILabel()
+  public let supportingLabel: UILabel = {
+    let supportingLabel = UILabel()
+    supportingLabel.adjustsFontForContentSizeCategory = true
+    return supportingLabel
+  }()
 
   /// A label with a bottom trailing position that represents additional supporting text for a
   /// text field, such as character count.
-  public let trailingLabel = UILabel()
+  public let trailingLabel: UILabel = {
+    let trailingLabel = UILabel()
+    trailingLabel.adjustsFontForContentSizeCategory = true
+    return trailingLabel
+  }()
 
   /// Initializes a `M3CTextField` with a supporting label, title label, and trailing label.
   public init() {
