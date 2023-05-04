@@ -58,6 +58,7 @@ public class ParallaxFlowLayout: UICollectionViewFlowLayout {
   }
 
   override public func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+    itemSize = newBounds.size
     return true
   }
 
