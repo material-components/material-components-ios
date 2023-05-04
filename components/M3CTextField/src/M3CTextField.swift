@@ -2,7 +2,7 @@ import UIKit
 
 /// M3CTextField is a container view that provides a pre-configured layout for a text field, its
 /// accessory icons, and its associated labels.
-@available(iOS 14.0, *)
+@available(iOS 13.0, *)
 public final class M3CTextField: UIView {
   /// A text field that represents the primary source of user input and interaction for
   /// this component.
@@ -54,7 +54,7 @@ public final class M3CTextField: UIView {
 
 // MARK: View Configuration
 
-@available(iOS 14.0, *)
+@available(iOS 13.0, *)
 extension M3CTextField {
   private func configureStackViews() {
     titleLabel.setContentHuggingPriority(.required, for: .vertical)
@@ -112,7 +112,7 @@ extension M3CTextField {
 
 // MARK: M3CInsetTextField
 
-@available(iOS 14.0, *)
+@available(iOS 13.0, *)
 extension M3CTextField {
   /// A UITextField subclass created for the sole purpose of overriding its rect implementations.
   ///
