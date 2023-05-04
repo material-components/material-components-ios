@@ -100,8 +100,22 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
 @property(nonatomic, strong, nonnull)
     NSMutableArray<NSLayoutConstraint *> *navigationBarHorizontalLayoutConstraints;
 
-/** The constraints for the @c contentView. */
-@property(nonatomic, strong) NSMutableArray<NSLayoutConstraint *> *contentViewConstraints;
+/** The constraint between the top edge of @c contentView and its superview. */
+@property(nonatomic, strong, nonnull) NSLayoutConstraint *contentViewTopConstraint;
+
+/** The constraint between the bottom edge of @c contentView and its superview. */
+@property(nonatomic, strong, nonnull) NSLayoutConstraint *contentViewBottomConstraint;
+
+/** The constraint between the trailing edge of @c contentView and its superview. */
+@property(nonatomic, strong, nonnull) NSLayoutConstraint *contentViewTrailingConstraint;
+
+/** The constraint for the leading edge of @c contentView in a horizontal layout. */
+@property(nonatomic, strong, nonnull)
+    NSLayoutConstraint *contentViewHorizontalLayoutLeadingConstraint;
+
+/** The constraint for the leading edge of @c contentView in a vertical layout. */
+@property(nonatomic, strong, nonnull)
+    NSLayoutConstraint *contentViewVerticalLayoutLeadingConstraint;
 
 /** The haptics generator. */
 @property(nonatomic, strong) UIImpactFeedbackGenerator *hapticsGenerator;
@@ -129,7 +143,6 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
     _dismissingLargeItemView = NO;
     _navigationBarVerticalLayoutConstraints = [NSMutableArray array];
     _navigationBarHorizontalLayoutConstraints = [NSMutableArray array];
-    _contentViewConstraints = [NSMutableArray array];
     _contentInsets = UIEdgeInsetsZero;
 
     if (@available(iOS 13.0, *)) {
@@ -650,14 +663,11 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
 
   CGFloat navigationBarHeight =
       self.isNavigationBarHidden ? 0 : CGRectGetHeight(self.navigationBar.frame);
-  CGFloat leftInsetAdjustment =
-      self.enableVerticalLayout
-          ? CGRectGetWidth(self.navigationBar.frame) - currentSafeAreaInsets.left
-          : 0;
+
   CGFloat bottomInsetAdjustment =
       self.enableVerticalLayout ? 0 : navigationBarHeight - currentSafeAreaInsets.bottom;
   self.selectedViewController.additionalSafeAreaInsets =
-      UIEdgeInsetsMake(0, leftInsetAdjustment, bottomInsetAdjustment, 0);
+      UIEdgeInsetsMake(0, 0, bottomInsetAdjustment, 0);
 }
 
 /**
@@ -735,30 +745,44 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
   }
 
   _contentInsets = contentInsets;
-  for (NSLayoutConstraint *constraint in self.contentViewConstraints) {
-    constraint.active = NO;
-  }
-  [self.contentViewConstraints removeAllObjects];
-  [self loadConstraintsForContentContainerView];
+
+  self.contentViewTopConstraint.constant = self.contentInsets.top;
+  self.contentViewBottomConstraint.constant = self.contentInsets.bottom;
+  self.contentViewTrailingConstraint.constant = self.contentInsets.right;
+
+  self.contentViewVerticalLayoutLeadingConstraint.constant = self.contentInsets.left;
+  self.contentViewHorizontalLayoutLeadingConstraint.constant = self.contentInsets.left;
 }
 
 - (void)loadConstraintsForContentContainerView {
   self.content.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.contentViewConstraints
-      addObject:[self.content.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor
-                                                            constant:self.contentInsets.right]];
-  [self.contentViewConstraints
-      addObject:[self.content.topAnchor constraintEqualToAnchor:self.view.topAnchor
-                                                       constant:self.contentInsets.top]];
-  [self.contentViewConstraints
-      addObject:[self.content.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor
-                                                          constant:self.contentInsets.bottom]];
-  [self.contentViewConstraints
-      addObject:[self.content.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor
-                                                           constant:self.contentInsets.left]];
-  for (NSLayoutConstraint *constraint in self.contentViewConstraints) {
-    constraint.active = YES;
-  }
+  self.contentViewTopConstraint =
+      [self.content.topAnchor constraintEqualToAnchor:self.view.topAnchor
+                                             constant:self.contentInsets.top];
+  self.contentViewBottomConstraint =
+      [self.content.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor
+                                                constant:self.contentInsets.bottom];
+  self.contentViewTrailingConstraint =
+      [self.content.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor
+                                                  constant:self.contentInsets.right];
+  [NSLayoutConstraint activateConstraints:@[
+    self.contentViewTopConstraint,
+    self.contentViewBottomConstraint,
+    self.contentViewTrailingConstraint,
+  ]];
+
+  // Rule-based constraits.
+  self.contentViewVerticalLayoutLeadingConstraint =
+      [self.content.leadingAnchor constraintEqualToAnchor:self.navigationBar.trailingAnchor
+                                                 constant:self.contentInsets.left];
+  self.contentViewHorizontalLayoutLeadingConstraint =
+      [self.content.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor
+                                                 constant:self.contentInsets.left];
+
+  [self.navigationBarVerticalLayoutConstraints
+      addObject:self.contentViewVerticalLayoutLeadingConstraint];
+  [self.navigationBarHorizontalLayoutConstraints
+      addObject:self.contentViewHorizontalLayoutLeadingConstraint];
 }
 
 /**
