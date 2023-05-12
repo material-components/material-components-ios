@@ -3,10 +3,8 @@ import UIKit
 /// M3CTextField is a container view that provides a pre-configured layout for a text field, its
 /// accessory icons, and its associated labels.
 @available(iOS 13.0, *)
-public final class M3CTextField: UIView {
-  /// A text field that represents the primary source of user input and interaction for
-  /// this component.
-  public private(set) lazy var textContainer: UITextField = {
+public final class M3CTextField: UIView, M3CTextInput {
+  public lazy var textContainer: UITextField = {
     let textField = M3CInsetTextField()
     textField.translatesAutoresizingMaskIntoConstraints = false
     textField.adjustsFontForContentSizeCategory = true
@@ -17,28 +15,11 @@ public final class M3CTextField: UIView {
     return textField
   }()
 
-  /// A label with a top leading position that represents title text for a text field.
-  public let titleLabel: UILabel = {
-    let titleLabel = UILabel()
-    titleLabel.adjustsFontForContentSizeCategory = true
-    return titleLabel
-  }()
+  public lazy var titleLabel: UILabel = buildLabel()
 
-  /// A label with a bottom leading position that represents supporting and error text for
-  /// a text field.
-  public let supportingLabel: UILabel = {
-    let supportingLabel = UILabel()
-    supportingLabel.adjustsFontForContentSizeCategory = true
-    return supportingLabel
-  }()
+  public lazy var supportingLabel: UILabel = buildLabel()
 
-  /// A label with a bottom trailing position that represents additional supporting text for a
-  /// text field, such as character count.
-  public let trailingLabel: UILabel = {
-    let trailingLabel = UILabel()
-    trailingLabel.adjustsFontForContentSizeCategory = true
-    return trailingLabel
-  }()
+  public lazy var trailingLabel: UILabel = buildLabel()
 
   /// Initializes a `M3CTextField` with a supporting label, title label, and trailing label.
   public init() {
@@ -49,64 +30,6 @@ public final class M3CTextField: UIView {
 
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
-  }
-}
-
-// MARK: View Configuration
-
-@available(iOS 13.0, *)
-extension M3CTextField {
-  private func configureStackViews() {
-    titleLabel.setContentHuggingPriority(.required, for: .vertical)
-    supportingLabel.setContentCompressionResistancePriority(.required, for: .vertical)
-    trailingLabel.setContentCompressionResistancePriority(.required, for: .vertical)
-
-    // Ensure that the trailing label shrinks to fit its content size, and the supporting label
-    // stretches to fill the remaining available space.
-    // If contentHuggingPriority is equal for both labels, they will distribute available
-    // horizontal space equally.
-    supportingLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
-    trailingLabel.setContentHuggingPriority(.required, for: .horizontal)
-
-    let bottomTextViews = [
-      supportingLabel,
-      trailingLabel,
-    ]
-
-    let bottomLabelsHorizontalStack = UIStackView(arrangedSubviews: bottomTextViews)
-    bottomLabelsHorizontalStack.translatesAutoresizingMaskIntoConstraints = false
-    bottomLabelsHorizontalStack.axis = .horizontal
-    bottomLabelsHorizontalStack.alignment = .fill
-    bottomLabelsHorizontalStack.distribution = .fill
-    bottomLabelsHorizontalStack.spacing = 6.0
-
-    let subviews = [
-      titleLabel,
-      textContainer,
-      bottomLabelsHorizontalStack,
-    ]
-
-    let verticalStackView = UIStackView(arrangedSubviews: subviews)
-    addSubview(verticalStackView)
-
-    verticalStackView.translatesAutoresizingMaskIntoConstraints = false
-    verticalStackView.alignment = .center
-    verticalStackView.distribution = .fill
-    verticalStackView.axis = .vertical
-    verticalStackView.spacing = 6.0
-
-    NSLayoutConstraint.activate([
-      titleLabel.leadingAnchor.constraint(equalTo: verticalStackView.leadingAnchor, constant: 6.0),
-      textContainer.leadingAnchor.constraint(equalTo: verticalStackView.leadingAnchor),
-      textContainer.trailingAnchor.constraint(equalTo: verticalStackView.trailingAnchor),
-      bottomLabelsHorizontalStack.leadingAnchor.constraint(
-        equalTo: verticalStackView.leadingAnchor, constant: 6.0),
-      verticalStackView.topAnchor.constraint(equalTo: topAnchor),
-      verticalStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-      verticalStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
-      verticalStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-      textContainer.heightAnchor.constraint(greaterThanOrEqualToConstant: 44.0),
-    ])
   }
 }
 
