@@ -21,6 +21,7 @@
 #import "MDCInkView.h"
 #import "MDCRippleView.h"
 #import "MDCStatefulRippleView.h"
+#import "M3CAnimationActions.h"
 #import "MDCShadow.h"
 #import "MDCShadowsCollection.h"
 #import "MDCShadowElevations.h"
@@ -1523,6 +1524,16 @@ static BOOL gEnablePerformantShadow = NO;
 
 + (BOOL)enablePerformantShadow {
   return gEnablePerformantShadow;
+}
+
+#pragma mark - CALayerDelegate
+
+- (id<CAAction>)actionForLayer:(CALayer *)layer forKey:(NSString *)key {
+  if (gEnablePerformantShadow && layer == self.layer && M3CIsMDCShadowPathKey(key)) {
+    return M3CShadowPathActionForLayer(layer);
+  }
+
+  return [super actionForLayer:layer forKey:key];
 }
 
 @end
