@@ -144,6 +144,7 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
     _navigationBarVerticalLayoutConstraints = [NSMutableArray array];
     _navigationBarHorizontalLayoutConstraints = [NSMutableArray array];
     _contentInsets = UIEdgeInsetsZero;
+    _contentCornerRadius = 0;
 
     if (@available(iOS 13.0, *)) {
       _longPressPopUpViewEnabled = NO;
@@ -752,6 +753,16 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
 
   self.contentViewVerticalLayoutLeadingConstraint.constant = self.contentInsets.left;
   self.contentViewHorizontalLayoutLeadingConstraint.constant = self.contentInsets.left;
+}
+
+- (void)setContentCornerRadius:(CGFloat)contentCornerRadius {
+  if (contentCornerRadius == _contentCornerRadius) {
+    return;
+  }
+
+  _contentCornerRadius = contentCornerRadius;
+  self.content.layer.cornerRadius = self.contentCornerRadius;
+  self.content.layer.masksToBounds = self.contentCornerRadius != 0 ? YES : NO;
 }
 
 - (void)loadConstraintsForContentContainerView {

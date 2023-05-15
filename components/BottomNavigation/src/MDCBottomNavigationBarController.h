@@ -100,6 +100,13 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarLayoutMode) {
 @property(nonatomic, assign) UIEdgeInsets contentInsets;
 
 /**
+ Corner radius applied to the content view.
+
+ Defaults to 0.
+ */
+@property(nonatomic, assign) CGFloat contentCornerRadius;
+
+/**
  An array of view controllers to display when their corresponding tab bar item is selected in the
  navigation bar.  When this property is set, the navigation bar's @c items property will be set to
  an array composed of the @c tabBarItem property of each view controller in this array.
