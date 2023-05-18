@@ -135,7 +135,7 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
   self = [super init];
   if (self) {
     _hapticsGenerator =
-        [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleMedium];
+        [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
     _enableHaptics = NO;
     _navigationBar = [[MDCBottomNavigationBar alloc] init];
     _content = [[UIView alloc] init];
@@ -490,11 +490,13 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
 
   // Update selected view controller
   UIViewController *selectedViewController = [self.viewControllers objectAtIndex:index];
-  self.selectedViewController = selectedViewController;
 
-  // Play haptics pattern if haptics are supported and enabled.
-  if (self.enableHaptics) {
-    [self.hapticsGenerator impactOccurred];
+  if (self.selectedViewController != selectedViewController) {
+    self.selectedViewController = selectedViewController;
+    // Play haptics pattern if haptics are supported and enabled.
+    if (self.enableHaptics) {
+      [self.hapticsGenerator impactOccurred];
+    }
   }
 
   // Notify the delegate.
