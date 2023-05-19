@@ -263,6 +263,7 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
        withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
   if (self.layoutMode != MDCBottomNavigationBarLayoutModeAutomatic) {
+    [self.navigationBar invalidateIntrinsicContentSize];
     return;
   }
   BOOL enableVerticalLayout = [self useVerticalLayoutAfterTransitioningToSize:size];
