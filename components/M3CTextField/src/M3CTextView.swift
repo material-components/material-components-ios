@@ -4,6 +4,8 @@ import UIKit
 /// its associated labels.
 @available(iOS 13.0, *)
 public final class M3CTextView: UIView, M3CTextInput {
+  @objc public var isInErrorState = false
+
   @objc public lazy var textContainer: UITextView = {
     let textContainer = UITextView()
     textContainer.translatesAutoresizingMaskIntoConstraints = false

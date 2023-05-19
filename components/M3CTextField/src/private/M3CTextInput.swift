@@ -6,8 +6,12 @@ import UIKit
 public protocol M3CTextInput: UIView {
   associatedtype TextContainer: UIView
 
-  /// A view that represents the primary source of user input and interaction for
-  /// this component.
+  /// A Boolean value that indicates whether an M3CTextInput is in a valid or invalid state.
+  ///
+  /// Validation is defined by the client.
+  var isInErrorState: Bool { get set }
+
+  /// A view that represents the primary source of user input and interaction for this component.
   var textContainer: TextContainer { get }
 
   /// A label with a top leading position that represents title text associated with
