@@ -4,7 +4,7 @@ import UIKit
 /// its associated labels.
 @available(iOS 13.0, *)
 public final class M3CTextView: UIView, M3CTextInput {
-  public lazy var textContainer: UITextView = {
+  @objc public lazy var textContainer: UITextView = {
     let textContainer = UITextView()
     textContainer.translatesAutoresizingMaskIntoConstraints = false
     textContainer.adjustsFontForContentSizeCategory = true
@@ -15,11 +15,11 @@ public final class M3CTextView: UIView, M3CTextInput {
     return textContainer
   }()
 
-  public lazy var titleLabel: UILabel = buildLabel()
+  @objc public lazy var titleLabel: UILabel = buildLabel()
 
-  public lazy var supportingLabel: UILabel = buildLabel()
+  @objc public lazy var supportingLabel: UILabel = buildLabel()
 
-  public lazy var trailingLabel: UILabel = buildLabel()
+  @objc public lazy var trailingLabel: UILabel = buildLabel()
 
   /// Initializes a `M3CTextView` with a supporting label, title label, and trailing label.
   public init() {

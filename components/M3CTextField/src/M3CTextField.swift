@@ -4,7 +4,7 @@ import UIKit
 /// accessory icons, and its associated labels.
 @available(iOS 13.0, *)
 public final class M3CTextField: UIView, M3CTextInput {
-  public lazy var textContainer: UITextField = {
+  @objc public lazy var textContainer: UITextField = {
     let textField = M3CInsetTextField()
     textField.translatesAutoresizingMaskIntoConstraints = false
     textField.adjustsFontForContentSizeCategory = true
@@ -15,11 +15,11 @@ public final class M3CTextField: UIView, M3CTextInput {
     return textField
   }()
 
-  public lazy var titleLabel: UILabel = buildLabel()
+  @objc public lazy var titleLabel: UILabel = buildLabel()
 
-  public lazy var supportingLabel: UILabel = buildLabel()
+  @objc public lazy var supportingLabel: UILabel = buildLabel()
 
-  public lazy var trailingLabel: UILabel = buildLabel()
+  @objc public lazy var trailingLabel: UILabel = buildLabel()
 
   /// Initializes a `M3CTextField` with a supporting label, title label, and trailing label.
   public init() {
