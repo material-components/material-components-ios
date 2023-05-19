@@ -3,6 +3,7 @@
 #import <UIKit/UIKit.h>
 
 #import "M3CButton.h"
+#import "M3CAnimationActions.h"
 #import "MDCShadow.h"
 #import "MDCShadowsCollection.h"
 
@@ -322,6 +323,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 #pragma mark - Overrides
+
 - (CGSize)intrinsicContentSize {
   [self updateInsets];
   CGSize size;
@@ -345,6 +347,17 @@ NS_ASSUME_NONNULL_BEGIN
   CGSize clampToMinimumSize = [self clampToMinimumSize:newSize];
   [self setCapsuleCornersBasedOn:clampToMinimumSize];
   return clampToMinimumSize;
+}
+
+#pragma mark - CALayerDelegate
+
+- (nullable id<CAAction>)actionForLayer:(CALayer *)layer forKey:(NSString *)key {
+  if (layer == self.layer && M3CIsMDCShadowPathKey(key)) {
+    // Provide a custom action for the view's layer's shadow path only.
+    return M3CShadowPathActionForLayer(layer);
+  }
+
+  return [super actionForLayer:layer forKey:key];
 }
 
 @end
