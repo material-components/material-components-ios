@@ -55,25 +55,25 @@ public final class M3CTextField: UIView, M3CTextInput {
 
   /// Sets the background color for a specific UIControlState.
   @objc(setBackgroundColor:forState:)
-  public func setBackgroundColor(_ color: UIColor, for state: UIControl.State) {
+  public func setBackgroundColor(_ color: UIColor?, for state: UIControl.State) {
     backgroundColors[state] = color
   }
 
   /// Sets the border color for a specific UIControlState.
   @objc(setBorderColor:forState:)
-  public func setBorderColor(_ color: UIColor, for state: UIControl.State) {
+  public func setBorderColor(_ color: UIColor?, for state: UIControl.State) {
     borderColors[state] = color
   }
 
   /// Sets the text color for a specific UIControlState.
   @objc(setTextColor:forState:)
-  public func setTextColor(_ color: UIColor, for state: UIControl.State) {
+  public func setTextColor(_ color: UIColor?, for state: UIControl.State) {
     textColors[state] = color
   }
 
   /// Sets the tint color for a specific UIControlState.
   @objc(setTintColor:forState:)
-  public func setTintColor(_ color: UIColor, for state: UIControl.State) {
+  public func setTintColor(_ color: UIColor?, for state: UIControl.State) {
     tintColors[state] = color
   }
 }
