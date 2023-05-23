@@ -98,32 +98,6 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
     _unselectedItemTintColor = [UIColor grayColor];
     _selectedItemTitleColor = _selectedItemTintColor;
 
-    _iconImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
-    _iconImageView.isAccessibilityElement = NO;
-    _iconImageView.tintAdjustmentMode = UIViewTintAdjustmentModeNormal;
-    [self addSubview:_iconImageView];
-
-    _label = [[UILabel alloc] initWithFrame:CGRectZero];
-    _label.text = _title;
-    _label.font = [UIFont systemFontOfSize:MDCBottomNavigationItemViewTitleFontSize];
-    _label.textAlignment = NSTextAlignmentCenter;
-    _label.textColor = _selectedItemTitleColor;
-    _label.isAccessibilityElement = NO;
-    [self addSubview:_label];
-    _label.numberOfLines = kDefaultTitleNumberOfLines;
-
-    // We store a local copy of the badge appearance so that we can consistently override with the
-    // UITabBarItem badgeColor property.
-    _badgeAppearance = [[MDCBadgeAppearance alloc] init];
-
-    _badge = [[MDCBadgeView alloc] initWithFrame:CGRectZero];
-    _badge.isAccessibilityElement = NO;
-    [self addSubview:_badge];
-    _badge.hidden = YES;
-
-    _rippleTouchController = [[MDCRippleTouchController alloc] initWithView:self];
-    _rippleTouchController.rippleView.rippleStyle = MDCRippleStyleUnbounded;
-
     _button = [[UIButton alloc] initWithFrame:self.bounds];
     _button.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     _button.accessibilityLabel = [self accessibilityLabelWithTitle:_title];
@@ -133,6 +107,33 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
       _button.accessibilityTraits |= UIAccessibilityTraitButton;
     }
     [self addSubview:_button];
+
+    _iconImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+    _iconImageView.isAccessibilityElement = NO;
+    _iconImageView.tintAdjustmentMode = UIViewTintAdjustmentModeNormal;
+
+    _label = [[UILabel alloc] initWithFrame:CGRectZero];
+    _label.text = _title;
+    _label.font = [UIFont systemFontOfSize:MDCBottomNavigationItemViewTitleFontSize];
+    _label.textAlignment = NSTextAlignmentCenter;
+    _label.textColor = _selectedItemTitleColor;
+    _label.isAccessibilityElement = NO;
+    _label.numberOfLines = kDefaultTitleNumberOfLines;
+
+    // We store a local copy of the badge appearance so that we can consistently override with the
+    // UITabBarItem badgeColor property.
+    _badgeAppearance = [[MDCBadgeAppearance alloc] init];
+
+    _badge = [[MDCBadgeView alloc] initWithFrame:CGRectZero];
+    _badge.isAccessibilityElement = NO;
+
+    [_button addSubview:_iconImageView];
+    [_button addSubview:_label];
+    [_button addSubview:_badge];
+    _badge.hidden = YES;
+
+    _rippleTouchController = [[MDCRippleTouchController alloc] initWithView:self];
+    _rippleTouchController.rippleView.rippleStyle = MDCRippleStyleUnbounded;
   }
   return self;
 }
@@ -733,7 +734,7 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
     _selectionIndicator.backgroundColor = _selectionIndicatorColor;
     _selectionIndicator.hidden = !_selected;
     [self commitSelectionIndicatorState];
-    [self insertSubview:_selectionIndicator belowSubview:_iconImageView];
+    [self.button insertSubview:_selectionIndicator belowSubview:_iconImageView];
   } else {
     [_selectionIndicator removeFromSuperview];
     _selectionIndicator = nil;
