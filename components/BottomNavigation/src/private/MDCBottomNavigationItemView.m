@@ -731,6 +731,7 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
 
   if (_showsSelectionIndicator) {
     _selectionIndicator = [[UIView alloc] init];
+    _selectionIndicator.userInteractionEnabled = NO;
     _selectionIndicator.backgroundColor = _selectionIndicatorColor;
     _selectionIndicator.hidden = !_selected;
     [self commitSelectionIndicatorState];
