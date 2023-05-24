@@ -14,9 +14,8 @@
 
 #import <XCTest/XCTest.h>
 
-#import "MaterialAvailability.h"
 #import "UIColor+MaterialBlending.h"
-#import "MaterialMath.h"
+#import "MDCMath.h"
 
 /** Returns a generated image of the given color and bounds. */
 static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
@@ -125,6 +124,15 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
                                            green:(CGFloat)0.63913043478260867
                                             blue:(CGFloat)0.16956521739130434
                                            alpha:(CGFloat)0.92000000000000004];
+  UIColor *resultColor = [UIColor mdc_blendColor:blendColor withBackgroundColor:backgroundColor];
+  XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
+                                                    secondColor:expectedColor]);
+}
+
+- (void)testClearColorMergeTest {
+  UIColor *backgroundColor = UIColor.clearColor;
+  UIColor *blendColor = UIColor.clearColor;
+  UIColor *expectedColor = UIColor.clearColor;
   UIColor *resultColor = [UIColor mdc_blendColor:blendColor withBackgroundColor:backgroundColor];
   XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
                                                     secondColor:expectedColor]);
