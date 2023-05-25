@@ -19,34 +19,19 @@
 
 #import "MaterialActionSheet.h"
 
-/** A test fake window that allows overriding its @c traitCollection. */
-@interface MDCActionSheetControllerCustomTraitCollectionTestsWindowFake : UIWindow
-
-/** Set to override the value of @c traitCollection. */
-@property(nonatomic, strong) UITraitCollection *traitCollectionOverride;
-
-@end
-
-@implementation MDCActionSheetControllerCustomTraitCollectionTestsWindowFake
-
-- (UITraitCollection *)traitCollection {
-  return self.traitCollectionOverride ?: [super traitCollection];
-}
-
-@end
+NS_ASSUME_NONNULL_BEGIN
 
 @interface MDCActionSheetControllerCustomTraitCollectionTests : MDCSnapshotTestCase
 @property(nonatomic, strong, nullable) MDCActionSheetController *actionSheetController;
+
+/// Parent of the action sheet controller, used to override trait collection.
+@property(nonatomic, strong, nullable) UIViewController *parent;
 @end
 
 @implementation MDCActionSheetControllerCustomTraitCollectionTests
 
 - (void)setUp {
   [super setUp];
-
-  // Uncomment below to recreate all the goldens (or add the following line to the specific
-  // test you wish to recreate the golden for).
-  //  self.recordMode = YES;
 
   self.actionSheetController = [[MDCActionSheetController alloc] init];
   self.actionSheetController.adjustsFontForContentSizeCategory = YES;
@@ -63,6 +48,12 @@
   self.actionSheetController.title = @"Title";
 
   self.actionSheetController.view.bounds = CGRectMake(0, 0, 700, 700);
+
+  // Set up the parent view controller.
+  self.parent = [[UIViewController alloc] init];
+  [self.parent addChildViewController:self.actionSheetController];
+  [self.parent.view addSubview:self.actionSheetController.view];
+  [self.actionSheetController didMoveToParentViewController:self.parent];
 }
 
 - (void)tearDown {
@@ -107,28 +98,21 @@
   self.actionSheetController.adjustsFontForContentSizeCategory = YES;
   [self.actionSheetController loadViewIfNeeded];
 
-  // Create a window so the Sheet's view can inherit the trait environment.
-  MDCActionSheetControllerCustomTraitCollectionTestsWindowFake *window =
-      [[MDCActionSheetControllerCustomTraitCollectionTestsWindowFake alloc] init];
-  [window makeKeyWindow];
-  window.hidden = NO;
-  [window addSubview:self.actionSheetController.view];
-
   // When
-  window.traitCollectionOverride = [UITraitCollection
+  UITraitCollection *xsTraits = [UITraitCollection
       traitCollectionWithPreferredContentSizeCategory:UIContentSizeCategoryExtraSmall];
-  [window traitCollectionDidChange:nil];
+  [self.parent setOverrideTraitCollection:xsTraits
+                   forChildViewController:self.actionSheetController];
+
   [self.actionSheetController.view layoutIfNeeded];
   [self.actionSheetController.view sizeToFit];
   CGSize size = self.actionSheetController.view.bounds.size;
-  window.bounds = CGRectMake(0, 0, size.width, size.height);
-  self.actionSheetController.view.frame = window.bounds;
+  self.parent.view.bounds = CGRectMake(0, 0, size.width, size.height);
+  self.actionSheetController.view.frame = self.parent.view.bounds;
+  [self.parent.view layoutIfNeeded];
 
   // Then
-  // Can't add a UIWindow to a UIView, so just screenshot the window directly.
-  window.bounds = self.actionSheetController.view.frame;
-  [window layoutIfNeeded];
-  [self snapshotVerifyView:window];
+  [self generateSnapshotAndVerifyForView:self.parent.view];
 }
 
 /**
@@ -159,29 +143,24 @@
   self.actionSheetController.adjustsFontForContentSizeCategory = YES;
   [self.actionSheetController loadViewIfNeeded];
 
-  // Create a window so the Action Sheets's view can inherit the trait environment.
-  MDCActionSheetControllerCustomTraitCollectionTestsWindowFake *window =
-      [[MDCActionSheetControllerCustomTraitCollectionTestsWindowFake alloc] init];
-  [window makeKeyWindow];
-  window.hidden = NO;
-  [window addSubview:self.actionSheetController.view];
-
   // When
-  window.traitCollectionOverride =
+  UITraitCollection *xxxlTraits =
       [UITraitCollection traitCollectionWithPreferredContentSizeCategory:
                              UIContentSizeCategoryAccessibilityExtraExtraExtraLarge];
-  [window traitCollectionDidChange:nil];
+  [self.parent setOverrideTraitCollection:xxxlTraits
+                   forChildViewController:self.actionSheetController];
+
   [self.actionSheetController.view layoutIfNeeded];
   [self.actionSheetController.view sizeToFit];
   CGSize size = self.actionSheetController.view.bounds.size;
-  window.bounds = CGRectMake(0, 0, size.width, size.height);
-  self.actionSheetController.view.frame = window.bounds;
+  self.parent.view.bounds = CGRectMake(0, 0, size.width, size.height);
+  self.actionSheetController.view.frame = self.parent.view.bounds;
+  [self.parent.view layoutIfNeeded];
 
   // Then
-  // Can't add a UIWindow to a UIView, so just screenshot the window directly.
-  window.bounds = self.actionSheetController.view.frame;
-  [window layoutIfNeeded];
-  [self snapshotVerifyView:window];
+  [self generateSnapshotAndVerifyForView:self.parent.view];
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
