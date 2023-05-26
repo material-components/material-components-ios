@@ -15,7 +15,8 @@ public final class M3CTextView: UIView, M3CTextInput {
   private var backgroundColors: [UIControl.State: UIColor] = [:]
   private var borderColors: [UIControl.State: UIColor] = [:]
   private var errorColors: [UIControl.State: UIColor] = [:]
-  private var textColors: [UIControl.State: UIColor] = [:]
+  private var inputColors: [UIControl.State: UIColor] = [:]
+  private var labelColors: [UIControl.State: UIColor] = [:]
   private var tintColors: [UIControl.State: UIColor] = [:]
 
   @objc public lazy var textContainer: UITextView = {
@@ -67,10 +68,16 @@ public final class M3CTextView: UIView, M3CTextInput {
     borderColors[state] = color
   }
 
-  /// Sets the text color for a specific UIControlState.
-  @objc(setTextColor:forState:)
-  public func setTextColor(_ color: UIColor?, for state: UIControl.State) {
-    textColors[state] = color
+  /// Sets the input color for a specific UIControlState.
+  @objc(setInputColor:forState:)
+  public func setInputColor(_ color: UIColor?, for state: UIControl.State) {
+    inputColors[state] = color
+  }
+
+  /// Sets the label color for a specific UIControlState.
+  @objc(setLabelColor:forState:)
+  public func setLabelColor(_ color: UIColor?, for state: UIControl.State) {
+    labelColors[state] = color
   }
 
   /// Sets the tint color for a specific UIControlState.
@@ -121,11 +128,12 @@ extension M3CTextView {
     textContainer.layer.borderColor = borderColor(for: state)?.cgColor
     textContainer.tintColor = tintColor(for: state)
 
-    let textColor = textColor(for: state)
-    textContainer.textColor = textColor
-    titleLabel.textColor = textColor
-    supportingLabel.textColor = textColor
-    trailingLabel.textColor = textColor
+    textContainer.textColor = inputColor(for: state)
+
+    let labelColor = labelColor(for: state)
+    titleLabel.textColor = labelColor
+    supportingLabel.textColor = labelColor
+    trailingLabel.textColor = labelColor
   }
 
   private func borderColor(for state: UIControl.State) -> UIColor? {
@@ -136,12 +144,16 @@ extension M3CTextView {
     backgroundColors[state] ?? backgroundColors[.normal]
   }
 
-  private func tintColor(for state: UIControl.State) -> UIColor? {
-    tintColors[state] ?? tintColors[.normal]
+  private func inputColor(for state: UIControl.State) -> UIColor? {
+    inputColors[state] ?? inputColors[.normal]
   }
 
-  private func textColor(for state: UIControl.State) -> UIColor? {
-    textColors[state] ?? textColors[.normal]
+  private func labelColor(for state: UIControl.State) -> UIColor? {
+    labelColors[state] ?? labelColors[.normal]
+  }
+
+  private func tintColor(for state: UIControl.State) -> UIColor? {
+    tintColors[state] ?? tintColors[.normal]
   }
 }
 
