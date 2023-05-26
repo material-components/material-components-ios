@@ -526,14 +526,12 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
       accessibilityHintKey, kMaterialSnackbarStringsTableName, [[self class] bundle],
       @"Dismissal accessibility hint for Snackbar");
   if (enableDismissalAccessibilityAffordance) {
-    _label.accessibilityTraits = UIAccessibilityTraitButton;
-    if (![_label.accessibilityHint length]) {
-      _label.accessibilityHint = accessibilityHint;
-    }
-  } else {
-    _label.accessibilityTraits = UIAccessibilityTraitNone;
     if ([_label.accessibilityHint isEqualToString:accessibilityHint]) {
       _label.accessibilityHint = nil;
+    }
+  } else {
+    if (![_label.accessibilityHint length]) {
+      _label.accessibilityHint = accessibilityHint;
     }
   }
 }
