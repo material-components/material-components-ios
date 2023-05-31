@@ -263,6 +263,7 @@
                      @"the screen.",
     @"primaryDemo" : @YES,
     @"presentable" : @YES,
+    @"snapshotDelay" : @1.0,
   };
 }
 
