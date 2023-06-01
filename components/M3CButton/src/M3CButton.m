@@ -54,6 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)initCommon {
   self.animationDuration = 0.3f;
   self.minimumHeight = 44.0f;
+  self.minimumWidth = 44.0f;
   _borderColors = [NSMutableDictionary dictionary];
   _shadows = [NSMutableDictionary dictionary];
   _customInsetAvailable = NO;
@@ -99,6 +100,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setMinimumHeight:(CGFloat)minimumHeight {
   _minimumHeight = minimumHeight;
+  [self setNeedsLayout];
+}
+
+- (void)setMinimumWidth:(CGFloat)minimumWidth {
+  _minimumWidth = minimumWidth;
   [self setNeedsLayout];
 }
 
@@ -301,9 +307,7 @@ NS_ASSUME_NONNULL_BEGIN
   if (size.height < _minimumHeight) {
     size.height = _minimumHeight;
   }
-  if (size.height > size.width) {
-    size.width = size.height;
-  }
+  size.width = MAX(MAX(size.height, size.width), _minimumWidth);
   return size;
 }
 

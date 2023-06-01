@@ -70,6 +70,11 @@ __attribute__((objc_subclassing_restricted))
 @property(nonatomic) CGFloat minimumHeight;
 
 /**
+ The minimum width of the button.
+*/
+@property(nonatomic) CGFloat minimumWidth;
+
+/**
  Is the button a capsule shape.
 */
 @property(nonatomic) BOOL isCapsuleShape;
