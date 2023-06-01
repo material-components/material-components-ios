@@ -1170,7 +1170,7 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
 - (id)accessibilityElementAtIndex:(NSInteger)index {
   if (index == 0) {
     return _label;
-  } else if (index == 1) {
+  } else if (index == 1 && self.actionButton) {
     return self.actionButton;
   }
   if (!self.dismissalAccessibilityAffordance.accessibilityElementsHidden) {
@@ -1186,7 +1186,7 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
     return 1;
   } else if (element == _dismissalAccessibilityAffordance &&
              !self.dismissalAccessibilityAffordance.accessibilityElementsHidden) {
-    return 2;
+    return _actionButton ? 2 : 1;
   }
 
   return NSNotFound;
