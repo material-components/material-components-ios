@@ -976,9 +976,11 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   for (UIButton *button in buttons) {
     [button sizeToFit];
     CGRect buttonFrame = button.frame;
+    CGFloat minTouchTargetHeight =
+        self.isM3CButtonEnabled ? M3CDialogActionMinHeight : MDCDialogActionMinTouchTarget;
     button.frame = CGRectMake(buttonFrame.origin.x, buttonFrame.origin.y,
                               MAX(MDCDialogActionMinTouchTarget, CGRectGetWidth(buttonFrame)),
-                              MAX(MDCDialogActionMinTouchTarget, CGRectGetHeight(buttonFrame)));
+                              MAX(minTouchTargetHeight, CGRectGetHeight(buttonFrame)));
   }
 
   if (self.isVerticalActionsLayout) {
