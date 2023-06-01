@@ -12,11 +12,22 @@ public final class M3CTextField: UIView, M3CTextInput {
     }
   }
 
+  private var controlState: UIControl.State {
+    if isInErrorState {
+      return .error
+    } else if textContainer.isFirstResponder {
+      return .selected
+    } else {
+      return .normal
+    }
+  }
+
   private var backgroundColors: [UIControl.State: UIColor] = [:]
   private var borderColors: [UIControl.State: UIColor] = [:]
-  private var errorColors: [UIControl.State: UIColor] = [:]
   private var inputColors: [UIControl.State: UIColor] = [:]
-  private var labelColors: [UIControl.State: UIColor] = [:]
+  private var supportingLabelColors: [UIControl.State: UIColor] = [:]
+  private var titleLabelColors: [UIControl.State: UIColor] = [:]
+  private var trailingLabelColors: [UIControl.State: UIColor] = [:]
   private var tintColors: [UIControl.State: UIColor] = [:]
 
   @objc public lazy var textContainer: UITextField = {
@@ -36,6 +47,56 @@ public final class M3CTextField: UIView, M3CTextInput {
 
     return textField
   }()
+
+  /// Proxy property for the underlying text field's `delegate` property.
+  @objc public var delegate: UITextFieldDelegate? {
+    get {
+      return textContainer.delegate
+    }
+    set {
+      textContainer.delegate = newValue
+    }
+  }
+
+  /// Proxy property for the underlying text field's `leftView` property.
+  @objc public var leftView: UIView? {
+    get {
+      return textContainer.leftView
+    }
+    set {
+      textContainer.leftView = newValue
+    }
+  }
+
+  /// Proxy property for the underlying text field's `rightView` property.
+  @objc public var rightView: UIView? {
+    get {
+      return textContainer.rightView
+    }
+    set {
+      textContainer.rightView = newValue
+    }
+  }
+
+  /// Proxy property for the underlying text field's `placeholder` property.
+  @objc public var placeholder: String? {
+    get {
+      return textContainer.placeholder
+    }
+    set {
+      textContainer.placeholder = newValue
+    }
+  }
+
+  /// Proxy property for the underlying text field's `text` property.
+  @objc public var text: String? {
+    get {
+      return textContainer.text
+    }
+    set {
+      textContainer.text = newValue
+    }
+  }
 
   @objc public lazy var titleLabel: UILabel = buildLabel()
 
@@ -72,10 +133,10 @@ public final class M3CTextField: UIView, M3CTextInput {
     inputColors[state] = color
   }
 
-  /// Sets the label color for a specific UIControlState.
-  @objc(setLabelColor:forState:)
-  public func setLabelColor(_ color: UIColor?, for state: UIControl.State) {
-    labelColors[state] = color
+  /// Sets the supporting label color for a specific UIControlState.
+  @objc(setSupportingLabelColor:forState:)
+  public func setSupportingLabelColor(_ color: UIColor?, for state: UIControl.State) {
+    supportingLabelColors[state] = color
   }
 
   /// Sets the tint color for a specific UIControlState.
@@ -83,28 +144,27 @@ public final class M3CTextField: UIView, M3CTextInput {
   public func setTintColor(_ color: UIColor?, for state: UIControl.State) {
     tintColors[state] = color
   }
+
+  /// Sets the title label color for a specific UIControlState.
+  @objc(setTitleLabelColor:forState:)
+  public func setTitleLabelColor(_ color: UIColor?, for state: UIControl.State) {
+    titleLabelColors[state] = color
+  }
+
+  /// Sets the trailing label color for a specific UIControlState.
+  @objc(setTrailingLabelColor:forState:)
+  public func setTrailingLabelColor(_ color: UIColor?, for state: UIControl.State) {
+    trailingLabelColors[state] = color
+  }
 }
 
 // MARK: M3CTextField Color Configuration
 
 @available(iOS 13.0, *)
 extension M3CTextField {
-  /// Applies colors for border, background, tint, and text, based on the current state.
-  ///
-  /// If `isInErrorState` is true, apply colors for .error state.
-  ///
-  /// If `isInErrorState` is false, and `isFirstResponder` is true, apply colors for the .selected
-  /// state.
-  ///
-  /// If neither is true, apply colors for the .normal state.
+  /// Applies colors for border, background, labels, tint, and text, based on the current state.
   @objc public func applyAllColors() {
-    if isInErrorState {
-      applyColors(for: .error)
-    } else if textContainer.isFirstResponder {
-      applyColors(for: .selected)
-    } else {
-      applyColors(for: .normal)
-    }
+    applyColors(for: controlState)
   }
 
   /// Applies border color based on the current state.
@@ -112,26 +172,18 @@ extension M3CTextField {
   /// This is necessary when transitioning between Light Mode and Dark Mode, because
   /// `layer.borderColor` is a CGColor.
   private func applyBorderColor() {
-    if isInErrorState {
-      textContainer.layer.borderColor = borderColor(for: .error)?.cgColor
-    } else if textContainer.isFirstResponder {
-      textContainer.layer.borderColor = borderColor(for: .selected)?.cgColor
-    } else {
-      textContainer.layer.borderColor = borderColor(for: .normal)?.cgColor
-    }
+    textContainer.layer.borderColor = borderColor(for: controlState)?.cgColor
   }
 
   private func applyColors(for state: UIControl.State) {
     textContainer.backgroundColor = backgroundColor(for: state)
     textContainer.layer.borderColor = borderColor(for: state)?.cgColor
     textContainer.tintColor = tintColor(for: state)
-
     textContainer.textColor = inputColor(for: state)
 
-    let labelColor = labelColor(for: state)
-    titleLabel.textColor = labelColor
-    supportingLabel.textColor = labelColor
-    trailingLabel.textColor = labelColor
+    titleLabel.textColor = titleLabelColor(for: state)
+    supportingLabel.textColor = supportingLabelColor(for: state)
+    trailingLabel.textColor = trailingLabelColor(for: state)
   }
 
   private func borderColor(for state: UIControl.State) -> UIColor? {
@@ -146,8 +198,16 @@ extension M3CTextField {
     inputColors[state] ?? inputColors[.normal]
   }
 
-  private func labelColor(for state: UIControl.State) -> UIColor? {
-    labelColors[state] ?? labelColors[.normal]
+  private func supportingLabelColor(for state: UIControl.State) -> UIColor? {
+    supportingLabelColors[state] ?? supportingLabelColors[.normal]
+  }
+
+  private func titleLabelColor(for state: UIControl.State) -> UIColor? {
+    titleLabelColors[state] ?? titleLabelColors[.normal]
+  }
+
+  private func trailingLabelColor(for state: UIControl.State) -> UIColor? {
+    trailingLabelColors[state] ?? trailingLabelColors[.normal]
   }
 
   private func tintColor(for state: UIControl.State) -> UIColor? {
