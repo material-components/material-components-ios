@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "MDCTabBarView.h"
+#import <UIKit/UIKit.h>
 
 #import "private/MDCTabBarViewIndicatorView.h"
 #import "private/MDCTabBarViewItemView.h"
@@ -1210,8 +1211,11 @@ static NSString *const kBadgeColorKeyPath = @"badgeColor";
 #ifdef __IPHONE_13_4
   if (@available(iOS 13.4, *)) {
     for (MDCTabBarView *view in self.itemViews) {
-      for (UIPointerInteraction *interaction in view.interactions) {
-        [interaction invalidate];
+      for (id<UIInteraction> interaction in view.interactions) {
+        if ([interaction isKindOfClass:[UIPointerInteraction class]]) {
+          UIPointerInteraction *pointerInteraction = (UIPointerInteraction *)interaction;
+          [pointerInteraction invalidate];
+        }
       }
     }
   }
