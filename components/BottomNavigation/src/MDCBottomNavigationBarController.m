@@ -146,11 +146,7 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
     _contentInsets = UIEdgeInsetsZero;
     _contentCornerRadius = 0;
 
-    if (@available(iOS 13.0, *)) {
-      _longPressPopUpViewEnabled = NO;
-    } else {
-      _longPressPopUpViewEnabled = YES;
-    }
+    _longPressPopUpViewEnabled = NO;
 
     [_navigationBar addObserver:self
                      forKeyPath:NSStringFromSelector(@selector(items))

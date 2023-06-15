@@ -86,12 +86,8 @@
   itemView.badgeText = item.badgeValue;
   itemView.badgeColor = item.badgeColor;
 
-#if MDC_AVAILABLE_SDK_IOS(13_0)
-  if (@available(iOS 13, *)) {
-    itemView.largeContentImageInsets = item.largeContentSizeImageInsets;
-    itemView.largeContentImage = item.largeContentSizeImage;
-  }
-#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
+  itemView.largeContentImageInsets = item.largeContentSizeImageInsets;
+  itemView.largeContentImage = item.largeContentSizeImage;
 }
 
 - (void)configureTitleForItemView:(MDCBottomNavigationItemView *)itemView {

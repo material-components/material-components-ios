@@ -572,20 +572,13 @@ static BOOL gEnablePerformantShadow = NO;
     } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(titlePositionAdjustment))]) {
       itemView.titlePositionAdjustment = [newValue UIOffsetValue];
     } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(largeContentSizeImage))]) {
-      if (@available(iOS 13.0, *)) {
-        itemView.largeContentImage = newValue;
-      }
+      itemView.largeContentImage = newValue;
     } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(tag))]) {
       itemView.tag = [newValue integerValue];
+    } else if ([keyPath
+                   isEqualToString:NSStringFromSelector(@selector(largeContentSizeImageInsets))]) {
+      itemView.largeContentImageInsets = [newValue UIEdgeInsetsValue];
     }
-#if MDC_AVAILABLE_SDK_IOS(13_0)
-    else if ([keyPath
-                 isEqualToString:NSStringFromSelector(@selector(largeContentSizeImageInsets))]) {
-      if (@available(iOS 13.0, *)) {
-        itemView.largeContentImageInsets = [newValue UIEdgeInsetsValue];
-      }
-    }
-#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
   } else {
     [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
   }
@@ -667,13 +660,10 @@ static BOOL gEnablePerformantShadow = NO;
   if ([_items isEqual:items] || _items == items) {
     return;
   }
-#if MDC_AVAILABLE_SDK_IOS(13_0)
-  if (@available(iOS 13, *)) {
-    // If clients report conflicting gesture recognizers please see proposed solution in the
-    // internal document: go/mdc-ios-bottomnavigation-largecontentvieweritem
-    [self addInteraction:[[UILargeContentViewerInteraction alloc] initWithDelegate:self]];
-  }
-#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
+  // If clients report conflicting gesture recognizers please see proposed solution in the
+  // internal document: go/mdc-ios-bottomnavigation-largecontentvieweritem
+  [self addInteraction:[[UILargeContentViewerInteraction alloc] initWithDelegate:self]];
+
   // Remove existing item views from the bottom navigation so it can be repopulated with new items.
   for (MDCBottomNavigationItemView *itemView in self.itemViews) {
     [itemView removeFromSuperview];

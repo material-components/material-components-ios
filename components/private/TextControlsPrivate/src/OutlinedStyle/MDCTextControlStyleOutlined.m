@@ -59,12 +59,7 @@ static const CGFloat kFilledFloatingLabelScaleFactor = (CGFloat)0.75;
 
 - (void)setUpOutlineColors {
   self.outlineColors = [NSMutableDictionary new];
-  UIColor *outlineColor = [UIColor blackColor];
-#if MDC_AVAILABLE_SDK_IOS(13_0)
-  if (@available(iOS 13.0, *)) {
-    outlineColor = [UIColor labelColor];
-  }
-#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
+  UIColor *outlineColor = [UIColor labelColor];
   self.outlineColors[@(MDCTextControlStateNormal)] = outlineColor;
   self.outlineColors[@(MDCTextControlStateEditing)] = outlineColor;
   self.outlineColors[@(MDCTextControlStateDisabled)] =
