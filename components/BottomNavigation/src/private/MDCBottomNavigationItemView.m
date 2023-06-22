@@ -50,6 +50,7 @@ static const CGFloat kAnchorVerticalOffsetWithoutLabel = -16.0;
 static const CGFloat kBadgeVerticalOffset = 2.0f;
 static const CGFloat kIconVerticalOffset = 1.0;
 static const CGFloat kLabelVerticalOffset = 7.0;
+static const CGFloat kLabelPadding = 5;
 static const CGFloat kSelectionIndicatorVerticalOffset = 1.0;
 
 // Used in horizontal layout only. Offset between label and adjacent image.
@@ -117,6 +118,7 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
     _label.font = [UIFont systemFontOfSize:MDCBottomNavigationItemViewTitleFontSize];
     _label.textAlignment = NSTextAlignmentCenter;
     _label.textColor = _selectedItemTitleColor;
+    _label.lineBreakMode = NSLineBreakByTruncatingTail;
     _label.isAccessibilityElement = NO;
     _label.numberOfLines = kDefaultTitleNumberOfLines;
 
@@ -982,8 +984,12 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
   if ([self isTitleHiddenInAnchoredLayout]) {
     return CGSizeZero;
   } else {
+    CGFloat adjustedWidth = CGRectGetWidth(self.bounds) - (2 * kLabelPadding);
     CGSize maxSize = CGSizeMake(kMaxSizeDimension, kMaxSizeDimension);
-    return [_label sizeThatFits:maxSize];
+    CGSize sizeThatFitsLabel = [_label sizeThatFits:maxSize];
+    CGSize adjustedSize =
+        CGSizeMake(MIN(sizeThatFitsLabel.width, adjustedWidth), sizeThatFitsLabel.height);
+    return adjustedSize;
   }
 }
 
@@ -991,7 +997,7 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
   if (isHorizontalLayout) {
     return [self labelXForHorizontalLayoutWithRTLState:isRTL];
   } else {
-    return [self labelXForVerticalLayout];
+    return [self labelXForVerticalLayoutForRect:_label.bounds];
   }
 }
 
@@ -1007,9 +1013,9 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
 }
 
 // Vertical Label (x,y)
-- (CGFloat)labelXForVerticalLayout {
+- (CGFloat)labelXForVerticalLayoutForRect:(CGRect)labelBounds {
   CGPoint midPoint = [self midPoint];
-  return midPoint.x - CGRectGetMidX(_label.bounds);
+  return midPoint.x - CGRectGetMidX(labelBounds);
 }
 
 - (CGFloat)labelYForVerticalLayout {
@@ -1090,12 +1096,13 @@ UIKIT_EXTERN float UIAnimationDragCoefficient(void);  // UIKit private drag coef
   CGRect iconFrame = (CGRectMake(iconX, iconY, iconSize.width, iconSize.height));
   _iconImageView.frame = iconFrame;
 
-  CGFloat labelX = [self labelXForRTLState:isRTL isHorizontalLayout:NO];
+  CGSize labelSize = [self labelSize];
+  CGRect adjustedLabelBounds = CGRectMake(0, 0, labelSize.width, labelSize.height);
+  CGFloat labelX = [self labelXForVerticalLayoutForRect:adjustedLabelBounds];
   CGFloat labelY = [self labelYForHorizontalLayoutState:NO];
   if (self.enableVerticalLayout) {
     labelY -= kLabelYPosAdjustmentInVerticalLayout;
   }
-  CGSize labelSize = [self labelSize];
   CGRect labelFrame = CGRectIntegral(CGRectMake(labelX, labelY, labelSize.width, labelSize.height));
   _label.frame = labelFrame;
 }
