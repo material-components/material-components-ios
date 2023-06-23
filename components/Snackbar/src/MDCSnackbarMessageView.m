@@ -106,6 +106,11 @@ static const CGFloat kMaxButtonRatio = 0.333333;
 static const CGFloat kMinimumHeight = 48;
 
 /**
+ The minimum height of a snackbar using GM3 shapes.
+ */
+static const CGFloat kMinimumHeightGM3 = 52;
+
+/**
  The minimum height of a multiline Snackbar.
  */
 static const CGFloat kMinimumHeightMultiline = 68;
@@ -1036,8 +1041,10 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
   height += self.safeContentMargin.top + self.safeContentMargin.bottom;
 
   // Make sure that the height of the text is larger than the minimum height;
-  height = MAX(_isMultilineText ? kMinimumHeightMultiline : kMinimumHeight, height) +
-           self.contentSafeBottomInset;
+  CGFloat minimumHeight = _isMultilineText ? kMinimumHeightMultiline
+                          : _usesGM3Shapes ? kMinimumHeightGM3
+                                           : kMinimumHeight;
+  height = MAX(minimumHeight, height) + self.contentSafeBottomInset;
 
   if ([self shouldUseVerticalLayout]) {
     height += self.actionButton.intrinsicContentSize.height + kTitleButtonPadding;
