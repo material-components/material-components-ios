@@ -125,12 +125,45 @@ static const MDCFontTextStyle kButtonTextStyle = MDCFontTextStyleButton;
  */
 static const CGFloat kMinimumAccessibiltyFontSize = 21;
 
+@protocol MDCHighlightableScrollViewDelegate
+
+- (void)scrollViewTouchBegan:(UIScrollView *)scrollView;
+- (void)scrollViewTouchEnded:(UIScrollView *)scrollView;
+- (void)scrollViewTouchCancelled:(UIScrollView *)scrollView;
+
+@end
+
+@interface MDCHighlightableScrollView : UIScrollView
+
+@property(nullable, nonatomic, weak) id<MDCHighlightableScrollViewDelegate> highlightDelegate;
+
+@end
+
+@implementation MDCHighlightableScrollView
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  [_highlightDelegate scrollViewTouchBegan:self];
+  [super touchesBegan:touches withEvent:event];
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  [_highlightDelegate scrollViewTouchEnded:self];
+  [super touchesEnded:touches withEvent:event];
+}
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+  [_highlightDelegate scrollViewTouchCancelled:self];
+  [super touchesCancelled:touches withEvent:event];
+}
+
+@end
+
 #if MDC_AVAILABLE_SDK_IOS(10_0)
 @interface MDCSnackbarMessageView () <CAAnimationDelegate>
 @end
 #endif  // MDC_AVAILABLE_SDK_IOS(10_0)
 
-@interface MDCSnackbarMessageView ()
+@interface MDCSnackbarMessageView () <MDCHighlightableScrollViewDelegate>
 
 /**
  Holds the text label for the main message.
@@ -287,6 +320,14 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
     [_containerView addTarget:self
                        action:@selector(handleBackgroundTapped:)
              forControlEvents:UIControlEventTouchUpInside];
+    if (_usesGM3Shapes) {
+      [_containerView addTarget:self
+                         action:@selector(highlightBackground)
+               forControlEvents:UIControlEventTouchDown];
+      [_containerView addTarget:self
+                         action:@selector(unhighlightBackground)
+               forControlEvents:UIControlEventTouchDragExit];
+    }
 
     _buttonGutterTapTarget = [[UIControl alloc] init];
     _buttonGutterTapTarget.translatesAutoresizingMaskIntoConstraints = NO;
@@ -335,7 +376,14 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
       _contentView = [[UIView alloc] init];
       _contentView.userInteractionEnabled = NO;
     } else {
-      UIScrollView *contentView = [[UIScrollView alloc] init];
+      UIScrollView *contentView;
+      if (_usesGM3Shapes) {
+        MDCHighlightableScrollView *highlightScrollView = [[MDCHighlightableScrollView alloc] init];
+        highlightScrollView.highlightDelegate = self;
+        contentView = highlightScrollView;
+      } else {
+        contentView = [[UIScrollView alloc] init];
+      }
       contentView.indicatorStyle =
           self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight
               ? UIScrollViewIndicatorStyleWhite
@@ -1112,6 +1160,16 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
   [self.layer addAnimation:translationAnimation forKey:@"transform.translation.x"];
 }
 
+- (void)highlightBackground {
+  if (_snackbarMessageViewHighlightColor) {
+    self.backgroundColor = _snackbarMessageViewHighlightColor;
+  }
+}
+
+- (void)unhighlightBackground {
+  self.backgroundColor = _snackbarMessageViewBackgroundColor;
+}
+
 - (void)handleBackgroundTapped:(__unused UIButton *)sender {
   BOOL accessibilityEnabled =
       UIAccessibilityIsVoiceOverRunning() || UIAccessibilityIsSwitchControlRunning();
@@ -1163,6 +1221,20 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
   if (flag) {
     [self dismissWithAction:nil userInitiated:YES];
   }
+}
+
+#pragma mark - MDCHighlightableScrollViewDelegate
+
+- (void)scrollViewTouchBegan:(UIScrollView *)scrollView {
+  [self highlightBackground];
+}
+
+- (void)scrollViewTouchEnded:(UIScrollView *)scrollView {
+  [self unhighlightBackground];
+}
+
+- (void)scrollViewTouchCancelled:(UIScrollView *)scrollView {
+  [self unhighlightBackground];
 }
 
 #pragma mark - Accessibility

@@ -39,6 +39,17 @@
     UIColor *snackbarMessageViewBackgroundColor UI_APPEARANCE_SELECTOR;
 
 /**
+ The color for the background of the Snackbar message view when highlighted.
+
+ The default color is nil (no change on highlight).
+
+ If you are using the GM3 branding API, customize the highlight color by setting this property
+ after calling the branding API.
+ */
+@property(nonatomic, strong, nullable)
+    UIColor *snackbarMessageViewHighlightColor UI_APPEARANCE_SELECTOR;
+
+/**
  The color for the shadow color for the Snackbar message view.
 
  The default color is @c blackColor.
