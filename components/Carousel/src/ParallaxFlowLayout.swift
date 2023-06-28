@@ -37,7 +37,11 @@ public class ParallaxFlowLayout: UICollectionViewFlowLayout {
     minimumInteritemSpacing = 0
     minimumLineSpacing = 0
     flowLayoutDirection = .vertical
-    itemSize = UIScreen.main.bounds.size
+    guard let collectionViewSize = collectionView?.bounds.size else {
+      itemSize = UIScreen.main.bounds.size
+      return
+    }
+    itemSize = collectionViewSize
   }
 
   public init(direction: ParallaxFlowLayoutDirection) {
@@ -45,7 +49,11 @@ public class ParallaxFlowLayout: UICollectionViewFlowLayout {
     minimumInteritemSpacing = 0
     minimumLineSpacing = 0
     flowLayoutDirection = direction
-    itemSize = UIScreen.main.bounds.size
+    guard let collectionViewSize = collectionView?.bounds.size else {
+      itemSize = UIScreen.main.bounds.size
+      return
+    }
+    itemSize = collectionViewSize
   }
 
   required init?(coder: NSCoder) {
@@ -69,25 +77,32 @@ public class ParallaxFlowLayout: UICollectionViewFlowLayout {
       return nil
     }
 
+    var finalLayoutAttributes: [UICollectionViewLayoutAttributes] = []
     for layoutAttributesItem in layoutAttributes {
+      let copiedLayoutAttributes = layoutAttributesItem.copy()
       if layoutAttributesItem.representedElementCategory == .cell,
-        let parallaxAttributes = layoutAttributesItem as? ParallaxLayoutVerticalAttributes
+        let parallaxAttributes = copiedLayoutAttributes as? ParallaxLayoutVerticalAttributes
       {
         if let collectionView = self.collectionView {
           let pageIndex = collectionView.contentOffset.y / collectionView.frame.size.height
           parallaxAttributes.update(with: pageIndex, for: collectionView.bounds)
+          finalLayoutAttributes.append(parallaxAttributes)
         }
       }
     }
 
-    return layoutAttributes
+    return finalLayoutAttributes
   }
 
   override public func layoutAttributesForItem(
     at indexPath: IndexPath
   ) -> UICollectionViewLayoutAttributes? {
-    let layoutAttributes = super.layoutAttributesForItem(at: indexPath)
-    guard let parallaxAttributes = layoutAttributes as? ParallaxLayoutVerticalAttributes else {
+    guard let layoutAttributes = super.layoutAttributesForItem(at: indexPath) else {
+      return nil
+    }
+    let copiedLayoutAttributes = layoutAttributes.copy()
+    guard let parallaxAttributes = copiedLayoutAttributes as? ParallaxLayoutVerticalAttributes
+    else {
       return layoutAttributes
     }
     if let collectionView = self.collectionView {
