@@ -42,6 +42,7 @@ extension M3CTextInput {
     // horizontal space equally.
     supportingLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
     trailingLabel.setContentHuggingPriority(.required, for: .horizontal)
+    trailingLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
 
     let bottomTextViews = [
       supportingLabel,
