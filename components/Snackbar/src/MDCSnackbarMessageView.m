@@ -334,7 +334,11 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
     [_buttonGutterTapTarget addTarget:self
                                action:@selector(handleButtonGutterTapped:)
                      forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:_buttonGutterTapTarget];
+    if (_usesGM3Shapes) {
+      [_containerView addSubview:_buttonGutterTapTarget];
+    } else {
+      [self addSubview:_buttonGutterTapTarget];
+    }
 
     if (MDCSnackbarMessage.usesLegacySnackbar) {
       UISwipeGestureRecognizer *swipeRightGesture =
@@ -972,7 +976,7 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
         ]];
       }
 
-      // The below constraint is shared by both vertical and horizontal layouts.
+      // The below constraints are shared by both vertical and horizontal layouts.
       [constraints addObjectsFromArray:@[
         // Pin the button container to the trailing edge of the container view.
         [self.buttonContainer.trailingAnchor
@@ -980,6 +984,18 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
                            constant:-self.safeContentMargin.right],
 
       ]];
+      if (_usesGM3Shapes) {
+        [constraints addObjectsFromArray:@[
+          [self.buttonGutterTapTarget.leadingAnchor
+              constraintEqualToAnchor:self.buttonContainer.leadingAnchor],
+          [self.buttonGutterTapTarget.trailingAnchor
+              constraintEqualToAnchor:self.containerView.trailingAnchor],
+          [self.buttonGutterTapTarget.topAnchor
+              constraintEqualToAnchor:self.buttonContainer.topAnchor],
+          [self.buttonGutterTapTarget.bottomAnchor
+              constraintEqualToAnchor:self.containerView.bottomAnchor],
+        ]];
+      }
     }
   } else {  // There is not an action button present.
     [constraints addObjectsFromArray:@[
