@@ -209,15 +209,7 @@ static BOOL gEnablePerformantShadow = NO;
 }
 
 - (CGFloat)barWidthForVerticalLayout {
-  UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-  UIWindow *window = UIApplication.sharedApplication.windows.firstObject;
-  CGFloat widthPlusSafeArea = kDefaultVerticalLayoutWidth;
-  if (orientation == UIInterfaceOrientationLandscapeLeft) {
-    widthPlusSafeArea += window.safeAreaInsets.left;
-  } else if (orientation == UIInterfaceOrientationLandscapeRight) {
-    widthPlusSafeArea += window.safeAreaInsets.right;
-  }
-  return widthPlusSafeArea;
+  return kDefaultVerticalLayoutWidth;
 }
 
 - (void)layoutSubviews {

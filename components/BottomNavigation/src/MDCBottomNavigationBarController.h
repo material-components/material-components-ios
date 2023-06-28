@@ -142,6 +142,11 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarLayoutMode) {
 @property(nonatomic, getter=isNavigationBarHidden) BOOL navigationBarHidden;
 
 /**
+ A UIColor value that sets the background color for both @c navigationBar and @c view.
+ */
+@property(nonatomic, strong, nullable) UIColor *backgroundColor;
+
+/**
  Shows or hides @c navigationBar with optional animation.
 
  @param hidden Whether @c navigationBar should be hidden.

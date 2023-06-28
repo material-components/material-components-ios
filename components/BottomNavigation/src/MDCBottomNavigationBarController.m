@@ -720,8 +720,8 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
 
 - (void)loadConstraintsForNavigationBar {
   self.navigationBar.translatesAutoresizingMaskIntoConstraints = NO;
-  self.navigationBarLeadingAnchorConstraint =
-      [self.navigationBar.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor];
+  self.navigationBarLeadingAnchorConstraint = [self.navigationBar.leadingAnchor
+      constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor];
   self.navigationBarLeadingAnchorConstraint.active = YES;
   self.navigationBarBottomAnchorConstraint =
       [self.navigationBar.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor];
@@ -733,10 +733,18 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
       addObject:[self.navigationBar.topAnchor constraintEqualToAnchor:self.view.topAnchor]];
 
   [self.navigationBarHorizontalLayoutConstraints
-      addObject:[self.view.trailingAnchor
+      addObject:[self.view.safeAreaLayoutGuide.trailingAnchor
                     constraintEqualToAnchor:self.navigationBar.trailingAnchor]];
   [self.navigationBarHorizontalLayoutConstraints
       addObject:self.navigationBarItemsBottomAnchorConstraint];
+}
+
+- (void)setBackgroundColor:(nullable UIColor *)color {
+  if (_backgroundColor != color) {
+    _backgroundColor = color;
+    self.view.backgroundColor = color;
+    self.navigationBar.backgroundColor = color;
+  }
 }
 
 - (void)setContentInsets:(UIEdgeInsets)contentInsets {
