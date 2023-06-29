@@ -141,6 +141,14 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
 
 @implementation MDCHighlightableScrollView
 
+- (id)init {
+  self = [super init];
+  if (self) {
+    self.delaysContentTouches = NO;
+  }
+  return self;
+}
+
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
   [_highlightDelegate scrollViewTouchBegan:self];
   [super touchesBegan:touches withEvent:event];
