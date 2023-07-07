@@ -1136,24 +1136,12 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
 }
 
 - (UIEdgeInsets)safeContentMargin {
-  UIEdgeInsets contentMargin = UIEdgeInsetsZero;
   if (MDCSnackbarMessage.usesLegacySnackbar) {
-    contentMargin = kLegacyContentMargin;
+    return kLegacyContentMargin;
   } else {
-    contentMargin = _isMultilineText || [self shouldUseVerticalLayout]
-                        ? kContentMarginMutliLineText
-                        : kContentMarginSingleLineText;
+    return _isMultilineText || [self shouldUseVerticalLayout] ? kContentMarginMutliLineText
+                                                              : kContentMarginSingleLineText;
   }
-
-  UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
-  safeAreaInsets = self.window.safeAreaInsets;
-
-  // We only take the left and right safeAreaInsets in to account because the bottom is
-  // handled by contentSafeBottomInset and we will never overlap the top inset.
-  contentMargin.left = MAX(contentMargin.left, safeAreaInsets.left);
-  contentMargin.right = MAX(contentMargin.right, safeAreaInsets.right);
-
-  return contentMargin;
 }
 
 #pragma mark - Event Handlers
