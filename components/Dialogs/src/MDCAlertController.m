@@ -153,6 +153,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
                               message:(nullable NSString *)message {
   self = [self initWithTitle:title];
   if (self) {
+    _shouldPlaceAccessoryViewAboveMessage = NO;
     _message = [message copy];
   }
   return self;
@@ -338,6 +339,13 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   }
 }
 
+- (void)setShouldPlaceAccessoryViewAboveMessage:(BOOL)shouldPlaceAccessoryViewAboveMessage {
+  if (_shouldPlaceAccessoryViewAboveMessage != shouldPlaceAccessoryViewAboveMessage) {
+    _shouldPlaceAccessoryViewAboveMessage = shouldPlaceAccessoryViewAboveMessage;
+    self.alertView.shouldPlaceAccessoryViewAboveMessage = shouldPlaceAccessoryViewAboveMessage;
+  }
+}
+
 - (void)setAccessoryViewNeedsLayout {
   [self.alertView setNeedsLayout];
   self.preferredContentSize =
@@ -432,6 +440,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
       button = [self M3CButtonForAction:action];
     }
     [self.alertView addActionButton:button];
+    [button setAccessibilityIdentifier:action.accessibilityIdentifier];
     self.preferredContentSize =
         [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
     [self.alertView setNeedsLayout];
@@ -660,6 +669,8 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   self.view = [[MDCAlertControllerView alloc] initWithFrame:CGRectZero];
   self.alertView = (MDCAlertControllerView *)self.view;
   [self.alertView setM3CButtonEnabled:self.isM3CButtonEnabled];
+  [self.alertView
+      setShouldPlaceAccessoryViewAboveMessage:self.shouldPlaceAccessoryViewAboveMessage];
   // sharing MDCActionManager with with the alert view
   self.alertView.actionManager = self.actionManager;
 }

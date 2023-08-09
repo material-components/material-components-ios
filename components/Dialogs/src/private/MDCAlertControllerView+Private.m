@@ -123,6 +123,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
     self.actionsVerticalMargin = 12.0f;
     self.accessoryViewVerticalInset = 20.0f;
     self.accessoryViewHorizontalInset = 0.0f;
+    self.shouldPlaceAccessoryViewAboveMessage = NO;
 
     self.contentScrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     self.titleView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -708,6 +709,9 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
 }
 
 - (CGFloat)accessoryVerticalInset {
+  if (self.shouldPlaceAccessoryViewAboveMessage && [self hasAccessoryView]) {
+    return self.accessoryViewVerticalInset;
+  }
   return ([self hasMessage] && [self hasAccessoryView]) ? self.accessoryViewVerticalInset : 0.0f;
 }
 
@@ -730,13 +734,6 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
 
 - (CGFloat)messageTopInsetWithTitleFrame:(CGRect)titleFrame {
   return CGRectGetMaxY(titleFrame) + [self titleInsetBottom];
-}
-
-- (CGRect)messageFrameWithMessageSize:(CGSize)messageSize titleFrame:(CGRect)titleFrame {
-  CGFloat top = self.titlePinsToTop
-                    ? [self contentInsetTop]
-                    : [self messageTopInsetWithTitleFrame:titleFrame] + [self contentInsetTop];
-  return CGRectMake(self.contentInsets.left, top, messageSize.width, messageSize.height);
 }
 
 /**
@@ -895,6 +892,13 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   return YES;
 }
 
+- (void)setShouldPlaceAccessoryViewAboveMessage:(BOOL)shouldPlaceAccessoryViewAboveMessage {
+  if (_shouldPlaceAccessoryViewAboveMessage != shouldPlaceAccessoryViewAboveMessage) {
+    _shouldPlaceAccessoryViewAboveMessage = shouldPlaceAccessoryViewAboveMessage;
+    [self setNeedsLayout];
+  }
+}
+
 - (void)layoutSubviews {
   [super layoutSubviews];
 
@@ -952,11 +956,26 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   // Calculate the title frame after the title icon size has been determined.
   CGRect titleFrame = [self titleFrameWithTitleSize:titleSize];
 
-  CGRect messageFrame = [self messageFrameWithMessageSize:messageSize titleFrame:titleFrame];
+  CGFloat top = self.titlePinsToTop
+                    ? [self contentInsetTop]
+                    : [self messageTopInsetWithTitleFrame:titleFrame] + [self contentInsetTop];
+  CGRect messageFrame =
+      CGRectMake(self.contentInsets.left, top, messageSize.width, messageSize.height);
   CGRect accessoryViewFrame = CGRectMake(
       self.contentInsets.left + self.accessoryViewHorizontalInset,
       CGRectGetMaxY(messageFrame) + [self accessoryVerticalInset],
       accessoryViewSize.width - self.accessoryViewHorizontalInset * 2.0, accessoryViewSize.height);
+
+  if (self.shouldPlaceAccessoryViewAboveMessage && self.accessoryView) {
+    accessoryViewFrame =
+        CGRectMake(self.contentInsets.left + self.accessoryViewHorizontalInset,
+                   [self contentInsetTop] + [self messageTopInsetWithTitleFrame:titleFrame],
+                   accessoryViewSize.width - self.accessoryViewHorizontalInset * 2.0,
+                   accessoryViewSize.height);
+    messageFrame = CGRectMake(self.contentInsets.left,
+                              CGRectGetMaxY(accessoryViewFrame) + [self accessoryVerticalInset],
+                              messageSize.width, messageSize.height);
+  }
 
   self.titleLabel.frame = titleFrame;
   self.messageTextView.frame = messageFrame;

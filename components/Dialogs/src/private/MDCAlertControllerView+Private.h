@@ -17,6 +17,8 @@
 #import "MDCAlertControllerView.h"
 #import "MDCAlertActionManager.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface MDCAlertControllerView ()
 
 @property(nonatomic, nonnull, strong) UILabel *titleLabel;
@@ -24,6 +26,13 @@
 
 /** An optional custom UIView that is displaed under the alert message. */
 @property(nonatomic, nullable, strong) UIView *accessoryView;
+
+/**
+ By setting this property to @c YES, the accessoryView will be placed on top of the message.
+
+ Defaults to @c NO.
+ */
+@property(nonatomic, assign) BOOL shouldPlaceAccessoryViewAboveMessage;
 
 /** An optional custom view above the title of the alert. */
 @property(nonatomic, strong, nullable) UIView *titleIconView;
@@ -88,3 +97,5 @@
 - (void)updateFonts;
 
 @end
+
+NS_ASSUME_NONNULL_END

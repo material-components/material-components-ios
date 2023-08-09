@@ -261,6 +261,13 @@ typedef BOOL (^MDCAttributedMessageActionHandler)(NSURL *_Nonnull URL, NSRange r
 @property(nonatomic, strong, nullable) UIView *accessoryView;
 
 /**
+ By setting this property to @c YES, the accessoryView will be placed on top of the message.
+
+ Defaults to @c NO.
+ */
+@property(nonatomic, assign) BOOL shouldPlaceAccessoryViewAboveMessage;
+
+/**
  Notifies the alert controller that the size of the accessory view needs to be recalculated due to
  content changes. Note that MDCAccessorizedAlertController will automatically recalculate the
  accessory view's size if the alert's width changes.
