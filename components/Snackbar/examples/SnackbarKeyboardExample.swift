@@ -77,6 +77,7 @@ extension SnackbarKeyboardExample {
       "breadcrumbs": ["Snackbar", "Snackbar Keyboard"],
       "primaryDemo": false,
       "presentable": true,
+      "snapshotDelay": 1.0,
     ]
   }
 }

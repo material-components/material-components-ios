@@ -14,7 +14,10 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialSnackbar.h"
+#import "MDCSnackbarManager.h"
+#import "MDCSnackbarMessage.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface SnackbarInputAccessoryViewController : UIViewController
 
@@ -74,7 +77,10 @@
     @"breadcrumbs" : @[ @"Snackbar", @"Snackbar Input Accessory" ],
     @"primaryDemo" : @NO,
     @"presentable" : @NO,
+    @"snapshotDelay" : @1.0,
   };
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

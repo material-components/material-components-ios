@@ -15,12 +15,17 @@
 #import <UIKit/UIKit.h>
 
 #import "supplemental/SnackbarExampleSupplemental.h"
-#import "MaterialButtons.h"
-#import "MaterialCollections.h"
-#import "MaterialSnackbar.h"
-#import "MaterialOverlay.h"
-#import "MaterialColorScheme.h"
-#import "MaterialTypographyScheme.h"
+#import "MDCFloatingButton+Animation.h"
+#import "MDCFloatingButton.h"
+#import "MDCCollectionViewController.h"
+#import "MDCSnackbarManager.h"
+#import "MDCSnackbarMessage.h"
+#import "MDCOverlayObserver.h"
+#import "MDCOverlayTransitioning.h"
+#import "MDCSemanticColorScheme.h"
+#import "MDCTypographyScheme.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 static const CGFloat kFABBottomOffset = 24;
 static const CGFloat kFABSideOffset = 24;
@@ -197,7 +202,10 @@ static const CGFloat kBottomBarHeight = 44;
     @"breadcrumbs" : @[ @"Snackbar", @"Snackbar Overlay View" ],
     @"primaryDemo" : @NO,
     @"presentable" : @YES,
+    @"snapshotDelay" : @1.0,
   };
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

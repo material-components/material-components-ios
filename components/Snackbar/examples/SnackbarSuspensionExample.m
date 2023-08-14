@@ -15,10 +15,14 @@
 #import <UIKit/UIKit.h>
 
 #import "supplemental/SnackbarExampleSupplemental.h"
-#import "MaterialCollections.h"
-#import "MaterialSnackbar.h"
-#import "MaterialColorScheme.h"
-#import "MaterialTypographyScheme.h"
+#import "MDCCollectionViewTextCell.h"
+#import "MDCCollectionViewController.h"
+#import "MDCSnackbarManager.h"
+#import "MDCSnackbarMessage.h"
+#import "MDCSemanticColorScheme.h"
+#import "MDCTypographyScheme.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 static NSString *const kCategoryA = @"CategoryA";
 static NSString *const kCategoryB = @"CategoryB";
@@ -28,13 +32,13 @@ static NSString *const kCategoryB = @"CategoryB";
 - (void)handleSuspendStateChanged:(UISwitch *)sender;
 
 /** The current suspension token. */
-@property(nonatomic) id<MDCSnackbarSuspensionToken> allMessagesToken;
+@property(nullable, nonatomic) id<MDCSnackbarSuspensionToken> allMessagesToken;
 
 /** Token held when suspending messages from Group A. */
-@property(nonatomic) id<MDCSnackbarSuspensionToken> groupAToken;
+@property(nullable, nonatomic) id<MDCSnackbarSuspensionToken> groupAToken;
 
 /** Token held when suspending messages from Group B. */
-@property(nonatomic) id<MDCSnackbarSuspensionToken> groupBToken;
+@property(nullable, nonatomic) id<MDCSnackbarSuspensionToken> groupBToken;
 
 @end
 
@@ -58,7 +62,7 @@ static NSString *const kCategoryB = @"CategoryB";
   self.title = @"Message Suspension";
 }
 
-- (void)showMessageWithPrefix:(NSString *)prefix category:(NSString *)category {
+- (void)showMessageWithPrefix:(NSString *)prefix category:(nullable NSString *)category {
   MDCSnackbarMessage *message = [[MDCSnackbarMessage alloc] init];
   NSMutableAttributedString *attributedMessage = [[NSMutableAttributedString alloc] init];
   NSString *formattedPrefix = [NSString stringWithFormat:@"%@ : ", prefix];
@@ -221,7 +225,10 @@ static NSString *const kCategoryB = @"CategoryB";
     @"breadcrumbs" : @[ @"Snackbar", @"Snackbar Suspension" ],
     @"primaryDemo" : @NO,
     @"presentable" : @YES,
+    @"snapshotDelay" : @1.0,
   };
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
