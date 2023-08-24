@@ -14,7 +14,7 @@
 
 #import "MDCTextControlLabelAnimation.h"
 
-#import "MaterialAnimationTiming.h"
+#import "UIView+MDCTimingFunction.h"
 #import "MDCTextControlLabelSupport.h"
 
 @implementation MDCTextControlLabelAnimation
@@ -68,7 +68,7 @@
   if (shouldPerformAnimation) {
     dispatch_async(dispatch_get_main_queue(), ^{
       CAMediaTimingFunction *timingFunction =
-          [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionStandard];
+          [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
       [UIView
           mdc_animateWithTimingFunction:timingFunction
                                duration:animationDuration

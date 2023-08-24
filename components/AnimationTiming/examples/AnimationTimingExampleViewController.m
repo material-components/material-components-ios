@@ -12,8 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialAnimationTiming.h"
+#import "CAMediaTimingFunction+MDCAnimationTiming.h"
 #import "supplemental/AnimationTimingExampleViewControllerSupplemental.h"
+#import "UIView+MDCTimingFunction.h"
 
 const NSTimeInterval kAnimationTimeInterval = 1;
 const NSTimeInterval kAnimationTimeDelay = 0.5;
@@ -48,7 +49,7 @@ const NSTimeInterval kAnimationTimeDelay = 0.5;
   [self applyAnimationToView:_linearView withTimingFunction:linearTimingCurve completion:nil];
 
   CAMediaTimingFunction *materialStandardCurve =
-      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionStandard];
+      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
   [self applyAnimationToView:_materialStandardView
           withTimingFunction:materialStandardCurve
                   completion:nil];
