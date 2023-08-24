@@ -126,11 +126,24 @@ static BOOL _usesLegacySnackbar = NO;
 
 #pragma mark - A11y
 
-- (NSString *)voiceNotificationText {
-  if ([self.accessibilityLabel length]) {
-    return self.accessibilityLabel;
+- (void)setAccessibilityLabel:(NSString *)accessibilityLabel {
+  if (accessibilityLabel == nil) {
+    self.attributedAccessibilityLabel = nil;
   } else {
-    return self.text;
+    self.attributedAccessibilityLabel =
+        [[NSAttributedString alloc] initWithString:[accessibilityLabel copy]];
+  }
+}
+
+- (NSString *)accessibilityLabel {
+  return [self.attributedAccessibilityLabel string];
+}
+
+- (NSAttributedString *)voiceNotificationText {
+  if (self.attributedAccessibilityLabel) {
+    return self.attributedAccessibilityLabel;
+  } else {
+    return self.attributedText;
   }
 }
 

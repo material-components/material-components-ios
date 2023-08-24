@@ -177,6 +177,11 @@ extern NSString *__nonnull const MDCSnackbarMessageBoldAttributeName;
 @property(nonatomic, copy, nullable) NSString *accessibilityLabel;
 
 /**
+ An attributed label that can be used to set priority for the accessibility announcement.
+ */
+@property(nonatomic, copy, nullable) NSAttributedString *attributedAccessibilityLabel;
+
+/**
  Redeclaration from UIAccessibility to make clear that this class supports accessibility hints.
  */
 @property(nonatomic, copy, nullable) NSString *accessibilityHint;
@@ -184,7 +189,7 @@ extern NSString *__nonnull const MDCSnackbarMessageBoldAttributeName;
 /**
  Text that should be read when the message appears on screen and VoiceOver is enabled.
  */
-@property(nonatomic, readonly, nullable) NSString *voiceNotificationText;
+@property(nonatomic, readonly, nullable) NSAttributedString *voiceNotificationText;
 
 /**
  By setting this property to @c YES, the Ripple component will be used instead of Ink
