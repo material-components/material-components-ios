@@ -55,7 +55,7 @@ const NSTimeInterval kAnimationTimeDelay = 0.5;
                   completion:nil];
 
   CAMediaTimingFunction *materialDecelerationCurve =
-      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionDeceleration];
+      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
   [self applyAnimationToView:_materialDecelerationView
           withTimingFunction:materialDecelerationCurve
                   completion:nil];
