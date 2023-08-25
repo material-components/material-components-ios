@@ -529,7 +529,6 @@ static inline UIColor *MDCTextInputUnderlineColor(void) { return [UIColor lightG
     [self.textInput setNeedsUpdateConstraints];
   }
 
-  [self updateTextColor];
   [self updateClearButton];
 }
 
