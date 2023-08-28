@@ -78,6 +78,8 @@ static const CGFloat kSheetBounceBuffer = 150;
     _sheet.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
     _sheet.delegate = self;
     _sheet.backgroundColor = contentView.backgroundColor;
+    _sheet.layer.cornerRadius = contentView.layer.cornerRadius;
+    _sheet.layer.maskedCorners = contentView.layer.maskedCorners;
 
     // Adjust the anchor point so all positions relate to the top edge rather than the actual
     // center.
