@@ -83,6 +83,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   UIColor *_scrimColor;
   BOOL _isScrimAccessibilityElement;
   NSString *_scrimAccessibilityLabel;
+  BOOL _userDraggingEnabled;
 }
 
 @synthesize delegate;
@@ -99,6 +100,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
     _elevation = MDCShadowElevationNavDrawer;
     _dismissOnBackgroundTap = YES;
     _shouldDisplayMobileLandscapeFullscreen = YES;
+    _userDraggingEnabled = YES;
   }
   return self;
 }
@@ -136,6 +138,7 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
   bottomDrawerContainerViewController.shouldAlwaysExpandHeader = self.shouldAlwaysExpandHeader;
   bottomDrawerContainerViewController.elevation = self.elevation;
   bottomDrawerContainerViewController.drawerShadowColor = self.drawerShadowColor;
+  bottomDrawerContainerViewController.userDraggingEnabled = self.userDraggingEnabled;
   bottomDrawerContainerViewController.adjustLayoutForIPadSlideOver =
       self.adjustLayoutForIPadSlideOver;
   bottomDrawerContainerViewController.shouldDisplayMobileLandscapeFullscreen =
@@ -418,10 +421,11 @@ static CGFloat kTopHandleTopMargin = (CGFloat)5.0;
 }
 
 - (BOOL)userDraggingEnabled {
-  return self.bottomDrawerContainerViewController.userDraggingEnabled;
+  return _userDraggingEnabled;
 }
 
 - (void)setUserDraggingEnabled:(BOOL)userDraggingEnabled {
+  _userDraggingEnabled = userDraggingEnabled;
   self.bottomDrawerContainerViewController.userDraggingEnabled = userDraggingEnabled;
 }
 
