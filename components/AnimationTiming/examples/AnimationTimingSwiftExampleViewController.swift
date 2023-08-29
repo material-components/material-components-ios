@@ -62,23 +62,14 @@ class AnimationTimingSwiftExampleViewController: UIViewController {
       name: CAMediaTimingFunctionName.linear)
     applyAnimation(toView: linearView, withTimingFunction: linearCurve)
 
-    if let materialStandard = CAMediaTimingFunction.mdc_function(withType: .standard) {
-      applyAnimation(toView: materialStandardView, withTimingFunction: materialStandard)
-    } else {
-      materialStandardView.removeFromSuperview()
-    }
+    let materialStandard = CAMediaTimingFunction(name: .easeInEaseOut)
+    applyAnimation(toView: materialStandardView, withTimingFunction: materialStandard)
 
-    if let materialDeceleration = CAMediaTimingFunction.mdc_function(withType: .deceleration) {
-      applyAnimation(toView: materialDecelerationView, withTimingFunction: materialDeceleration)
-    } else {
-      materialDecelerationView.removeFromSuperview()
-    }
+    let materialDeceleration = CAMediaTimingFunction(name: .easeOut)
+    applyAnimation(toView: materialDecelerationView, withTimingFunction: materialDeceleration)
 
-    if let materialAcceleration = CAMediaTimingFunction.mdc_function(withType: .acceleration) {
-      applyAnimation(toView: materialAccelerationView, withTimingFunction: materialAcceleration)
-    } else {
-      materialAccelerationView.removeFromSuperview()
-    }
+    let materialAcceleration = CAMediaTimingFunction(name: .easeIn)
+    applyAnimation(toView: materialAccelerationView, withTimingFunction: materialAcceleration)
 
     if let materialSharp = CAMediaTimingFunction.mdc_function(withType: .sharp) {
       applyAnimation(toView: materialSharpView, withTimingFunction: materialSharp)
