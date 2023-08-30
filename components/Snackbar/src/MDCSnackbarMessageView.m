@@ -14,7 +14,6 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-#import "CAMediaTimingFunction+MDCAnimationTiming.h"
 #import "MDCAvailability.h"
 #import "MDCButton.h"
 #import "MDCFlatButton.h"
@@ -1152,7 +1151,7 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
   translationAnimation.toValue = [NSNumber numberWithDouble:-self.frame.size.width];
   translationAnimation.duration = MDCSnackbarLegacyTransitionDuration;
   translationAnimation.timingFunction =
-      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionTranslateOffScreen];
+      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
   translationAnimation.delegate = self;
   translationAnimation.fillMode = kCAFillModeForwards;
   translationAnimation.removedOnCompletion = NO;
@@ -1165,7 +1164,7 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
   translationAnimation.toValue = [NSNumber numberWithDouble:self.frame.size.width];
   translationAnimation.duration = MDCSnackbarLegacyTransitionDuration;
   translationAnimation.timingFunction =
-      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionTranslateOffScreen];
+      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
   translationAnimation.delegate = self;
   translationAnimation.fillMode = kCAFillModeForwards;
   translationAnimation.removedOnCompletion = NO;

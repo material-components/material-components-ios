@@ -15,12 +15,14 @@
 #import "MDCItemBarCell.h"
 #import "MDCItemBarCell+Private.h"
 
+#import "MDCInkTouchController.h"
+#import "MDCInkView.h"
+#import "MDCRippleTouchController.h"
+#import "MDCRippleView.h"
 #import "MDCItemBarBadge.h"
 #import "MDCItemBarStyle.h"
-#import "MaterialAnimationTiming.h"
-#import "MaterialInk.h"
-#import "MaterialMath.h"
-#import "MaterialTypography.h"
+#import "MDCTypography.h"
+#import "MDCMath.h"
 
 /// Size of image in points.
 static const CGSize kImageSize = {24, 24};
@@ -542,7 +544,7 @@ static const NSTimeInterval kSelectionAnimationDuration = 0.3;
   if (animated) {
     [CATransaction begin];
     CAMediaTimingFunction *translateTimingFunction =
-        [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionTranslate];
+        [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     [CATransaction setAnimationTimingFunction:translateTimingFunction];
     [UIView animateWithDuration:kSelectionAnimationDuration
                           delay:0
