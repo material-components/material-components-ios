@@ -34,10 +34,13 @@ public final class M3CTextField: UIView, M3CTextInput {
     let textField = M3CInsetTextField()
     textField.translatesAutoresizingMaskIntoConstraints = false
     textField.adjustsFontForContentSizeCategory = true
-    textField.clearButtonMode = .whileEditing
     textField.font = UIFont.systemFont(ofSize: 17)
     textField.layer.borderWidth = 1.0
     textField.layer.cornerRadius = 10.0
+
+    // `clearButton` replaces the system default clear button.
+    // Since the custom clear button must be set as `rightView`, the system button must be hidden.
+    textField.clearButtonMode = .never
 
     // When firstResponder status changes, apply all colors associated with the resulting
     // UIControlState.
@@ -57,6 +60,12 @@ public final class M3CTextField: UIView, M3CTextInput {
       textContainer.delegate = newValue
     }
   }
+
+  /// A custom clear button with a sensible default value.
+  ///
+  /// As of iOS 17.0, a custom clear button is required to meet accessibility requirements.
+  /// A minimum contrast ratio of 3:1 is required.
+  @objc public lazy var clearButton: UIButton? = buildDefaultClearButton()
 
   /// Proxy property for the underlying text field's `leftView` property.
   @objc public var leftView: UIView? {
@@ -108,6 +117,8 @@ public final class M3CTextField: UIView, M3CTextInput {
   public init() {
     super.init(frame: .zero)
 
+    textContainer.addTarget(self, action: #selector(textFieldEditingChanged), for: .editingChanged)
+
     configureStackViews()
   }
 
@@ -155,6 +166,72 @@ public final class M3CTextField: UIView, M3CTextInput {
   @objc(setTrailingLabelColor:forState:)
   public func setTrailingLabelColor(_ color: UIColor?, for state: UIControl.State) {
     trailingLabelColors[state] = color
+  }
+}
+
+// MARK: M3CTextField Custom Clear Button
+
+@available(iOS 13.0, *)
+extension M3CTextField {
+  /// Updates the appearance of the button used to clear text from the text field.
+  ///
+  /// Note: This method only needs to be called when `clearButton`'s appearance should differ
+  /// from the provided default.
+  ///
+  /// - Parameters:
+  ///   - symbolConfiguration: The SymbolConfiguration used to determine the button icon's size.
+  ///   - tintColor: The UIColor used to determine the button icon's color. The default value
+  ///   matches the system default color.
+  @objc(configureClearButtonWithSymbolConfiguration:tintColor:)
+  public func configureClearButton(
+    symbolConfiguration: UIImage.SymbolConfiguration = UIImage.SymbolConfiguration(
+      font: UIFont.systemFont(ofSize: 21, weight: .light)
+    ),
+    tintColor: UIColor = .systemGray3
+  ) {
+    let button = buildClearButton(
+      symbolConfiguration: symbolConfiguration,
+      tintColor: tintColor
+    )
+    clearButton = button
+  }
+
+  private func buildClearButton(
+    symbolConfiguration: UIImage.SymbolConfiguration,
+    tintColor: UIColor
+  ) -> UIButton {
+    let button = UIButton()
+    button.adjustsImageSizeForAccessibilityContentSizeCategory = true
+    button.addTarget(self, action: #selector(didTapClearButton), for: .touchUpInside)
+
+    let clearIcon = UIImage(
+      systemName: "xmark.circle.fill", withConfiguration: symbolConfiguration)?
+      .withTintColor(tintColor)
+      .withRenderingMode(.alwaysOriginal)
+
+    button.contentMode = .scaleAspectFit
+    button.setImage(clearIcon, for: .normal)
+    button.setPreferredSymbolConfiguration(symbolConfiguration, forImageIn: .normal)
+
+    button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 9)
+
+    return button
+  }
+
+  private func buildDefaultClearButton() -> UIButton {
+    let font = UIFont.systemFont(ofSize: 21, weight: .light)
+    let configuration = UIImage.SymbolConfiguration(font: font)
+
+    return buildClearButton(
+      symbolConfiguration: configuration,
+      tintColor: .systemGray3
+    )
+  }
+
+  @objc private func didTapClearButton(sender: UIButton) {
+    textContainer.text = ""
+
+    textContainer.sendActions(for: .editingChanged)
   }
 }
 
@@ -215,6 +292,29 @@ extension M3CTextField {
   }
 }
 
+// MARK: - UIControl.editingChanged
+@available(iOS 13.0, *)
+extension M3CTextField {
+  @objc private func textFieldEditingChanged(textField: UITextField) {
+    // `clearButton` has lower priority than any other non-nil `rightView` value.
+    // A non-nil `rightView` value should not be replaced by `clearButton`.
+    // Return early if `rightView` is any value other than `clearButton`.
+    // This guard also ensures that the clear button is not re-set if it is already `rightView`.
+    guard rightView == nil || rightView == clearButton else {
+      return
+    }
+
+    let textCount = textField.text?.count ?? 0
+
+    if textCount > 0, let clearButton {
+      rightView = clearButton
+      // rightView should not be set to nil unless it is the clearButton.
+    } else if textCount == 0 && rightView == clearButton {
+      rightView = nil
+    }
+  }
+}
+
 // MARK: - UITraitEnvironment
 
 @available(iOS 13.0, *)
@@ -268,11 +368,16 @@ extension M3CTextField {
     static let verticalPaddingValue: CGFloat = 8.0
 
     var padding: UIEdgeInsets {
+      let isRightToLeft =
+        UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft
+        || traitCollection.layoutDirection == .rightToLeft
+      let leftPadding = isRightToLeft ? rightView?.bounds.size.width : leftView?.bounds.size.width
+      let rightPadding = isRightToLeft ? leftView?.bounds.size.width : rightView?.bounds.size.width
       return UIEdgeInsets(
         top: M3CInsetTextField.verticalPaddingValue,
-        left: (leftView?.bounds.size.width ?? M3CInsetTextField.horizontalPaddingValue),
+        left: leftPadding ?? M3CInsetTextField.horizontalPaddingValue,
         bottom: M3CInsetTextField.verticalPaddingValue,
-        right: (rightView?.bounds.size.width ?? M3CInsetTextField.horizontalPaddingValue)
+        right: rightPadding ?? M3CInsetTextField.horizontalPaddingValue
       )
     }
 
