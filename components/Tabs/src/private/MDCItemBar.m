@@ -16,9 +16,10 @@
 
 #import <MDFInternationalization/MDFInternationalization.h>
 
-#import "MaterialAnimationTiming.h"
+#import "MDCTabBar.h"
+#import "MDCItemBarAlignment.h"
+
 #import "MDCTabBarDisplayDelegate.h"
-#import "MDCTabBarIndicatorAttributes.h"
 #import "MDCTabBarIndicatorTemplate.h"
 #import "MDCTabBarSizeClassDelegate.h"
 #import "MDCItemBarCell.h"
@@ -605,7 +606,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
 
   if (animate) {
     CAMediaTimingFunction *easeInOutFunction =
-        [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
+        [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     // Wrap in explicit CATransaction to allow layer-based animations with the correct duration.
     [CATransaction begin];
     [CATransaction setAnimationDuration:kDefaultAnimationDuration];
@@ -707,7 +708,7 @@ static void *kItemPropertyContext = &kItemPropertyContext;
   if (animate) {
     [CATransaction begin];
     CAMediaTimingFunction *easeInOut =
-        [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
+        [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     [CATransaction setAnimationTimingFunction:easeInOut];
     [UIView animateWithDuration:kDefaultAnimationDuration
                           delay:0

@@ -14,18 +14,22 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MaterialActionSheet.h"  // ComponentImport
-#import "MaterialActionSheet+Theming.h"  // SubtargetImport
-#import "MaterialAnimationTiming.h"  // ComponentImport
-#import "MaterialButtons.h"
-#import "MaterialButtons+Theming.h"  // ComponentImport
-#import "MaterialTabs+TabBarView.h"
+#import "MDCActionSheetAction.h"
+#import "MDCActionSheetController.h"
+#import "MDCActionSheetController+MaterialTheming.h"
+#import "UIView+MDCTimingFunction.h"
+#import "MDCButton.h"
+#import "MDCButton+MaterialTheming.h"
+#import "MDCTabBarItem.h"
+#import "MDCTabBarView.h"
+#import "MDCTabBarViewCustomViewable.h"
+#import "MDCTabBarViewDelegate.h"
 #import "MaterialIcons+ic_check.h"  // PrivateSubtargetImport
 #import "MaterialIcons+ic_settings.h"  // PrivateSubtargetImport
-#import "MaterialMath.h"  // PrivateImport
-#import "MaterialColorScheme.h"
-#import "MaterialContainerScheme.h"  // SchemeImport
-#import "MaterialTypographyScheme+Scheming.h"
+#import "MDCMath.h"
+#import "MDCSemanticColorScheme.h"
+#import "MDCContainerScheme.h"
+#import "MDCTypographyScheming.h"
 
 static NSString *const kExampleTitle = @"TabBarView";
 
@@ -53,7 +57,7 @@ static NSString *const kPreferredLayoutMenuAccessibilityLabel = @"Change preferr
   if (self) {
     _aSwitch = [[UISwitch alloc] init];
     _animationTimingFunction =
-        [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
+        [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
   }
   return self;
 }

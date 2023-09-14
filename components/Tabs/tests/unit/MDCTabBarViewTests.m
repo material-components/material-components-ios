@@ -15,7 +15,6 @@
 #import <XCTest/XCTest.h>
 
 #import "../../src/TabBarView/private/MDCTabBarViewItemView.h"
-#import "CAMediaTimingFunction+MDCAnimationTiming.h"
 #import "MDCAvailability.h"
 #import "MDCRippleTouchController.h"
 #import "MDCTabBarItem.h"
@@ -1356,7 +1355,7 @@ static UIImage *fakeImage(CGSize size) {
 - (void)testDefaultSelectionChangeAnimationTimingFunction {
   // Then
   CAMediaTimingFunction *expectedFunction =
-      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
+      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
   float expectedControlPoint1[2];
   float expectedControlPoint2[2];
   float expectedControlPoint3[2];

@@ -18,15 +18,15 @@
 
 #import "../MDCSnackbarError.h"
 #import "../MDCSnackbarMessage.h"
-#import "MaterialAnimationTiming.h"
-#import "MaterialAvailability.h"
+#import "CAMediaTimingFunction+MDCAnimationTiming.h"
+#import "MDCAvailability.h"
 #import "MDCSnackbarAlignment.h"
 #import "MDCSnackbarMessageView.h"
 #import "MDCSnackbarMessageInternal.h"
 #import "MDCSnackbarMessageViewInternal.h"
-#import "MaterialApplication.h"
-#import "MaterialKeyboardWatcher.h"
-#import "MaterialOverlay.h"
+#import "UIApplication+MDCAppExtensions.h"
+#import "MDCKeyboardWatcher.h"
+#import "MDCOverlayImplementor.h"
 
 NSString *const MDCSnackbarOverlayIdentifier = @"MDCSnackbar";
 
@@ -589,7 +589,7 @@ static const CGFloat kMaximumHeightLegacy = 80;
     duration = onscreen ? MDCSnackbarEnterTransitionDuration : MDCSnackbarExitTransitionDuration;
   }
   CAMediaTimingFunction *timingFunction =
-      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
+      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
   [CATransaction begin];
   [CATransaction setAnimationTimingFunction:timingFunction];
   [CATransaction setCompletionBlock:completion];

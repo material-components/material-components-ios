@@ -14,10 +14,10 @@
 
 #import "ShadowCornerRadiusAnimationViewController.h"
 
-#import "MaterialAnimationTiming.h"
-#import "MaterialButtons+ButtonThemer.h"
-#import "MaterialButtons.h"
-#import "MaterialShadowLayer.h"
+#import "MDCButtonScheme.h"
+#import "MDCContainedButtonThemer.h"
+#import "MDCButton.h"
+#import "MDCShadowLayer.h"
 
 static const CGFloat kStartCornerRadius = (CGFloat)0.001;
 static const CGFloat kEndCornerRadius = (CGFloat)25.0;
@@ -82,7 +82,7 @@ static const CGFloat kAnimationDuration = (CGFloat)2.5;
 
 - (void)animateView {
   CAMediaTimingFunction *timingFunction =
-      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
+      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
   if (!_animated) {
     [self.customView.shadowLayer animateCornerRadius:kEndCornerRadius
                                   withTimingFunction:timingFunction

@@ -19,7 +19,6 @@
 #import "private/MDCTabBarViewItemView.h"
 #import "private/MDCTabBarViewItemViewDelegate.h"
 #import "private/MDCTabBarViewPrivateIndicatorContext.h"
-#import "CAMediaTimingFunction+MDCAnimationTiming.h"
 #import "MDCAvailability.h"
 #import "MDCBadgeAppearance.h"
 #import "MDCRippleTouchController.h"
@@ -185,7 +184,7 @@ static NSString *const kBadgeColorKeyPath = @"badgeColor";
   _selectionIndicatorView.tintColor = UIColor.blackColor;
   _selectionIndicatorView.indicatorPathAnimationDuration = kSelectionChangeAnimationDuration;
   _selectionIndicatorView.indicatorPathTimingFunction =
-      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
+      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
 
   _selectionIndicatorTemplate = [[MDCTabBarViewUnderlineIndicatorTemplate alloc] init];
 
@@ -637,7 +636,7 @@ static NSString *const kBadgeColorKeyPath = @"badgeColor";
 }
 
 - (CAMediaTimingFunction *)selectionChangeAnimationTimingFunction {
-  return [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
+  return [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
 }
 
 #pragma mark - Key-Value Observing (KVO)
@@ -1326,7 +1325,7 @@ static NSString *const kBadgeColorKeyPath = @"badgeColor";
 
 - (void)performAnimationBlockInCATransaction:(void (^)(void))animationBlock {
   CAMediaTimingFunction *easeInOutFunction =
-      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
+      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
   // Wrap in explicit CATransaction to allow layer-based animations with the correct duration.
   [CATransaction begin];
   [CATransaction setAnimationDuration:self.selectionChangeAnimationDuration];

@@ -15,7 +15,6 @@
 #import "MDCTextInputControllerBase.h"
 #import "private/MDCTextInputControllerBase+Subclassing.h"
 
-#import "CAMediaTimingFunction+MDCAnimationTiming.h"
 #import "MDCPalettes.h"
 #import "MDCMultilineTextField.h"
 #import "MDCTextField.h"
@@ -1540,7 +1539,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
       setAnimationDuration:MDCTextInputControllerBaseDefaultFloatingPlaceholderUpAnimationDuration];
   [CATransaction
       setAnimationTimingFunction:[CAMediaTimingFunction
-                                     mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];
+                                     functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
 
   [self updateLayout];
 
@@ -1601,7 +1600,7 @@ static UITextFieldViewMode _underlineViewModeDefault = UITextFieldViewModeWhileE
                      MDCTextInputControllerBaseDefaultFloatingPlaceholderDownAnimationDuration];
   [CATransaction
       setAnimationTimingFunction:[CAMediaTimingFunction
-                                     mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut]];
+                                     functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
 
   [self updateLayout];
 
