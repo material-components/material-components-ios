@@ -16,7 +16,7 @@
 #import <Availability.h>
 #import <UIKit/UIKit.h>
 
-#if TARGET_OS_IOS == 1 && __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_13_0
+#if TARGET_OS_IOS == 1 && __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_14_0
 #error \
-    "Material only supports iOS 13 or higher. Visit go/material-ios-minimum-os-support to learn more."
+    "Material only supports iOS 14 or higher. Visit go/material-ios-minimum-os-support to learn more."
 #endif
