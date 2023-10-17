@@ -25,6 +25,7 @@ static const CGFloat kImageViewSideLength = 40;
 static const CGFloat kLeadingPadding = 16.0f;
 static const CGFloat kTextTrailingPadding = 16.0f;
 static const CGFloat kButtonContainerTrailingPadding = 8.0f;
+static const CGFloat kButtonContainerTrailingPaddingWithM3CButton = 16.0f;
 static const CGFloat kTopPaddingSmall = 10.0f;
 static const CGFloat kTopPaddingLarge = 24.0f;
 static const CGFloat kBottomPadding = 8.0f;
@@ -33,6 +34,7 @@ static const CGFloat kButtonVerticalIntervalSpace = 8.0f;
 static const CGFloat kSpaceBetweenIconImageAndTextView = 16.0f;
 static const CGFloat kHorizontalSpaceBetweenTextViewAndButton = 24.0f;
 static const CGFloat kVerticalSpaceBetweenButtonAndTextView = 12.0f;
+static const CGFloat kVerticalSpaceBetweenButtonAndTextViewWithM3CButton = 8.0f;
 static const CGFloat kDividerDefaultOpacity = 0.12f;
 static const CGFloat kDividerDefaultHeight = 1.0f;
 static const CGFloat kTextDefaultOpacity = 0.87f;
@@ -317,6 +319,10 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 
 - (void)setUpButtonContainerConstraints {
   UIButton *leadingButton = self.currentLeadingButton;
+  CGFloat verticalSpace = _isM3CButtonEnabled ? kVerticalSpaceBetweenButtonAndTextViewWithM3CButton
+                                              : kVerticalSpaceBetweenButtonAndTextView;
+  CGFloat trailingPadding = _isM3CButtonEnabled ? kButtonContainerTrailingPaddingWithM3CButton
+                                                : kButtonContainerTrailingPadding;
 
   self.buttonContainerConstraintLeading =
       [self.buttonContainerView.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor
@@ -325,7 +331,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
       [self.buttonContainerView.widthAnchor constraintEqualToAnchor:leadingButton.widthAnchor];
   self.buttonContainerConstraintTrailing = [self.buttonContainerView.trailingAnchor
       constraintEqualToAnchor:self.contentView.trailingAnchor
-                     constant:-kButtonContainerTrailingPadding];
+                     constant:-trailingPadding];
   self.buttonContainerConstraintBottom =
       [self.buttonContainerView.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor
                                                             constant:-kBottomPadding];
@@ -337,14 +343,14 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
                                                          constant:kTopPaddingSmall];
   self.buttonContainerConstraintTopWithImageViewGreater = [self.buttonContainerView.topAnchor
       constraintGreaterThanOrEqualToAnchor:self.imageView.bottomAnchor
-                                  constant:kVerticalSpaceBetweenButtonAndTextView];
-  self.buttonContainerConstraintTopWithTextView = [self.buttonContainerView.topAnchor
-      constraintEqualToAnchor:self.textView.bottomAnchor
-                     constant:kVerticalSpaceBetweenButtonAndTextView];
+                                  constant:verticalSpace];
+  self.buttonContainerConstraintTopWithTextView =
+      [self.buttonContainerView.topAnchor constraintEqualToAnchor:self.textView.bottomAnchor
+                                                         constant:verticalSpace];
   self.buttonContainerConstraintTopWithTextView.priority = UILayoutPriorityDefaultLow;
   self.buttonContainerConstraintTopWithTextViewGreater = [self.buttonContainerView.topAnchor
       constraintGreaterThanOrEqualToAnchor:self.textView.bottomAnchor
-                                  constant:kVerticalSpaceBetweenButtonAndTextView];
+                                  constant:verticalSpace];
   self.buttonContainerConstraintHeight = [self.buttonContainerView.heightAnchor
       constraintGreaterThanOrEqualToAnchor:leadingButton.heightAnchor
                                   constant:0];
@@ -658,7 +664,9 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
     textViewSize = [self.textView sizeThatFits:CGSizeMake(remainingWidth, CGFLOAT_MAX)];
     frameHeight += textViewSize.height;
   }
-  frameHeight += kVerticalSpaceBetweenButtonAndTextView;
+  CGFloat verticalSpace = _isM3CButtonEnabled ? kVerticalSpaceBetweenButtonAndTextViewWithM3CButton
+                                              : kVerticalSpaceBetweenButtonAndTextView;
+  frameHeight += verticalSpace;
   return frameHeight;
 }
 
@@ -667,7 +675,9 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   CGFloat marginsPadding = self.layoutMargins.left + self.layoutMargins.right;
   marginsPadding += self.contentEdgeInsets.left + self.contentEdgeInsets.right;
   remainingWidth -= marginsPadding;
-  remainingWidth -= (kLeadingPadding + kButtonContainerTrailingPadding);
+  CGFloat trailingPadding = _isM3CButtonEnabled ? kButtonContainerTrailingPaddingWithM3CButton
+                                                : kButtonContainerTrailingPadding;
+  remainingWidth -= (kLeadingPadding + trailingPadding);
   return CGSizeMake(remainingWidth, layoutSize.height);
 }
 
