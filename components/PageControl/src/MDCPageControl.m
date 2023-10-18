@@ -252,7 +252,7 @@ static inline CGFloat normalizeValue(CGFloat value, CGFloat minRange, CGFloat ma
       lround(scrollView.contentOffset.x / scrollView.frame.size.width);
   NSInteger scrolledPageNumberLTR = MAX(0, MIN(_numberOfPages - 1, unboundedPageNumberLTR));
   if ([self isRTL]) {
-    return self.numberOfPages - 1 - scrolledPageNumberLTR;
+    return MAX(0, self.numberOfPages - 1 - scrolledPageNumberLTR);
   }
   return scrolledPageNumberLTR;
 }
