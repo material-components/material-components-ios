@@ -40,14 +40,19 @@ public final class M3CTextField: UIView, M3CTextInput {
     }
   }
 
-  // This constant is based on the default font size for UITextField.
-  private var defaultTextContainerFont = UIFont.systemFont(ofSize: 17)
-
   private var symbolConfiguration: UIImage.SymbolConfiguration {
-    let font = UIFont.systemFont(ofSize: preferredIconPointSize())
-    let configuration = UIImage.SymbolConfiguration(font: font)
+    let preferredFont = UIFontMetrics.default.scaledFont(for: defaultSymbolConfigurationFont)
+    let configuration = UIImage.SymbolConfiguration(font: preferredFont)
     return configuration
   }
+
+  /// This constant is based on the default font size for UITextField, increased by two points.
+  ///
+  /// This font is used to configure symbol configurations for icons.
+  private var defaultSymbolConfigurationFont = UIFont.systemFont(ofSize: 19)
+
+  // This constant is based on the default font size for UITextField.
+  private var defaultTextContainerFont = UIFont.systemFont(ofSize: 17)
 
   private var backgroundColors: [UIControl.State: UIColor] = [:]
   private var borderColors: [UIControl.State: UIColor] = [:]
@@ -56,9 +61,6 @@ public final class M3CTextField: UIView, M3CTextInput {
   private var titleLabelColors: [UIControl.State: UIColor] = [:]
   private var trailingLabelColors: [UIControl.State: UIColor] = [:]
   private var tintColors: [UIControl.State: UIColor] = [:]
-
-  // The initial value is based on the color of the system clear button.
-  @objc public var clearButtonTintColor: UIColor = .systemGray3
 
   @objc public lazy var textContainer: UITextField = {
     let textField = M3CInsetTextField()
@@ -92,7 +94,12 @@ public final class M3CTextField: UIView, M3CTextInput {
   /// As of iOS 17.0, a custom clear button is required to meet accessibility requirements.
   /// A minimum contrast ratio of 3:1 is required.
   /// If `clearButton` is not set, the text field will use the default clear button.
-  @objc public var clearButton: UIButton?
+  @objc public private(set) var clearButton: UIButton?
+
+  /// An error icon, to be set by the client as `rightView` when in the error state.
+  ///
+  /// The client initializes and configures `errorIcon`, using `configureErrorIcon`.
+  @objc public private(set) var errorIcon: UIView?
 
   /// Proxy property for the underlying text field's `leftView` property.
   @objc public var leftView: UIView? {
@@ -205,14 +212,7 @@ extension M3CTextField {
   ///   matches the system default color.
   @objc(configureClearButtonWithTintColor:)
   public func configureClearButton(tintColor: UIColor) {
-    // `clearButtonTintColor` is stored as a property so that the clear button can be reconfigured
-    // after `preferredContentSize` changes.
-    clearButtonTintColor = tintColor
-
-    let button = buildClearButton(symbolConfiguration: symbolConfiguration, tintColor: tintColor)
-    button.translatesAutoresizingMaskIntoConstraints = false
-    clearButton = button
-    rightView = clearButton
+    clearButton = buildClearButton(symbolConfiguration: symbolConfiguration, tintColor: tintColor)
   }
 
   private func buildClearButton(
@@ -237,21 +237,55 @@ extension M3CTextField {
     return button
   }
 
+  /// Updates the appearance of the icon used to signify the error state.
+  ///
+  /// - Parameters:
+  ///   - imageName: The string path for the image used to initialize the error icon.
+  ///   - tintColor: The UIColor used to determine the error icon's color.
+  @objc(configureErrorIconWithImageName:tintColor:)
+  public func configureErrorIcon(imageName: String, tintColor: UIColor) {
+    let iconImageView = buildErrorIconImageView(
+      imageName: imageName, symbolConfiguration: symbolConfiguration, tintColor: tintColor)
+    errorIcon = buildErrorIconView(imageView: iconImageView)
+  }
+
+  private func buildErrorIconImageView(
+    imageName: String,
+    symbolConfiguration: UIImage.SymbolConfiguration,
+    tintColor: UIColor
+  ) -> UIImageView {
+    let image = UIImage(
+      named: imageName, in: nil, with: symbolConfiguration)?
+      .withTintColor(tintColor)
+      .withRenderingMode(.alwaysOriginal)
+
+    let imageView = UIImageView(image: image)
+    imageView.translatesAutoresizingMaskIntoConstraints = false
+    imageView.contentMode = .scaleAspectFit
+    imageView.adjustsImageSizeForAccessibilityContentSizeCategory = true
+
+    return imageView
+  }
+
+  private func buildErrorIconView(imageView: UIImageView) -> UIView {
+    let containerView = UIView()
+    containerView.translatesAutoresizingMaskIntoConstraints = false
+    containerView.addSubview(imageView)
+
+    NSLayoutConstraint.activate([
+      imageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 8),
+      imageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 8),
+      imageView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -8),
+      imageView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -8),
+    ])
+
+    return containerView
+  }
+
   @objc private func didTapClearButton(sender: UIButton) {
     textContainer.text = ""
 
     textContainer.sendActions(for: .editingChanged)
-  }
-
-  private func preferredIconPointSize() -> CGFloat {
-    let lowerBound = 19.0
-    let upperBound = 36.0
-
-    // Clamp within a size range, to ensure that icons do not shrink too small or grow too large.
-    return min(
-      max(lowerBound, textContainer.font?.pointSize ?? defaultTextContainerFont.pointSize),
-      upperBound
-    )
   }
 }
 
@@ -339,9 +373,22 @@ extension M3CTextField {
     if self.traitCollection.preferredContentSizeCategory
       != previousTraitCollection?.preferredContentSizeCategory
     {
-      // It is necessary to rebuild the clear button when changing preferred font sizing.
-      if rightView == clearButton {
-        configureClearButton(tintColor: clearButtonTintColor)
+      // As of iOS 17.0, we need to to call `invalidateIntrinsicContentSize` for any `leftView`
+      // or `rightView`. Otherwise, changes to the preferred font size will not be reflected in
+      // images until the view is reloaded. This reconfiguration should be implemented client-side
+      // when any other views are used as `rightView` or `leftView`.
+      errorIcon?.invalidateIntrinsicContentSize()
+      errorIcon?.setNeedsLayout()
+
+      if let clearButton {
+        // Note that using `setPreferredSymbolConfiguration` on the button does not appear
+        // to scale the image when beginning from a smaller font size, and increasing font size
+        // to a larger one. Updating the button's image directly is the current workaround for this.
+
+        clearButton.setImage(
+          clearButton.image(for: .normal)?.withConfiguration(symbolConfiguration), for: .normal)
+        clearButton.invalidateIntrinsicContentSize()
+        clearButton.setNeedsLayout()
       }
     }
   }
@@ -399,10 +446,10 @@ extension M3CTextField {
         trailing: rightView?.bounds.size.width ?? M3CInsetTextField.horizontalPaddingValue
       )
 
-      var leadingPadding =
+      let leadingPadding =
         (leftViewMode == .never || leftView?.isHidden ?? true)
         ? M3CInsetTextField.horizontalPaddingValue : directionalEdgeInsets.leading
-      var trailingPadding =
+      let trailingPadding =
         (rightViewMode == .never || rightView?.isHidden ?? true)
         ? M3CInsetTextField.horizontalPaddingValue : directionalEdgeInsets.trailing
 
