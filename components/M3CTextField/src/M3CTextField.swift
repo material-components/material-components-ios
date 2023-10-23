@@ -199,6 +199,15 @@ public final class M3CTextField: UIView, M3CTextInput {
   public func setTrailingLabelColor(_ color: UIColor?, for state: UIControl.State) {
     trailingLabelColors[state] = color
   }
+
+  override public func layoutSubviews() {
+    super.layoutSubviews()
+
+    // Hide or show `trailingLabel`, depending on whether or not it is empty.
+    // This is to fix an issue in RTL, where an empty trailing label affects the position of the
+    // leading label when M3CTextField is placed inside of a UICollectionViewCell.
+    trailingLabel.isHidden = (trailingLabel.text ?? "").isEmpty
+  }
 }
 
 // MARK: M3CTextField Custom Clear Button
