@@ -332,6 +332,16 @@ static const UIEdgeInsets internalLayoutInsets = (UIEdgeInsets){0, 16, 0, 24};
                                self.contentEdgeInsets);
 }
 
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+  // Explicitly disable hit testing in VoiceOver mode when not the actively focused element to avoid
+  // intercepting touch events that should go to elements beneath the button. See b/303378197 for
+  // more.
+  if (UIAccessibilityIsVoiceOverRunning() && !self.accessibilityElementIsFocused) {
+    return nil;
+  }
+  return [super hitTest:point withEvent:event];
+}
+
 #pragma mark - Mode animator
 
 - (MDCFloatingButtonModeAnimator *)modeAnimator {
