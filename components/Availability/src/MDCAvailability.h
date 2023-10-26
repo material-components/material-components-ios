@@ -36,4 +36,21 @@
   ((__IPHONE_##_ios != 0) &&        \
    (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_##_ios))
 
+/**
+  On SDKs that support visionOS, this attribute will mark the annotated API as
+  unavailable.
+
+  This annotation can be stacked with an existing API_UNAVAILABLE macro if
+  needed, e.g.:
+
+  ```
+  MDC_UNAVAILABLE_VISIONOS API_UNAVAILABLE(macos)
+  ```
+*/
+#ifdef __API_UNAVAILABLE_PLATFORM_visionos
+#define MDC_UNAVAILABLE_VISIONOS API_UNAVAILABLE(visionos)
+#else
+#define MDC_UNAVAILABLE_VISIONOS
+#endif
+
 #endif  // MDC_AVAILABILITY
