@@ -337,7 +337,6 @@ NS_ASSUME_NONNULL_BEGIN
     size = [super intrinsicContentSize];
   }
   CGSize clampToMinimumSize = [self clampToMinimumSize:size];
-  [self setCapsuleCornersBasedOn:clampToMinimumSize];
   return clampToMinimumSize;
 }
 
