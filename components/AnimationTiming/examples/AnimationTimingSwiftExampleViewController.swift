@@ -70,12 +70,6 @@ class AnimationTimingSwiftExampleViewController: UIViewController {
 
     let materialAcceleration = CAMediaTimingFunction(name: .easeIn)
     applyAnimation(toView: materialAccelerationView, withTimingFunction: materialAcceleration)
-
-    if let materialSharp = CAMediaTimingFunction.mdc_function(withType: .sharp) {
-      applyAnimation(toView: materialSharpView, withTimingFunction: materialSharp)
-    } else {
-      materialSharpView.removeFromSuperview()
-    }
   }
 
   func applyAnimation(toView view: UIView, withTimingFunction timingFunction: CAMediaTimingFunction)

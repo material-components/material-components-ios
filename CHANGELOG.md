@@ -13181,7 +13181,7 @@ present(bottomDrawerViewController, animated: true, completion: nil)
  @end
 
 CAMediaTimingFunction *timingFunction =
-    [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionEaseInOut];
+    [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
 [self.customView.shadowLayer animateCornerRadius:(CGFloat)25.0
                               withTimingFunction:timingFunction
                                         duration:(CGFloat)2.5];

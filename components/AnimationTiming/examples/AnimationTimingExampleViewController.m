@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "CAMediaTimingFunction+MDCAnimationTiming.h"
 #import "supplemental/AnimationTimingExampleViewControllerSupplemental.h"
 #import "UIView+MDCTimingFunction.h"
 
@@ -67,7 +66,7 @@ const NSTimeInterval kAnimationTimeDelay = 0.5;
                   completion:nil];
 
   CAMediaTimingFunction *materialSharpCurve =
-      [CAMediaTimingFunction mdc_functionWithType:MDCAnimationTimingFunctionSharp];
+      [[CAMediaTimingFunction alloc] initWithControlPoints:(float) 0.4:0:(float)0.6:1];
   [self applyAnimationToView:_materialSharpView
           withTimingFunction:materialSharpCurve
                   completion:completion];

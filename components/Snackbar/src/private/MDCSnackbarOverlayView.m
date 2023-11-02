@@ -18,7 +18,6 @@
 
 #import "../MDCSnackbarError.h"
 #import "../MDCSnackbarMessage.h"
-#import "CAMediaTimingFunction+MDCAnimationTiming.h"
 #import "MDCAvailability.h"
 #import "MDCSnackbarAlignment.h"
 #import "MDCSnackbarMessageView.h"
@@ -914,26 +913,6 @@ static const CGFloat kMaximumHeightLegacy = 80;
   } else {
     return NO;
   }
-}
-
-#pragma mark - Timing functions
-
-static void WrapWithTimingFunctionForCurve(MDCAnimationTimingFunction mediaTiming,
-                                           void (^block)(void)) {
-  [CATransaction begin];
-  [CATransaction
-      setAnimationTimingFunction:[CAMediaTimingFunction mdc_functionWithType:mediaTiming]];
-  block();
-  [CATransaction commit];
-}
-
-+ (void)animateWithDuration:(NSTimeInterval)duration
-                      curve:(MDCAnimationTimingFunction)curve
-                 animations:(void (^)(void))animations
-                 completion:(void (^)(BOOL finished))completion {
-  WrapWithTimingFunctionForCurve(curve, ^{
-    [UIView animateWithDuration:duration animations:animations completion:completion];
-  });
 }
 
 @end
