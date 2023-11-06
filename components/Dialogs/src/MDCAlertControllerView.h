@@ -55,6 +55,16 @@
 @property(nonatomic, assign) UIEdgeInsets contentInsets;
 
 /**
+ The edge insets around the content view (which includes the message, and the accessory view if it
+ is set) against the dialog edges or its neighbor elements, the title and the actions.
+
+ In GM3, the bottom content inset is not needed due to the top action inset provding 24 spacing.
+
+ Default value is UIEdgeInsets(top: 24, leading: 24, bottom: 0, trailing: 24).
+ */
+@property(nonatomic, assign) UIEdgeInsets M3CDialogContentInsets;
+
+/**
  The edge insets around the actions against the dialog edges and its neighbor, which could be any of
  the other elements: the message, accessory view, title, title icon or title icon view.
 

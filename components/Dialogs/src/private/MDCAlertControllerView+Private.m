@@ -43,8 +43,6 @@ static const CGFloat M3CDialogActionMinHeight = 44.0f;
 
 static const CGFloat MDCDialogMessageOpacity = 0.54f;
 
-static const UIEdgeInsets M3CDialogContentInsets = (UIEdgeInsets){24.0f, 24.0f, 0.0f, 24.0f};
-
 /** KVO context for this file. */
 static char *const kKVOContextMDCAlertControllerViewPrivate =
     "kKVOContextMDCAlertControllerViewPrivate";
@@ -117,6 +115,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
     self.titleInsets = UIEdgeInsetsMake(24.0f, 24.0f, 20.0f, 24.0f);
     self.contentInsets = UIEdgeInsetsMake(24.0f, 24.0f, 24.0f, 24.0f);
     self.actionsInsets = UIEdgeInsetsMake(8.0f, 8.0f, 8.0f, 8.0f);
+    self.M3CDialogContentInsets = UIEdgeInsetsMake(24.0f, 24.0f, 0.0f, 24.0f);
     self.M3CButtonActionsInsets = UIEdgeInsetsMake(24.0f, 24.0f, 24.0f, 24.0f);
     self.actionsHorizontalMargin = 8.0f;
     self.M3CButtonActionsVerticalMargin = 8.0f;
@@ -178,6 +177,13 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   return self;
 }
 
+- (UIEdgeInsets)contentInsets {
+  if (self.M3CButtonEnabled) {
+    return self.M3CDialogContentInsets;
+  }
+  return _contentInsets;
+}
+
 - (NSString *)title {
   return self.titleLabel.text;
 }
@@ -186,14 +192,6 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   self.titleLabel.text = title;
 
   [self setNeedsLayout];
-}
-
-- (void)setM3CButtonEnabled:(BOOL)M3CButtonEnabled {
-  if (M3CButtonEnabled) {
-    // Bottom content inset is not needed due to the top action inset.
-    self.contentInsets = M3CDialogContentInsets;
-  }
-  _M3CButtonEnabled = M3CButtonEnabled;
 }
 
 - (void)setBackgroundColor:(UIColor *_Nullable)backgroundColor {
