@@ -15,6 +15,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 API_DEPRECATED_BEGIN("🤖👀 Use standard Foundation APIs instead. "
                      "This has go/material-ios-migrations#scriptable-potential 🤖👀.",
                      ios(12, 12))
@@ -56,3 +58,5 @@ OBJC_EXTERN NSString *const MDCKeyboardWatcherKeyboardWillChangeFrameNotificatio
 @end
 
 API_DEPRECATED_END
+
+NS_ASSUME_NONNULL_END
