@@ -114,11 +114,6 @@ static MDCKeyboardWatcher *_sKeyboardWatcher;
   return CGRectGetHeight(self.keyboardFrame);
 }
 
-// TODO : keyboardOffset deprecated, delete.
-- (CGFloat)keyboardOffset {
-  return self.visibleKeyboardHeight;
-}
-
 + (NSTimeInterval)animationDurationFromKeyboardNotification:(NSNotification *)notification {
   if (![notification.name isEqualToString:MDCKeyboardWatcherKeyboardWillShowNotification] &&
       ![notification.name isEqualToString:MDCKeyboardWatcherKeyboardWillHideNotification] &&

@@ -53,16 +53,6 @@ OBJC_EXTERN NSString *const MDCKeyboardWatcherKeyboardWillChangeFrameNotificatio
  */
 @property(nonatomic, readonly) CGFloat visibleKeyboardHeight;
 
-#pragma mark deprecated
-
-/**
- The distance from the top of the keyboard to the bottom of the screen.
-
- Zero if the keyboard is not currently showing or is not docked.
- */
-@property(nonatomic, readonly)
-    CGFloat keyboardOffset __deprecated_msg("Use visibleKeyboardHeight instead of keyboardOffset");
-
 @end
 
 API_DEPRECATED_END
