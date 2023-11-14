@@ -17,10 +17,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-API_DEPRECATED_BEGIN("🤖👀 Use standard Foundation APIs instead. "
-                     "This has go/material-ios-migrations#scriptable-potential 🤖👀.",
-                     ios(12, 12))
-
 // These notifications mirror their UIKeyboard* counterparts. They are posted after the keyboard
 // watcher has updated its own internal state, so listeners are safe to query the keyboard watcher
 // for its values.
@@ -56,7 +52,5 @@ OBJC_EXTERN NSString *const MDCKeyboardWatcherKeyboardWillChangeFrameNotificatio
 @property(nonatomic, readonly) CGFloat visibleKeyboardHeight;
 
 @end
-
-API_DEPRECATED_END
 
 NS_ASSUME_NONNULL_END
