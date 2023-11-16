@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <QuartzCore/QuartzCore.h>
+
 #import "MDCTextInputCommonFundament.h"
 
 #import "MDCButton.h"
@@ -25,7 +27,6 @@
 #import "MDCTextInputCommonFundament.h"
 #import "MDCTextInputUnderlineView.h"
 
-#import "MaterialAnimationTiming.h"
 #import "MaterialMath.h"
 #import "MaterialPalettes.h"
 #import "MaterialTypography.h"

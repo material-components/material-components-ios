@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIKit.h>
 
 #import "MDCActionSheetAction.h"
 #import "MDCActionSheetController.h"
 #import "MDCActionSheetController+MaterialTheming.h"
-#import "UIView+MDCTimingFunction.h"
 #import "MDCButton.h"
 #import "MDCButton+MaterialTheming.h"
 #import "MDCTabBarItem.h"
@@ -84,15 +84,17 @@ static NSString *const kPreferredLayoutMenuAccessibilityLabel = @"Change preferr
 - (void)switchTapped:(id)sender {
   [self invalidateIntrinsicContentSize];
   [self setNeedsLayout];
-  [UIView mdc_animateWithTimingFunction:self.animationTimingFunction
-                               duration:self.animationDuration
-                                  delay:0
-                                options:0
-                             animations:^{
-                               [self.superview setNeedsLayout];
-                               [self.superview layoutIfNeeded];
-                             }
-                             completion:nil];
+  [CATransaction begin];
+  [CATransaction setAnimationTimingFunction:self.animationTimingFunction];
+  [UIView animateWithDuration:self.animationDuration
+                        delay:0
+                      options:0
+                   animations:^{
+                     [self.superview setNeedsLayout];
+                     [self.superview layoutIfNeeded];
+                   }
+                   completion:nil];
+  [CATransaction commit];
 }
 
 - (CGSize)intrinsicContentSize {

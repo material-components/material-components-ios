@@ -12,9 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <QuartzCore/QuartzCore.h>
+
 #import "MDCTextControlLabelAnimation.h"
 
-#import "UIView+MDCTimingFunction.h"
 #import "MDCTextControlLabelSupport.h"
 
 @implementation MDCTextControlLabelAnimation
@@ -69,16 +70,17 @@
     dispatch_async(dispatch_get_main_queue(), ^{
       CAMediaTimingFunction *timingFunction =
           [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-      [UIView
-          mdc_animateWithTimingFunction:timingFunction
-                               duration:animationDuration
-                                  delay:0
-                                options:0
-                             animations:^{
-                               label.transform =
-                                   transformNeededToMakeViewWithCurrentFrameLookLikeItHasTargetFrame;
-                             }
-                             completion:completionBlock];
+      [CATransaction begin];
+      [CATransaction setAnimationTimingFunction:timingFunction];
+      [UIView animateWithDuration:animationDuration
+                            delay:0
+                          options:0
+                       animations:^{
+                         label.transform =
+                             transformNeededToMakeViewWithCurrentFrameLookLikeItHasTargetFrame;
+                       }
+                       completion:completionBlock];
+      [CATransaction commit];
     });
   } else {
     completionBlock(YES);
