@@ -62,22 +62,7 @@ public final class M3CTextField: UIView, M3CTextInput {
   private var trailingLabelColors: [UIControl.State: UIColor] = [:]
   private var tintColors: [UIControl.State: UIColor] = [:]
 
-  @objc public lazy var textContainer: UITextField = {
-    let textField = M3CInsetTextField()
-    textField.translatesAutoresizingMaskIntoConstraints = false
-    textField.adjustsFontForContentSizeCategory = true
-    textField.font = defaultTextContainerFont
-    textField.layer.borderWidth = 1.0
-    textField.layer.cornerRadius = 10.0
-
-    // When firstResponder status changes, apply all colors associated with the resulting
-    // UIControlState.
-    textField.firstResponderChangeHandler = { [weak self] in
-      self?.applyAllColors()
-    }
-
-    return textField
-  }()
+  @objc public var textContainer: UITextField
 
   /// Proxy property for the underlying text field's `delegate` property.
   @objc public var delegate: UITextFieldDelegate? {
@@ -148,9 +133,20 @@ public final class M3CTextField: UIView, M3CTextInput {
   @objc public lazy var trailingLabel: UILabel = buildLabel()
 
   /// Initializes a `M3CTextField` with a supporting label, title label, and trailing label.
-  public init() {
-    super.init(frame: .zero)
+  @objc public convenience init() {
+    self.init(textContainer: M3CInsetTextField())
+  }
 
+  /// Initializes a `M3CTextField` with a supporting label, title label, and trailing label.
+  ///
+  /// @param textContainer Custom `textContainer` subclass to use as the underlying text
+  ///                      field in order to provide more customization. Overriding the default text container
+  ///                      may lead to unexpected behavior. There are no guarantees when overriding members of the
+  ///                      subclass and this should be used very sparingly.
+  @objc public required init(textContainer: UITextField) {
+    self.textContainer = textContainer
+    super.init(frame: .zero)
+    configure(textContainer)
     configureStackViews()
   }
 
@@ -207,6 +203,22 @@ public final class M3CTextField: UIView, M3CTextInput {
     // This is to fix an issue in RTL, where an empty trailing label affects the position of the
     // leading label when M3CTextField is placed inside of a UICollectionViewCell.
     trailingLabel.isHidden = (trailingLabel.text ?? "").isEmpty
+  }
+
+  private func configure(_ textField: UITextField) {
+    textField.translatesAutoresizingMaskIntoConstraints = false
+    textField.adjustsFontForContentSizeCategory = true
+    textField.font = defaultTextContainerFont
+    textField.layer.borderWidth = 1.0
+    textField.layer.cornerRadius = 10.0
+
+    if let insetTextField = textField as? M3CInsetTextField {
+      // When firstResponder status changes, apply all colors associated with the resulting
+      // UIControlState.
+      insetTextField.firstResponderChangeHandler = { [weak self] in
+        self?.applyAllColors()
+      }
+    }
   }
 }
 
