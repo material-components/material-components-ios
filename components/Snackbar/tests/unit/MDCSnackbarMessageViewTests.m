@@ -27,6 +27,8 @@
 #import "MDCSnackbarOverlayView.h"
 #pragma clang diagnostic pop
 
+NS_ASSUME_NONNULL_BEGIN
+
 static const int64_t kDispatchTimeWait = (int64_t)((CGFloat)0.2 * NSEC_PER_SEC);
 
 @interface MDCSnackbarManagerInternal (Testing)
@@ -58,9 +60,9 @@ static const int64_t kDispatchTimeWait = (int64_t)((CGFloat)0.2 * NSEC_PER_SEC);
 @end
 
 @interface MDCSnackbarMessageViewTests : XCTestCase
-@property(nonatomic, strong) MDCSnackbarManager *manager;
-@property(nonatomic, strong) FakeMDCSnackbarManagerDelegate *delegate;
-@property(nonatomic, strong) MDCSnackbarMessage *message;
+@property(nonatomic, strong, nullable) MDCSnackbarManager *manager;
+@property(nonatomic, strong, nullable) FakeMDCSnackbarManagerDelegate *delegate;
+@property(nonatomic, strong, nullable) MDCSnackbarMessage *message;
 @end
 
 @implementation MDCSnackbarMessageViewTests
@@ -376,7 +378,6 @@ static const int64_t kDispatchTimeWait = (int64_t)((CGFloat)0.2 * NSEC_PER_SEC);
 
 - (void)testManagerForwardsButtonProperties {
   // Given
-  self.manager.disabledButtonAlpha = (CGFloat)0.5;
   self.manager.uppercaseButtonTitle = NO;
   self.manager.buttonInkColor = UIColor.redColor;
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
@@ -396,7 +397,6 @@ static const int64_t kDispatchTimeWait = (int64_t)((CGFloat)0.2 * NSEC_PER_SEC);
   XCTAssertTrue([actionButton isKindOfClass:[MDCButton class]]);
   MDCButton *button = (MDCButton *)actionButton;
   XCTAssertFalse(button.uppercaseTitle);
-  XCTAssertEqual(button.disabledAlpha, 0.5);
   XCTAssertEqualObjects(UIColor.redColor, button.inkColor);
 }
 
@@ -710,3 +710,5 @@ static const int64_t kDispatchTimeWait = (int64_t)((CGFloat)0.2 * NSEC_PER_SEC);
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

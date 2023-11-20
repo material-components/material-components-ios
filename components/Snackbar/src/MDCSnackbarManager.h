@@ -283,14 +283,6 @@ NS_ASSUME_NONNULL_END
 @property(nonatomic, assign) BOOL uppercaseButtonTitle;
 
 /**
- Alpha of disabled buttons. Defaults to the MDCButton's default (0.12).
-
- If using the MDCSnackbarMessageView GM3 branding API, setting this property will have no effect.
- See go/material-ios-snackbar for details on using GM3 branding APIs.
- */
-@property(nonatomic) CGFloat disabledButtonAlpha;
-
-/**
  The color for the ink view in the Snackbar message view's buttons.
 
  If using the MDCSnackbarMessageView GM3 branding API, setting this property will have no effect.
