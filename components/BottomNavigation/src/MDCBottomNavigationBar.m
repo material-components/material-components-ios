@@ -1015,7 +1015,7 @@ static BOOL gEnablePerformantShadow = NO;
   UIPointerEffect *highlightEffect = [UIPointerHighlightEffect effectWithPreview:targetedPreview];
   CGRect hoverRect =
       [bottomNavigationView convertRect:[bottomNavigationView pointerEffectHighlightRect]
-                                 toView:self];
+                                 toView:self.itemsLayoutView];
   UIPointerShape *shape = [UIPointerShape shapeWithRoundedRect:hoverRect];
   return [UIPointerStyle styleWithEffect:highlightEffect shape:shape];
 }
