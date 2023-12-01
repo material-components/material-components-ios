@@ -9409,7 +9409,7 @@ EarlGrey
 To:
 ```swift
 EarlGrey
-      .selectElement(with: grey_accessibilityLabel("Phone Number, XXX-XXXX")
+      .selectElement(with: GREYAccessibilityLabel("Phone Number, XXX-XXXX")
 ```
 More information can be found [in the PR](https://github.com/material-components/material-components-ios/pull/7256)
 
