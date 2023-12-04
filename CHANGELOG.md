@@ -9403,7 +9403,7 @@ for the MDCTextField's accessibility label. The label now also has a inserted `,
 For example an EarlGrey matcher needs to be adjusted from
 ```swift
 EarlGrey
-      .selectElement(with: grey_accessibilityValue("Phone Number XXX-XXXX")
+      .selectElement(with: GREYAccessibilityValue("Phone Number XXX-XXXX")
 ```
 
 To:
