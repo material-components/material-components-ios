@@ -203,6 +203,7 @@ public final class M3CTextField: UIView, M3CTextInput {
     // This is to fix an issue in RTL, where an empty trailing label affects the position of the
     // leading label when M3CTextField is placed inside of a UICollectionViewCell.
     trailingLabel.isHidden = (trailingLabel.text ?? "").isEmpty
+    hideEmptyLabels()
   }
 
   private func configure(_ textField: UITextField) {

@@ -128,6 +128,11 @@ public final class M3CTextView: UIView, M3CTextInput {
   public func setTrailingLabelColor(_ color: UIColor?, for state: UIControl.State) {
     trailingLabelColors[state] = color
   }
+
+  override public func layoutSubviews() {
+    super.layoutSubviews()
+    hideEmptyLabels()
+  }
 }
 
 // MARK: M3CTextView Color Configuration

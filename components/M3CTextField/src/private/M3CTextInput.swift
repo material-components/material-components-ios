@@ -90,4 +90,19 @@ extension M3CTextInput {
     label.adjustsFontForContentSizeCategory = true
     return label
   }
+
+  internal func hideEmptyLabels() {
+    // Arranged subviews must be explicitly hidden to avoid contributing their spacing to the
+    // stack view's size.
+    titleLabel.isHidden = titleLabel.isEmpty()
+    // We can't store a reference to the bottom labels' stack view in this extension, so we assume
+    // here that the supporting label's superview is the bottom stack view.
+    supportingLabel.superview?.isHidden = supportingLabel.isEmpty() && trailingLabel.isEmpty()
+  }
+}
+
+extension UILabel {
+  fileprivate func isEmpty() -> Bool {
+    (text ?? "").isEmpty
+  }
 }
