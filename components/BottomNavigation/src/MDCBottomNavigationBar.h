@@ -152,6 +152,35 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
 @property(nonatomic, strong, readwrite, nonnull) UIColor *selectedItemTitleColor;
 
 /**
+ If @c YES, a pill-shaped "active indicator" is used to show which item is currently selected. The
+ active indicator is centered around the selected icon, and animates in/out when a new item is
+ selected.
+
+ Note that using the active indicator turns off any ink/ripple behavior, as they should not both be
+ used as an indication of selection of a new item.
+
+ Defaults to @c NO.
+ */
+@property(nonatomic, assign) BOOL showsSelectionIndicator;
+
+/**
+ Size of the active indicator.
+
+ Only has an impact if @c useActiveIndicator is set to @c YES.
+
+ Defaults to 30, 60.
+ */
+@property(nonatomic, assign) CGSize selectionIndicatorSize;
+
+/**
+  Background color for the active indicator. Only has an impact if @c useActiveIndicator is set to
+  @c YES.
+
+  Defaults to #C3D9F2.
+ */
+@property(nonatomic, strong, nonnull) UIColor *selectionIndicatorColor;
+
+/**
  Color of unselected items. Applies color to items' icons. Text is not displayed in unselected mode.
  Default color is dark gray.
  */

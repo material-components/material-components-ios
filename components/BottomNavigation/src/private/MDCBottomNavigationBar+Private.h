@@ -40,9 +40,4 @@
 
 @property(nonatomic, readonly) BOOL isTitleBelowIcon;
 
-// Selection indicator
-@property(nonatomic, assign) BOOL showsSelectionIndicator;
-@property(nonatomic, assign) CGSize selectionIndicatorSize;
-@property(nonatomic, strong, nonnull) UIColor *selectionIndicatorColor;
-
 @end
