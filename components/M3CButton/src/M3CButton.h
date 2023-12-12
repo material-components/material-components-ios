@@ -84,6 +84,22 @@ __attribute__((objc_subclassing_restricted))
 */
 @property(nonatomic) NSTimeInterval animationDuration;
 
+#pragma mark - Enabling multi-line layout
+
+/**
+ When enabled, makes use of constraints to enable the title label to wrap to multiple lines.
+
+ Note: this property does not currently support buttons with images. Enabling this property when an
+ image is present will result in undefined behavior. On iOS 15+, please consider using @c
+ UIButtonConfiguration for multiline button.
+
+ Precondition: use this property to enable multiline button only under auto layout. Use @c
+ textCanWrap under manual layout.
+
+ Default value is @c NO.
+ */
+@property(nonatomic) BOOL layoutTitleWithConstraints;
+
 /**
  Should the button's label be rendered on multiple lines. If you set this
  property to YES, make sure that your button has either its

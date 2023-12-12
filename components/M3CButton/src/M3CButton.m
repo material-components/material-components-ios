@@ -17,6 +17,12 @@ NS_ASSUME_NONNULL_BEGIN
   BOOL _customInsetAvailable;
 }
 
+// Used only when layoutTitleWithConstraints is enabled.
+@property(nonatomic, strong, nullable) NSLayoutConstraint *titleTopConstraint;
+@property(nonatomic, strong, nullable) NSLayoutConstraint *titleBottomConstraint;
+@property(nonatomic, strong, nullable) NSLayoutConstraint *titleLeadingConstraint;
+@property(nonatomic, strong, nullable) NSLayoutConstraint *titleTrailingConstraint;
+
 @end
 
 @implementation M3CButton
@@ -208,6 +214,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setContentEdgeInsets:(UIEdgeInsets)edgeInsets {
   [super setContentEdgeInsets:edgeInsets];
   _customInsetAvailable = YES;
+
+  // Update constraint constants for multiline layout.
+  if (self.layoutTitleWithConstraints) {
+    [self updateTitleLabelConstraint];
+  }
 }
 
 - (void)updateInsets {
@@ -309,6 +320,52 @@ NS_ASSUME_NONNULL_BEGIN
   }
   size.width = MAX(MAX(size.height, size.width), _minimumWidth);
   return size;
+}
+#pragma mark - Enabling multi-line layout
+
+- (void)setLayoutTitleWithConstraints:(BOOL)layoutTitleWithConstraints {
+  if (_layoutTitleWithConstraints == layoutTitleWithConstraints) {
+    return;
+  }
+
+  _layoutTitleWithConstraints = layoutTitleWithConstraints;
+
+  if (_layoutTitleWithConstraints) {
+    self.titleTopConstraint = [self.titleLabel.topAnchor constraintEqualToAnchor:self.topAnchor];
+    self.titleBottomConstraint =
+        [self.titleLabel.bottomAnchor constraintEqualToAnchor:self.bottomAnchor];
+    self.titleLeadingConstraint =
+        [self.titleLabel.leadingAnchor constraintEqualToAnchor:self.leadingAnchor];
+    self.titleTrailingConstraint =
+        [self.titleLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor];
+    self.titleTopConstraint.active = YES;
+    self.titleBottomConstraint.active = YES;
+    self.titleLeadingConstraint.active = YES;
+    self.titleTrailingConstraint.active = YES;
+
+    [self.titleLabel setContentHuggingPriority:UILayoutPriorityRequired
+                                       forAxis:UILayoutConstraintAxisHorizontal];
+    [self.titleLabel setContentHuggingPriority:UILayoutPriorityRequired
+                                       forAxis:UILayoutConstraintAxisVertical];
+
+    [self updateTitleLabelConstraint];
+  } else {
+    self.titleTopConstraint.active = NO;
+    self.titleBottomConstraint.active = NO;
+    self.titleLeadingConstraint.active = NO;
+    self.titleTrailingConstraint.active = NO;
+    self.titleTopConstraint = nil;
+    self.titleBottomConstraint = nil;
+    self.titleLeadingConstraint = nil;
+    self.titleTrailingConstraint = nil;
+  }
+}
+
+- (void)updateTitleLabelConstraint {
+  self.titleTopConstraint.constant = self.contentEdgeInsets.top;
+  self.titleBottomConstraint.constant = -self.contentEdgeInsets.bottom;
+  self.titleLeadingConstraint.constant = self.contentEdgeInsets.left;
+  self.titleTrailingConstraint.constant = -self.contentEdgeInsets.right;
 }
 
 - (CGSize)sizeBasedOnLabel {
