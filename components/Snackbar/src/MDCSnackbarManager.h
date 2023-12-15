@@ -370,6 +370,13 @@ NS_ASSUME_NONNULL_END
 @property(nonatomic, assign) BOOL shouldShowMessageWhenVoiceOverIsRunning;
 
 /**
+ If disabled, @c MDCSnackbarManager will not show or dismiss snackbar messages with animation.
+
+ Default is set to YES.
+ */
+@property(nonatomic, assign, getter=isMessageAnimationEnabled) BOOL messageAnimationEnabled;
+
+/**
  The delegate for MDCSnackbarManager.defaultManager through which it may inform of snackbar
  presentation updates.
  */
