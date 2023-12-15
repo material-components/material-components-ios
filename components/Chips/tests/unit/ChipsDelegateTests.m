@@ -15,9 +15,8 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
-#import "MaterialChips.h"
-#import "MaterialTextFields.h"
-#import "MDCTextField+Testing.h"
+#import "MDCChipField.h"
+#import "MDCChipFieldDelegate.h"
 
 @interface ChipsDelegateTests : XCTestCase <MDCChipFieldDelegate>
 
@@ -58,19 +57,6 @@
 
   // Then
   XCTAssertEqualObjects(self.delegateTextInput, @"Hello World");
-}
-
-- (void)testTouchUpOnClearButtonInvokesDidChangeInputOnDelegate {
-  // Given
-  self.chip.textField.text = @"Hello World";
-
-  // When
-  [self.chip.textField clearButtonDidTouch];
-
-  // Then
-  // Check length == 0 instead of looking for nil to handle both nil and @"".
-  // Cast to (unsigned long) to handle 32-bit and 64-bit tests.
-  XCTAssertEqual((unsigned long)self.delegateTextInput.length, 0UL);
 }
 
 - (void)testDelegateShouldNotBeginEditing {

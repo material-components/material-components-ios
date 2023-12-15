@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialChips.h"
-#import "MaterialChips+Theming.h"
-#import "MaterialTextFields.h"
-#import "MaterialColorScheme.h"
-#import "MaterialContainerScheme.h"
-#import "MaterialTypographyScheme.h"
+#import "MDCChipField.h"
+#import "MDCChipFieldDelegate.h"
+#import "MDCChipView.h"
+#import "MDCChipView+MaterialTheming.h"
+#import "MDCContainerScheme.h"
+#import "MDCTypographyScheme.h"
 
 @interface ChipsInputExampleViewController : UIViewController <MDCChipFieldDelegate>
 @property(nonatomic, strong) MDCContainerScheme *containerScheme;
@@ -42,26 +42,17 @@
   typographyScheme.useCurrentContentSizeCategoryWhenApplied = YES;
   self.containerScheme.typographyScheme = typographyScheme;
 
-  if (self.containerScheme.colorScheme) {
-    self.view.backgroundColor = self.containerScheme.colorScheme.backgroundColor;
-  } else {
-    MDCSemanticColorScheme *colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    self.view.backgroundColor = colorScheme.backgroundColor;
-  }
+  self.view.backgroundColor = UIColor.systemBackgroundColor;
 
   self.chipField = [[MDCChipField alloc] initWithFrame:CGRectZero];
   self.chipField.delegate = self;
   self.chipField.textField.accessibilityIdentifier = @"chip_field_text_field";
-  self.chipField.textField.placeholderLabel.text = @"This is a chip field.";
-  self.chipField.textField.mdc_adjustsFontForContentSizeCategory = YES;
-  if (self.containerScheme.colorScheme) {
-    self.chipField.backgroundColor = self.containerScheme.colorScheme.surfaceColor;
-  } else {
-    MDCSemanticColorScheme *colorScheme =
-        [[MDCSemanticColorScheme alloc] initWithDefaults:MDCColorSchemeDefaultsMaterial201804];
-    self.chipField.backgroundColor = colorScheme.surfaceColor;
-  }
+  NSDictionary<NSString *, id> *placeholderAttributes =
+      @{NSForegroundColorAttributeName : UIColor.placeholderTextColor};
+  self.chipField.placeholderAttributes = placeholderAttributes;
+  self.chipField.placeholder = @"This is a chip field.";
+  self.chipField.textField.adjustsFontForContentSizeCategory = YES;
+  self.chipField.backgroundColor = UIColor.systemBackgroundColor;
   [self.view addSubview:self.chipField];
 
   // When Dynamic Type changes we need to invalidate the collection view layout in order to let the

@@ -16,7 +16,6 @@
 #import <UIKit/UIKit.h>
 
 #import "MDCChipView.h"
-#import "MaterialTextFields.h"
 
 /**
  Note: There is a UIKit bug affecting iOS 8.0-8.2 where UITextFields do not properly call the
@@ -60,7 +59,7 @@ typedef NS_OPTIONS(NSUInteger, MDCChipFieldDelimiter) {
 
 /**
   This class provides an "input chips" experience on iOS, where chip creation is
- coordinated with a user's text input. It manages an @c MDCTextField and a series of @c
+ coordinated with a user's text input. It manages a @c UITextField and a series of @c
  MDCChipViews. When the user hits the return key, new chips are added. When the client hits the
  delete button and the text field has no text, the last chip is deleted.
 
@@ -80,7 +79,7 @@ typedef NS_OPTIONS(NSUInteger, MDCChipFieldDelimiter) {
  If you set a custom font, make sure to also set the custom font on textField.placeholderLabel and
  on your MDCChipView instances.
  */
-@property(nonatomic, nonnull, readonly) MDCTextField *textField;
+@property(nonatomic, nonnull, readonly) UITextField *textField;
 
 /**
  The fixed height of all chip views.
@@ -141,6 +140,18 @@ typedef NS_OPTIONS(NSUInteger, MDCChipFieldDelimiter) {
  Defaults to a bezier-drawn image declared in `MDCChipViewDeleteButton`.
  */
 @property(nonatomic, nullable, strong) UIImage *deleteButtonImage;
+
+/**
+ The string to be used as the attributed placeholder for the UITextField associated
+ with a chip field.
+ */
+@property(nonatomic, nullable, copy) NSString *placeholder;
+
+/**
+ The attributes applied to the attributed placeholder in the UITextField associated with a
+ chip field.
+ */
+@property(nonatomic, nullable, copy) NSDictionary<NSAttributedStringKey, id> *placeholderAttributes;
 
 /**
  Adds a chip to the chip field.
