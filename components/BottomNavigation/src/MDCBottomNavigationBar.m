@@ -14,8 +14,8 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <Foundation/Foundation.h>
 
-#import "MDCBottomNavigationBar.h"
 #import "MDCAvailability.h"
+#import "MDCBottomNavigationBar.h"
 #import "UIView+MaterialElevationResponding.h"
 
 #import "private/MDCBottomNavigationBar+Private.h"
@@ -383,6 +383,11 @@ static BOOL gEnablePerformantShadow = NO;
   return height;
 }
 
+- (void)recalculateBarHeightAndUpdateLayout {
+  _itemsLayoutViewHeightConstraint.constant = [self calculateBarHeight];
+  [self setNeedsLayout];
+}
+
 - (void)setEnableVerticalLayout:(BOOL)enableVerticalLayout {
   if (_enableVerticalLayout == enableVerticalLayout) {
     return;
@@ -622,6 +627,11 @@ static BOOL gEnablePerformantShadow = NO;
 
   if (self.traitCollectionDidChangeBlock) {
     self.traitCollectionDidChangeBlock(self, previousTraitCollection);
+  }
+
+  if (self.traitCollection.verticalSizeClass != previousTraitCollection.verticalSizeClass ||
+      self.traitCollection.horizontalSizeClass != previousTraitCollection.horizontalSizeClass) {
+    [self recalculateBarHeightAndUpdateLayout];
   }
 }
 
@@ -872,9 +882,7 @@ static BOOL gEnablePerformantShadow = NO;
   for (MDCBottomNavigationItemView *itemView in self.itemViews) {
     [self configureTitleStateForItemView:itemView];
   }
-  [self invalidateIntrinsicContentSize];
-  [self setNeedsLayout];
-  _itemsLayoutViewHeightConstraint.constant = [self calculateBarHeight];
+  [self recalculateBarHeightAndUpdateLayout];
 }
 
 - (void)setShowsSelectionIndicator:(BOOL)showsSelectionIndicator {
