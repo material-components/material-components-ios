@@ -385,7 +385,7 @@ static BOOL gEnablePerformantShadow = NO;
 
 - (void)recalculateBarHeightAndUpdateLayout {
   _itemsLayoutViewHeightConstraint.constant = [self calculateBarHeight];
-  [self setNeedsLayout];
+  [self invalidateIntrinsicContentSize];
 }
 
 - (void)setEnableVerticalLayout:(BOOL)enableVerticalLayout {
