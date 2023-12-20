@@ -18,7 +18,3 @@
 #import "MDCChipFieldDelegate.h"  // IWYU pragma: keep
 #import "MDCChipView.h"  // IWYU pragma: keep
 #import "MDCChipViewDeleteButton.h"  // IWYU pragma: keep
-
-// TODO(cl/315839473): Delete references to MDCLegacyChipField fork.
-#import "MDCLegacyChipField.h"  // IWYU pragma: keep
-#import "MDCLegacyChipFieldDelegate.h"  // IWYU pragma: keep
