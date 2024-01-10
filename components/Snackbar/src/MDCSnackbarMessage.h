@@ -99,8 +99,11 @@ extern NSString *__nonnull const MDCSnackbarMessageBoldAttributeName;
 /**
  Optional button to show along with the rest of the message.
 
- A MDCSnackbarMessageAction is displayed as a button on the Snackbar. If no action is set no button
+ A MDCSnackbarMessageAction is displayed as a button on the Snackbar. If no action is set, no button
  will appear on the Snackbar.
+
+ Attempting to set this property to an action with a nil or empty title will cause this property to
+ be nil.
  */
 @property(nonatomic, strong, nullable) MDCSnackbarMessageAction *action;
 
@@ -273,6 +276,8 @@ extern NSString *__nonnull const MDCSnackbarMessageBoldAttributeName;
 
 /**
  The title text on the button.
+
+ If this property is set to nil or an empty string, it will not be changed from its current value.
  */
 @property(nonatomic, copy, nullable) NSString *title;
 

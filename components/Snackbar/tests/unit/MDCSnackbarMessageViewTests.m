@@ -106,6 +106,23 @@ static const int64_t kDispatchTimeWait = (int64_t)((CGFloat)0.2 * NSEC_PER_SEC);
   XCTAssertTrue([self.message.description containsString:@"MDCSnackbarMessageView"]);
 }
 
+- (void)testSettingMessageActionWithNilTitleAsserts {
+  // Given
+  MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
+
+  // When/Then
+  XCTAssertThrows(self.message.action = action);
+}
+
+- (void)testSettingMessageActionWithEmptyTitleAsserts {
+  // Given
+  MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
+  action.title = @"";
+
+  // When/Then
+  XCTAssertThrows(self.message.action = action);
+}
+
 - (void)testDescription {
   // Given
   XCTestExpectation *expectation = [self expectationWithDescription:@"completed"];
