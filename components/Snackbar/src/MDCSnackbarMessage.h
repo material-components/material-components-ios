@@ -246,6 +246,14 @@ extern NSString *__nonnull const MDCSnackbarMessageBoldAttributeName;
 @property(nonatomic) BOOL automaticallyDismisses;
 
 /**
+ Allows the snackbar to auto-dismiss even if it has an action. Default is NO.
+
+ This property has no effect on snackbars without an action. Using the legacy behavior for snackbars
+ with an action is not GAR-compliant (go/GAR-mobile#timeout).
+ */
+@property(nonatomic) BOOL usesLegacyDismissalBehavior;
+
+/**
  MDCSnackbarManager.defaultManager will display the snackbar message in this view.
 
  Call this method to choose where in the view hierarchy this specific snackbar message will be

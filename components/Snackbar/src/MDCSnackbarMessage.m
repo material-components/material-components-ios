@@ -77,6 +77,7 @@ static BOOL _usesLegacySnackbar = NO;
   copy.automaticallyDismisses = self.automaticallyDismisses;
   copy.presentationHostViewOverride = self.presentationHostViewOverride;
   copy.shouldDismissOnOverlayTap = self.shouldDismissOnOverlayTap;
+  copy.usesLegacyDismissalBehavior = self.usesLegacyDismissalBehavior;
 
   // Unfortunately there's not really a concept of 'copying' a block (in the same way you would copy
   // a string, for example). A block's pointer is immutable once it is created and copied to the
