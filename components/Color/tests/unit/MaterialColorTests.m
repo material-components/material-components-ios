@@ -34,34 +34,25 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 
 - (void)testColorMergeForOpaqueColor {
   UIColor *backgroundColor = [UIColor whiteColor];
-  UIColor *blendColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1.0];
-  UIColor *expectedColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:1];
+  UIColor *blendColor = [UIColor colorWithWhite:0 alpha:1.0];
+  UIColor *expectedColor = [UIColor colorWithWhite:0 alpha:1];
   UIColor *resultColor = [UIColor mdc_blendColor:blendColor withBackgroundColor:backgroundColor];
   XCTAssertEqualObjects(resultColor, expectedColor);
 }
 
 - (void)testColorMergeFor50OpacityBlackOnWhite {
   UIColor *backgroundColor = [UIColor whiteColor];
-  UIColor *blendColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:(CGFloat)0.5];
-  UIColor *expectedColor = [UIColor colorWithRed:(CGFloat)0.5
-                                           green:(CGFloat)0.5
-                                            blue:(CGFloat)0.5
-                                           alpha:1];
+  UIColor *blendColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.5];
+  UIColor *expectedColor = [UIColor colorWithWhite:(CGFloat)0.5 alpha:1];
   UIColor *resultColor = [UIColor mdc_blendColor:blendColor withBackgroundColor:backgroundColor];
   XCTAssertEqualObjects(resultColor, expectedColor);
 }
 
 - (void)testColorMergeFor60GrayOpacityOnWhite {
   UIColor *backgroundColor = [UIColor whiteColor];
-  UIColor *blendColor = [UIColor colorWithRed:(CGFloat)0.9
-                                        green:(CGFloat)0.9
-                                         blue:(CGFloat)0.9
-                                        alpha:(CGFloat)0.6];
+  UIColor *blendColor = [UIColor colorWithWhite:(CGFloat)0.9 alpha:(CGFloat)0.6];
   UIColor *resultColor = [UIColor mdc_blendColor:blendColor withBackgroundColor:backgroundColor];
-  UIColor *expectedColor = [UIColor colorWithRed:(CGFloat)0.94000000000000006
-                                           green:(CGFloat)0.94000000000000006
-                                            blue:(CGFloat)0.94000000000000006
-                                           alpha:(CGFloat)1];
+  UIColor *expectedColor = [UIColor colorWithWhite:(CGFloat)0.94000000000000006 alpha:(CGFloat)1];
 
   XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:resultColor
                                                     secondColor:expectedColor]);
@@ -69,11 +60,8 @@ static UIImage *fakeImageWithColorAndSize(UIColor *color, CGRect bounds) {
 
 - (void)testColorMergeFor50OpacityWhiteOnBlack {
   UIColor *backgroundColor = [UIColor blackColor];
-  UIColor *blendColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:(CGFloat)0.5];
-  UIColor *expectedColor = [UIColor colorWithRed:(CGFloat)0.5
-                                           green:(CGFloat)0.5
-                                            blue:(CGFloat)0.5
-                                           alpha:1];
+  UIColor *blendColor = [UIColor colorWithWhite:1 alpha:(CGFloat)0.5];
+  UIColor *expectedColor = [UIColor colorWithWhite:(CGFloat)0.5 alpha:1];
   UIColor *resultColor = [UIColor mdc_blendColor:blendColor withBackgroundColor:backgroundColor];
   XCTAssertEqualObjects(resultColor, expectedColor);
 }
