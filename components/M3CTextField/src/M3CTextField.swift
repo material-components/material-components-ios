@@ -106,7 +106,20 @@ public final class M3CTextField: UIView, M3CTextInput {
     }
   }
 
+  /// Proxy property for the underlying text field's `attributedPlaceholder` property.
+  @objc public var attributedPlaceholder: NSAttributedString? {
+    get {
+      return textContainer.attributedPlaceholder
+    }
+    set {
+      textContainer.attributedPlaceholder = newValue
+    }
+  }
+
   /// Proxy property for the underlying text field's `placeholder` property.
+  ///
+  /// Note that `attributedPlaceholder` is prioritized to be displayed instead of `placeholder`
+  /// when both properties are not nil.
   @objc public var placeholder: String? {
     get {
       return textContainer.placeholder
