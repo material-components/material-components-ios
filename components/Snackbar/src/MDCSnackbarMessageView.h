@@ -18,6 +18,19 @@
 #import "MaterialElevation.h"
 #import "MaterialShadowElevations.h"
 
+@class MDCSnackbarManager;
+@class MDCSnackbarMessage;
+@class MDCSnackbarMessageAction;
+
+/**
+ Called by the Snackbar message view when the user interacts with the Snackbar view.
+
+ @c userInitiated indicates whether or not the handler is being called due to direct user
+ interaction. @c action, if non-nil, indicates that the user chose to execute a specific action.
+ */
+typedef void (^MDCSnackbarMessageDismissHandler)(BOOL userInitiated,
+                                                 MDCSnackbarMessageAction *_Nullable action);
+
 // TODO(b/238930139): Remove usage of this deprecated API.
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -132,6 +145,16 @@
  Defaults to @c NO.
  */
 @property(nonatomic, assign) BOOL enableDismissalAccessibilityAffordance;
+
+/**
+ Creates a Snackbar view to display @c message.
+
+ The view will call @c handler when the user has interacted with the Snackbar view in such a way
+ that it needs to be dismissed prior to its timer-based dismissal time.
+ */
+- (_Nonnull instancetype)initWithMessage:(MDCSnackbarMessage *_Nullable)message
+                          dismissHandler:(MDCSnackbarMessageDismissHandler _Nullable)handler
+                         snackbarManager:(MDCSnackbarManager *_Nonnull)manager;
 
 /**
  Returns the button title color for a particular control state.

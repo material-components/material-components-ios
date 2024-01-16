@@ -14,18 +14,7 @@
 
 #import "../MDCSnackbarMessageView.h"
 
-@class MDCSnackbarManager;
-@class MDCSnackbarMessage;
 @class MDCSnackbarMessageAction;
-
-/**
- Called by the Snackbar message view when the user interacts with the Snackbar view.
-
- @c userInitiated indicates whether or not the handler is being called due to direct user
- interaction. @c action, if non-nil, indicates that the user chose to execute a specific action.
- */
-typedef void (^MDCSnackbarMessageDismissHandler)(BOOL userInitiated,
-                                                 MDCSnackbarMessageAction *_Nullable action);
 
 @interface MDCSnackbarMessageView ()
 
@@ -53,16 +42,6 @@ typedef void (^MDCSnackbarMessageDismissHandler)(BOOL userInitiated,
  If the Snackbar view should be anchored to the bottom of the screen. Default is YES.
  */
 @property(nonatomic) BOOL anchoredToScreenBottom;
-
-/**
- Creates a Snackbar view to display @c message.
-
- The view will call @c handler when the user has interacted with the Snackbar view in such a way
- that it needs to be dismissed prior to its timer-based dismissal time.
- */
-- (_Nonnull instancetype)initWithMessage:(MDCSnackbarMessage *_Nullable)message
-                          dismissHandler:(MDCSnackbarMessageDismissHandler _Nullable)handler
-                         snackbarManager:(MDCSnackbarManager *_Nonnull)manager;
 
 /**
  Dismisses the message view.
