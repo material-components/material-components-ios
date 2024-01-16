@@ -67,9 +67,6 @@ NSString *const kErrorDomain = @"com.google.mdc.snackbar";
 
   self.message = [[MDCSnackbarMessage alloc] init];
   self.message.text = @"Snackbar Message";
-  MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
-  action.title = @"Tap Me";
-  self.message.action = action;
 
   self.fakeMessage = [[MDCFakeSnackbarMessage alloc] init];
   self.fakeMessage.text = @"Fake Snackbar Message";

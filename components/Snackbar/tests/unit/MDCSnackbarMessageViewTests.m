@@ -258,9 +258,8 @@ static const int64_t kDispatchTimeWait = (int64_t)((CGFloat)0.2 * NSEC_PER_SEC);
   XCTAssertFalse(self.manager.internalManager.overlayView.accessibilityViewIsModal);
 }
 
-- (void)testWhenSnackbarAccessibiltyViewIsModalIsYesWithActions {
+- (void)testSnackbarAccessibilityViewIsModalIsYesWithActions {
   // Given
-  self.manager.internalManager.isVoiceOverRunningOverride = YES;
   MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
   action.title = @"Tap Me";
   self.message.action = action;
@@ -278,11 +277,9 @@ static const int64_t kDispatchTimeWait = (int64_t)((CGFloat)0.2 * NSEC_PER_SEC);
   XCTAssertTrue(self.manager.internalManager.overlayView.accessibilityViewIsModal);
 }
 
-- (void)testWhenSnackbarAccessibiltyViewIsModalIsYesWithActionsAndWithoutVoiceOver {
+- (void)testSnackbarAccessibiltyViewIsModalIsNoWithoutActions {
   // Given
-  MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
-  action.title = @"Tap Me";
-  self.message.action = action;
+  self.manager.internalManager.isVoiceOverRunningOverride = YES;
   self.manager.shouldEnableAccessibilityViewIsModal = YES;
 
   // When
@@ -297,9 +294,13 @@ static const int64_t kDispatchTimeWait = (int64_t)((CGFloat)0.2 * NSEC_PER_SEC);
   XCTAssertFalse(self.manager.internalManager.overlayView.accessibilityViewIsModal);
 }
 
-- (void)testWhenSnackbarAccessibiltyViewIsModalIsYesWhenWithNoActions {
+- (void)testSnackbarAccessibilityViewIsModalIsNoWithoutVoiceOverWithLegacyBehavior {
   // Given
-  self.manager.internalManager.isVoiceOverRunningOverride = YES;
+  MDCSnackbarMessageAction *action = [[MDCSnackbarMessageAction alloc] init];
+  action.title = @"Tap Me";
+  self.message.action = action;
+  self.message.usesLegacyDismissalBehavior = YES;
+  self.manager.internalManager.isVoiceOverRunningOverride = NO;
   self.manager.shouldEnableAccessibilityViewIsModal = YES;
 
   // When

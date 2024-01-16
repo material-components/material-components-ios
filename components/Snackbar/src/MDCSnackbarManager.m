@@ -385,11 +385,15 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
 }
 
 - (BOOL)isSnackbarTransient:(MDCSnackbarMessageView *)snackbarView {
-  if ([self isVoiceOverRunning]) {
+  if (snackbarView.message.usesLegacyDismissalBehavior) {
+    if ([self isVoiceOverRunning]) {
+      return ![snackbarView shouldWaitForDismissalDuringVoiceover];
+    } else {
+      return YES;
+    }
+  } else {
     return ![snackbarView shouldWaitForDismissalDuringVoiceover];
   }
-
-  return YES;
 }
 
 #pragma mark - Overlay Activation
