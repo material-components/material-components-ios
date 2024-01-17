@@ -218,6 +218,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
           isEqualToString:previousTraitCollection.preferredContentSizeCategory]) {
     self.preferredContentSize =
         [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
+    [self.view setNeedsLayout];
   }
 }
 
