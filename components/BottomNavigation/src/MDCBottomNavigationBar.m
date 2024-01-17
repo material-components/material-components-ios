@@ -614,7 +614,8 @@ static BOOL gEnablePerformantShadow = NO;
 - (MDCBottomNavigationItemView *_Nullable)itemViewForPoint:(CGPoint)point {
   for (NSUInteger i = 0; i < self.itemViews.count; i++) {
     MDCBottomNavigationItemView *itemView = self.itemViews[i];
-    if (CGRectContainsPoint(itemView.frame, point)) {
+    CGRect rect = [itemView convertRect:itemView.bounds toView:self];
+    if (CGRectContainsPoint(rect, point)) {
       return itemView;
     }
   }
@@ -965,7 +966,7 @@ static BOOL gEnablePerformantShadow = NO;
   MDCBottomNavigationItemView *lastItemView =
       (MDCBottomNavigationItemView *)self.lastLargeContentViewerItem;
 
-  if (!CGRectContainsPoint(self.bounds, point)) {
+  if (!CGRectContainsPoint(self.itemsLayoutView.frame, point)) {
     // The touch has wandered outside of the view. Clear the ripple and do not display the
     // content viewer.
     if (lastItemView) {
