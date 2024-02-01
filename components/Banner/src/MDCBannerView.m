@@ -704,6 +704,9 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   if (self.traitCollectionDidChangeBlock) {
     self.traitCollectionDidChangeBlock(self, previousTraitCollection);
   }
+
+  [self setNeedsLayout];
+  [self layoutIfNeeded];
 }
 
 #pragma mark - Accessibility
