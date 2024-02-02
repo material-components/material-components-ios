@@ -14,7 +14,8 @@
 
 #import "TypographyCustomFontViewController.h"
 
-#import "MaterialTypography.h"
+#import "MDCFontTextStyle.h"
+#import "UIFontDescriptor+MaterialTypography.h"
 
 @implementation TypographyCustomFontViewController {
   NSArray<NSString *> *_strings;
@@ -46,7 +47,7 @@ static inline UIFont *customFont(MDCFontTextStyle style) {
     @"Caption Font", @"Button Font",
 
     // Display fonts (extra large fonts)
-    @"Display 1 Font", @"Display 2 Font", @"Display 3 Font", @"Display 4 Font"
+    @"Display 1 Font"
   ];
 
   _styleFonts = @[
@@ -54,8 +55,6 @@ static inline UIFont *customFont(MDCFontTextStyle style) {
     customFont(MDCFontTextStyleSubheadline), customFont(MDCFontTextStyleBody2),
     customFont(MDCFontTextStyleBody1), customFont(MDCFontTextStyleCaption),
     customFont(MDCFontTextStyleButton), customFont(MDCFontTextStyleDisplay1),
-    customFont(MDCFontTextStyleDisplay2), customFont(MDCFontTextStyleDisplay3),
-    customFont(MDCFontTextStyleDisplay4)
   ];
 
   [[NSNotificationCenter defaultCenter] addObserver:self
@@ -71,8 +70,6 @@ static inline UIFont *customFont(MDCFontTextStyle style) {
     customFont(MDCFontTextStyleSubheadline), customFont(MDCFontTextStyleBody2),
     customFont(MDCFontTextStyleBody1), customFont(MDCFontTextStyleCaption),
     customFont(MDCFontTextStyleButton), customFont(MDCFontTextStyleDisplay1),
-    customFont(MDCFontTextStyleDisplay2), customFont(MDCFontTextStyleDisplay3),
-    customFont(MDCFontTextStyleDisplay4)
   ];
 
   [self.tableView reloadData];

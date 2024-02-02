@@ -36,8 +36,5 @@ typedef NS_ENUM(NSInteger, MDCFontTextStyle) {
   MDCFontTextStyleSubheadline,
   MDCFontTextStyleTitle,
   MDCFontTextStyleDisplay1,
-  MDCFontTextStyleDisplay2,
-  MDCFontTextStyleDisplay3,
-  MDCFontTextStyleDisplay4,
   MDCFontTextStyleButton,
 };

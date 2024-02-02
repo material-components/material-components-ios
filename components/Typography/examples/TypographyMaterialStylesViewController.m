@@ -14,7 +14,8 @@
 
 #import "TypographyMaterialStylesViewController.h"
 
-#import "MaterialTypography.h"
+#import "MDCFontTextStyle.h"
+#import "UIFont+MaterialTypography.h"
 
 @implementation TypographyMaterialStyleViewController {
   NSArray<NSString *> *_strings;
@@ -45,10 +46,7 @@
     @"Button Font", @"Button Font (Dynamic Type-enabled)",
 
     // Display fonts (extra large fonts)
-    @"Display 1 Font", @"Display 1 Font (Dynamic Type-enabled)", @"Display 2 Font",
-    @"Display 2 Font (Dynamic Type-enabled)", @"Display 3 Font",
-    @"Display 3 Font (Dynamic Type-enabled)", @"Display 4 Font",
-    @"Display 4 Font (Dynamic Type-enabled)"
+    @"Display 1 Font", @"Display 1 Font (Dynamic Type-enabled)"
   ];
 
   _styleFonts = @[
@@ -68,12 +66,6 @@
     [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleButton],
     [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay1],
     [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay1],
-    [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay2],
-    [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay2],
-    [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay3],
-    [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay3],
-    [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay4],
-    [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay4]
   ];
 
   [[NSNotificationCenter defaultCenter] addObserver:self
@@ -129,12 +121,6 @@
     [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleButton],
     [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay1],
     [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay1],
-    [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay2],
-    [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay2],
-    [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay3],
-    [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay3],
-    [UIFont mdc_standardFontForMaterialTextStyle:MDCFontTextStyleDisplay4],
-    [UIFont mdc_preferredFontForMaterialTextStyle:MDCFontTextStyleDisplay4]
   ];
 
   [self.tableView reloadData];

@@ -14,9 +14,10 @@
 
 #import <XCTest/XCTest.h>
 #import "MDCFontScaler.h"
-#import "MaterialTypography.h"
+#import "MDCFontTextStyle.h"
+#import "UIFont+MaterialScalable.h"
+#import "UIFont+MaterialTypography.h"
 #import "MDCTypographyMockTraitEnvironment.h"
-#import "MaterialApplication.h"
 
 @interface UIFont_MaterialTypographyTests : XCTestCase
 @end
@@ -28,7 +29,6 @@
   NSArray<NSNumber *> *textStyles = @[
     @(MDCFontTextStyleTitle), @(MDCFontTextStyleBody1), @(MDCFontTextStyleBody2),
     @(MDCFontTextStyleButton), @(MDCFontTextStyleCaption), @(MDCFontTextStyleDisplay1),
-    @(MDCFontTextStyleDisplay2), @(MDCFontTextStyleDisplay3), @(MDCFontTextStyleDisplay4),
     @(MDCFontTextStyleHeadline), @(MDCFontTextStyleSubheadline)
   ];
 

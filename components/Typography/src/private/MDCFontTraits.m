@@ -14,14 +14,13 @@
 
 #import "MDCFontTraits.h"
 
+#import "MDCFontTextStyle.h"
+
 static NSDictionary<NSString *, MDCFontTraits *> *_body1Traits;
 static NSDictionary<NSString *, MDCFontTraits *> *_body2Traits;
 static NSDictionary<NSString *, MDCFontTraits *> *_buttonTraits;
 static NSDictionary<NSString *, MDCFontTraits *> *_captionTraits;
 static NSDictionary<NSString *, MDCFontTraits *> *_display1Traits;
-static NSDictionary<NSString *, MDCFontTraits *> *_display2Traits;
-static NSDictionary<NSString *, MDCFontTraits *> *_display3Traits;
-static NSDictionary<NSString *, MDCFontTraits *> *_display4Traits;
 static NSDictionary<NSString *, MDCFontTraits *> *_headlineTraits;
 static NSDictionary<NSString *, MDCFontTraits *> *_subheadlineTraits;
 static NSDictionary<NSString *, MDCFontTraits *> *_titleTraits;
@@ -245,105 +244,6 @@ static NSDictionary<NSNumber *, NSDictionary *> *_styleTable;
                                         tracking:0.0],
   };
 
-  _display2Traits = @{
-    UIContentSizeCategoryExtraSmall : [[MDCFontTraits alloc] initWithPointSize:39
-                                                                        weight:UIFontWeightRegular
-                                                                       leading:0.0
-                                                                      tracking:0.0],
-    UIContentSizeCategorySmall : [[MDCFontTraits alloc] initWithPointSize:41
-                                                                   weight:UIFontWeightRegular
-                                                                  leading:0.0
-                                                                 tracking:0.0],
-    UIContentSizeCategoryMedium : [[MDCFontTraits alloc] initWithPointSize:43
-                                                                    weight:UIFontWeightRegular
-                                                                   leading:0.0
-                                                                  tracking:0.0],
-    UIContentSizeCategoryLarge : [[MDCFontTraits alloc] initWithPointSize:45
-                                                                   weight:UIFontWeightRegular
-                                                                  leading:0.0
-                                                                 tracking:0.0],
-    UIContentSizeCategoryExtraLarge : [[MDCFontTraits alloc] initWithPointSize:47
-                                                                        weight:UIFontWeightRegular
-                                                                       leading:0.0
-                                                                      tracking:0.0],
-    UIContentSizeCategoryExtraExtraLarge :
-        [[MDCFontTraits alloc] initWithPointSize:49
-                                          weight:UIFontWeightRegular
-                                         leading:0.0
-                                        tracking:0.0],
-    UIContentSizeCategoryExtraExtraExtraLarge :
-        [[MDCFontTraits alloc] initWithPointSize:51
-                                          weight:UIFontWeightRegular
-                                         leading:0.0
-                                        tracking:0.0],
-  };
-
-  _display3Traits = @{
-    UIContentSizeCategoryExtraSmall : [[MDCFontTraits alloc] initWithPointSize:50
-                                                                        weight:UIFontWeightRegular
-                                                                       leading:0.0
-                                                                      tracking:0.0],
-    UIContentSizeCategorySmall : [[MDCFontTraits alloc] initWithPointSize:52
-                                                                   weight:UIFontWeightRegular
-                                                                  leading:0.0
-                                                                 tracking:0.0],
-    UIContentSizeCategoryMedium : [[MDCFontTraits alloc] initWithPointSize:54
-                                                                    weight:UIFontWeightRegular
-                                                                   leading:0.0
-                                                                  tracking:0.0],
-    UIContentSizeCategoryLarge : [[MDCFontTraits alloc] initWithPointSize:56
-                                                                   weight:UIFontWeightRegular
-                                                                  leading:0.0
-                                                                 tracking:0.0],
-    UIContentSizeCategoryExtraLarge : [[MDCFontTraits alloc] initWithPointSize:58
-                                                                        weight:UIFontWeightRegular
-                                                                       leading:0.0
-                                                                      tracking:0.0],
-    UIContentSizeCategoryExtraExtraLarge :
-        [[MDCFontTraits alloc] initWithPointSize:60
-                                          weight:UIFontWeightRegular
-                                         leading:0.0
-                                        tracking:0.0],
-    UIContentSizeCategoryExtraExtraExtraLarge :
-        [[MDCFontTraits alloc] initWithPointSize:62
-                                          weight:UIFontWeightRegular
-                                         leading:0.0
-                                        tracking:0.0],
-  };
-
-  _display4Traits = @{
-    UIContentSizeCategoryExtraSmall : [[MDCFontTraits alloc] initWithPointSize:100
-                                                                        weight:UIFontWeightLight
-                                                                       leading:0.0
-                                                                      tracking:0.0],
-    UIContentSizeCategorySmall : [[MDCFontTraits alloc] initWithPointSize:104
-                                                                   weight:UIFontWeightLight
-                                                                  leading:0.0
-                                                                 tracking:0.0],
-    UIContentSizeCategoryMedium : [[MDCFontTraits alloc] initWithPointSize:108
-                                                                    weight:UIFontWeightLight
-                                                                   leading:0.0
-                                                                  tracking:0.0],
-    UIContentSizeCategoryLarge : [[MDCFontTraits alloc] initWithPointSize:112
-                                                                   weight:UIFontWeightLight
-                                                                  leading:0.0
-                                                                 tracking:0.0],
-    UIContentSizeCategoryExtraLarge : [[MDCFontTraits alloc] initWithPointSize:116
-                                                                        weight:UIFontWeightLight
-                                                                       leading:0.0
-                                                                      tracking:0.0],
-    UIContentSizeCategoryExtraExtraLarge :
-        [[MDCFontTraits alloc] initWithPointSize:120
-                                          weight:UIFontWeightLight
-                                         leading:0.0
-                                        tracking:0.0],
-    UIContentSizeCategoryExtraExtraExtraLarge :
-        [[MDCFontTraits alloc] initWithPointSize:124
-                                          weight:UIFontWeightLight
-                                         leading:0.0
-                                        tracking:0.0],
-  };
-
   _headlineTraits = @{
     UIContentSizeCategoryExtraSmall : [[MDCFontTraits alloc] initWithPointSize:21
                                                                         weight:UIFontWeightRegular
@@ -449,9 +349,6 @@ static NSDictionary<NSNumber *, NSDictionary *> *_styleTable;
     @(MDCFontTextStyleButton) : _buttonTraits,
     @(MDCFontTextStyleCaption) : _captionTraits,
     @(MDCFontTextStyleDisplay1) : _display1Traits,
-    @(MDCFontTextStyleDisplay2) : _display2Traits,
-    @(MDCFontTextStyleDisplay3) : _display3Traits,
-    @(MDCFontTextStyleDisplay4) : _display4Traits,
     @(MDCFontTextStyleHeadline) : _headlineTraits,
     @(MDCFontTextStyleSubheadline) : _subheadlineTraits,
     @(MDCFontTextStyleTitle) : _titleTraits

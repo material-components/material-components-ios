@@ -65,36 +65,6 @@ static const CGFloat kEpsilon = (CGFloat)0.001;
 
 #pragma mark - font name and size
 
-- (void)testDisplay4Font {
-  // Given
-  // When
-  UIFont *font = [MDCTypography display4Font];
-
-  // Then
-  XCTAssertEqualWithAccuracy(font.pointSize, 112, kEpsilon,
-                             @"The font size of display 4 must be 112.");
-}
-
-- (void)testDisplay3Font {
-  // Given
-  // When
-  UIFont *font = [MDCTypography display3Font];
-
-  // Then
-  XCTAssertEqualWithAccuracy(font.pointSize, 56, kEpsilon,
-                             @"The font size of display 3 must be 56.");
-}
-
-- (void)testDisplay2Font {
-  // Given
-  // When
-  UIFont *font = [MDCTypography display2Font];
-
-  // Then
-  XCTAssertEqualWithAccuracy(font.pointSize, 45, kEpsilon,
-                             @"The font size of display 2 must be 45.");
-}
-
 - (void)testDisplay1Font {
   // Given
   // When
@@ -178,9 +148,6 @@ static const CGFloat kEpsilon = (CGFloat)0.001;
     @(MDCFontTextStyleSubheadline),
     @(MDCFontTextStyleTitle),
     @(MDCFontTextStyleDisplay1),
-    @(MDCFontTextStyleDisplay2),
-    @(MDCFontTextStyleDisplay3),
-    @(MDCFontTextStyleDisplay4),
     @(MDCFontTextStyleButton),
   ];
 
