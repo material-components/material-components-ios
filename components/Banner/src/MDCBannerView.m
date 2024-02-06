@@ -16,7 +16,6 @@
 
 #import "MDCButton.h"
 #import "M3CButton.h"
-#import "MDCTypography.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -163,7 +162,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   // Create textView
   UITextView *textView = [[UITextView alloc] init];
   textView.translatesAutoresizingMaskIntoConstraints = NO;
-  textView.font = [MDCTypography body2Font];
+  textView.font = [UIFont systemFontOfSize:14 weight:UIFontWeightMedium];
   textView.textColor = UIColor.blackColor;
   textView.alpha = kTextDefaultOpacity;
   textView.textContainer.maximumNumberOfLines = kTextNumberOfLineLimit;
