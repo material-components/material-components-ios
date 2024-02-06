@@ -23,18 +23,6 @@ static id<MDCTypographyFontLoading> gFontLoader = nil;
 
 #pragma mark - Font loader access
 
-+ (void)setFontLoader:(id<MDCTypographyFontLoading>)fontLoader {
-  if (gFontLoader && fontLoader != gFontLoader) {
-    [[NSNotificationCenter defaultCenter] removeObserver:gFontLoader];
-  }
-  gFontLoader = fontLoader;
-  NSAssert(gFontLoader,
-           @"Font loader can't be null. The font loader will be reset to the default font loader.");
-  if (!gFontLoader) {
-    gFontLoader = [self defaultFontLoader];
-  }
-}
-
 + (id<MDCTypographyFontLoading>)fontLoader {
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
