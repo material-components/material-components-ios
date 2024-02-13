@@ -142,6 +142,9 @@ Default value is 0 (meaning, the accessory view's horizontal insets are determin
 */
 @property(nonatomic, assign) CGFloat accessoryViewHorizontalInset;
 
+/** The horizontal alignment of @c title. */
+@property(nonatomic, assign) NSTextAlignment titleAlignment;
+
 @end
 
 @interface MDCAlertControllerView (Deprecated)

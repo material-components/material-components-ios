@@ -59,9 +59,6 @@ NS_ASSUME_NONNULL_BEGIN
 /** The horizontal alignment of @c titleIcon. */
 @property(nonatomic, assign) NSTextAlignment titleIconAlignment;
 
-/** The horizontal alignment of @c title. */
-@property(nonatomic, assign) NSTextAlignment titleAlignment;
-
 /** The horizontal alignment of @c message. */
 @property(nonatomic, assign) NSTextAlignment messageAlignment;
 
