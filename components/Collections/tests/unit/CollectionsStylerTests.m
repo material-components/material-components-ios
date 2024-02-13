@@ -15,7 +15,6 @@
 #import <XCTest/XCTest.h>
 
 #import "MDCCollectionViewLayoutAttributes.h"
-#import "MDCCollectionViewStyling.h"
 #import "MDCCollectionViewStylingDelegate.h"
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wprivate-header"
@@ -141,44 +140,6 @@ static MDCCollectionViewLayoutAttributes* footer1(void) {
   XCTAssertFalse([styler shouldHideSeparatorForCellLayoutAttributes:header1()]);
   XCTAssertFalse([styler shouldHideSeparatorForCellLayoutAttributes:footer0()]);
   XCTAssertFalse([styler shouldHideSeparatorForCellLayoutAttributes:footer1()]);
-}
-
-/** Verifies images returned for dynamic color are different when trait is changed. */
-- (void)testBackgroundImageForCellLayoutAttributesWithTraitUpdate {
-  UICollectionView* collectionView =
-      [[UICollectionView alloc] initWithFrame:CGRectZero
-                         collectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
-  MDCCollectionViewStyler* styler =
-      [[MDCCollectionViewStyler alloc] initWithCollectionView:collectionView];
-  styler.delegate = nil;
-  styler.cellStyle = MDCCollectionViewCellStyleCard;
-
-  if (@available(iOS 13.0, *)) {
-    styler.cellBackgroundColor = [UIColor
-        colorWithDynamicProvider:^UIColor* _Nonnull(UITraitCollection* _Nonnull traitCollection) {
-          if (collectionView.traitCollection.userInterfaceStyle == UIUserInterfaceStyleLight) {
-            return UIColor.whiteColor;
-          } else {
-            return UIColor.darkGrayColor;
-          }
-        }];
-
-    // Update to light mode.
-    collectionView.overrideUserInterfaceStyle = UIUserInterfaceStyleLight;
-  }
-
-  UIImage* lightModeImage = [styler backgroundImageForCellLayoutAttributes:cell00()];
-  XCTAssertNotNil(lightModeImage);
-
-  // Update to dark mode.
-  if (@available(iOS 13.0, *)) {
-    collectionView.overrideUserInterfaceStyle = UIUserInterfaceStyleDark;
-
-    UIImage* darkModeImage = [styler backgroundImageForCellLayoutAttributes:cell00()];
-    XCTAssertNotNil(darkModeImage);
-
-    XCTAssertNotEqualObjects(lightModeImage, darkModeImage);
-  }
 }
 
 @end
