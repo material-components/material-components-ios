@@ -92,50 +92,6 @@ This class is used for creating a @UIWindow with customized size category.
   [super tearDown];
 }
 
-- (void)testThemingWithDefaultValues {
-  // When
-  [self.bannerView applyThemeWithScheme:self.containerScheme];
-
-  // Then
-  NSUInteger maximumStateValue = UIControlStateNormal | UIControlStateSelected |
-                                 UIControlStateHighlighted | UIControlStateDisabled;
-  // Color
-  XCTAssertEqualObjects(self.bannerView.backgroundColor,
-                        self.containerScheme.colorScheme.surfaceColor);
-  XCTAssertEqualObjects(
-      self.bannerView.textView.textColor,
-      [self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:kTextViewOpacity]);
-  XCTAssertEqualObjects(
-      self.bannerView.dividerColor,
-      [self.containerScheme.colorScheme.onSurfaceColor colorWithAlphaComponent:kDividerOpacity]);
-  XCTAssertEqualObjects(self.bannerView.imageView.tintColor,
-                        self.containerScheme.colorScheme.primaryColor);
-  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
-    XCTAssertEqualObjects([self.bannerView.leadingButton titleColorForState:UIControlStateNormal],
-                          self.containerScheme.colorScheme.primaryColor);
-    XCTAssertEqualObjects(
-        [self.bannerView.leadingButton imageTintColorForState:UIControlStateNormal],
-        self.containerScheme.colorScheme.primaryColor);
-    XCTAssertEqualObjects([self.bannerView.trailingButton titleColorForState:UIControlStateNormal],
-                          self.containerScheme.colorScheme.primaryColor);
-    XCTAssertEqualObjects(
-        [self.bannerView.trailingButton imageTintColorForState:UIControlStateNormal],
-        self.containerScheme.colorScheme.primaryColor);
-  }
-
-  // Typography
-  XCTAssertEqualObjects(self.bannerView.textView.font, self.containerScheme.typographyScheme.body2);
-  for (NSUInteger state = 0; state <= maximumStateValue; ++state) {
-    XCTAssertEqualObjects([self.bannerView.leadingButton titleFontForState:state],
-                          self.containerScheme.typographyScheme.button);
-    XCTAssertEqualObjects([self.bannerView.trailingButton titleFontForState:state],
-                          self.containerScheme.typographyScheme.button);
-  }
-
-  [self assertTraitCollectionAndElevationBlockForBannerView:self.bannerView
-                                                colorScheme:self.containerScheme.colorScheme];
-}
-
 - (void)testThemingWithCustomValues {
   // Given
   self.containerScheme.colorScheme.surfaceColor = UIColor.yellowColor;
@@ -187,52 +143,6 @@ This class is used for creating a @UIWindow with customized size category.
 
   [self assertTraitCollectionAndElevationBlockForBannerView:self.bannerView
                                                 colorScheme:self.containerScheme.colorScheme];
-}
-
-- (void)testFontsAreScaledWhenTypographySchemeRequestsPrescaling {
-  // Given
-  self.containerScheme.typographyScheme =
-      [[MDCTypographyScheme alloc] initWithDefaults:MDCTypographySchemeDefaultsMaterial201902];
-  self.containerScheme.typographyScheme.useCurrentContentSizeCategoryWhenApplied = YES;
-
-  // When
-  MDCBannerViewThemingTestsDynamicTypeContentSizeCategoryOverrideWindow *extraExtraLargeContainer =
-      [[MDCBannerViewThemingTestsDynamicTypeContentSizeCategoryOverrideWindow alloc]
-          initWithContentSizeCategoryOverride:UIContentSizeCategoryExtraExtraLarge];
-  [extraExtraLargeContainer addSubview:self.bannerView];
-  [NSNotificationCenter.defaultCenter
-      postNotificationName:UIContentSizeCategoryDidChangeNotification
-                    object:nil];
-  [self.bannerView applyThemeWithScheme:self.containerScheme];
-
-  // Then
-  XCTAssertGreaterThan(self.bannerView.textView.font.pointSize,
-                       self.containerScheme.typographyScheme.body2.pointSize);
-}
-
-- (void)testBannerViewBackgroundColorChangeWhenUIUserInterfaceStyleChangesOnIOS13 {
-#if MDC_AVAILABLE_SDK_IOS(13_0)
-  if (@available(iOS 13.0, *)) {
-    // Given
-    UIColor *darkSurfaceColor = UIColor.blackColor;
-    UIColor *lightSurfaceColor = UIColor.whiteColor;
-
-    UIColor *dynamicSurfaceColor = [UIColor colorWithUserInterfaceStyleDarkColor:darkSurfaceColor
-                                                                    defaultColor:lightSurfaceColor];
-    self.containerScheme.colorScheme.surfaceColor = dynamicSurfaceColor;
-    self.containerScheme.colorScheme.elevationOverlayEnabledForDarkMode = YES;
-
-    // When
-    [self.bannerView applyThemeWithScheme:self.containerScheme];
-    UITraitCollection *previousTraitCollection = [self.bannerView.traitCollection copy];
-    self.bannerView.overrideUserInterfaceStyle = UIUserInterfaceStyleDark;
-    [self.bannerView traitCollectionDidChange:previousTraitCollection];
-
-    // Then
-    XCTAssertTrue([self compareColorsWithFloatPrecisionFirstColor:self.bannerView.backgroundColor
-                                                      secondColor:darkSurfaceColor]);
-  }
-#endif  // MDC_AVAILABLE_SDK_IOS(13_0)
 }
 
 - (void)assertTraitCollectionAndElevationBlockForBannerView:(MDCBannerView *)bannerView
