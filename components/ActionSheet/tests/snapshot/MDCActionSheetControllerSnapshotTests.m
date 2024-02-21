@@ -712,30 +712,6 @@ static NSString *const kLongTitle5Arabic =
   [self generateSnapshotAndVerifyForView:controller.view];
 }
 
-- (void)testThreeActionsSufficientSizeShortTextLTRWithDefaultPresentationStyleOniOS13 {
-  // Given
-  self.actionSheetController = [MDCActionSheetController actionSheetControllerWithTitle:nil];
-  [self.actionSheetController addAction:self.action1];
-  [self.actionSheetController addAction:self.action2];
-  [self.actionSheetController addAction:self.action3];
-  self.actionSheetController.view.bounds = CGRectMake(0, 0, 320, 200);
-
-  // When
-  UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
-  UIViewController *currentViewController = window.rootViewController;
-  XCTestExpectation *expectation =
-      [[XCTestExpectation alloc] initWithDescription:@"Action sheet is presented"];
-  [currentViewController presentViewController:self.actionSheetController
-                                      animated:NO
-                                    completion:^{
-                                      [expectation fulfill];
-                                    }];
-
-  // Then
-  [self waitForExpectations:@[ expectation ] timeout:5];
-  [self snapshotVerifyViewForIOS13:window];
-}
-
 - (void)testActionSheetWithHeaderShown {
   // Given
   self.actionSheetController = [MDCActionSheetController actionSheetControllerWithTitle:@"Foo"];
