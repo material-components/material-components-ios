@@ -19,6 +19,7 @@
 
 #include <tgmath.h>
 
+#import "MDCPalettes.h"
 #import "MaterialPalettes.h"
 #import "MDCProgressGradientView.h"
 #import "MDCProgressLayerView.h"
@@ -721,7 +722,8 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
   }
 
   if (_queuedProgress != nil) {
-    [self configureDeterminateAnimationsForProgress:[_queuedProgress floatValue]];
+    [self configureDeterminateAnimationsForProgress:_queuedProgress.floatValue];
+    _progress = _queuedProgress.floatValue;
     _queuedProgress = nil;
   }
 }
@@ -879,7 +881,7 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
   progressBarLayerPathAnimation.duration = duration;
   progressBarLayerPathAnimation.delegate = self;
   progressBarLayerPathAnimation.fromValue = (id)([originalProgressBarPathValue pointerValue]);
-  progressBarLayerPathAnimation.fillMode = kCAFillModeForwards;
+  progressBarLayerPathAnimation.fillMode = kCAFillModeBoth;
   progressBarLayerPathAnimation.timingFunction =
       [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
   [_determinateProgressBarLayer addAnimation:progressBarLayerPathAnimation
@@ -891,7 +893,7 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
   // Add a slight duration increase to account for track bar overhang near animation end.
   progressGapLayerPathAnimation.duration = duration + 0.01;
   progressGapLayerPathAnimation.fromValue = (id)([originalProgressGapPathValue pointerValue]);
-  progressGapLayerPathAnimation.fillMode = kCAFillModeForwards;
+  progressGapLayerPathAnimation.fillMode = kCAFillModeBoth;
   progressGapLayerPathAnimation.timingFunction =
       [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
   [_determinateProgressViewGapLayer addAnimation:progressGapLayerPathAnimation
