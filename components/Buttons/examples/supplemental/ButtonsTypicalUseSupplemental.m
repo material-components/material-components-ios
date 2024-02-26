@@ -18,9 +18,9 @@
  */
 
 #import "ButtonsTypicalUseSupplemental.h"
-#import "MaterialButtons.h"
-#import "MaterialMath.h"
-#import "MaterialTypography.h"
+#import "MDCButton.h"
+#import "MDCTypography.h"
+#import "MDCMath.h"
 
 static const CGFloat kViewOffsetToCenter = 20;
 
@@ -35,19 +35,6 @@ static const CGFloat kViewOffsetToCenter = 20;
                      @"\nA floating action button (FAB) represents the primary action of a screen.",
     @"primaryDemo" : @YES,
     @"presentable" : @YES,
-  };
-}
-
-@end
-
-@implementation ButtonsShapesExample (CatalogByConvention)
-
-+ (NSDictionary *)catalogMetadata {
-  return @{
-    @"breadcrumbs" : @[ @"Buttons", @"Shaped Buttons" ],
-    @"primaryDemo" : @NO,
-    @"presentable" : @YES,
-    @"snapshotDelay" : @5.0,
   };
 }
 
