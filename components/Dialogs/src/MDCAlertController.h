@@ -357,7 +357,9 @@ typedef BOOL (^MDCAttributedMessageActionHandler)(NSURL *_Nonnull URL, NSRange r
 
  Actions are the possible reactions of the user to the presented alert. Actions are added as a
  button at the bottom of the alert. Affirmative actions should be added before dismissive actions.
- Action buttons will be laid out from right to left if possible or top to bottom depending on space.
+ Action buttons will be laid out from the trailing side to the leading side (unless
+ @c actionsHorizontalAlignment is changed from the default) if possible, or top to bottom (by
+ default), depending on space.
 
  Material spec recommends alerts should not have more than two actions.
 
