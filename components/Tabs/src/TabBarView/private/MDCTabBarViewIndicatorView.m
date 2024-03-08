@@ -145,8 +145,19 @@
 
 - (void)tintColorDidChange {
   [super tintColorDidChange];
+  [self updateLayerFillColor];
+}
 
-  // Update layer fill color
+#pragma mark - UITraitEnvironment
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+  [self updateLayerFillColor];
+}
+
+#pragma mark - Private
+
+- (void)updateLayerFillColor {
   CAShapeLayer *shapeLayer = (CAShapeLayer *)self.layer;
   shapeLayer.fillColor = self.tintColor.CGColor;
 }
