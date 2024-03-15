@@ -1,0 +1,2 @@
+/* Name for ChipField custom accessibility action that deletes a Chip. */
+"ChipFieldAccessibilityActionDelete" = "Delete";

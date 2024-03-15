@@ -24,6 +24,13 @@ NSString *const MDCEmptyTextString = @"";
 NSString *const MDCChipDelimiterSpace = @" ";
 NSString *const MDCChipFieldDidSetTextNotification = @"MDCChipFieldDidSetTextNotification";
 
+/** Key for name of ChipField custom accessibility action that deletes a Chip. */
+static NSString *const kAccessibilityActionDeleteNameKey = @"ChipFieldAccessibilityActionDelete";
+/** The name of the accessibility table for localizations. */
+static NSString *const kLocalizationAccessibilityTableName = @"Chips";
+/** The name of the bundle. */
+static NSString *const kBundle = @"Chips.bundle";
+
 static const CGFloat MDCChipFieldDefaultFontSize = 14;
 static const CGFloat MDCChipFieldHorizontalInset = 15;
 static const CGFloat MDCChipFieldVerticalInset = 8;
@@ -111,6 +118,7 @@ const UIEdgeInsets MDCChipFieldTextFieldLTREdgeInsets = {16, 4, 16, 0};
 @end
 
 @interface MDCChipField () <MDCChipFieldTextFieldDelegate, UITextFieldDelegate>
+@property(nullable, nonatomic, copy) NSString *accessibilityActionDeleteChipName;
 @end
 
 @implementation MDCChipField {
@@ -174,6 +182,8 @@ const UIEdgeInsets MDCChipFieldTextFieldLTREdgeInsets = {16, 4, 16, 0};
   _contentEdgeInsets = MDCChipFieldDefaultContentEdgeInsets;
   _showPlaceholderWithChips = YES;
   _chipHeight = 32;
+
+  [self configureLocalizedAccessibilityActionName];
 }
 
 - (void)layoutSubviews {
@@ -335,7 +345,31 @@ const UIEdgeInsets MDCChipFieldTextFieldLTREdgeInsets = {16, 4, 16, 0};
   // themselves rather than using |chipField:shouldAddChip| to prevent chips from being added.
   if (self.showChipsDeleteButton) {
     [self addClearButtonToChip:chip];
+
+    // Set Chip's accessibilityTraits to `UIAccessibilityTraitNone` if there is a `clearButton`.
+    // A11y compliance is handled by a UIAccessibilityCustomAction.
+    chip.accessibilityTraits = UIAccessibilityTraitNone;
+
+    __weak __typeof__(self) weakSelf = self;
+    __weak MDCChipView *weakChip = chip;
+
+    UIAccessibilityCustomActionHandler actionHandler =
+        ^BOOL(UIAccessibilityCustomAction *__unused customAction) {
+          __typeof__(self) strongSelf = weakSelf;
+          MDCChipView *strongChip = weakChip;
+          if (strongSelf) {
+            [strongSelf removeChip:strongChip];
+          }
+          return YES;
+        };
+
+    UIAccessibilityCustomAction *action =
+        [[UIAccessibilityCustomAction alloc] initWithName:_accessibilityActionDeleteChipName
+                                            actionHandler:actionHandler];
+
+    chip.accessibilityCustomActions = @[ action ];
   }
+
   [_chips addObject:chip];
   [self addChipSubview:chip];
   if ([self.delegate respondsToSelector:@selector(chipField:didAddChip:)]) {
@@ -775,4 +809,30 @@ const UIEdgeInsets MDCChipFieldTextFieldLTREdgeInsets = {16, 4, 16, 0};
   [self setNeedsLayout];
 }
 
+// Sets the localized accessibility action name for deleting a Chip.
+- (void)configureLocalizedAccessibilityActionName {
+  NSBundle *resourceBundle = [[self class] bundle];
+  _accessibilityActionDeleteChipName =
+      [resourceBundle localizedStringForKey:kAccessibilityActionDeleteNameKey
+                                      value:@"Delete"
+                                      table:kLocalizationAccessibilityTableName];
+}
+
+#pragma mark - Resource Bundle
+
++ (NSBundle *)bundle {
+  static NSBundle *bundle = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    bundle = [NSBundle bundleWithPath:[self bundlePathWithName:kBundle]];
+  });
+
+  return bundle;
+}
+
++ (NSString *)bundlePathWithName:(NSString *)bundleName {
+  NSBundle *bundle = [NSBundle bundleForClass:[MDCChipField class]];
+  NSString *resourcePath = [(nil == bundle ? [NSBundle mainBundle] : bundle) resourcePath];
+  return [resourcePath stringByAppendingPathComponent:bundleName];
+}
 @end
