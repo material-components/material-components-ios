@@ -16,6 +16,8 @@
 
 #import "MDCTabBarViewCustomViewable.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  Defines the necessary APIs for MDCTabBarView to use a UITabBarItem for a custom view property.
 
@@ -28,3 +30,5 @@
 @property(nullable, nonatomic, strong) UIView<MDCTabBarViewCustomViewable> *mdc_customView;
 
 @end
+
+NS_ASSUME_NONNULL_END

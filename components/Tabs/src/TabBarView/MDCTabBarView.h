@@ -16,6 +16,8 @@
 
 #import "MDCAvailability.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol MDCTabBarViewDelegate;
 @protocol MDCTabBarViewIndicatorTemplate;
 
@@ -271,7 +273,7 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
  @param item The tab bar item to be centered.
  @param animated Whether to animate the scroll.
  */
-- (void)scrollToItem:(UITabBarItem *)item animated:(BOOL)animated;
+- (void)scrollToItem:(nonnull UITabBarItem *)item animated:(BOOL)animated;
 
 /**
  The color for the Ripple effect for touch feedback.
@@ -298,3 +300,5 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
     UILargeContentViewerInteractionDelegate>
 @end
 #endif  // MDC_AVAILABLE_SDK_IOS(13_0)
+
+NS_ASSUME_NONNULL_END

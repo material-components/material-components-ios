@@ -14,11 +14,13 @@
 
 #import "MDCTabBarViewIndicatorAttributes.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation MDCTabBarViewIndicatorAttributes
 
 #pragma mark - NSCopying
 
-- (instancetype)copyWithZone:(__unused NSZone *)zone {
+- (instancetype)copyWithZone:(nullable __unused NSZone *)zone {
   MDCTabBarViewIndicatorAttributes *attributes = [[[self class] alloc] init];
   attributes.path = _path;
   return attributes;
@@ -49,3 +51,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

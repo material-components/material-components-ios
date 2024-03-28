@@ -21,6 +21,8 @@
 #import "MDCBadgeView.h"
 #import <MaterialComponents/MaterialRipple.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /** A basic view that displays a title and image for a tab bar item within MDCTabBarView. */
 @interface MDCTabBarViewItemView : UIView <MDCTabBarViewCustomViewable>
 
@@ -93,3 +95,5 @@
         "Enable disableRippleBehavior instead.");
 
 @end
+
+NS_ASSUME_NONNULL_END

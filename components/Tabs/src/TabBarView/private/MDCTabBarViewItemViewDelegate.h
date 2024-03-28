@@ -15,6 +15,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class MDCTabBarViewItemView;
 
 /** The different styles for an @c MDCTabBarViewItemView. */
@@ -47,3 +49,5 @@ typedef NS_ENUM(NSUInteger, MDCTabBarViewItemViewStyle) {
 - (UIEdgeInsets)contentInsetsForItemViewStyle:(MDCTabBarViewItemViewStyle)itemViewStyle;
 
 @end
+
+NS_ASSUME_NONNULL_END

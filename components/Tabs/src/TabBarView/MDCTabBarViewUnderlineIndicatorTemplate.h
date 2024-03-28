@@ -16,8 +16,12 @@
 
 #import "MDCTabBarViewIndicatorTemplate.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /*
  Default indicator template which produces a fixed-height solid line underneath the selected tab.
  */
 @interface MDCTabBarViewUnderlineIndicatorTemplate : NSObject <MDCTabBarViewIndicatorTemplate>
 @end
+
+NS_ASSUME_NONNULL_END

@@ -22,6 +22,8 @@
 #import "MDCTabBarViewItemViewDelegate.h"
 #import "MDCMath.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /** The minimum height of any item view with only a title or image (not both). */
 static const CGFloat kMinHeightTitleOrImageOnly = 48;
 
@@ -67,7 +69,7 @@ static const CGFloat kBadgeXInset = 12;
   return self;
 }
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
     self.isAccessibilityElement = YES;
@@ -332,19 +334,19 @@ static const CGFloat kBadgeXInset = 12;
   }
 }
 
-- (void)setImage:(UIImage *)image {
+- (void)setImage:(nullable UIImage *)image {
   _image = image;
   self.iconImageView.image = self.selected ? self.selectedImage : self.image;
   [self setNeedsLayout];
 }
 
-- (void)setSelectedImage:(UIImage *)selectedImage {
+- (void)setSelectedImage:(nullable UIImage *)selectedImage {
   _selectedImage = selectedImage;
   self.iconImageView.image = self.selected ? self.selectedImage : self.image;
   [self setNeedsLayout];
 }
 
-- (UIImage *)selectedImage {
+- (nullable UIImage *)selectedImage {
   return _selectedImage ?: self.image;
 }
 
@@ -365,7 +367,7 @@ static const CGFloat kBadgeXInset = 12;
 
 #pragma mark - Displaying a value in the badge
 
-- (void)setBadgeText:(NSString *)badgeText {
+- (void)setBadgeText:(nullable NSString *)badgeText {
   _badgeText = badgeText;
   _badge.text = self.badgeText;
   if (badgeText == nil) {
@@ -377,7 +379,7 @@ static const CGFloat kBadgeXInset = 12;
   [self setNeedsLayout];
 }
 
-- (NSString *)badgeText {
+- (nullable NSString *)badgeText {
   return _badgeText;
 }
 
@@ -411,7 +413,7 @@ static const CGFloat kBadgeXInset = 12;
 
 #pragma mark - UIAccessibility
 
-- (NSString *)accessibilityLabel {
+- (nullable NSString *)accessibilityLabel {
   return [super accessibilityLabel] ?: self.titleLabel.text;
 }
 
@@ -477,7 +479,7 @@ static const CGFloat kBadgeXInset = 12;
   return YES;
 }
 
-- (NSString *)largeContentTitle {
+- (nullable NSString *)largeContentTitle {
   if (_largeContentTitle) {
     return _largeContentTitle;
   }
@@ -490,7 +492,7 @@ static const CGFloat kBadgeXInset = 12;
   return title;
 }
 
-- (UIImage *)largeContentImage {
+- (nullable UIImage *)largeContentImage {
   if (_largeContentImage) {
     return _largeContentImage;
   }
@@ -503,3 +505,5 @@ static const CGFloat kBadgeXInset = 12;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

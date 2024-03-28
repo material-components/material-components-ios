@@ -14,6 +14,8 @@
 
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /** Information about the context in which a tab bar indicator will be displayed. */
 @protocol MDCTabBarViewIndicatorContext <NSObject>
 
@@ -37,3 +39,5 @@
 @property(nonatomic, readonly) CGRect contentFrame;
 
 @end
+
+NS_ASSUME_NONNULL_END

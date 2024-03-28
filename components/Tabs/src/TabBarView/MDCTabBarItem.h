@@ -16,9 +16,13 @@
 
 #import "MDCTabBarItemCustomViewing.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  A subclass of @c UITabBarItem that supports a custom view property.
  */
 __attribute__((objc_subclassing_restricted)) @interface MDCTabBarItem
     : UITabBarItem<MDCTabBarItemCustomViewing>
 @end
+
+NS_ASSUME_NONNULL_END

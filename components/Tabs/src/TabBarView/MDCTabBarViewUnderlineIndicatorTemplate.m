@@ -17,6 +17,8 @@
 #import "MDCTabBarViewIndicatorAttributes.h"
 #import "MDCTabBarViewIndicatorContext.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// Height in points of the underline shown under selected items.
 static const CGFloat kUnderlineIndicatorHeight = 2;
 
@@ -34,3 +36,5 @@ static const CGFloat kUnderlineIndicatorHeight = 2;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
