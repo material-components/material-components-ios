@@ -94,6 +94,15 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
 @property(nonatomic) BOOL disableRippleBehavior;
 
 /**
+ The size of the icons within the tab bar.
+
+ This property is not respected unless a value other than @c CGSizeZero is used.
+
+ @note Defaults to CGSizeZero.
+ */
+@property(nonatomic, assign) CGSize itemIconSize;
+
+/**
  The default appearance to be used for all item badges.
 
  If a given UITabBarItem has set a non-nil badgeColor, then that value will be used for that item

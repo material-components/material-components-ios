@@ -111,6 +111,8 @@ static const CGFloat kBadgeXInset = 12;
     [self addSubview:_badge];
     _badge.hidden = YES;
   }
+
+  _iconSize = CGSizeZero;
 }
 
 - (CGPoint)badgeCenterFromFrame:(CGRect)frame isRTL:(BOOL)isRTL {
@@ -200,7 +202,9 @@ static const CGFloat kBadgeXInset = 12;
       self.bounds, [self contentInsetsForItemViewStyle:MDCTabBarViewItemViewStyleImageOnly]);
 
   CGSize contentSize = CGSizeMake(CGRectGetWidth(contentFrame), CGRectGetHeight(contentFrame));
-  CGSize imageIntrinsicContentSize = self.iconImageView.intrinsicContentSize;
+  CGSize imageIntrinsicContentSize = CGSizeEqualToSize(self.iconSize, CGSizeZero)
+                                         ? self.iconImageView.intrinsicContentSize
+                                         : self.iconSize;
   CGSize imageFinalSize = CGSizeMake(MIN(contentSize.width, imageIntrinsicContentSize.width),
                                      MIN(contentSize.height, imageIntrinsicContentSize.height));
   CGRect imageViewFrame = CGRectMake(CGRectGetMidX(contentFrame) - (imageFinalSize.width / 2),
@@ -220,7 +224,9 @@ static const CGFloat kBadgeXInset = 12;
       contentSize.width, contentSize.height - (kImageTitlePadding + labelSingleLineSize.height));
 
   // Position the image, limiting it so that at least 1 line of text remains.
-  CGSize imageIntrinsicContentSize = self.iconImageView.intrinsicContentSize;
+  CGSize imageIntrinsicContentSize = CGSizeEqualToSize(self.iconSize, CGSizeZero)
+                                         ? self.iconImageView.intrinsicContentSize
+                                         : self.iconSize;
   CGSize imageFinalSize =
       CGSizeMake(MIN(imageIntrinsicContentSize.width, availableIconSize.width),
                  MIN(imageIntrinsicContentSize.height, availableIconSize.height));
@@ -409,6 +415,12 @@ static const CGFloat kBadgeXInset = 12;
   _badgeColor = badgeColor;
 
   [self commitBadgeAppearance];
+}
+
+- (void)setIconSize:(CGSize)iconSize {
+  _iconSize = iconSize;
+
+  [self setNeedsLayout];
 }
 
 #pragma mark - UIAccessibility

@@ -179,7 +179,7 @@ static NSString *const kBadgeColorKeyPath = @"badgeColor";
   _itemBadgeAppearance = [[MDCBadgeAppearance alloc] init];
   _itemBadgeAppearance.textColor = UIColor.whiteColor;
   _itemBadgeAppearance.font = [UIFont systemFontOfSize:kBadgeFontSize];
-
+  _itemIconSize = CGSizeZero;
   _selectionIndicatorView = [[MDCTabBarViewIndicatorView alloc] init];
   _selectionIndicatorView.translatesAutoresizingMaskIntoConstraints = NO;
   _selectionIndicatorView.userInteractionEnabled = NO;
@@ -313,6 +313,7 @@ static NSString *const kBadgeColorKeyPath = @"badgeColor";
       mdcItemView.rippleTouchController.rippleView.rippleColor = self.rippleColor;
 
       mdcItemView.badgeAppearance = self.itemBadgeAppearance;
+      mdcItemView.iconSize = self.itemIconSize;
 
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
       if (@available(iOS 13, *)) {
@@ -371,6 +372,16 @@ static NSString *const kBadgeColorKeyPath = @"badgeColor";
   for (UIView *itemView in self.itemViews) {
     if ([itemView isKindOfClass:[MDCTabBarViewItemView class]]) {
       ((MDCTabBarViewItemView *)itemView).badgeAppearance = _itemBadgeAppearance;
+    }
+  }
+}
+
+- (void)setItemIconSize:(CGSize)itemIconSize {
+  _itemIconSize = itemIconSize;
+
+  for (UIView *itemView in self.itemViews) {
+    if ([itemView isKindOfClass:[MDCTabBarViewItemView class]]) {
+      ((MDCTabBarViewItemView *)itemView).iconSize = _itemIconSize;
     }
   }
 }
