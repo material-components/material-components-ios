@@ -15,10 +15,10 @@
 #import "MDCChipField.h"
 #import <UIKit/UIKit.h>
 
-#import "MDCChipView.h"
-#import <MDFInternationalization/MDFInternationalization.h>
 #import "MDCChipFieldDelegate.h"
+#import "MDCChipView.h"
 #import "MDCChipViewDeleteButton.h"
+#import <MDFInternationalization/MDFRTL.h>
 
 NSString *const MDCEmptyTextString = @"";
 NSString *const MDCChipDelimiterSpace = @" ";
@@ -584,7 +584,8 @@ const UIEdgeInsets MDCChipFieldTextFieldLTREdgeInsets = {16, 4, 16, 0};
   if (!CGRectIsEmpty(lastChipFrame)) {
     BOOL isTextTooWide = [self textInputDesiredWidth] >= [self availableWidthForTextInput];
     BOOL isTextFieldOnSameLineAsChips =
-        CGRectGetMidY(self.textField.frame) == CGRectGetMidY(lastChipFrame);
+        CGRectGetMidY(self.textField.frame) >= CGRectGetMinY(lastChipFrame) &&
+        CGRectGetMidY(self.textField.frame) < CGRectGetMaxY(lastChipFrame);
     if (isTextTooWide && isTextFieldOnSameLineAsChips) {
       // The text is on the same line as the chips and doesn't fit
       // Trigger layout to move the text field down to the next line
