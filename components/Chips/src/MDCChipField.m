@@ -404,6 +404,16 @@ const UIEdgeInsets MDCChipFieldTextFieldLTREdgeInsets = {16, 4, 16, 0};
   }
 }
 
+#pragma mark - Chip selection
+
+- (void)didTapChipWithGestureRecognizer:(UITapGestureRecognizer *)gesture {
+  if (![gesture.view isKindOfClass:[MDCChipView class]]) {
+    return;
+  }
+  MDCChipView *chipView = (MDCChipView *)gesture.view;
+  chipView.selected = !chipView.selected;
+}
+
 - (void)selectChip:(MDCChipView *)chip {
   [self deselectAllChipsExceptChip:chip];
   chip.selected = YES;
@@ -454,6 +464,12 @@ const UIEdgeInsets MDCChipFieldTextFieldLTREdgeInsets = {16, 4, 16, 0};
       stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
   if (strippedTitle.length > 0) {
     MDCChipView *chip = [[MDCChipView alloc] init];
+
+    UITapGestureRecognizer *tapGesture =
+        [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                action:@selector(didTapChipWithGestureRecognizer:)];
+    [chip addGestureRecognizer:tapGesture];
+
     chip.titleLabel.text = strippedTitle;
     BOOL shouldAddChip = YES;
     if ([self.delegate respondsToSelector:@selector(chipField:shouldAddChip:)]) {
