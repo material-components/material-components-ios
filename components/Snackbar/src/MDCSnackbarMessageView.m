@@ -35,6 +35,18 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@interface AccessibilityAffordanceButton : UIButton
+@end
+
+@implementation AccessibilityAffordanceButton
+
+- (BOOL)accessibilityActivate {
+  [self sendActionsForControlEvents:UIControlEventTouchUpInside];
+  return YES;
+}
+
+@end
+
 NSString *const MDCSnackbarMessageTitleAutomationIdentifier =
     @"MDCSnackbarMessageTitleAutomationIdentifier";
 
@@ -373,7 +385,7 @@ static const CGFloat kMinimumAccessibiltyFontSize = 21;
     NSString *dismissalAccessibilityHint = NSLocalizedStringFromTableInBundle(
         dismissalAccessibilityHintKey, kMaterialSnackbarStringsTableName, [[self class] bundle],
         @"Dismissal accessibility hint for Snackbar");
-    _dismissalAccessibilityAffordance = [[UIButton alloc] init];
+    _dismissalAccessibilityAffordance = [[AccessibilityAffordanceButton alloc] init];
     _dismissalAccessibilityAffordance.isAccessibilityElement = YES;
     _dismissalAccessibilityAffordance.accessibilityLabel = dismissalAccessibilityLabel;
     _dismissalAccessibilityAffordance.accessibilityHint = dismissalAccessibilityHint;
