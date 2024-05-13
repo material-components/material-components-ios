@@ -31,6 +31,7 @@
 #import "UIFont+MaterialTypography.h"
 #import "MDCMath.h"
 #import <MDFInternationalization/MDFInternationalization.h>  // IWYU pragma: keep
+#import <MDFInternationalization/MDFRTL.h>
 
 static const MDCFontTextStyle kTitleTextStyle = MDCFontTextStyleBody2;
 
@@ -703,6 +704,7 @@ static BOOL gEnablePerformantShadow = NO;
 
   if (tintColor != nil) {
     self.imageView.tintColor = tintColor;
+    self.selectedImageView.tintColor = tintColor;
     self.accessoryView.tintColor = tintColor;
   }
 }
