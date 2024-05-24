@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <UIKit/UIKit.h>
 #import "MDCButton.h"
 #import "MDCAlertController.h"
 #import "MDCAlertControllerView.h"
@@ -1058,6 +1059,13 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   }
   buttonOrigin.y = actionsInsets.top;
   for (UIButton *button in buttons) {
+    if (self.isM3CButtonEnabled) {
+      M3CButton *m3cButton = (M3CButton *)button;
+      if (m3cButton.textCanWrap) {
+        m3cButton.textCanWrap = false;
+        m3cButton.titleLabel.preferredMaxLayoutWidth = 0;
+      }
+    }
     CGRect buttonRect = button.frame;
 
     buttonWidth = buttonRect.size.width;
@@ -1118,6 +1126,12 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
     buttonCenter.y = buttonOrigin.y;
     for (NSUInteger index = 0; index < buttons.count; ++index) {
       UIButton *button = buttons[index];
+      if (self.isM3CButtonEnabled) {
+        M3CButton *m3cButton = (M3CButton *)button;
+        m3cButton.textCanWrap = YES;
+        self.titleLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
+        m3cButton.titleLabel.preferredMaxLayoutWidth = maxButtonWidth;
+      }
       CGRect buttonRect = button.bounds;
 
       if (CGRectGetWidth(buttonRect) > maxButtonWidth ||

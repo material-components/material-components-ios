@@ -682,8 +682,6 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
   [self setupAlertView];
 
   _previousLayoutSize = CGSizeZero;
-  CGSize idealSize = [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
-  self.preferredContentSize = idealSize;
 
   self.preferredContentSize =
       [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
@@ -780,7 +778,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
       animateAlongsideTransition:^(
           __unused id<UIViewControllerTransitionCoordinatorContext> _Nonnull context) {
         [self.alertView setNeedsLayout];
-        // Reset preferredContentSize on viewWIllTransition to take advantage of additional width
+        // Reset preferredContentSize on viewWillTransition to take advantage of additional width.
         self.preferredContentSize =
             [self.alertView calculatePreferredContentSizeForBounds:CGRectInfinite.size];
       }
