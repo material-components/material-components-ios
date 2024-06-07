@@ -28,6 +28,13 @@
 #import "MDCLayoutMetrics.h"
 #import <MDFTextAccessibility/MDFTextAccessibility.h>
 
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+// For code review, use the review queue listed in go/material-visionos-review.
+#define IS_VISIONOS 1
+#else
+#define IS_VISIONOS 0
+#endif
+
 @interface UIView ()
 - (UIEdgeInsets)safeAreaInsets;  // For pre-iOS 11 SDK targets.
 @end
@@ -136,8 +143,21 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 - (void)commonMDCFlexibleHeaderViewControllerInit {
   _inferPreferredStatusBarStyle = YES;
 
+#if IS_VISIONOS
+  UIWindow *keyWindow = nil;
+  for (UIScene *scene in UIApplication.sharedApplication.connectedScenes) {
+    if ([scene isKindOfClass:[UIWindowScene class]]) {
+      UIWindowScene *windowScene = (UIWindowScene *)scene;
+      keyWindow = windowScene.keyWindow;
+      break;
+    }
+  }
+  MDCFlexibleHeaderView *headerView =
+      [[MDCFlexibleHeaderView alloc] initWithFrame:keyWindow.bounds];
+#else
   MDCFlexibleHeaderView *headerView =
       [[MDCFlexibleHeaderView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+#endif
   headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
   headerView.delegate = self;
   _headerView = headerView;
@@ -152,6 +172,7 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 - (void)willMoveToParentViewController:(UIViewController *)parent {
   [super willMoveToParentViewController:parent];
 
+#if !IS_VISIONOS
   BOOL shouldDisableAutomaticInsetting = YES;
   // Prior to iOS 11 there was no way to know whether UIKit had injected insets into our
   // UIScrollView, so we disable automatic insetting on these devices. iOS 11 provides
@@ -161,6 +182,7 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
   if (shouldDisableAutomaticInsetting) {
     parent.automaticallyAdjustsScrollViewInsets = NO;
   }
+#endif
 }
 
 - (void)didMoveToParentViewController:(UIViewController *)parent {
@@ -199,13 +221,18 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
     // Querying the top layout guide ensures that the flexible header receives layout event when
     // the status bar visibility changes. This allows the flexible header to animate alongside any
     // status bar visibility changes.
+#if !IS_VISIONOS
     [self.parentViewController topLayoutGuide];
+#else
+    [self.parentViewController.view safeAreaLayoutGuide];
+#endif
   }
 
   if (self.topLayoutGuideAdjustmentEnabled) {
     [self updateTopLayoutGuide];
 
   } else {
+#if !IS_VISIONOS
     // Legacy behavior.
     for (NSLayoutConstraint *constraint in self.parentViewController.view.constraints) {
       // Because topLayoutGuide is a readonly property on a viewController we must manipulate
@@ -215,6 +242,7 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
         self.topLayoutGuideConstraint = constraint;
       }
     }
+#endif
 
     // On moving to parentViewController, we calculate the height
     self.flexibleHeaderViewControllerHeightOffset = [self headerViewControllerHeight];
@@ -372,6 +400,10 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 
 - (NSLayoutConstraint *)fhv_topLayoutGuideConstraintForViewController:
     (UIViewController *)viewController {
+#if IS_VISIONOS
+  // We could look at the view's safe area anchors if this is incorrect.
+  return nil;
+#else
   // Note: accessing topLayoutGuide has the side effect of setting up all of the view controller
   // constraints. We need to access this property before we enter the for loop, otherwise
   // view.constraints will be empty.
@@ -383,6 +415,7 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
     }
   }
   return foundConstraint;
+#endif
 }
 
 - (void)setTopLayoutGuideConstraint:(NSLayoutConstraint *)topLayoutGuideConstraint {
@@ -537,7 +570,11 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 - (CGFloat)headerViewControllerHeight {
   BOOL shiftEnabledForStatusBar =
       _headerView.shiftBehavior == MDCFlexibleHeaderShiftBehaviorEnabledWithStatusBar;
+#if IS_VISIONOS
+  CGFloat statusBarHeight = 0.0;
+#else
   CGFloat statusBarHeight = [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
+#endif
   CGFloat height = MAX(_headerView.frame.origin.y + _headerView.frame.size.height,
                        shiftEnabledForStatusBar ? 0 : statusBarHeight);
   return height;
@@ -676,7 +713,9 @@ static char *const kKVOContextMDCFlexibleHeaderViewController =
 
 - (void)flexibleHeaderViewNeedsStatusBarAppearanceUpdate:
     (__unused MDCFlexibleHeaderView *)headerView {
+#if !IS_VISIONOS
   [self setNeedsStatusBarAppearanceUpdate];
+#endif
 }
 
 - (void)flexibleHeaderViewFrameDidChange:(MDCFlexibleHeaderView *)headerView {

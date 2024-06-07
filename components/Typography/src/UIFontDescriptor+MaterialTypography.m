@@ -18,6 +18,13 @@
 
 #import "private/MDCFontTraits.h"
 
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+// For code review, use the review queue listed in go/material-visionos-review.
+#define IS_VISIONOS 1
+#else
+#define IS_VISIONOS 0
+#endif
+
 @implementation UIFontDescriptor (MaterialTypography)
 
 + (nonnull UIFontDescriptor *)mdc_fontDescriptorForMaterialTextStyle:(MDCFontTextStyle)style
@@ -65,7 +72,12 @@
   if ([UIApplication mdc_safeSharedApplication]) {
     sizeCategory = [UIApplication mdc_safeSharedApplication].preferredContentSizeCategory;
   } else {
+#if !IS_VISIONOS
     sizeCategory = UIScreen.mainScreen.traitCollection.preferredContentSizeCategory;
+#else
+    UITraitCollection *current = [UITraitCollection currentTraitCollection];
+    sizeCategory = current ? [current preferredContentSizeCategory] : UIContentSizeCategoryLarge;
+#endif
   }
 
   return [UIFontDescriptor mdc_fontDescriptorForMaterialTextStyle:style sizeCategory:sizeCategory];

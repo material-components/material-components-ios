@@ -177,7 +177,14 @@ static inline UIColor *CollectionInfoBarRedColor(void) {
     if (!_backgroundBorderLayer) {
       _backgroundBorderLayer = [CALayer layer];
       _backgroundBorderLayer.borderColor = [UIColor colorWithWhite:0 alpha:(CGFloat)0.1].CGColor;
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+      // For code review, use the review queue listed in go/material-visionos-review.
+      UITraitCollection *current = [UITraitCollection currentTraitCollection];
+      CGFloat scale = current ? [current displayScale] : 1.0;
+      _backgroundBorderLayer.borderWidth = 1 / scale;
+#else
       _backgroundBorderLayer.borderWidth = 1 / [[UIScreen mainScreen] scale];
+#endif
       [self.backgroundView.layer addSublayer:_backgroundBorderLayer];
     }
   }

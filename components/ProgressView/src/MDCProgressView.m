@@ -571,7 +571,16 @@ static NSString *const kBundle = @"MaterialProgressView.bundle";
   CGRect progressFrame = self.bounds;
   if (_mode == MDCProgressViewModeDeterminate) {
     // Update progressView with the current progress value.
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+    // For code review, use the review queue listed in go/material-visionos-review.
+    UITraitCollection *current = [UITraitCollection currentTraitCollection];
+    CGFloat scale = current ? [current displayScale] : 1.0;
+    if (scale <= 0) {
+      scale = 1.0;
+    }
+#else
     CGFloat scale = self.window.screen.scale > 0 ? self.window.screen.scale : 1;
+#endif
     CGFloat pointWidth = self.progress * CGRectGetWidth(self.bounds);
     CGFloat pixelAlignedWidth = round(pointWidth * scale) / scale;
     progressFrame = CGRectMake(0, 0, pixelAlignedWidth, CGRectGetHeight(self.bounds));

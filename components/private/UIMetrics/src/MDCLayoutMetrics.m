@@ -16,8 +16,16 @@
 
 #import "UIApplication+MDCAppExtensions.h"
 
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+// For code review, use the review queue listed in go/material-visionos-review.
+#define IS_VISIONOS 1
+#else
+#define IS_VISIONOS 0
+#endif
+
 const CGFloat MDCFixedStatusBarHeightOnPreiPhoneXDevices = 20;
 
+#if !IS_VISIONOS
 static BOOL HasHardwareSafeAreas(void) {
   static BOOL hasHardwareSafeAreas = NO;
   static BOOL hasCheckedForHardwareSafeAreas = NO;
@@ -33,8 +41,12 @@ static BOOL HasHardwareSafeAreas(void) {
   }
   return hasHardwareSafeAreas;
 }
+#endif
 
 CGFloat MDCDeviceTopSafeAreaInset(void) {
+#if IS_VISIONOS
+  CGFloat topInset = 0.0;
+#else
   CGFloat topInset = MDCFixedStatusBarHeightOnPreiPhoneXDevices;
   // Devices with hardware safe area insets have fixed insets that depend on the device
   // orientation. On such devices, we aren't interested in the status bar's height because the
@@ -46,5 +58,6 @@ CGFloat MDCDeviceTopSafeAreaInset(void) {
     UIEdgeInsets insets = [UIApplication mdc_safeSharedApplication].keyWindow.safeAreaInsets;
     topInset = insets.top;
   }
+#endif
   return topInset;
 }

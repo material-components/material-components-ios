@@ -35,6 +35,13 @@
 #import "UIFont+MaterialTypography.h"
 #import "MDCMath.h"
 
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+// For code review, use the review queue listed in go/material-visionos-review.
+#define IS_VISIONOS 1
+#else
+#define IS_VISIONOS 0
+#endif
+
 // TODO(ajsecord): Animate title color when animating between enabled/disabled states.
 // Non-trivial: http://corecocoa.wordpress.com/2011/10/04/animatable-text-color-of-uilabel/
 
@@ -373,7 +380,14 @@ static BOOL gEnablePerformantShadow = NO;
     _inkView.frame = bounds;
     self.rippleView.frame = bounds;
   }
+
+#if IS_VISIONOS
+  UITraitCollection *current = [UITraitCollection currentTraitCollection];
+  self.titleLabel.frame =
+      MDCRectAlignToScale(self.titleLabel.frame, current ? [current displayScale] : 1.0);
+#else
   self.titleLabel.frame = MDCRectAlignToScale(self.titleLabel.frame, [UIScreen mainScreen].scale);
+#endif
 
   if ([self shouldInferMinimumAndMaximumSize]) {
     [self inferMinimumAndMaximumSize];

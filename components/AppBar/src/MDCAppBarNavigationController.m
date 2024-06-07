@@ -23,6 +23,13 @@
 
 #import <objc/runtime.h>
 
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+// For code review, use the review queue listed in go/material-visionos-review.
+#define IS_VISIONOS 1
+#else
+#define IS_VISIONOS 0
+#endif
+
 // Light-weight book-keeping associated with any pushed view controller.
 @interface MDCAppBarNavigationControllerInfo : NSObject
 
@@ -111,7 +118,9 @@
 
   [self injectAppBarIntoViewController:viewController];
 
+#if !IS_VISIONOS
   [self setNeedsStatusBarAppearanceUpdate];
+#endif
   [self setNeedsUpdateOfHomeIndicatorAutoHidden];
 }
 
@@ -122,7 +131,9 @@
     [self injectAppBarIntoViewController:viewController];
   }
 
+#if !IS_VISIONOS
   [self setNeedsStatusBarAppearanceUpdate];
+#endif
   [self setNeedsUpdateOfHomeIndicatorAutoHidden];
 }
 

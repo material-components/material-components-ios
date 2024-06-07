@@ -17,12 +17,21 @@
 #import "MDCStatusBarShifterDelegate.h"
 #import "MaterialApplication.h"
 
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+// For code review, use the review queue listed in go/material-visionos-review.
+#define IS_VISIONOS 1
+#else
+#define IS_VISIONOS 0
+#endif
+
 static NSTimeInterval kStatusBarBecomesInvalidAnimationDuration = 0.2;
 
+#if !IS_VISIONOS
 // If the time changes then we need to invalidate the status bar.
 // This value is the minimum amount of time we'll wait before invalidating the status bar even
 // after the time has changed in an effort to minimize flickering.
 static NSTimeInterval kMinimumNumberOfSecondsToWaitFor = 3;
+#endif
 
 // Simple state machine for the shifter:
 //          IsReal => IsSnapshot
@@ -71,12 +80,16 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
     _enabled = YES;
     _snapshottingEnabled = YES;
 
+#if IS_VISIONOS
+    _originalStatusBarHeight = 0.0;
+#else
     _originalStatusBarHeight = [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
     [[NSNotificationCenter defaultCenter]
         addObserver:self
            selector:@selector(statusBarDidChangeFrame)
                name:UIApplicationDidChangeStatusBarFrameNotification
              object:nil];
+#endif
   }
   return self;
 }
@@ -84,8 +97,10 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
 #pragma mark - Notification
 
 - (void)statusBarDidChangeFrame {
+#if !IS_VISIONOS
   CGFloat statusBarHeight = [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
   _originalStatusBarHeight = statusBarHeight == 0 ? _originalStatusBarHeight : statusBarHeight;
+#endif
 }
 
 #pragma mark - Private
@@ -179,6 +194,7 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
       break;
     }
     case MDCStatusBarShifterStateIsSnapshot: {
+#if !IS_VISIONOS
       // Take a snapshot of the status bar.
       UIView *snapshotView = [[UIScreen mainScreen] snapshotViewAfterScreenUpdates:NO];
       UIView *clippingView = [[UIView alloc] init];
@@ -207,7 +223,7 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
                                                        userInfo:nil
                                                         repeats:NO];
       [[NSRunLoop currentRunLoop] addTimer:_replicaInvalidatorTimer forMode:NSRunLoopCommonModes];
-
+#endif
       self.prefersStatusBarHidden = YES;
       break;
     }
@@ -268,10 +284,14 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
 }
 
 - (BOOL)canUpdateStatusBarFrame {
+#if IS_VISIONOS
+  return NO;
+#else
   CGRect statusBarFrame = [[UIApplication mdc_safeSharedApplication] statusBarFrame];
   CGFloat statusBarHeight = MIN(statusBarFrame.size.width, statusBarFrame.size.height);
   return ((statusBarHeight == _originalStatusBarHeight) || _statusBarReplicaView ||
           _snapshotState == MDCStatusBarShifterStateInvalidSnapshot);
+#endif
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -289,7 +309,9 @@ typedef NS_ENUM(NSInteger, MDCStatusBarShifterState) {
 }
 
 - (void)didMoveToWindow {
+#if !IS_VISIONOS
   _originalStatusBarHeight = [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
+#endif
 }
 
 @end

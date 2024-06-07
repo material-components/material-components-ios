@@ -19,6 +19,13 @@
 
 #include <tgmath.h>
 
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+// For code review, use the review queue listed in go/material-visionos-review.
+#define IS_VISIONOS 1
+#else
+#define IS_VISIONOS 0
+#endif
+
 // Default cell heights.
 const CGFloat MDCCellDefaultOneLineHeight = 48;
 const CGFloat MDCCellDefaultOneLineWithAvatarHeight = 56;
@@ -61,14 +68,24 @@ static const CGFloat kCellTextWithImagePaddingLeading =
 // Returns the closest pixel-aligned value higher than |value|, taking the scale factor into
 // account. At a scale of 1, equivalent to Ceil().
 static inline CGFloat AlignValueToUpperPixel(CGFloat value) {
+#if !IS_VISIONOS
   CGFloat scale = [[UIScreen mainScreen] scale];
+#else
+  UITraitCollection *current = [UITraitCollection currentTraitCollection];
+  CGFloat scale = current ? [current displayScale] : 1.0;
+#endif
   return (CGFloat)ceil(value * scale) / scale;
 }
 
 // Returns the closest pixel-aligned value lower than |value|, taking the scale factor into
 // account. At a scale of 1, equivalent to Floor().
 static inline CGFloat AlignValueToLowerPixel(CGFloat value) {
+#if !IS_VISIONOS
   CGFloat scale = [[UIScreen mainScreen] scale];
+#else
+  UITraitCollection *current = [UITraitCollection currentTraitCollection];
+  CGFloat scale = current ? [current displayScale] : 1.0;
+#endif
   return (CGFloat)floor(value * scale) / scale;
 }
 

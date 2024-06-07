@@ -22,6 +22,13 @@
 #import "MaterialMath.h"
 #import "MaterialTypography.h"
 
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+// For code review, use the review queue listed in go/material-visionos-review.
+#define IS_VISIONOS 1
+#else
+#define IS_VISIONOS 0
+#endif
+
 static const NSUInteger kTitleFontSize = 20;
 static const CGFloat kNavigationBarDefaultHeight = 56;
 static const CGFloat kNavigationBarMinHeight = 24;
@@ -303,8 +310,12 @@ static NSArray<NSString *> *MDCNavigationBarNavigationItemKVOPaths(void) {
                                             withinBounds:textFrame
                                                alignment:titleVerticalAlignment];
   alignedFrame = [self mdc_frameAlignedHorizontally:alignedFrame alignment:self.titleAlignment];
+#if !IS_VISIONOS
   _titleLabel.frame = MDCRectAlignToScale(alignedFrame, self.window.screen.scale);
-
+#else
+  UITraitCollection *current = [UITraitCollection currentTraitCollection];
+  _titleLabel.frame = MDCRectAlignToScale(alignedFrame, current ? [current displayScale] : 1.0);
+#endif
   // Layout TitleView
   if (self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft) {
     textFrame = MDFRectFlippedHorizontally(textFrame, CGRectGetWidth(self.bounds));

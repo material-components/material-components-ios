@@ -33,6 +33,13 @@
 #import "MDCMath.h"
 #import "MDCLayoutMetrics.h"
 
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+// For code review, use the review queue listed in go/material-visionos-review.
+#define IS_VISIONOS 1
+#else
+#define IS_VISIONOS 0
+#endif
+
 #if TARGET_IPHONE_SIMULATOR
 float UIAnimationDragCoefficient(void);  // Private API for simulator animation speed
 #endif
@@ -611,10 +618,12 @@ NSString *_Nonnull const MDCFlexibleHeaderViewAccessibilityIdentifier =
   info.hasInjectedTopContentInset = NO;
   scrollView.contentInset = insets;
 
+#if !IS_VISIONOS
   UIEdgeInsets scrollIndicatorInsets = scrollView.scrollIndicatorInsets;
   scrollIndicatorInsets.top -= info.injectedTopScrollIndicatorInset;
-  info.injectedTopScrollIndicatorInset = 0;
   scrollView.scrollIndicatorInsets = scrollIndicatorInsets;
+#endif
+  info.injectedTopScrollIndicatorInset = 0;
 }
 
 - (CGFloat)fhv_existingContentInsetAdjustmentForScrollView:(UIScrollView *)scrollView {
@@ -680,7 +689,11 @@ NSString *_Nonnull const MDCFlexibleHeaderViewAccessibilityIdentifier =
     scrollView.contentInset = insets;
   }
 
+#if IS_VISIONOS
+  BOOL statusBarIsHidden = YES;
+#else
   BOOL statusBarIsHidden = [UIApplication mdc_safeSharedApplication].statusBarHidden ? YES : NO;
+#endif
   if (_wasStatusBarHiddenIsValid && _wasStatusBarHidden != statusBarIsHidden &&
       !_isChangingStatusBarVisibility && !self.inferTopSafeAreaInsetFromViewController) {
     // Our status bar state has changed without our knowledge. UIKit will have already adjusted our
@@ -753,7 +766,11 @@ NSString *_Nonnull const MDCFlexibleHeaderViewAccessibilityIdentifier =
 
 - (CGFloat)fhv_accumulatorMax {
   BOOL shouldCollapseToStatusBar = [self fhv_shouldCollapseToStatusBar];
+#if IS_VISIONOS
+  CGFloat statusBarHeight = 0.0;
+#else
   CGFloat statusBarHeight = [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
+#endif
   return (shouldCollapseToStatusBar
               ? MAX(0, self.minMaxHeight.minimumHeightWithTopSafeArea - statusBarHeight)
               : self.minMaxHeight.minimumHeightWithTopSafeArea) -
@@ -822,8 +839,12 @@ NSString *_Nonnull const MDCFlexibleHeaderViewAccessibilityIdentifier =
     _scrollPhaseValue = topEdge + self.minMaxHeight.minimumHeightWithTopSafeArea;
     CGFloat adjustedHeight = self.minMaxHeight.minimumHeightWithTopSafeArea;
     if ([self fhv_shouldCollapseToStatusBar]) {
+#if IS_VISIONOS
+      CGFloat statusBarHeight = 0.0;
+#else
       CGFloat statusBarHeight =
           [UIApplication mdc_safeSharedApplication].statusBarFrame.size.height;
+#endif
       adjustedHeight -= statusBarHeight;
     }
     if (adjustedHeight > 0) {
@@ -988,7 +1009,11 @@ NSString *_Nonnull const MDCFlexibleHeaderViewAccessibilityIdentifier =
     self.hidden = isHidden;
   }
 
+#if IS_VISIONOS
+  UIEdgeInsets scrollIndicatorInsets = _trackingScrollView.horizontalScrollIndicatorInsets;
+#else
   UIEdgeInsets scrollIndicatorInsets = _trackingScrollView.scrollIndicatorInsets;
+#endif
   scrollIndicatorInsets.top -= _trackingInfo.injectedTopScrollIndicatorInset;
 
   CGFloat existingContentInsetAdjustment =

@@ -298,7 +298,14 @@ typedef NS_ENUM(NSInteger, MDCAutoscrollPanningDirection) {
 
   // Render snapshot.
   [_collectionView.layer renderInContext:cx];
+#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
+  // For code review, use the review queue listed in go/material-visionos-review.
+  UITraitCollection *current = [UITraitCollection currentTraitCollection];
+  CGFloat scale = current ? [current displayScale] : 1.0;
+  _collectionView.layer.rasterizationScale = scale;
+#else
   _collectionView.layer.rasterizationScale = [UIScreen mainScreen].scale;
+#endif
   _collectionView.layer.shouldRasterize = YES;
   UIImage *screenshotImage = UIGraphicsGetImageFromCurrentImageContext();
 
