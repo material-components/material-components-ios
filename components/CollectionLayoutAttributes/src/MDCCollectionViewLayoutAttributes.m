@@ -14,6 +14,8 @@
 
 #import "MDCCollectionViewLayoutAttributes.h"
 
+#import <CoreGraphics/CoreGraphics.h>
+
 @implementation MDCCollectionViewLayoutAttributes
 
 - (id)copyWithZone:(NSZone *)zone {
