@@ -16,6 +16,8 @@
 
 #import "MDCPageControl.h"
 
+#import <CoreGraphics/CoreGraphics.h>
+
 @interface PageControlExampleTests : XCTestCase
 
 @end

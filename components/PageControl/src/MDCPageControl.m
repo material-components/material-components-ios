@@ -14,6 +14,8 @@
 
 #import "MDCPageControl.h"
 
+#import <CoreGraphics/CoreGraphics.h>
+
 #import "private/MDCPageControlIndicator.h"
 #import "private/MDCPageControlTrackLayer.h"
 #import "private/MaterialPageControlStrings.h"
