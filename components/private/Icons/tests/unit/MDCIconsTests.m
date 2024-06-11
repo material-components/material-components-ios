@@ -25,6 +25,8 @@
 #import "MaterialIcons+ic_radio_button_unchecked.h"
 #import "MaterialIcons+ic_reorder.h"
 #import "MaterialIcons+ic_settings.h"
+#import "MDCIcons+BundleLoader.h"
+#import "MDCIcons.h"
 
 @interface MDCIconsTests : XCTestCase
 @end
