@@ -12,11 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialSnapshot.h"
+#import "MDCInkView.h"
 
-#import "MaterialAvailability.h"
-#import "MaterialColor.h"
-#import "MaterialInk.h"
+#import <CoreGraphics/CoreGraphics.h>
+
+#import "MDCAvailability.h"
+#import "UIColor+MaterialDynamic.h"
+#import "MDCSnapshotTestCase.h"
+#import "UIView+MDCSnapshot.h"
 
 /**
  Creates a fake MDCInkView that has its traitCollection overridden.

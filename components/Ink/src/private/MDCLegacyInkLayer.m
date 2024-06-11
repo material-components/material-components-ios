@@ -15,9 +15,10 @@
 #import "MDCLegacyInkLayer.h"
 #import "MDCLegacyInkLayer+Private.h"
 
+#import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
-#import "MaterialAvailability.h"
+#import "MDCAvailability.h"
 #import "MDCLegacyInkLayerDelegate.h"
 #import "MDCLegacyInkLayerRippleDelegate.h"
 

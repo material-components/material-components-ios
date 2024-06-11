@@ -16,6 +16,8 @@
 
 #import "MDCInkLayerDelegate.h"
 
+#import <CoreGraphics/CoreGraphics.h>
+
 static const CGFloat MDCInkLayerCommonDuration = (CGFloat)0.083;
 static const CGFloat MDCInkLayerEndFadeOutDuration = (CGFloat)0.15;
 static const CGFloat MDCInkLayerStartScalePositionDuration = (CGFloat)0.333;
