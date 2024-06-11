@@ -12,9 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialSnapshot.h"
+#import "MDCProgressView.h"
 
-#import "MaterialProgressView.h"
+#import <CoreGraphics/CoreGraphics.h>
+
+#import "MDCSnapshotTestCase.h"
+#import "UIView+MDCSnapshot.h"
 
 /** Snapshot tests for MDCProgressView. */
 @interface MDCProgressViewSnapshotTests : MDCSnapshotTestCase

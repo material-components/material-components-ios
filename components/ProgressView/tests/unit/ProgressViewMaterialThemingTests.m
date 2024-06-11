@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <CoreGraphics/CoreGraphics.h>
 #import <XCTest/XCTest.h>
 
-#import "MaterialProgressView.h"
-#import "MaterialProgressView+Theming.h"
-#import "MaterialColorScheme.h"
-#import "MaterialContainerScheme.h"
+#import "MDCProgressView.h"
+#import "MDCProgressView+MaterialTheming.h"
+#import "MDCSemanticColorScheme.h"
+#import "MDCContainerScheme.h"
 
 // The ratio by which to desaturate the progress tint color to obtain the default track tint color.
 static const CGFloat MDCProgressViewTrackColorDesaturation = (CGFloat)0.3;

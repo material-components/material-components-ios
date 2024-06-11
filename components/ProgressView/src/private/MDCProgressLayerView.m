@@ -14,6 +14,8 @@
 
 #import "MDCProgressLayerView.h"
 
+#import <CoreGraphics/CoreGraphics.h>
+
 NS_ASSUME_NONNULL_BEGIN
 
 /** The duration of each individual layer animation. */

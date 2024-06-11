@@ -14,20 +14,20 @@
 
 #import "MDCProgressView.h"
 
+#import <CoreGraphics/CoreGraphics.h>
 #import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIKit.h>
 
 #include <tgmath.h>
 
 #import "MDCPalettes.h"
-#import "MaterialPalettes.h"
 #import "MDCProgressGradientView.h"
 #import "MDCProgressLayerView.h"
 
 #import "MaterialProgressViewStrings.h"
 #import "MaterialProgressViewStrings_table.h"
-#import "MaterialMath.h"
-#import <MDFInternationalization/MDFInternationalization.h>
+#import "MDCMath.h"
+#import <MDFInternationalization/MDFRTL.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

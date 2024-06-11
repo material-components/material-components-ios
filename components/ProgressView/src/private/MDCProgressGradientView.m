@@ -14,6 +14,7 @@
 
 #import "MDCProgressGradientView.h"
 
+#import <CoreGraphics/CoreGraphics.h>
 #import <QuartzCore/QuartzCore.h>
 
 @interface MDCProgressGradientView ()
