@@ -14,6 +14,8 @@
 
 #import "MDCRippleLayer.h"
 
+#import <CoreGraphics/CoreGraphics.h>
+
 #import "MDCRippleLayerDelegate.h"
 
 static const CGFloat kExpandRippleBeyondSurface = 10;

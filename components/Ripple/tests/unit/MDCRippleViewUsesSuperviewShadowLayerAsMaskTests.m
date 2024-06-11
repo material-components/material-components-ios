@@ -12,9 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <CoreGraphics/CoreGraphics.h>
 #import <XCTest/XCTest.h>
 
-#import "MaterialRipple.h"
+#import "MDCRippleView.h"
 
 /**
  These tests demonstrate how a ripple view added as a subview can end up with an incorrect layer

@@ -19,6 +19,8 @@
 
 #import "RippleExampleSupplemental.h"
 
+#import <CoreGraphics/CoreGraphics.h>
+
 @implementation RippleSurfaces
 
 - (id)initWithFrame:(CGRect)frame {

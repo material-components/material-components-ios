@@ -12,9 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIKit.h>
 
-#import "MaterialRipple.h"
+#import "MDCRippleTouchController.h"
+#import "MDCRippleTouchControllerDelegate.h"
 
 #import "supplemental/RippleExampleSupplemental.h"
 

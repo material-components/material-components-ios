@@ -12,10 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialAvailability.h"
-#import "MaterialRipple.h"
-#import "MaterialColor.h"
-#import "MaterialSnapshot.h"
+#import "MDCRippleView.h"
+
+#import <CoreGraphics/CoreGraphics.h>
+
+#import "MDCAvailability.h"
+#import "UIColor+MaterialDynamic.h"
+#import "MDCSnapshotTestCase.h"
+#import "UIView+MDCSnapshot.h"
 
 /**
  Creates a fake MDCRippleView that has its traitCollection overridden.

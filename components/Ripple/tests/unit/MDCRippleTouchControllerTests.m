@@ -14,9 +14,12 @@
 
 #import <XCTest/XCTest.h>
 
+#import <CoreGraphics/CoreGraphics.h>
 #import <UIKit/UIGestureRecognizerSubclass.h>
 
-#import "MaterialRipple.h"
+#import "MDCRippleTouchController.h"
+#import "MDCRippleTouchControllerDelegate.h"
+#import "MDCRippleView.h"
 
 @interface FakeMDCRippleTouchControllerDelegate : NSObject <MDCRippleTouchControllerDelegate>
 @property(nonatomic, strong) MDCRippleTouchController *rippleTouchController;

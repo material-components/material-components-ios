@@ -12,8 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialRipple.h"
-#import "MaterialSnapshot.h"
+#import "MDCStatefulRippleView.h"
+
+#import <CoreGraphics/CoreGraphics.h>
+
+#import "MDCSnapshotTestCase.h"
+#import "UIView+MDCSnapshot.h"
 
 /** Snapshot tests for MDCStatefulRippleView. */
 @interface MDCStatefulRippleViewSnapshotTests : MDCSnapshotTestCase
