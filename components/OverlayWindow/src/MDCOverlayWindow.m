@@ -14,6 +14,7 @@
 
 #import "MDCOverlayWindow.h"
 
+#import <CoreGraphics/CoreGraphics.h>
 #import <objc/runtime.h>
 
 #import "MDCAvailability.h"
