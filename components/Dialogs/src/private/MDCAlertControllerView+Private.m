@@ -1059,7 +1059,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
   }
   buttonOrigin.y = actionsInsets.top;
   for (UIButton *button in buttons) {
-    if (self.isM3CButtonEnabled) {
+    if (self.isM3CButtonEnabled && [button isKindOfClass:M3CButton.class]) {
       M3CButton *m3cButton = (M3CButton *)button;
       if (m3cButton.textCanWrap) {
         m3cButton.textCanWrap = false;
@@ -1126,7 +1126,7 @@ static CGFloat SingleLineTextViewHeight(NSString *_Nullable title, UIFont *_Null
     buttonCenter.y = buttonOrigin.y;
     for (NSUInteger index = 0; index < buttons.count; ++index) {
       UIButton *button = buttons[index];
-      if (self.isM3CButtonEnabled) {
+      if (self.isM3CButtonEnabled && [button isKindOfClass:M3CButton.class]) {
         M3CButton *m3cButton = (M3CButton *)button;
         m3cButton.textCanWrap = YES;
         self.titleLabel.lineBreakMode = NSLineBreakByTruncatingMiddle;
