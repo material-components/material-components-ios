@@ -136,6 +136,19 @@ typedef NS_OPTIONS(NSUInteger, MDCChipFieldDelimiter) {
 @property(nonatomic, assign) UIEdgeInsets contentEdgeInsets;
 
 /**
+ * The padding before the leading edge of the text field when there are chips. This is not applied
+ * when there are no chips.
+ * Default is 0.
+ */
+@property(nonatomic, assign) CGFloat textFieldLeadingPaddingWhenChipIsAdded;
+
+/**
+ * The insets of the text rect. Flipping for RTL is handled internally.
+ * Default is 4.
+ */
+@property(nonatomic, assign) UIEdgeInsets textFieldTextInsets;
+
+/**
  The image used in the MDCChipViewDeleteButton.
  Defaults to a bezier-drawn image declared in `MDCChipViewDeleteButton`.
  */

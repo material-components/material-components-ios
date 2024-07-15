@@ -36,6 +36,7 @@ static const CGFloat MDCChipFieldHorizontalInset = 15;
 static const CGFloat MDCChipFieldVerticalInset = 8;
 static const CGFloat MDCChipFieldHorizontalMargin = 8;
 static const CGFloat MDCChipFieldVerticalMargin = 8;
+static const UIEdgeInsets MDCChipFieldTextFieldTextInsetsDefault = {16, 4, 16, 0};
 static const UIKeyboardType MDCChipFieldDefaultKeyboardType = UIKeyboardTypeEmailAddress;
 
 const CGFloat MDCChipFieldDefaultMinTextFieldWidth = 44;
@@ -53,20 +54,20 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
 
 @property(nonatomic, weak) id<MDCChipFieldTextFieldDelegate> deletionDelegate;
 
+@property(nonatomic) UIEdgeInsets textFieldTextInsets;
+
 @end
 
 @implementation MDCChipFieldTextField
-
-const UIEdgeInsets MDCChipFieldTextFieldRTLEdgeInsets = {16, 0, 16, 4};
-
-const UIEdgeInsets MDCChipFieldTextFieldLTREdgeInsets = {16, 4, 16, 0};
 
 - (BOOL)isRTL {
   return self.effectiveUserInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionRightToLeft;
 }
 
 - (UIEdgeInsets)textEdgeInsets {
-  return [self isRTL] ? MDCChipFieldTextFieldRTLEdgeInsets : MDCChipFieldTextFieldLTREdgeInsets;
+  return [self isRTL] ? UIEdgeInsetsMake(_textFieldTextInsets.top, _textFieldTextInsets.right,
+                                         _textFieldTextInsets.bottom, _textFieldTextInsets.left)
+                      : _textFieldTextInsets;
 }
 
 - (CGRect)textRectForBounds:(CGRect)bounds {
@@ -149,6 +150,7 @@ const UIEdgeInsets MDCChipFieldTextFieldLTREdgeInsets = {16, 4, 16, 0};
     chipFieldTextField.autocorrectionType = UITextAutocorrectionTypeNo;
     chipFieldTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
     chipFieldTextField.keyboardType = MDCChipFieldDefaultKeyboardType;
+    chipFieldTextField.textFieldTextInsets = MDCChipFieldTextFieldTextInsetsDefault;
     // Listen for notifications posted when the text field is the first responder.
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(textFieldDidChange)
@@ -182,6 +184,8 @@ const UIEdgeInsets MDCChipFieldTextFieldLTREdgeInsets = {16, 4, 16, 0};
   _contentEdgeInsets = MDCChipFieldDefaultContentEdgeInsets;
   _showPlaceholderWithChips = YES;
   _chipHeight = 32;
+  _textFieldLeadingPaddingWhenChipIsAdded = 0;
+  _textFieldTextInsets = MDCChipFieldTextFieldTextInsetsDefault;
 
   [self configureLocalizedAccessibilityActionName];
 }
@@ -287,6 +291,13 @@ const UIEdgeInsets MDCChipFieldTextFieldLTREdgeInsets = {16, 4, 16, 0};
                                                            attributes:_placeholderAttributes];
 
   [self updateTextFieldPlaceholderText];
+}
+
+- (void)setTextFieldTextInsets:(UIEdgeInsets)textFieldTextInsets {
+  _textFieldTextInsets = textFieldTextInsets;
+  if ([_textField isKindOfClass:[MDCChipFieldTextField class]]) {
+    ((MDCChipFieldTextField *)self.textField).textFieldTextInsets = _textFieldTextInsets;
+  }
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
@@ -720,7 +731,8 @@ const UIEdgeInsets MDCChipFieldTextFieldLTREdgeInsets = {16, 4, 16, 0};
         chipFieldSize.width - self.contentEdgeInsets.left - self.contentEdgeInsets.right;
   } else {
     // The text field fits on the line with chips
-    originX += CGRectGetMaxX(lastChipFrame) + MDCChipFieldHorizontalMargin;
+    originX += CGRectGetMaxX(lastChipFrame) + MDCChipFieldHorizontalMargin +
+               _textFieldLeadingPaddingWhenChipIsAdded;
     textFieldWidth = availableWidth;
   }
 

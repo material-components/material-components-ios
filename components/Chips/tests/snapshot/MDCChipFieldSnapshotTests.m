@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#import <UIKit/UIKit.h>
 #import "MaterialChips.h"
 #import "MaterialSnapshot.h"
 
@@ -117,6 +118,32 @@
 
   // When
   [self.chipField addChip:[self chipViewWithTitle:@"chipper1234@gmail.com"]];
+
+  // Then
+  [self.chipField sizeToFit];
+  [self snapshotVerifyView:self.chipField];
+}
+
+- (void)testTextFieldLeadingPaddingWhenChipIsAdded {
+  // Given
+  self.chipField.textField.text = @"This is a chip field.";
+  self.chipField.textFieldLeadingPaddingWhenChipIsAdded = 50.0;
+
+  // When
+  [self.chipField addChip:[self chipViewWithTitle:@"Chip"]];
+
+  // Then
+  [self.chipField sizeToFit];
+  [self snapshotVerifyView:self.chipField];
+}
+
+- (void)testTextFieldTextLeadingInset {
+  // Given
+  self.chipField.textField.text = @"This is a chip field.";
+  self.chipField.textFieldTextInsets = UIEdgeInsetsMake(16, 50, 16, 0);
+
+  // When
+  [self.chipField addChip:[self chipViewWithTitle:@"Chip"]];
 
   // Then
   [self.chipField sizeToFit];
