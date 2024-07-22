@@ -21,8 +21,6 @@ MDCConfigureShadowForView should be called in the start of the view’s lifecycl
 MDCConfigureShadowForView should also be called when the elevation is changed for the view i.e. it is set by the client, or there is a state change that also changes the elevation. This is to ensure that the right shadow values for that elevation are set on the layer.
 Lastly, MDCConfigureShadowForView should be called in layoutSubviews, to ensure that the shadowPath is set using the most up to date bounds and cornerRadius of the view.
 
-UIView+ShadowAnimations is provided as an extension for animations that changes a view's bounds or layer.cornerRadius. Choose from the provided methods based on your use case. See below for import instructions.
-
 ### Importing Shadow
 
 Before using Shadow, you'll need to import it:
@@ -75,16 +73,4 @@ shadowsCollection = [shadowsBuilder build];
                             [self.shadowsCollection shadowForElevation:self.mdc_currentElevation],
                             self.shadowColor);
 }
-```
-
-### Importing Shadow/Animations
-
-#### Swift
-```swift
-import MaterialComponents.Shadow_Animations
-```
-
-#### Objective-C
-```objc
-#import "UIView+MDCShadowAnimations.h"
 ```
