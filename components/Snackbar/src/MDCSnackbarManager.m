@@ -307,8 +307,11 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
   if (!_overlayView) {
     // Only initialize on the main thread.
     NSAssert([NSThread isMainThread], @"Method is not called on main thread.");
-
+#if !TARGET_OS_VISION
     _overlayView = [[MDCSnackbarOverlayView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+#else
+    _overlayView = [[MDCSnackbarOverlayView alloc] initWithFrame:CGRectZero];
+#endif  // TODO: b/359236816 - fix visionOS-specific compatibility workarounds.
   }
   return _overlayView;
 }
@@ -473,17 +476,23 @@ static NSString *const kAllMessagesCategory = @"$$___ALL_MESSAGES___$$";
       return [_windowScene keyWindow];
     }
   }
+#if !TARGET_OS_VISION
   return [[UIApplication mdc_safeSharedApplication] keyWindow];
+#else
+  return nil;
+#endif  // TODO: b/359236816 - fix visionOS-specific compatibility workarounds.
 }
 
 - (void)deactivateOverlay:(UIView *)overlay {
+#if !TARGET_OS_VISION
   UIWindow *window = [[UIApplication mdc_safeSharedApplication] keyWindow];
   if ([window isKindOfClass:[MDCOverlayWindow class]]) {
     MDCOverlayWindow *overlayWindow = (MDCOverlayWindow *)window;
     [overlayWindow deactivateOverlay:overlay];
-  } else {
-    [overlay removeFromSuperview];
+    return;
   }
+#endif  // TODO: b/359236816 - fix visionOS-specific compatibility workarounds.
+  [overlay removeFromSuperview];
 }
 
 #pragma mark - Public API

@@ -24,7 +24,7 @@
 
  If @c screen is nil, the main screen is used.
  */
-+ (instancetype)observerForScreen:(UIScreen *)screen;
++ (instancetype)observerForScreen:(UIScreen *)screen API_UNAVAILABLE(visionos);
 
 /**
  Adds a target/action pair to listen for changes to overlays.

@@ -15,9 +15,11 @@
 #import "MDCOverlayUtilities.h"
 
 CGRect MDCOverlayConvertRectToView(CGRect screenRect, UIView *target) {
+#if !TARGET_OS_VISION
   if (target != nil && !CGRectIsNull(screenRect)) {
     UIScreen *screen = [UIScreen mainScreen];
     return [target convertRect:screenRect fromCoordinateSpace:screen.coordinateSpace];
   }
+#endif  // TODO: b/359236816 - fix visionOS-specific compatibility workarounds.
   return CGRectNull;
 }

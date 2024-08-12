@@ -19,7 +19,7 @@
 #import "MDCDraggableViewDelegate.h"
 #import "MDCSheetBehavior.h"
 #import "MDCSheetContainerViewDelegate.h"
-#import "MaterialKeyboardWatcher.h"
+#import "MDCKeyboardWatcher.h"
 
 /** KVO key for monitoring the content size for the content view if it is a scrollview. */
 static NSString *kContentSizeKey = nil;
@@ -103,11 +103,12 @@ static const CGFloat kSheetBounceBuffer = 150;
                  forKeyPath:kContentInsetKey
                     options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
                     context:kObservingContext];
+#if !TARGET_OS_VISION
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(voiceOverStatusDidChange)
                                                  name:UIAccessibilityVoiceOverStatusChanged
                                                object:nil];
-
+#endif
     // Add the keyboard notifications.
     NSArray *notificationNames = @[
       MDCKeyboardWatcherKeyboardWillShowNotification,

@@ -189,6 +189,7 @@ static const CGFloat kMaximumHeightLegacy = 80;
                name:MDCKeyboardWatcherKeyboardWillChangeFrameNotification
              object:watcher];
 
+#if !TARGET_OS_VISION
     [nc addObserver:self
            selector:@selector(willRotate:)
                name:UIApplicationWillChangeStatusBarOrientationNotification
@@ -198,6 +199,7 @@ static const CGFloat kMaximumHeightLegacy = 80;
            selector:@selector(didRotate:)
                name:UIApplicationDidChangeStatusBarOrientationNotification
              object:nil];
+#endif
 
     [self setupContainerConstraints];
   }
@@ -290,12 +292,13 @@ static const CGFloat kMaximumHeightLegacy = 80;
  */
 - (CGFloat)staticBottomMargin {
   if (MDCSnackbarMessage.usesLegacySnackbar) {
-    return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad
+    return UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad
                ? MDCSnackbarLegacyBottomMargin_iPad
                : MDCSnackbarLegacyBottomMargin_iPhone;
   }
-  return UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ? MDCSnackbarBottomMargin_iPad
-                                                              : MDCSnackbarBottomMargin_iPhone;
+  return UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad
+             ? MDCSnackbarBottomMargin_iPad
+             : MDCSnackbarBottomMargin_iPhone;
 }
 
 - (void)setSnackbarView:(MDCSnackbarMessageView *)snackbarView {
@@ -490,6 +493,7 @@ static const CGFloat kMaximumHeightLegacy = 80;
 }
 
 - (CGRect)snackbarRectInScreenCoordinates {
+#if !TARGET_OS_VISION
   if (self.snackbarView == nil) {
     return CGRectNull;
   }
@@ -501,6 +505,9 @@ static const CGFloat kMaximumHeightLegacy = 80;
 
   return [self.snackbarView convertRect:self.snackbarView.bounds
                       toCoordinateSpace:window.screen.coordinateSpace];
+#else
+  return CGRectNull;
+#endif  // TODO: b/359236816 - fix visionOS-specific compatibility workarounds.
 }
 
 - (CGFloat)maximumHeight {
@@ -851,6 +858,7 @@ static const CGFloat kMaximumHeightLegacy = 80;
 }
 
 - (void)willRotate:(NSNotification *)notification {
+#if !TARGET_OS_VISION
   UIApplication *application = [UIApplication mdc_safeSharedApplication];
   UIInterfaceOrientation currentOrientation = application.statusBarOrientation;
   UIInterfaceOrientation targetOrientation =
@@ -866,6 +874,7 @@ static const CGFloat kMaximumHeightLegacy = 80;
   }
 
   self.rotationDuration = duration;
+#endif  // TODO: b/359220619 - fix this workaround for visionOS incompatibility.
 }
 
 - (void)didRotate:(__unused NSNotification *)notification {
