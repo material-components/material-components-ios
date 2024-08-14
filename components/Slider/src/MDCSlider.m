@@ -34,8 +34,10 @@ static const CGFloat kSliderLightThemeTrackAlpha = (CGFloat)0.26;
 static inline UIColor *MDCThumbTrackDefaultColor(void) { return MDCPalette.bluePalette.tint500; }
 
 @interface MDCSlider () <MDCThumbTrackDelegate>
+#if !TARGET_OS_VISION
 @property(nonnull, nonatomic, strong)
     UIImpactFeedbackGenerator *feedbackGenerator API_AVAILABLE(ios(10.0));
+#endif
 @property(nonatomic) CGFloat previousValue;
 @end
 
@@ -119,8 +121,10 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) { return MDCPalette.blueP
   _mdc_overrideBaseElevation = -1;
 
   _hapticsEnabled = YES;
+#if !TARGET_OS_VISION
   self.feedbackGenerator =
       [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleLight];
+#endif
   _shouldEnableHapticsForAllDiscreteValues = NO;
 
   _previousValue = -CGFLOAT_MAX;
@@ -706,6 +710,7 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) { return MDCPalette.blueP
 - (void)thumbTrackValueChanged:(__unused MDCThumbTrack *)thumbTrack {
   [self sendActionsForControlEvents:UIControlEventValueChanged];
   UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, self.accessibilityValue);
+#if !TARGET_OS_VISION
   if (self.hapticsEnabled && _previousValue != _thumbTrack.value) {
     BOOL valueCrossesAboveAnchor = (_previousValue < _thumbTrack.filledTrackAnchorValue &&
                                     _thumbTrack.filledTrackAnchorValue <= _thumbTrack.value);
@@ -719,11 +724,14 @@ static inline UIColor *MDCThumbTrackDefaultColor(void) { return MDCPalette.blueP
       [self.feedbackGenerator impactOccurred];
     }
   }
+#endif
   self.previousValue = _thumbTrack.value;
 }
 
 - (void)thumbTrackTouchDown:(__unused MDCThumbTrack *)thumbTrack {
+#if !TARGET_OS_VISION
   [self.feedbackGenerator prepare];
+#endif
   [self sendActionsForControlEvents:UIControlEventTouchDown];
 }
 

@@ -40,7 +40,13 @@
   if (self) {
     // TODO: Remove once MDCShadowLayer is rasterized by default.
     self.layer.shouldRasterize = YES;
-    self.layer.rasterizationScale = [UIScreen mainScreen].scale;
+    if (@available(iOS 13.0, *)) {
+      self.layer.rasterizationScale = UITraitCollection.currentTraitCollection.displayScale;
+    } else {
+#if !TARGET_OS_VISION
+      self.layer.rasterizationScale = UIScreen.mainScreen.scale;
+#endif
+    }
 
     _shadowColor = UIColor.blackColor;
     _shapeGenerator = [[MDCRectangleShapeGenerator alloc] init];
