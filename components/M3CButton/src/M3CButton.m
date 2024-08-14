@@ -378,7 +378,7 @@ NS_ASSUME_NONNULL_BEGIN
   CGSize titleLabelSize = self.titleLabel.intrinsicContentSize;
   self.titleLabel.preferredMaxLayoutWidth = textWidth;
   return CGSizeMake(
-      titleLabelSize.width + self.contentEdgeInsets.left + self.contentEdgeInsets.right +
+      ceil(titleLabelSize.width) + self.contentEdgeInsets.left + self.contentEdgeInsets.right +
           self.imageView.frame.size.width,
       titleLabelSize.height + self.contentEdgeInsets.top + self.contentEdgeInsets.bottom);
 }
