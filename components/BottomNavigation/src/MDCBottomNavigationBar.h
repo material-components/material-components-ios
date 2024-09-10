@@ -15,6 +15,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MaterialAvailability.h"
+#import "MDCBadgeAppearance.h"
 // TODO(b/151929968): Delete import of MDCBottomNavigationBarDelegate.h when client code has been
 // migrated to no longer import MDCBottomNavigationBarDelegate as a transitive dependency.
 #import "MDCBottomNavigationBarDelegate.h"
@@ -69,8 +70,6 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarAlignment) {
   // below icons.
   MDCBottomNavigationBarAlignmentCentered = 2
 };
-
-@class MDCBadgeAppearance;
 
 /**
  A bottom navigation bar.
