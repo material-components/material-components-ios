@@ -736,6 +736,7 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
 }
 
 - (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
   // Increments the counter to account for an additional layout pass.
   self.layoutPassCounter += 1;
   // Abort if the layout pass counter is too high.
