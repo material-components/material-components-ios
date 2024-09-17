@@ -92,6 +92,10 @@ static NSString *const kMaterialDialogsBundle = @"MaterialDialogs.bundle";
       [self.title isEqualToString:anotherAction.title] && self.emphasis == anotherAction.emphasis;
 }
 
+- (NSUInteger)hash {
+  return self.title.hash ^ self.emphasis;
+}
+
 @end
 
 @interface MDCAlertController () <UITextViewDelegate>
