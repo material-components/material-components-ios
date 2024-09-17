@@ -184,11 +184,13 @@ static BOOL gEnablePerformantShadow = NO;
       UIColor *normal = MDCColorFromRGB(MDCChipBackgroundColor);
       UIColor *disabled = MDCColorLighten(normal, MDCChipDisabledLightenPercent);
       UIColor *selected = MDCColorDarken(normal, MDCChipSelectedDarkenPercent);
+      UIColor *selectedDisabled = MDCColorFromRGB(MDCChipBackgroundColor);
 
       _backgroundColors = [NSMutableDictionary dictionary];
       _backgroundColors[@(UIControlStateNormal)] = normal;
       _backgroundColors[@(UIControlStateDisabled)] = disabled;
       _backgroundColors[@(UIControlStateSelected)] = selected;
+      _backgroundColors[@(UIControlStateSelected & UIControlStateDisabled)] = selectedDisabled;
     }
     _borderColors = [NSMutableDictionary dictionary];
     _borderWidths = [NSMutableDictionary dictionary];
