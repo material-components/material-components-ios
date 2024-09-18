@@ -12,5 +12,4 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import "MaterialTypographyScheme+BasicFontScheme.h"  // IWYU pragma: keep // SchemesSubtargetImport  // IWYU pragma: keep
 #import "MDCTypographyScheme.h"  // IWYU pragma: keep
