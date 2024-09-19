@@ -95,7 +95,10 @@ typedef NS_OPTIONS(NSUInteger, MDCChipFieldDelimiter) {
  Default is YES.
  */
 @property(nonatomic, assign) BOOL showPlaceholderWithChips;
-
+/**
+ If true, the chip will increase its height to accommodate accessibility sizes of text.
+*/
+@property(nonatomic, assign) BOOL adjustChipHeightForTextSize;
 /**
  Enabling this property allows chips to be deleted by tapping on them.
 
