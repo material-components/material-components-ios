@@ -230,9 +230,22 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
 - (CGFloat)getChipHeight {
   if (self.adjustChipHeightForTextSize) {
     CGFloat chipDynamicHeight = self.textField.font.lineHeight;
-    return _chipHeight > chipDynamicHeight ? _chipHeight : chipDynamicHeight + 5;
+    return _chipHeight > chipDynamicHeight ? _chipHeight : chipDynamicHeight;
   } else {
     return _chipHeight;
+  }
+}
+
+- (CGFloat)getChipYCoordinateForHeight:(CGFloat)chipFullHeight row:(NSUInteger)row {
+  if (self.adjustChipHeightForTextSize) {
+    // Smaller chip heights need more vertical padding to accommodate a touch target size of at
+    // least 44. At larger text sizes, the padding can shrink to reduce wasted space.
+    return chipFullHeight >= 36
+               ? self.contentEdgeInsets.top + (row * (chipFullHeight + MDCChipFieldVerticalMargin))
+               : self.contentEdgeInsets.top +
+                     (row * (chipFullHeight + MDCChipFieldVerticalMargin + 4));
+  } else {
+    return self.contentEdgeInsets.top + (row * (_chipHeight + MDCChipFieldVerticalMargin));
   }
 }
 
@@ -708,8 +721,7 @@ const UIEdgeInsets MDCChipFieldDefaultContentEdgeInsets = {
       row++;
       currentOriginX = self.contentEdgeInsets.left;
     }
-    CGFloat currentOriginY =
-        self.contentEdgeInsets.top + (row * ([self getChipHeight] + MDCChipFieldVerticalMargin));
+    CGFloat currentOriginY = [self getChipYCoordinateForHeight:chipSize.height row:(row)];
     CGRect chipFrame = CGRectMake(currentOriginX, currentOriginY, chipSize.width, chipSize.height);
     [chipFrames addObject:[NSValue valueWithCGRect:chipFrame]];
     currentOriginX = CGRectGetMaxX(chipFrame) + MDCChipFieldHorizontalMargin;
