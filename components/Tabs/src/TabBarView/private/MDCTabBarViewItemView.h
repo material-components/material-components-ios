@@ -19,7 +19,7 @@
 
 #import "MDCBadgeAppearance.h"
 #import "MDCBadgeView.h"
-#import <MaterialComponents/MaterialRipple.h>
+#import "MaterialRipple.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -102,6 +102,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong, nullable)
     MDCRippleTouchController *rippleTouchController __deprecated_msg(
         "Enable disableRippleBehavior instead.");
+
+/**
+ Offset to shift the badge from its default location.
+
+ Positive x values move the badge toward the trailing edge, and positive y values move the badge
+ downward.
+ */
+@property(nonatomic) CGPoint badgeOffset;
 
 @end
 

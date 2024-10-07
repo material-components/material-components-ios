@@ -314,6 +314,7 @@ static NSString *const kBadgeColorKeyPath = @"badgeColor";
 
       mdcItemView.badgeAppearance = self.itemBadgeAppearance;
       mdcItemView.iconSize = self.itemIconSize;
+      mdcItemView.badgeOffset = self.badgeOffset;
 
 #if defined(__IPHONE_13_0) && (__IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_13_0)
       if (@available(iOS 13, *)) {
@@ -372,6 +373,15 @@ static NSString *const kBadgeColorKeyPath = @"badgeColor";
   for (UIView *itemView in self.itemViews) {
     if ([itemView isKindOfClass:[MDCTabBarViewItemView class]]) {
       ((MDCTabBarViewItemView *)itemView).badgeAppearance = _itemBadgeAppearance;
+    }
+  }
+}
+
+- (void)setBadgeOffset:(CGPoint)badgeOffset {
+  _badgeOffset = badgeOffset;
+  for (UIView *itemView in self.itemViews) {
+    if ([itemView isKindOfClass:[MDCTabBarViewItemView class]]) {
+      ((MDCTabBarViewItemView *)itemView).badgeOffset = badgeOffset;
     }
   }
 }

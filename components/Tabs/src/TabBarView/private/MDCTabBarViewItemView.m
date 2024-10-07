@@ -128,7 +128,7 @@ static const CGFloat kBadgeXInset = 12;
                           : (CGRectGetMaxX(frame) + kBadgeXOffset) - halfBadgeWidth;
   xCenter -= _badge.appearance.borderWidth / 2;
 
-  return CGPointMake(xCenter, badgeCenterY);
+  return CGPointMake(xCenter + self.badgeOffset.x, badgeCenterY + self.badgeOffset.y);
 }
 
 - (CGPoint)centerForOnlyTitleFromFrame:(CGRect)frame isRTL:(BOOL)isRTL {
@@ -138,7 +138,7 @@ static const CGFloat kBadgeXInset = 12;
   CGFloat centerY = CGRectGetMidY(frame);
   CGFloat centerX = isRTL ? CGRectGetMinX(frame) - halfBadgeWidth - kBadgeXOffset
                           : CGRectGetMaxX(frame) + halfBadgeWidth + kBadgeXOffset;
-  return CGPointMake(centerX, centerY);
+  return CGPointMake(centerX + self.badgeOffset.x, centerY + self.badgeOffset.y);
 }
 
 #pragma mark - UIView

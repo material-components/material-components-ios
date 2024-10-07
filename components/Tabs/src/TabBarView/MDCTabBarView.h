@@ -290,6 +290,14 @@ __attribute__((objc_subclassing_restricted)) @interface MDCTabBarView : UIScroll
 @property(nonnull, nonatomic, copy)
     UIColor *rippleColor __deprecated_msg("Enable disableRippleBehavior instead.");
 
+/**
+ Offset to shift the badge from its default location.
+
+ Positive x values move the badge toward the trailing edge, and positive y values move the badge
+ downward. All badges in the tab bar use the same offset.
+ */
+@property(nonatomic) CGPoint badgeOffset;
+
 @end
 
 #if MDC_AVAILABLE_SDK_IOS(13_0) && !TARGET_OS_TV
