@@ -19,9 +19,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-static const NSInteger kTextNumberOfLineLimit = 0;
-static const NSInteger kMinimumTextSizeForNextLine = 42;
-static const NSInteger kMinimumCharactersLengthForNextLine = 10;
+static const NSInteger kTextNumberOfLineLimit = 3;
 static const CGFloat kImageViewSideLength = 40;
 static const CGFloat kLeadingPadding = 16.0f;
 static const CGFloat kTextTrailingPadding = 16.0f;
@@ -32,7 +30,6 @@ static const CGFloat kTopPaddingLarge = 24.0f;
 static const CGFloat kBottomPadding = 8.0f;
 static const CGFloat kButtonHorizontalIntervalSpace = 8.0f;
 static const CGFloat kButtonVerticalIntervalSpace = 8.0f;
-static const CGFloat kButtonVerticalIntervalSpaceForLargeTextSize = 24.0f;
 static const CGFloat kSpaceBetweenIconImageAndTextView = 16.0f;
 static const CGFloat kHorizontalSpaceBetweenTextViewAndButton = 24.0f;
 static const CGFloat kVerticalSpaceBetweenButtonAndTextView = 12.0f;
@@ -110,7 +107,6 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *trailingButtonConstraintTop;
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *trailingButtonConstraintTrailing;
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *trailingButtonConstraintHeightZero;
-@property(nonatomic, readwrite, strong) NSLayoutConstraint *trailingButtonConstraintLeading;
 
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *dividerConstraintHeight;
 @property(nonatomic, readwrite, strong) NSLayoutConstraint *dividerConstraintBottom;
@@ -172,6 +168,7 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   textView.textContainer.maximumNumberOfLines = kTextNumberOfLineLimit;
   textView.textContainer.lineBreakMode = NSLineBreakByTruncatingTail;
   textView.textContainer.lineFragmentPadding = 0;
+  textView.scrollEnabled = NO;
   textView.editable = NO;
   textView.textAlignment = NSTextAlignmentNatural;
   textView.textContainerInset = UIEdgeInsetsZero;
@@ -381,9 +378,6 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
                                    forAxis:UILayoutConstraintAxisHorizontal];
   self.leadingButtonConstraintHeightZero =
       [leadingButton.heightAnchor constraintEqualToConstant:0.f];
-  self.trailingButtonConstraintLeading =
-      [trailingButton.leadingAnchor constraintEqualToAnchor:self.buttonContainerView.leadingAnchor
-                                                   constant:kButtonHorizontalIntervalSpace];
   self.trailingButtonConstraintBottom =
       [trailingButton.bottomAnchor constraintEqualToAnchor:self.buttonContainerView.bottomAnchor];
   self.trailingButtonConstraintTop =
@@ -447,7 +441,6 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   self.dividerConstraintHeight.active = NO;
   self.dividerConstraintLeading.active = NO;
   self.dividerConstraintWidth.active = NO;
-  self.trailingButtonConstraintLeading.active = NO;
 }
 
 #pragma mark - UIView overrides
@@ -624,36 +617,6 @@ static NSString *const kMDCBannerViewImageViewImageKeyPath = @"image";
   self.leadingButtonConstraintLeading.active = YES;
   self.trailingButtonConstraintTrailing.active = YES;
   self.trailingButtonConstraintBottom.active = YES;
-  self.trailingButtonConstraintLeading.active = YES;
-  [self adjustForDynamicText];
-}
-- (void)adjustForDynamicText {
-  UIButton *leadingButton = self.currentLeadingButton;
-  UIButton *trailingButton = self.currentTrailingButton;
-  leadingButton.titleLabel.numberOfLines = 0;
-  trailingButton.titleLabel.numberOfLines = 0;
-
-  CGSize leadingTextSize = [leadingButton.titleLabel intrinsicContentSize];
-  CGSize trailingTextSize = [trailingButton.titleLabel intrinsicContentSize];
-
-  CGFloat sumOfHeight = leadingTextSize.height + trailingTextSize.height;
-  CGFloat lengthOfLeadingButtonText = [leadingButton.titleLabel.text length];
-
-  if (leadingTextSize.height > kMinimumTextSizeForNextLine) {
-    sumOfHeight += kButtonVerticalIntervalSpaceForLargeTextSize;
-  }
-
-  if (sumOfHeight > kMinimumTextSizeForNextLine &&
-      lengthOfLeadingButtonText > kMinimumCharactersLengthForNextLine) {
-    self.textView.scrollEnabled = YES;
-    [NSLayoutConstraint activateConstraints:@[
-      [leadingButton.heightAnchor constraintEqualToConstant:sumOfHeight],
-      [trailingButton.heightAnchor constraintEqualToConstant:sumOfHeight],
-    ]];
-  } else {
-    self.trailingButtonConstraintLeading.active = NO;
-    self.textView.scrollEnabled = NO;
-  }
 }
 
 - (MDCBannerViewLayoutStyle)layoutStyleForSizeToFit:(CGSize)sizeToFit {
