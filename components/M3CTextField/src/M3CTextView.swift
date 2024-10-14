@@ -22,13 +22,13 @@ public final class M3CTextView: UIView, M3CTextInput {
     }
   }
 
-  private var backgroundColors: [UIControl.State: UIColor] = [:]
-  private var borderColors: [UIControl.State: UIColor] = [:]
-  private var inputColors: [UIControl.State: UIColor] = [:]
-  private var supportingLabelColors: [UIControl.State: UIColor] = [:]
-  private var titleLabelColors: [UIControl.State: UIColor] = [:]
-  private var trailingLabelColors: [UIControl.State: UIColor] = [:]
-  private var tintColors: [UIControl.State: UIColor] = [:]
+  var backgroundColors: [UIControl.State: UIColor] = [:]
+  var borderColors: [UIControl.State: UIColor] = [:]
+  var inputColors: [UIControl.State: UIColor] = [:]
+  var supportingLabelColors: [UIControl.State: UIColor] = [:]
+  var titleLabelColors: [UIControl.State: UIColor] = [:]
+  var trailingLabelColors: [UIControl.State: UIColor] = [:]
+  var tintColors: [UIControl.State: UIColor] = [:]
 
   @objc public lazy var textContainer: UITextView = {
     let textContainer = M3CSelectableTextView()
@@ -91,42 +91,63 @@ public final class M3CTextView: UIView, M3CTextInput {
   @objc(setBackgroundColor:forState:)
   public func setBackgroundColor(_ color: UIColor?, for state: UIControl.State) {
     backgroundColors[state] = color
+    if state == controlState {
+      applyAllColors()
+    }
   }
 
   /// Sets the border color for a specific UIControlState.
   @objc(setBorderColor:forState:)
   public func setBorderColor(_ color: UIColor?, for state: UIControl.State) {
     borderColors[state] = color
+    if state == controlState {
+      applyAllColors()
+    }
   }
 
   /// Sets the input color for a specific UIControlState.
   @objc(setInputColor:forState:)
   public func setInputColor(_ color: UIColor?, for state: UIControl.State) {
     inputColors[state] = color
+    if state == controlState {
+      applyAllColors()
+    }
   }
 
   /// Sets the supporting label color for a specific UIControlState.
   @objc(setSupportingLabelColor:forState:)
   public func setSupportingLabelColor(_ color: UIColor?, for state: UIControl.State) {
     supportingLabelColors[state] = color
+    if state == controlState {
+      applyAllColors()
+    }
   }
 
   /// Sets the tint color for a specific UIControlState.
   @objc(setTintColor:forState:)
   public func setTintColor(_ color: UIColor?, for state: UIControl.State) {
     tintColors[state] = color
+    if state == controlState {
+      applyAllColors()
+    }
   }
 
   /// Sets the title label color for a specific UIControlState.
   @objc(setTitleLabelColor:forState:)
   public func setTitleLabelColor(_ color: UIColor?, for state: UIControl.State) {
     titleLabelColors[state] = color
+    if state == controlState {
+      applyAllColors()
+    }
   }
 
   /// Sets the trailing label color for a specific UIControlState.
   @objc(setTrailingLabelColor:forState:)
   public func setTrailingLabelColor(_ color: UIColor?, for state: UIControl.State) {
     trailingLabelColors[state] = color
+    if state == controlState {
+      applyAllColors()
+    }
   }
 
   override public func layoutSubviews() {
