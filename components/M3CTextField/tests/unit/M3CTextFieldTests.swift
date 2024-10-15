@@ -147,6 +147,96 @@ class M3CTextFieldTests: XCTestCase {
     assertSUTExpectations(for: errorColor)
     XCTAssertTrue(sutTextContainer.isFirstResponder)
   }
+
+  /// Tests that a new background color for a specific state is applied to the underlying
+  /// UITextField when calling `setBackgroundColor`.
+  func testSetBackgroundColorAppliesNewColor() {
+    applyInitialColorTestingConfiguration(for: .normal)
+    let defaultColor = expectedColor(for: .normal)
+    let customColor = UIColor.green
+    XCTAssertEqual(sutTextContainer.backgroundColor, defaultColor)
+
+    sutTextField.setBackgroundColor(customColor, for: .normal)
+    XCTAssertEqual(sutTextContainer.backgroundColor, customColor)
+  }
+
+  /// Tests that a new border color for a specific state is applied to the underlying
+  /// UITextField when calling `setBorderColor`.
+  func testSetBorderColorAppliesNewColor() {
+    applyInitialColorTestingConfiguration(for: .normal)
+    let defaultColor = expectedColor(for: .normal)
+    let customColor = UIColor.green
+    XCTAssertEqual(sutTextContainer.layer.borderColor, defaultColor.cgColor)
+
+    sutTextField.setBorderColor(customColor, for: .normal)
+
+    XCTAssertEqual(sutTextContainer.layer.borderColor, customColor.cgColor)
+  }
+
+  /// Tests that a new input color for a specific state is applied to the underlying
+  /// UITextField when calling `setInputColor`.
+  func testSetInputColorAppliesNewColor() {
+    applyInitialColorTestingConfiguration(for: .normal)
+    let defaultColor = expectedColor(for: .normal)
+    let customColor = UIColor.green
+    XCTAssertEqual(sutTextContainer.textColor, defaultColor)
+
+    sutTextField.setInputColor(customColor, for: .normal)
+
+    XCTAssertEqual(sutTextContainer.textColor, customColor)
+  }
+
+  /// Tests that a new supporting label color for a specific state is applied to the underlying
+  /// UILabel when calling `setSupportingLabelColor`.
+  func testSetSupportingLabelColorAppliesNewColor() {
+    applyInitialColorTestingConfiguration(for: .normal)
+    let defaultColor = expectedColor(for: .normal)
+    let customColor = UIColor.green
+    XCTAssertEqual(sutTextField.supportingLabel.textColor, defaultColor)
+
+    sutTextField.setSupportingLabelColor(customColor, for: .normal)
+
+    XCTAssertEqual(sutTextField.supportingLabel.textColor, customColor)
+  }
+
+  /// Tests that a new tint color for a specific state is applied to the underlying
+  /// UITextField when calling `setTintColor`.
+  func testSetTintColorAppliesNewColor() {
+    applyInitialColorTestingConfiguration(for: .normal)
+    let defaultColor = expectedColor(for: .normal)
+    let customColor = UIColor.green
+    XCTAssertEqual(sutTextContainer.tintColor, defaultColor)
+
+    sutTextField.setTintColor(customColor, for: .normal)
+
+    XCTAssertEqual(sutTextContainer.tintColor, customColor)
+  }
+
+  /// Tests that a new title label color for a specific state is applied to the underlying
+  /// UILabel when calling `setTitleLabelColor`.
+  func testSetTitleLabelColorAppliesNewColor() {
+    applyInitialColorTestingConfiguration(for: .normal)
+    let defaultColor = expectedColor(for: .normal)
+    let customColor = UIColor.green
+    XCTAssertEqual(sutTextField.titleLabel.textColor, defaultColor)
+
+    sutTextField.setTitleLabelColor(customColor, for: .normal)
+
+    XCTAssertEqual(sutTextField.titleLabel.textColor, customColor)
+  }
+
+  /// Tests that a new trailing label color for a specific state is applied to the underlying
+  /// UILabel when calling `setTrailingLabelColor`.
+  func testSetTrailingLabelColorAppliesNewColor() {
+    applyInitialColorTestingConfiguration(for: .normal)
+    let defaultColor = expectedColor(for: .normal)
+    let customColor = UIColor.green
+    XCTAssertEqual(sutTextField.trailingLabel.textColor, defaultColor)
+
+    sutTextField.setTrailingLabelColor(customColor, for: .normal)
+
+    XCTAssertEqual(sutTextField.trailingLabel.textColor, customColor)
+  }
 }
 
 // MARK: - Test Assertion Helpers
