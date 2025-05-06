@@ -121,7 +121,7 @@ typedef NS_ENUM(NSInteger, MDCBottomNavigationBarLayoutMode) {
  The current selected view controller.  When setting this property, the view controller must be in
  @c viewControllers.
  */
-@property(nonatomic, assign, nullable) __kindof UIViewController *selectedViewController;
+@property(nonatomic, weak, nullable) __kindof UIViewController *selectedViewController;
 
 /**
  The index of the current selected tab item.  When setting this property the value must be in bounds
