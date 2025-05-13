@@ -732,6 +732,9 @@ static const CGFloat kMinimumTouchTarget = 44.f;
   }
   CGSize clampToMinimumSize = [self clampToMinimumSize:size];
   if (_buttonSizeSet) {
+    if (@available(iOS 15.0, *)) {
+      size = [self explicitSize];
+    }
     _visualContentSize = size;
     return CGSizeMake(MAX(kMinimumTouchTarget, clampToMinimumSize.width),
                       MAX(kMinimumTouchTarget, clampToMinimumSize.height));
@@ -750,12 +753,45 @@ static const CGFloat kMinimumTouchTarget = 44.f;
   CGSize clampToMinimumSize = [self clampToMinimumSize:newSize];
   [self setCapsuleCornersBasedOn:clampToMinimumSize];
   if (_buttonSizeSet) {
+    if (@available(iOS 15.0, *)) {
+      newSize = [self explicitSize];
+    }
     _visualContentSize = newSize;
     return CGSizeMake(MAX(kMinimumTouchTarget, clampToMinimumSize.width),
                       MAX(kMinimumTouchTarget, clampToMinimumSize.height));
   } else {
     return clampToMinimumSize;
   }
+}
+
+- (CGSize)explicitSize API_AVAILABLE(ios(15.0)) {
+  [self updateInsets];
+  BOOL hasTitle = self.currentTitle.length > 0 || self.currentAttributedTitle.length > 0;
+  BOOL hasImage = self.currentImage != nil;
+  CGSize size = [super intrinsicContentSize];
+  CGFloat imageEdgeInsetsWidth = self.imageEdgeInsets.left + self.imageEdgeInsets.right;
+  CGFloat contentEdgeInsetsWidth = self.contentEdgeInsets.left + self.contentEdgeInsets.right;
+  CGFloat imageEdgeInsetsHeight = self.imageEdgeInsets.top + self.imageEdgeInsets.bottom;
+  CGFloat contentEdgeInsetsHeight = self.contentEdgeInsets.top + self.contentEdgeInsets.bottom;
+  CGFloat symbolSize = _symbolFonts[@(self.buttonSize)].pointSize;
+  if (hasTitle && hasImage) {
+    CGFloat iconWidth = imageEdgeInsetsWidth + symbolSize;
+    CGFloat titleWidth = contentEdgeInsetsWidth + self.titleLabel.intrinsicContentSize.width;
+    CGFloat iconHeight = imageEdgeInsetsHeight + symbolSize;
+    CGFloat titleHeight = contentEdgeInsetsHeight + self.titleLabel.intrinsicContentSize.height;
+    size = CGSizeMake(iconWidth + titleWidth, MAX(iconHeight, titleHeight));
+  } else if (hasImage) {
+    // If only using an image we set the contentEdgeInsets rather than imageEdgeInsets.
+    CGFloat width = contentEdgeInsetsWidth + symbolSize;
+    CGFloat height = contentEdgeInsetsHeight + symbolSize;
+    size = CGSizeMake(width, height);
+  } else if (hasTitle) {
+    CGFloat width = contentEdgeInsetsWidth + self.titleLabel.intrinsicContentSize.width;
+    CGFloat height = contentEdgeInsetsHeight + self.titleLabel.intrinsicContentSize.height;
+    size = CGSizeMake(width, height);
+  }
+
+  return size;
 }
 
 #pragma mark - CALayerDelegate
