@@ -539,6 +539,7 @@ static const CGFloat kMinimumTouchTarget = 44.f;
     if (@available(iOS 15.0, *)) {
       if (_buttonSizeSet) {
         [self updateCorners];
+        [self updateShadows];
       }
     }
   };
@@ -603,7 +604,6 @@ static const CGFloat kMinimumTouchTarget = 44.f;
 - (void)layoutSubviews {
   [super layoutSubviews];
   [self setCapsuleCornersBasedOn:self.frame.size];
-  [self updateShadows];
   [self updateSymbolFont];
 
   if (_buttonSizeSet) {
@@ -617,6 +617,7 @@ static const CGFloat kMinimumTouchTarget = 44.f;
       self.visualBackground.frame = self.bounds;
     }
   }
+  [self updateShadows];
 }
 
 - (void)setCapsuleCornersBasedOn:(CGSize)size {
