@@ -737,8 +737,13 @@ static const CGFloat kMinimumTouchTarget = 44.f;
       size = [self explicitSize];
     }
     _visualContentSize = size;
-    return CGSizeMake(MAX(kMinimumTouchTarget, clampToMinimumSize.width),
-                      MAX(kMinimumTouchTarget, clampToMinimumSize.height));
+
+    // The MAX function only takes two inputs but we need the max of clampToMinimumSize, size, and
+    // kMinimumTouchTarget.
+    CGSize minimumVisualSize = CGSizeMake(MAX(clampToMinimumSize.width, size.width),
+                                          MAX(clampToMinimumSize.height, size.height));
+    return CGSizeMake(MAX(kMinimumTouchTarget, minimumVisualSize.width),
+                      MAX(kMinimumTouchTarget, minimumVisualSize.height));
   } else {
     return clampToMinimumSize;
   }
@@ -758,8 +763,13 @@ static const CGFloat kMinimumTouchTarget = 44.f;
       newSize = [self explicitSize];
     }
     _visualContentSize = newSize;
-    return CGSizeMake(MAX(kMinimumTouchTarget, clampToMinimumSize.width),
-                      MAX(kMinimumTouchTarget, clampToMinimumSize.height));
+
+    // The MAX function only takes two inputs but we need the max of clampToMinimumSize, size, and
+    // kMinimumTouchTarget.
+    CGSize minimumVisualSize = CGSizeMake(MAX(clampToMinimumSize.width, newSize.width),
+                                          MAX(clampToMinimumSize.height, newSize.height));
+    return CGSizeMake(MAX(kMinimumTouchTarget, minimumVisualSize.width),
+                      MAX(kMinimumTouchTarget, minimumVisualSize.height));
   } else {
     return clampToMinimumSize;
   }
