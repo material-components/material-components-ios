@@ -9,6 +9,26 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ Used to handle shadow animations of a @c M3CButton.
+ */
+@interface M3CVisualBackgroundView : UIView
+@end
+
+@implementation M3CVisualBackgroundView
+
+#pragma mark - CALayerDelegate
+
+- (nullable id<CAAction>)actionForLayer:(CALayer *)layer forKey:(NSString *)key {
+  if (layer == self.layer && M3CIsMDCShadowPathKey(key)) {
+    // Provide a custom action for the view's layer's shadow path only.
+    return M3CShadowPathActionForLayer(layer);
+  }
+  return [super actionForLayer:layer forKey:key];
+}
+
+@end
+
 /** Used to store the scaling curve and initial size of the @c imageView of a @c M3CButton. */
 @interface M3CIconAttributes : NSObject
 
@@ -63,7 +83,7 @@ static const CGFloat kMinimumTouchTarget = 44.f;
  where touch targets are not met, this replaces the background while the background remains the
  touch target size but changes to clear.
  */
-@property(nonatomic, strong, nonnull) UIView *visualBackground;
+@property(nonatomic, strong, nonnull) M3CVisualBackgroundView *visualBackground;
 
 // Used only when layoutTitleWithConstraints is enabled.
 @property(nonatomic, strong, nullable) NSLayoutConstraint *titleTopConstraint;
@@ -120,7 +140,7 @@ static const CGFloat kMinimumTouchTarget = 44.f;
   _edgeInsetsWithImageForSize = [NSMutableDictionary dictionary];
   _edgeInsetsWithTitleForSize = [NSMutableDictionary dictionary];
   _customInsetAvailable = NO;
-  _visualBackground = [[UIView alloc] init];
+  _visualBackground = [[M3CVisualBackgroundView alloc] init];
   _visualBackground.exclusiveTouch = NO;
   _visualBackground.userInteractionEnabled = NO;
   _visualContentSize = CGSizeZero;
