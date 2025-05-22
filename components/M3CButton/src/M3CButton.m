@@ -3,54 +3,13 @@
 #import <UIKit/UIKit.h>
 
 #import "M3CButton.h"
+#import "M3CIconAttributes.h"
+#import "M3CVisualBackgroundView.h"
 #import "M3CAnimationActions.h"
 #import "MDCShadow.h"
 #import "MDCShadowsCollection.h"
 
 NS_ASSUME_NONNULL_BEGIN
-
-/**
- Used to handle shadow animations of a @c M3CButton.
- */
-@interface M3CVisualBackgroundView : UIView
-@end
-
-@implementation M3CVisualBackgroundView
-
-#pragma mark - CALayerDelegate
-
-- (nullable id<CAAction>)actionForLayer:(CALayer *)layer forKey:(NSString *)key {
-  if (layer == self.layer && M3CIsMDCShadowPathKey(key)) {
-    // Provide a custom action for the view's layer's shadow path only.
-    return M3CShadowPathActionForLayer(layer);
-  }
-  return [super actionForLayer:layer forKey:key];
-}
-
-@end
-
-/** Used to store the scaling curve and initial size of the @c imageView of a @c M3CButton. */
-@interface M3CIconAttributes : NSObject
-
-@property(nonatomic, copy, readonly) UIFontTextStyle textStyle;
-@property(nonatomic, assign, readonly) CGFloat pointSize;
-
-- (instancetype)initWithTextStyle:(UIFontTextStyle)textStyle pointSize:(CGFloat)pointSize;
-
-@end
-
-@implementation M3CIconAttributes
-
-- (instancetype)initWithTextStyle:(UIFontTextStyle)textStyle pointSize:(CGFloat)pointSize {
-  self = [super init];
-  if (self) {
-    _textStyle = [textStyle copy];  // Use copy for NSString properties
-    _pointSize = pointSize;
-  }
-  return self;
-}
-
-@end
 
 // Minimum touch size recommended by Apple:
 // https://developer.apple.com/design/human-interface-guidelines/accessibility#Mobility
