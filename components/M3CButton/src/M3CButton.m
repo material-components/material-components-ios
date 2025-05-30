@@ -29,6 +29,7 @@ static const CGFloat kMinimumTouchTarget = 44.f;
   NSMutableDictionary<NSNumber *, NSValue *> *_edgeInsetsWithImageForSize;
   NSMutableDictionary<NSNumber *, NSValue *> *_edgeInsetsWithTitleForSize;
   CGSize _visualContentSize;
+  CGFloat _symbolSize;
   BOOL _customInsetAvailable;
   BOOL _buttonSizeSet;
 }
@@ -274,9 +275,10 @@ static const CGFloat kMinimumTouchTarget = 44.f;
   if (@available(iOS 15.0, *)) {
     currentAttributes = _symbolFonts[@(self.buttonSize)];
     if (_buttonSizeSet && currentAttributes != nil) {
-      CGFloat pointSize = [[UIFontMetrics metricsForTextStyle:currentAttributes.textStyle]
-          scaledValueForValue:currentAttributes.pointSize];
-      self.imageView.bounds = CGRectMake(0, 0, pointSize, pointSize);
+      _symbolSize = [[UIFontMetrics metricsForTextStyle:currentAttributes.textStyle]
+                    scaledValueForValue:currentAttributes.pointSize
+          compatibleWithTraitCollection:self.traitCollection];
+      self.imageView.bounds = CGRectMake(0, 0, _symbolSize, _symbolSize);
     }
   }
 }
@@ -578,6 +580,13 @@ static const CGFloat kMinimumTouchTarget = 44.f;
 - (void)traitCollectionDidChange:(nullable UITraitCollection *)previousTraitCollection {
   [super traitCollectionDidChange:previousTraitCollection];
   [self updateCGColors];
+  [self updateSymbolFont];
+
+  if (@available(iOS 15.0, *)) {
+    _visualContentSize = [self explicitSize];
+  }
+  [self invalidateIntrinsicContentSize];
+  [self setNeedsLayout];
 }
 
 - (void)layoutSubviews {
@@ -763,17 +772,16 @@ static const CGFloat kMinimumTouchTarget = 44.f;
   CGFloat contentEdgeInsetsWidth = self.contentEdgeInsets.left + self.contentEdgeInsets.right;
   CGFloat imageEdgeInsetsHeight = self.imageEdgeInsets.top + self.imageEdgeInsets.bottom;
   CGFloat contentEdgeInsetsHeight = self.contentEdgeInsets.top + self.contentEdgeInsets.bottom;
-  CGFloat symbolSize = _symbolFonts[@(self.buttonSize)].pointSize;
   if (hasTitle && hasImage) {
-    CGFloat iconWidth = imageEdgeInsetsWidth + symbolSize;
+    CGFloat iconWidth = imageEdgeInsetsWidth + _symbolSize;
     CGFloat titleWidth = contentEdgeInsetsWidth + self.titleLabel.intrinsicContentSize.width;
-    CGFloat iconHeight = imageEdgeInsetsHeight + symbolSize;
+    CGFloat iconHeight = imageEdgeInsetsHeight + _symbolSize;
     CGFloat titleHeight = contentEdgeInsetsHeight + self.titleLabel.intrinsicContentSize.height;
     size = CGSizeMake(iconWidth + titleWidth, MAX(iconHeight, titleHeight));
   } else if (hasImage) {
     // If only using an image we set the contentEdgeInsets rather than imageEdgeInsets.
-    CGFloat width = contentEdgeInsetsWidth + symbolSize;
-    CGFloat height = contentEdgeInsetsHeight + symbolSize;
+    CGFloat width = contentEdgeInsetsWidth + _symbolSize;
+    CGFloat height = contentEdgeInsetsHeight + _symbolSize;
     size = CGSizeMake(width, height);
   } else if (hasTitle) {
     CGFloat width = contentEdgeInsetsWidth + self.titleLabel.intrinsicContentSize.width;
