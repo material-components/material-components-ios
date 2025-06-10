@@ -43,9 +43,7 @@
 
 @end
 
-@implementation MDCInkView {
-  BOOL _isActiveInkLayerAnimationRunning;
-}
+@implementation MDCInkView
 
 + (Class)layerClass {
   return [MDCLegacyInkLayer class];
@@ -181,13 +179,6 @@
   if (self.usesLegacyInkRipple) {
     [self.inkLayer spreadFromPoint:point completion:completionBlock];
   } else {
-    @synchronized(self) {
-      if (animated && _isActiveInkLayerAnimationRunning) {
-        // Only one ink layer animation can be running at a time.
-        return;
-      }
-      _isActiveInkLayerAnimationRunning = YES;
-    }
     self.startInkRippleCompletionBlock = completionBlock;
     MDCInkLayer *inkLayer = [MDCInkLayer layer];
     inkLayer.inkColor = self.inkColor;
@@ -283,14 +274,6 @@
   }
   if ([self.animationDelegate respondsToSelector:@selector(inkAnimationDidStart:)]) {
     [self.animationDelegate inkAnimationDidStart:self];
-  }
-}
-
-- (void)inkLayerStartAnimationDidFinish:(MDCInkLayer *)inkLayer {
-  @synchronized(self) {
-    if (self.activeInkLayer == inkLayer && _isActiveInkLayerAnimationRunning) {
-      _isActiveInkLayerAnimationRunning = NO;
-    }
   }
 }
 

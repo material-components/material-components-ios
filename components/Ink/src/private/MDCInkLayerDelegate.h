@@ -39,12 +39,6 @@ NS_SWIFT_UI_ACTOR
 - (void)inkLayerAnimationDidStart:(nonnull MDCInkLayer *)inkLayer;
 
 /**
- Called when the ink ripple appearing animation: scale up, reposition and fade in animation,
- finishes.
- */
-- (void)inkLayerStartAnimationDidFinish:(nonnull MDCInkLayer *)inkLayer;
-
-/**
  Called when the ink ripple animation ends.
 
  @param inkLayer The MDCInkLayer that ends animating.
