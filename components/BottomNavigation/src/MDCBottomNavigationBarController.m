@@ -87,14 +87,14 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
 @property(nonatomic, strong, nullable) NSLayoutConstraint *navigationBarBottomAnchorConstraint;
 
 /** The constraint between @c navigationBar.barItemsBottomAnchor and the bottom of the safe area. */
-@property(nonatomic, strong, nullable) NSLayoutConstraint *navigationBarItemsBottomAnchorConstraint;
+@property(nonatomic, strong, nonnull) NSLayoutConstraint *navigationBarItemsBottomAnchorConstraint;
 
 /** The constraints for the @c navigationBar in a vertical layout. */
 @property(nonatomic, strong, nonnull)
     NSMutableArray<NSLayoutConstraint *> *navigationBarVerticalLayoutConstraints;
 
 /** The constraint between the leading edge of @c navigationBar and its superview. */
-@property(nonatomic, strong, nullable) NSLayoutConstraint *navigationBarLeadingAnchorConstraint;
+@property(nonatomic, strong, nonnull) NSLayoutConstraint *navigationBarLeadingAnchorConstraint;
 
 /** The constraints for the @c navigationBar in a horizontal layout. */
 @property(nonatomic, strong, nonnull)
@@ -217,7 +217,6 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
   if (!navigationBar.enableVerticalLayout) {
     CGFloat height = CGRectGetHeight(navigationBar.frame);
     self.navigationBarBottomAnchorConstraint.constant = hidden ? height : 0;
-    self.navigationBarLeadingAnchorConstraint.constant = 0;
   } else {
     CGFloat width = CGRectGetWidth(navigationBar.frame);
     self.navigationBarBottomAnchorConstraint.constant = 0;
@@ -720,21 +719,24 @@ static UIViewController *_Nullable DecodeViewController(NSCoder *coder, NSString
 
 - (void)loadConstraintsForNavigationBar {
   self.navigationBar.translatesAutoresizingMaskIntoConstraints = NO;
-  self.navigationBarLeadingAnchorConstraint = [self.navigationBar.leadingAnchor
-      constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor];
-  self.navigationBarLeadingAnchorConstraint.active = YES;
   self.navigationBarBottomAnchorConstraint =
       [self.navigationBar.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor];
   self.navigationBarBottomAnchorConstraint.active = YES;
+
+  self.navigationBarLeadingAnchorConstraint = [self.navigationBar.leadingAnchor
+      constraintEqualToAnchor:self.view.safeAreaLayoutGuide.leadingAnchor];
   self.navigationBarItemsBottomAnchorConstraint = [self.navigationBar.barItemsBottomAnchor
       constraintEqualToAnchor:self.view.safeAreaLayoutGuide.bottomAnchor];
 
   [self.navigationBarVerticalLayoutConstraints
       addObject:[self.navigationBar.topAnchor constraintEqualToAnchor:self.view.topAnchor]];
+  [self.navigationBarVerticalLayoutConstraints addObject:self.navigationBarLeadingAnchorConstraint];
 
   [self.navigationBarHorizontalLayoutConstraints
-      addObject:[self.view.safeAreaLayoutGuide.trailingAnchor
+      addObject:[self.view.trailingAnchor
                     constraintEqualToAnchor:self.navigationBar.trailingAnchor]];
+  [self.navigationBarHorizontalLayoutConstraints
+      addObject:[self.navigationBar.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor]];
   [self.navigationBarHorizontalLayoutConstraints
       addObject:self.navigationBarItemsBottomAnchorConstraint];
 }
