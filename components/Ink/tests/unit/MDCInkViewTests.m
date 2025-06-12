@@ -164,4 +164,23 @@
   XCTAssertFalse(masksToBoundsWhenUnbounded);
 }
 
+- (void)testStartTouchBeganAtPointAddsInkLayerWithAnimationIsIdempotent {
+  // Given
+  MDCInkView *testInkView = [[MDCInkView alloc] init];
+  testInkView.usesLegacyInkRipple = NO;
+
+  // Verifies that only one ink animation layer is added, even with concurrent triggers.
+  // The initial sublayer count is 1 due to the button's default shape-drawing layer.
+  // After adding the ink layer via startTouchBeganAtPoint:, the count must be 2.
+  // This assertion ensures subsequent calls do not erroneously add more layers.
+  [testInkView startTouchBeganAtPoint:CGPointZero animated:YES withCompletion:nil];
+  [testInkView startTouchBeganAtPoint:CGPointZero animated:YES withCompletion:nil];
+
+  XCTAssertEqual(testInkView.layer.sublayers.count, 2);
+
+  // Verifies that the ink layer is removed when cancelAllAnimationsAnimated:NO is called.
+  [testInkView cancelAllAnimationsAnimated:NO];
+  XCTAssertEqual(testInkView.layer.sublayers.count, 1);
+}
+
 @end

@@ -165,6 +165,9 @@ static NSString *const MDCInkLayerScaleString = @"transform.scale";
     animGroup.removedOnCompletion = NO;
     [CATransaction setCompletionBlock:^{
       self->_startAnimationActive = NO;
+      if ([self.animationDelegate respondsToSelector:@selector(inkLayerStartAnimationDidFinish:)]) {
+        [self.animationDelegate inkLayerStartAnimationDidFinish:self];
+      }
     }];
     [self addAnimation:animGroup forKey:nil];
     [CATransaction commit];
