@@ -57,12 +57,14 @@
   return layer;
 }
 
-- (UIImage *)createImageWithLayer:(CALayer *)layer {
-  UIGraphicsBeginImageContext(layer.frame.size);
-  [layer renderInContext:UIGraphicsGetCurrentContext()];
-  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-  UIGraphicsEndImageContext();
-  return image;
+
+//Replace deprecated UIGraphicsBeginImageContext with UIGraphicsImageRenderer in createImageWithLayer
+- (UIImage *)createImageWithLayer:(CALayer *)layer{
+    UIGraphicsImageRenderer *render = [[UIGraphicsImageRenderer alloc] initWithSize:layer.frame.size];
+    UIImage *image = [render imageWithActions:^(UIGraphicsImageRendererContext *context){
+        [layer renderInContext:context.CGContext];
+    }];
+    return image;
 }
 
 - (CALayer *)createLayerWithImage:(UIImage *)image {
